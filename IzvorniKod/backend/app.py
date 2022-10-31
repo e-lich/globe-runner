@@ -11,7 +11,7 @@ CORS(app)
 
 @app.route('/')
 def hello():
-    return "Hello world!"
+    return "Hello Backend!"
 
 if __name__ == '__main__':
     app.run()
