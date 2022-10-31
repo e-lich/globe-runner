@@ -1,9 +1,9 @@
-import axios from 'axios';
-import {format} from 'date-fns';
-import { useEffect, useState } from 'react';
+import axios from "axios";
+import { format } from "date-fns";
+import { useEffect, useState } from "react";
 
-import './App.css';
-const baseUrl = "http://localhost:5000"
+import "./App.css";
+const baseUrl = "http://localhost:5000";
 
 function App() {
   return (
