@@ -8,7 +8,8 @@ import "./App.css";
 import "./App.css";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
-const baseUrl = "http://localhost:5000/";
+import BasicRegister from "./pages/BasicRegister";
+import CartographerRegister from "./pages/CartographerRegister";
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
+        {/* <Route path="/auth/basic" element={<BasicRegister />} />
+        ,<Route path="/auth/cartographer" element={<CartographerRegister />} /> */}
       </Routes>
     </BrowserRouter>
   );

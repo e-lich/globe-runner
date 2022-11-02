@@ -37,3 +37,13 @@ label {
   font-weight: 600;
   color: rgb(34, 34, 34);
 }
+
+.flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.padding {
+  margin-top: 5px;
+  margin-bottom: 50px;
+}
