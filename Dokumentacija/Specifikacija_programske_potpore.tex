@@ -290,7 +290,7 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[2.a] Korisnik promijeni svoje osobne podatke, ali ne odabere opciju "Save changes"
+							\item[2.a] Korisnik promijeni svoje osobne podatke, ali ne odabere opciju "Spremi promjene"
 							\item[] \begin{packed_enum}
 								
 								\item Sustav obavještava korisnika da nije spremio podatke prije izlaska iz prozora
@@ -479,6 +479,388 @@
 							
 						\end{packed_item}
 					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC15 - Pregled vlastitih predloženih lokacija koje čekaju pregled}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Igrač
+						\item  \textbf{Cilj:} Pregledati vlastite predložene lokacije koje čekaju pregled kartografa.
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Igrač je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Igrač se nalazi na stranici za predlaganje lokacija
+							\item Igrač odabire filtar neodobrenih lokacija
+							\item Igraču se na karti prikazuju vlastite predložene lokacije koje čekaju pregled.
+
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC16 - Pregled vlastitih predloženih lokacija koje su odobrene}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Igrač
+						\item  \textbf{Cilj:} Pregledati vlastite predložene lokacije koje su odobrene.
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Igrač je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Igrač se nalazi na stranici za predlaganje lokacija
+							\item Igrač odabire filtar odobrenih lokacija
+							\item Igraču se na karti prikazuju vlastite predložene lokacije koje su prošle provjeru
+
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC17 - Pregled prijedloga novih lokacija}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Kartograf
+						\item  \textbf{Cilj:} Pregledati predložene lokacije koje nisu odobrene.
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Kartograf je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Kartograf se nalazi na početnoj stranici
+							\item Kartograf odabire filtar neodobrenih lokacija
+							\item Kartografu se na karti prikazuju predložene lokacije koje još nisu provjerene
+
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC18 - Uređivanje prijedloga novih lokacija}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Kartograf
+						\item  \textbf{Cilj:} Urediti predloženu lokaciju koja nije odobrena.
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Kartograf je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Kartograf se nalazi na početnoj stranici
+							\item Kartograf odabire filtar neodobrenih lokacija
+							\item Kartograf odabire lokaciju koju želi urediti
+							\item Kartograf uređuje podatke u prijedlogu lokacije
+							\item Kartograf sprema promjene
+							\item Baza podataka se ažurira
+
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Kartograf promijeni podatke o lokaciji, ali ne odabere opciju "Spremi promjene"
+							\item[] \begin{packed_enum}
+								
+								\item Sustav obavještava kartografa da nije spremio podatke prije izlaska iz prozora
+								
+							\end{packed_enum}
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC19 - Odobravanje prijedloga novih lokacija}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Kartograf
+						\item  \textbf{Cilj:} Odobriti predloženu lokaciju
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Kartograf je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Kartograf se nalazi na početnoj stranici
+							\item Kartograf odabire filtar neodobrenih lokacija
+							\item Kartografu se na karti prikazuju predložene lokacije koje još nisu odobrene
+							\item Kartograf odabire lokaciju koju želi odobriti
+							\item Kartograf odobrava lokaciju klikom na gumb "Odobri lokaciju"
+							\item Baza podataka se ažurira
+
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC20 - Označavanje lokacije za terensku provjeru}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Kartograf
+						\item  \textbf{Cilj:} Označiti da je potrebna terenska provjera za predloženu lokaciju.
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Kartograf je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Kartograf se nalazi na početnoj stranici
+							\item Kartograf odabire filtar neodobrenih lokacija
+							\item Kartografu se na karti prikazuju predložene lokacije koje još nisu odobrene
+							\item Kartograf odabire lokaciju koju želi označiti za terensku provjeru
+							\item Kartograf označava da je potrebna terenska provjera lokacije klikom na gumb "Zatraži provjeru"
+							\item Baza podataka se ažurira
+
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC21 - Pregled i preuzimanje kartica kojima je potrebna terenska provjera}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Kartograf
+						\item  \textbf{Cilj:} Pregledati predložene lokacije koje trebaju terensku provjeru
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Kartograf je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Kartograf se nalazi na stranici "Provjera na terenu"
+							\item Kartograf odabire filtar koji će prikazati lokacije koje trebaju terensku provjeru
+							\item Kartografu se na karti prikazuju predložene lokacije koje trebaju provjeru na terenu
+							\item Kartograf klikom odabire lokaciju koju želi osobno obići, zatim klikne na gumb "Dodaj u rutu"
+							\item Baza podataka se ažurira
+
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC22 - Uklanjanje lokacija s vlastite liste za pregled lokacija na terenu}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Kartograf
+						\item  \textbf{Cilj:} Ukloniti lokaciju s vlastite liste za provjeru na terenu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Kartograf je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Kartograf se nalazi na stranici "Provjera na terenu"
+							\item Kartograf odabire filtar koji će prikazati lokacije koje je dodao na vlastitu listu za provjeru na terenu
+							\item Kartografu se na karti prikazuju njegove lokacije koje trebaju provjeru na terenu
+							\item Kartograf klikom odabire lokaciju koju želi ukloniti iz rute, a uklanja ju klikom na gumb "Ukloni"
+							\item Baza podataka se ažurira
+
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC23 - Generiranje rute na temelju odabranih lokacija za terensku provjeru}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Kartograf
+						\item  \textbf{Cilj:} Generirati najkraću rutu za obilazak odabranih lokacija
+						\item  \textbf{Sudionici:} Baza podataka, OSRM servis
+						\item  \textbf{Preduvjet:} Kartograf je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Kartograf se nalazi na stranici "Provjera na terenu"
+							\item Kartografu se na karti prikazuju predložene lokacije koje trebaju provjeru na terenu
+							\item Kartograf odabire filtre po želji - može prikazati lokacije koje je dodao na vlastitu listu za provjeru na terenu i/ili lokacije koje trebaju terensku provjeru, ali ih nitko nije zadužio
+							\item Kartograf izražava zahtjev za generiranjem rute koja će obići sve odabrane lokacije klikom na gumb "Generiraj rutu"
+							\item Sustav rješava problem trgovačkog putnika putem vanjskog servisa i prikazuje kartografu generiranu rutu
+							
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC24 - Odobravanje lokacije s vlastite liste za terensku provjeru}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Kartograf
+						\item  \textbf{Cilj:} Odobriti lokaciju s vlastite liste za terensku provjeru
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Kartograf je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Kartograf se nalazi na stranici "Provjera na terenu"
+							\item Kartografu se ispod karte prikazuje lista lokacija koje je dodao na vlastitu listu za provjeru na terenu
+							\item Kartograf pojedinu lokaciju odobrava klikom na gumb "Odobri"
+							\item Baza podataka se ažurira
+							
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC25 - Pregled osobno odobrenih lokacija}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Kartograf
+						\item  \textbf{Cilj:} Kartograf želi pregledati popis lokacija koje je do sada odobrio
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Kartograf je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Kartograf se nalazi na stranici "Vlastiti profil"
+							\item Kartografu se na njegovom profilu prikazuje lista svih lokacija koje je odobrio
+							
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC26 - Pregled osobnih podataka svih korisnika}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Dobiti uvid u osobne podatke svih korisnika
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Administrator je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Administrator se nalazi na stranici "Svi korisnici"
+							\item Administrator vidi popis svih korisnika i klikom na korisničko ime pojedinog korisnika biva odveden na stranicu gdje dobiva uvid u njegove osobne podatke
+							
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC27 - Uređivanje osobnih podataka nekog korisnika}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Urediti osobne podatke nekog korisnika
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Administrator je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Administrator se nalazi na stranici "Svi korisnici"
+							\item Administrator vidi popis svih korisnika i klikom na gumb za uređivanje pored korisničkog imena pojedinog korisnika biva odveden na stranicu gdje dobiva mogućnost izmjene njegovih osobnih podataka
+							
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Administrator na gumb iste funkcionalnosti može kliknuti na stranici gdje pregledava osobne podatke nekog korisnika (UC26)
+							\item[] \begin{packed_enum}
+								
+								\item Sustav odvodi administratora na stranicu za izmjenu osobnih podataka
+								
+							\end{packed_enum}
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC28 - Privremeno isključenje korisnika}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Privremeno onemogućiti pristup aplikaciji za nekog korisnika
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Administrator je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Administrator se nalazi na stranici "Svi korisnici"
+							\item Administrator vidi popis svih korisnika i klikom na gumb za isključenje isključuje korisnika na konačan vremenski period
+							
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC29 - Pregled svih lokacija}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Dobiti uvid u podatke o svim lokacijama						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Administrator je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Administrator se nalazi na stranici "Sve kartice"
+							\item Administrator vidi popis svih kartica i klikom na pojedinu biva odveden na stranicu gdje dobiva uvid u podatke o njoj
+							
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC30 - Uređivanje podataka neke lokacije}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Urediti podatke neke lokacije
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Administrator je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Administrator se nalazi na stranici "Sve kartice"
+							\item Administrator vidi popis svih korisnika i klikom na gumb za uređivanje pored pojedine kartice biva odveden na stranicu gdje dobiva mogućnost izmjene podataka o lokaciji
+							
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Administrator na gumb iste funkcionalnosti može kliknuti na stranici gdje pregledava podatke o lokaciji (UC29)
+							\item[] \begin{packed_enum}
+								
+								\item Sustav odvodi administratora na stranicu za izmjenu podataka o lokaciji
+								
+							\end{packed_enum}
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC31 - Pregled neodobrenih registracija kartografa}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Dobiti uvid u neodobrene registracije kartografa
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Administrator je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Administrator se nalazi na stranici "Odobravanje kartografa"
+							\item Administrator vidi popis svih neodobrenih registracija kartografa i klikom na pojedinu biva odveden na stranicu gdje dobiva uvid u podatke koje je kartograf predao u prijavi
+							
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC32 - Odobravanje registracija kartografa}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Odobriti registraciju kartografa
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Administrator je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Administrator se nalazi na na kojoj ima uvid u podatke koje je kartograf predao u prijavi (UC3)
+							\item Klikom na gumb "Odobri" administrator odobrava registraciju kartografa
+							
+						\end{packed_enum}
+						
+					\end{packed_item}
+					
 					
 				\subsubsection{Dijagrami obrazaca uporabe}
 					
