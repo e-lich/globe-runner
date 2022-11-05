@@ -1,6 +1,6 @@
 1. otvori VSC i terminal iz njega u globerunnerrepo repozitoriju
-2. git pull
-3. git checkout project-skeleton-setup
+2. git checkout main
+3. git pull
 4. ako ste kao lovro i niste nista updeatali i instalirali tri godine instalirajte python na koji vec nacin ide na vasem kompu i ugasi pa upali terminal
 5. cd IzvorniKod/backend
 6. pip3 install pipenv
@@ -22,5 +22,5 @@
 23. ako ne, hit uppaj Elu
 24. otvori novi terminal i cd u frontend
 25. npm start
-26. otvori localhost:3000 i nadaj se da vidis Hello Frontend!
+26. otvori localhost:3000 i nadaj se da vidis Hello Frontend! // sad bi trebao biti sign in page koji su decki napravili!
 27. ako ne, hit uppaj Elu
