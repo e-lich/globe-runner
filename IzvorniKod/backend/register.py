@@ -1,26 +1,14 @@
 from flask import request, abort, jsonify, render_template, url_for
 from backend import app, db
 from backend.models import User
-from itsdangerous import URLSafeTimedSerializer
 from backend.send_email import send_email
+from backend.email_confirmation import generate_confirmation_token, confirm_email
 
-# token for email confirmation
-def generate_confirmation_token(email):
-    serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
-    return serializer.dumps(email, salt=app.config['SECURITY_PASSWORD_SALT'])
+@app.route('/')
+def registered():
+    return "WOOOO"
 
-def confirm_token(token, expiration=3600):
-    serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
-    try:
-        email = serializer.loads(
-            token,
-            salt=app.config['SECURITY_PASSWORD_SALT'],
-            max_age=expiration
-        )
-    except:
-        return False
-    return email
-
+# register basic user
 @app.route('/register', methods=['POST'])
 def register_user(): 
     username = request.form['username']
@@ -39,7 +27,7 @@ def register_user():
     db.session.commit()
 
     token = generate_confirmation_token(email)
-    confirm_url = "fer.unizg.hr"
+    confirm_url = url_for('confirm_email', token=token, _external=True)
     html = render_template('activate.html', confirm_url=confirm_url)
     subject = "Please confirm your email"
     send_email(new_user.email, subject, html)
