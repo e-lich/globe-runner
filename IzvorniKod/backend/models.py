@@ -1,12 +1,29 @@
 from flask_sqlalchemy import SQLAlchemy
+from backend import db, app
 
-db = SQLAlchemy()
+# defining all db models
 
-class Korisnik(db.Model):
-    __tablename__ = "korisnici"
+# User db model
+class User(db.Model):
+    __tablename__ = "Users"
 
-    korisnickoIme = db.Column(db.String(32), primary_key=True, unique=True)
+    username = db.Column(db.String(32), primary_key=True, unique=True)
     email = db.Column(db.String(345), unique=True)
-    fotografija = db.Column(db.String(100))
-    lozinka = db.Column(db.String(30))
-    lokacija = db.Column(db.String(50))
+    photo = db.Column(db.String(100))
+    password = db.Column(db.String(30))
+    location = db.Column(db.String(50))
+    confirmed = db.Column(db.Boolean)
+
+    def __init__(self, username, email, password):
+        self.username = username
+        self.email = email
+        self.password = password
+        self.photo = None
+        self.location = None
+        self.confirmed = False
+
+# adding all models to db
+db.init_app(app)
+with app.app_context():
+    db.create_all()
+        
