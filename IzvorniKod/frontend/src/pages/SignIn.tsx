@@ -1,16 +1,16 @@
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
   let navigator = useNavigate();
 
-  const [file, setFile] = useState<string | Blob>("");
-
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [submitDisabled, setSubmitDisabled] = useState(true);
 
   const navigate = useNavigate();
+  const baseURL = "localhost:3000";
 
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setEmail(e.target.value);
@@ -20,11 +20,22 @@ export default function SignIn() {
     setPassword(e.target.value);
   }
 
-  function profilePictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
-    }
+  function handleLogin() {
+    axios
+      .post(baseURL + "/singIn", {
+        email: email,
+        password: password,
+      })
+      .then(function (response) {
+        console.log(response); // only for testing
+        // set session user to response's user
+        navigate("/home");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
+
   return (
     <div className="Auth-form-container">
       <form className="Auth-form">
@@ -63,7 +74,7 @@ export default function SignIn() {
             <button
               type="submit"
               className="btn btn-primary"
-              onClick={() => navigate("/home")}
+              onClick={() => handleLogin()}
               disabled={submitDisabled}
             >
               Submit

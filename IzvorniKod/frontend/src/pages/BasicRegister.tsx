@@ -1,23 +1,30 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function BasicRegister() {
-  let [authMode, setAuthMode] = useState("signin");
-
   const [file, setFile] = useState<string | Blob>("");
 
   let [email, setEmail] = useState("");
+  let [fullName, setFullName] = useState("");
+  let [IBAN, setIBAN] = useState("");
+  let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
   let [submitDisabled, setSubmitDisabled] = useState(true);
 
   const navigate = useNavigate();
 
-  const changeAuthMode = () => {
-    setAuthMode(authMode === "signin" ? "register" : "signin");
-  };
-
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setEmail(e.target.value);
+  }
+  function handleFullNameChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setFullName(e.target.value);
+  }
+  function handleIBANChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setIBAN(e.target.value);
+  }
+  function handleUsernameChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setUsername(e.target.value);
   }
 
   function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -30,6 +37,40 @@ function BasicRegister() {
     }
   }
 
+  const baseURL = "localhost:3000";
+
+  function handleRegister() {
+    axios
+      .post(baseURL + "/register", {
+        email: email,
+        fullName: fullName,
+        IBAN: IBAN,
+        username: username,
+        password: password,
+        imageString: file,
+      })
+      .then(function (response) {
+        console.log(response); // only for testing
+        // set session user to response's user
+        navigate("/home");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  useEffect(() => {
+    if (
+      email !== "" &&
+      email.includes("@") &&
+      email.substring(0, email.indexOf("@")).length > 0 &&
+      email.substring(email.indexOf("@"), email.length - 1).length > 0 &&
+      password !== "" &&
+      password.length >= 8
+    )
+      setSubmitDisabled(false);
+    else setSubmitDisabled(true);
+  }, [email, password]);
   return (
     <div className="Auth-form-container">
       <form className="Auth-form">
@@ -69,6 +110,7 @@ function BasicRegister() {
               type="username"
               className="form-control mt-1"
               placeholder="e.g CoolKid69420"
+              onChange={(e) => handleUsernameChange(e)}
             />
           </div>
           <div className="form-group mt-3">
@@ -92,7 +134,7 @@ function BasicRegister() {
             <button
               type="submit"
               className="btn btn-primary"
-              onClick={() => navigate("/home")}
+              onClick={() => handleRegister()}
               disabled={submitDisabled}
             >
               Submit

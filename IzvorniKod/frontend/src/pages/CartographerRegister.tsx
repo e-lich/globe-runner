@@ -1,12 +1,14 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function CartographerRegister() {
-  let [authMode, setAuthMode] = useState("signin");
-
   const [file, setFile] = useState<string | Blob>("");
 
   let [email, setEmail] = useState("");
+  let [fullName, setFullName] = useState("");
+  let [IBAN, setIBAN] = useState("");
+  let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
   let [submitDisabled, setSubmitDisabled] = useState(true);
 
@@ -14,6 +16,15 @@ function CartographerRegister() {
 
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setEmail(e.target.value);
+  }
+  function handleFullNameChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setFullName(e.target.value);
+  }
+  function handleIBANChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setIBAN(e.target.value);
+  }
+  function handleUsernameChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setUsername(e.target.value);
   }
 
   function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -24,6 +35,27 @@ function CartographerRegister() {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
     }
+  }
+
+  const baseURL = "localhost:3000";
+
+  function handleRegister() {
+    axios
+      .post(baseURL + "/register", {
+        email: email,
+        fullName: fullName,
+        IBAN: IBAN,
+        username: username,
+        password: password,
+      })
+      .then(function (response) {
+        console.log(response); // only for testing
+        // set session user to response's user
+        navigate("/home");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   useEffect(() => {
@@ -60,6 +92,7 @@ function CartographerRegister() {
               type="email"
               className="form-control mt-1"
               placeholder="e.g Jane Doe"
+              onChange={(e) => handleFullNameChange(e)}
             />
           </div>
           <div className="form-group mt-3">
@@ -68,6 +101,7 @@ function CartographerRegister() {
               type="username"
               className="form-control mt-1"
               placeholder="e.g Jane Doe"
+              onChange={(e) => handleUsernameChange(e)}
             />
           </div>
           <div className="form-group mt-3">
@@ -76,6 +110,7 @@ function CartographerRegister() {
               type="string"
               className="form-control mt-1"
               placeholder="e.g HR111423431212"
+              onChange={(e) => handleIBANChange(e)}
             />
           </div>
           <div className="form-group mt-3">
@@ -108,7 +143,7 @@ function CartographerRegister() {
             <button
               type="submit"
               className="btn btn-primary"
-              onClick={() => navigate("/home")}
+              onClick={() => handleRegister()}
               disabled={submitDisabled}
             >
               Submit
