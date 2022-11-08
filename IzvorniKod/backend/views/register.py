@@ -1,6 +1,6 @@
 from flask import request, jsonify, render_template, url_for
 from backend import app, db
-from backend.models import Player, Cartographer, User
+from backend.models import Player, Cartographer
 from backend.send_email import send_email
 from backend.views.email_confirmation import generate_confirmation_token, confirm_email
 
@@ -22,20 +22,21 @@ def register_user():
 
     if 'iban' in request_data:
         iban = request_data['iban']
+        id = request_data['id']
 
         # checking iban format
-        if iban[0:1] != 'HR' or len(iban[2:]) != 19 or not iban[2:].isnumeric():
+        if iban[0:2] != 'HR' or len(iban[2:]) != 19 or not iban[2:].isnumeric():
             iban_valid = False
 
-        new_user = Cartographer(username=username, name=name, email=email, password=password, photo=photo, iban=iban)
+        new_user = Cartographer(username=username, name=name, email=email, password=password, photo=photo, iban=iban, id=id)
 
     else:
         new_user = Player(username=username, email=email, password=password, photo=photo, name=name)
 
     # checking username and email
-    if db.session.query(User.username).filter_by(username=username).first() is not None:
+    if db.session.query(Player.username).filter_by(username=username).first() is not None or db.session.query(Cartographer.username).filter_by(username=username).first() is not None:
         username_valid = False
-    if db.session.query(User.username).filter_by(email=email).first() is not None:
+    if db.session.query(Player.username).filter_by(email=email).first() is not None or db.session.query(Cartographer.username).filter_by(email=email).first() is not None:
         email_valid = False
 
     # return if input is invalid

@@ -46,7 +46,7 @@ class Player(User):
     authority = db.Column(db.Enum("ordinary", "advanced", "admin", name="authority_type"))
     eloScore = db.Column(db.Integer)
     banned = db.Column(db.Boolean)
-    cards = relationship("Card")
+    cards = relationship("Card", foreign_keys="Card.owned_by")
 
     def __init__(self, username, name, email, password, photo):
         self.username = username

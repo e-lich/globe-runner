@@ -1,7 +1,7 @@
 from backend import app, db
 from itsdangerous import URLSafeTimedSerializer
 from flask import flash, redirect, url_for
-from backend.models import User
+from backend.models import Player, Cartographer
 import datetime
 
 # token for email confirmation
@@ -32,11 +32,13 @@ def confirm_email(token):
         email = confirm_token(token)
     except:
         flash('The confirmation link is invalid or has expired.', 'danger')
-    user = User.query.filter_by(email=email).first_or_404()
+    user = Player.query.filter_by(email=email).first()
+    if user is None:
+        user = Cartographer.query.filter_by(email=email).first_or_404()
     if user.confirmed:
         flash('Account already confirmed. Please login.', 'success')
     else:
         user.confirmed = True
         db.session.commit()
         flash('You have confirmed your account. Thanks!', 'success')
-    return redirect('/')
+    return "Email confirmed"
