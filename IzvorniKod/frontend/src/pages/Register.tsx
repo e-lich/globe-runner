@@ -1,50 +1,31 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import BasicRegister from "./BasicRegister";
 import CartographerRegister from "./CartographerRegister";
 
 function Register(props: any) {
   let navigator = useNavigate();
 
-  let [isBasic, setIsBasic] = useState(false);
-  let [isCartographer, setIsCartographer] = useState(false);
+  const [file, setFile] = useState<string | Blob>("");
 
-  function navigateToCartographerRegister() {
-    navigator("/auth/cartographer");
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
+  let [submitDisabled, setSubmitDisabled] = useState(true);
+
+  const navigate = useNavigate();
+
+  function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setEmail(e.target.value);
   }
 
-  function navigateToBasicRegister() {
-    navigator("/auth/basic");
+  function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setPassword(e.target.value);
   }
 
-  function reverseUserType() {
-    setIsBasic(!isBasic);
-    setIsCartographer(!isCartographer);
-  }
-
-  if (isBasic) {
-    return (
-      <BasicRegister
-        changeAuthMode={props.changeAuthMode}
-        handleEmailChange={props.handleEmailChange}
-        handlePasswordChange={props.handlePasswordChange}
-        submitDisabled={props.submitDisabled}
-        navigate={props.navigate}
-        changeUserType={reverseUserType}
-      ></BasicRegister>
-    );
-  } else if (isCartographer) {
-    return (
-      <CartographerRegister
-        changeAuthMode={props.changeAuthMode}
-        handleEmailChange={props.handleEmailChange}
-        handlePasswordChange={props.handlePasswordChange}
-        submitDisabled={props.submitDisabled}
-        navigate={props.navigate}
-        reverseUserType={reverseUserType}
-        profilePictureChange={props.profilePictureChange}
-      ></CartographerRegister>
-    );
+  function profilePictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
   }
 
   return (
@@ -56,19 +37,22 @@ function Register(props: any) {
               <h1 className="Auth-form-title">Register</h1>
               <div className="text-center">
                 Already registered?{" "}
-                <span className="link-primary" onClick={props.changeAuthMode}>
+                <span
+                  className="link-primary"
+                  onClick={() => navigate("/signIn")}
+                >
                   Sign in
                 </span>
               </div>
               <div className="flex-column">
                 <button
-                  onClick={() => setIsBasic(!isBasic)}
+                  onClick={() => navigator("/register/basic")}
                   className="padding-button btn-primary btn"
                 >
                   Basic user
                 </button>
                 <button
-                  onClick={() => setIsCartographer(!isCartographer)}
+                  onClick={() => navigator("/register/cartographer")}
                   className="padding-button btn-primary btn"
                 >
                   Cartographer
