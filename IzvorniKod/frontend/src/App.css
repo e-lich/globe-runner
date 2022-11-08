@@ -47,3 +47,13 @@ label {
   margin-top: 5px;
   margin-bottom: 50px;
 }
+
+.padding-button {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
