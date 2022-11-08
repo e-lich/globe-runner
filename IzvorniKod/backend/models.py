@@ -1,5 +1,6 @@
-from enum import unique
+import enum
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import relationship
 from backend import db, app
 
 # defining all db models
@@ -8,17 +9,14 @@ from backend import db, app
 class User(db.Model):
     __tablename__ = "Users"
 
+    __abstract__ = True
+
     username = db.Column(db.String(32), primary_key=True, unique=True)
     email = db.Column(db.String(345), unique=True)
     photo = db.Column(db.String(100))
     password = db.Column(db.String(30))
     location = db.Column(db.String(50))
     confirmed = db.Column(db.Boolean)
-
-    __mapper_args__ = {
-        "polymorphic_identity": "user",
-        "polymorphic_on": type
-    }
 
     def __init__(self, username, email, password):
         self.username = username
@@ -31,26 +29,17 @@ class User(db.Model):
 class Cartographer(User):
     __tablename__ = "Cartographers"
 
-    username = db.Column(db.String(32), db.ForeignKey("Users.username"), primary_key=True)
-    iban = db.Column(db.String(21), unique=True)#varchar(21) ili "HR"+integer(19)
+    iban = db.Column(db.String(21))
     id = db.Column(db.String(100))
     verified = db.Column(db.Boolean)
-
-    __mapper_args__ = {
-        "polymorphic_identity": "cartographer",
-    }
 
 class Player(User):
     __tablename__ = "Players"
 
-    username = db.Column(db.String(32), db.ForeignKey("Users.username"), primary_key=True)
-    authority = db.Column(db.String(21), unique=True)#ordinary/advanced/admin
+    authority = db.Column(db.Enum("ordinary", "advanced", "admin", name="authority_type"))
     eloScore = db.Column(db.Integer)
     banned = db.Column(db.Boolean)
-
-    __mapper_args__ = {
-        "polymorphic_identity": "player",
-    }
+    cards = relationship("Card")
 
 class Card(db.Model):
     __tablename__ = "Cards"
@@ -61,23 +50,18 @@ class Card(db.Model):
     picture = db.Column(db.String(100))
     name = db.Column(db.String(50))
     description = db.Column(db.String(250))
-    status = db.Column(db.String(10))#submitted, unclaimed, claimed, verified
-    author = db.Column(db.String(32))
-    approved_by = db.Column(db.String(32))
-
-class Inventory(Player, Card):
-    __tablename__ = "Inventory"
-
-    username = db.Column(db.String(32), db.ForeignKey("Players.username"), primary_key=True, unique=True)
-    cipher = db.Column(db.Integer, db.ForeignKey("Cards.cipher"), unique=True)
+    status = db.Column(db.Enum("submitted", "unclaimed", "claimed", "verified", name="status_type"))
+    author = db.Column(db.String(32), db.ForeignKey("Players.username"))
+    approved_by = db.Column(db.String(32), db.ForeignKey("Cartographers.username"))
+    owned_by = db.Column(db.String(32), db.ForeignKey("Players.username"))
     
-class Fight(Player):
+class Fight(db.Model):
     __tablename__ = "Fight"
     
-    codeno = db.Column(db.Integer, primary_key=True, unique=True)
-    player_one = username = db.Column(db.String(32), db.ForeignKey("Players.username"), unique=True)
-    player_two = db.Column(db.String(32))
-    winner = db.Column(db.String(32))
+    codeno = db.Column(db.Integer, primary_key=True)
+    player_one = username = db.Column(db.String(32), db.ForeignKey("Players.username"))
+    player_two = db.Column(db.String(32), db.ForeignKey("Players.username"))
+    winner = db.Column(db.String(32), db.ForeignKey("Players.username"))
     #kartice???
 
 # adding all models to db
