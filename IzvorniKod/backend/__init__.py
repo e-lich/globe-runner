@@ -31,6 +31,7 @@ if __name__ == '__main__':
     app.run()
 
 # import all views (+ db models?)
-import backend.register
 import backend.models
-import backend.email_confirmation
+import backend.views.register
+import backend.views.email_confirmation
+import backend.views.login
