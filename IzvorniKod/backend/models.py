@@ -12,21 +12,14 @@ class User(db.Model):
     __abstract__ = True
 
     username = db.Column(db.String(32), primary_key=True, unique=True)
+    name = db.Column(db.String(50))
     email = db.Column(db.String(345), unique=True)
     photo = db.Column(db.String(100))
     password = db.Column(db.String(30))
     location = db.Column(db.String(50))
     confirmed = db.Column(db.Boolean)
 
-    def __init__(self, username, email, password, photo, name):
-        self.username = username
-        self.email = email
-        self.password = password
-        self.photo = photo
-        self.name = name
-        self.location = None
-        self.confirmed = False
-
+# Cartographer db model
 class Cartographer(User):
     __tablename__ = "Cartographers"
 
@@ -34,6 +27,7 @@ class Cartographer(User):
     id = db.Column(db.String(100))
     verified = db.Column(db.Boolean)
 
+# Player db model
 class Player(User):
     __tablename__ = "Players"
 
@@ -42,6 +36,7 @@ class Player(User):
     banned = db.Column(db.Boolean)
     cards = relationship("Card")
 
+# Card db model
 class Card(db.Model):
     __tablename__ = "Cards"
 
@@ -55,7 +50,8 @@ class Card(db.Model):
     author = db.Column(db.String(32), db.ForeignKey("Players.username"))
     approved_by = db.Column(db.String(32), db.ForeignKey("Cartographers.username"))
     owned_by = db.Column(db.String(32), db.ForeignKey("Players.username"))
-    
+
+# Fight db model   
 class Fight(db.Model):
     __tablename__ = "Fight"
     
