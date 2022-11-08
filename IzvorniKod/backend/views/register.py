@@ -12,23 +12,25 @@ def register_user():
     email_valid = True
     iban_valid = True
 
-    name = request.form['name']
-    username = request.form['username']
-    email = request.form['email']
-    password = request.form['password']
-    photo = request.form['photo']
+    request_data = request.get_json()
 
-    if 'iban' in request.form:
-        iban = request.form['iban']
+    name = request_data['name']
+    username = request_data['username']
+    email = request_data['email']
+    password = request_data['password']
+    photo = request_data['photo']
+
+    if 'iban' in request_data:
+        iban = request_data['iban']
 
         # checking iban format
         if iban[0:1] != 'HR' or len(iban[2:]) != 19 or not iban[2:].isnumeric():
             iban_valid = False
 
     # checking username and email
-    if db.session.query(User).filter_by(username=username).first() is not None:
+    if db.session.query(User.username).filter_by(username=username).first() is not None:
         username_valid = False
-    if db.session.query(User).filter_by(email=email).first() is not None:
+    if db.session.query(User.username).filter_by(email=email).first() is not None:
         email_valid = False
 
     # return if input is invalid
@@ -40,7 +42,7 @@ def register_user():
             'iban_valid': iban_valid
         })
 
-    new_user = User(username=username, email=email, password=password)
+    new_user = User(username=username, email=email, password=password, photo=photo, name=name)
 
     db.session.add(new_user)
     db.session.commit()
