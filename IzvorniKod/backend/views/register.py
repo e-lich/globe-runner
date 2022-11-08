@@ -1,6 +1,6 @@
 from flask import request, jsonify, render_template, url_for
 from backend import app, db
-from backend.models import User
+from backend.models import Player, Cartographer, User
 from backend.send_email import send_email
 from backend.views.email_confirmation import generate_confirmation_token, confirm_email
 
@@ -27,6 +27,11 @@ def register_user():
         if iban[0:1] != 'HR' or len(iban[2:]) != 19 or not iban[2:].isnumeric():
             iban_valid = False
 
+        new_user = Cartographer(username=username, name=name, email=email, password=password, photo=photo, iban=iban)
+
+    else:
+        new_user = Player(username=username, email=email, password=password, photo=photo, name=name)
+
     # checking username and email
     if db.session.query(User.username).filter_by(username=username).first() is not None:
         username_valid = False
@@ -41,8 +46,6 @@ def register_user():
             'email_valid': email_valid,
             'iban_valid': iban_valid
         })
-
-    new_user = User(username=username, email=email, password=password, photo=photo, name=name)
 
     db.session.add(new_user)
     db.session.commit()

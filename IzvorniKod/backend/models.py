@@ -27,6 +27,18 @@ class Cartographer(User):
     id = db.Column(db.String(100))
     verified = db.Column(db.Boolean)
 
+    def __init__(self, username, name, email, password, photo, iban, id):
+        self.username = username
+        self.name = name
+        self.email = email
+        self.photo = photo
+        self.password = password
+        self.iban = iban
+        self.location = None
+        self.confirmed = False
+        self.verified = False
+        self.id = id
+
 # Player db model
 class Player(User):
     __tablename__ = "Players"
@@ -35,6 +47,18 @@ class Player(User):
     eloScore = db.Column(db.Integer)
     banned = db.Column(db.Boolean)
     cards = relationship("Card")
+
+    def __init__(self, username, name, email, password, photo):
+        self.username = username
+        self.name = name
+        self.email = email
+        self.password = password
+        self.photo = photo
+        self.location = None
+        self.authority = "ordinary"
+        self.eloScore = 0
+        self.banned = False
+        self.confirmed = False
 
 # Card db model
 class Card(db.Model):
