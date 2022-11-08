@@ -6,7 +6,7 @@ export default function Home() {
   let user = false;
 
   useEffect(() => {
-    if (!user) navigate("/auth");
+    if (!user) navigate("/signIn");
   });
 
   return <p>Home is here!</p>;

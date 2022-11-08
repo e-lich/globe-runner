@@ -1,4 +1,41 @@
-export default function SignIn(props: any) {
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function SignIn() {
+  let navigator = useNavigate();
+
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
+  let [submitDisabled, setSubmitDisabled] = useState(true);
+
+  const navigate = useNavigate();
+  const baseURL = "localhost:3000";
+
+  function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setEmail(e.target.value);
+  }
+
+  function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setPassword(e.target.value);
+  }
+
+  function handleLogin() {
+    axios
+      .post(baseURL + "/singIn", {
+        email: email,
+        password: password,
+      })
+      .then(function (response) {
+        console.log(response); // only for testing
+        // set session user to response's user
+        navigate("/home");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   return (
     <div className="Auth-form-container">
       <form className="Auth-form">
@@ -6,7 +43,12 @@ export default function SignIn(props: any) {
           <h3 className="Auth-form-title">Sign In</h3>
           <div className="text-center">
             Not registered yet?{" "}
-            <span className="link-primary" onClick={props.changeAuthMode}>
+            <span
+              className="link-primary"
+              onClick={() => {
+                navigate("/register");
+              }}
+            >
               Register
             </span>
           </div>
@@ -16,7 +58,7 @@ export default function SignIn(props: any) {
               type="email"
               className="form-control mt-1"
               placeholder="Email Address"
-              onChange={(e) => props.handleEmailChange(e)}
+              onChange={(e) => handleEmailChange(e)}
             />
           </div>
           <div className="form-group mt-3">
@@ -25,15 +67,15 @@ export default function SignIn(props: any) {
               type="password"
               className="form-control mt-1"
               placeholder="Enter password"
-              onChange={(e) => props.handlePasswordChange(e)}
+              onChange={(e) => handlePasswordChange(e)}
             />
           </div>
           <div className="d-grid gap-2 mt-3">
             <button
               type="submit"
               className="btn btn-primary"
-              onClick={() => props.navigate("/home")}
-              disabled={props.submitDisabled}
+              onClick={() => handleLogin()}
+              disabled={submitDisabled}
             >
               Submit
             </button>
