@@ -26,9 +26,9 @@ def register_user():
             iban_valid = False
 
     # checking username and email
-    if db.session.query.filter_by(username=username).first() is not None:
+    if db.session.query(User).filter_by(username=username).first() is not None:
         username_valid = False
-    if db.session.query.filter_by(email=email).first() is not None:
+    if db.session.query(User).filter_by(email=email).first() is not None:
         email_valid = False
 
     # return if input is invalid
