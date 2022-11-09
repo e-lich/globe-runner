@@ -1,16 +1,14 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
-  let navigator = useNavigate();
-
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [submitDisabled, setSubmitDisabled] = useState(true);
 
   const navigate = useNavigate();
-  const baseURL = "localhost:5000";
+  const baseURL = "http://localhost:5000";
 
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setEmail(e.target.value);
@@ -20,21 +18,51 @@ export default function SignIn() {
     setPassword(e.target.value);
   }
 
+  // function handleLogin() {
+  //   axios
+  //     .post(baseURL + "/register", {
+  //       username_or_email: email,
+  //       password: password,
+  //     })
+  //     .then(function (response) {
+  //       console.log(response); // only for testing
+  //       // set session user to response's user
+  //       navigate("/home");
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }
   function handleLogin() {
-    axios
-      .post(baseURL + "/singIn", {
-        "username_or_email": email,
-        "password": password,
-      })
-      .then(function (response) {
-        console.log(response); // only for testing
-        // set session user to response's user
-        navigate("/home");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    return new Promise((resolve, reject) => {
+      axios
+        .post("http://127.0.0.1:5000/signIn", {
+          username_or_email: email,
+          password: password,
+        })
+        .then(
+          (res) => {
+            console.log(res); // only for testing
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+    });
   }
+
+  useEffect(() => {
+    if (
+      email !== "" &&
+      email.includes("@") &&
+      email.substring(0, email.indexOf("@")).length > 0 &&
+      email.substring(email.indexOf("@"), email.length - 1).length > 0 &&
+      password !== "" &&
+      password.length >= 8
+    )
+      setSubmitDisabled(false);
+    else setSubmitDisabled(true);
+  }, [email, password]);
 
   return (
     <div className="Auth-form-container">

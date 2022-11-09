@@ -5,7 +5,7 @@ from flask_mail import Mail
 
 app = Flask(__name__)
 # ovaj link morate urediti u 'postgresql://postgres:<insert-password>@localhost/<insert-ime-baze>'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:elajekul@localhost/globe-runner'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:bazepodataka@localhost/globe-runner'
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
