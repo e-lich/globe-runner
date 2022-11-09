@@ -20,16 +20,17 @@ def login():
         if user is None:
             user = db.session.query(Cartographer).filter_by(username=username).first()
 
+    errors = []
     if user is None:
-        return jsonify({
-            'result': 'not found'
-        })
+        errors.append("User not found")
+        return errors
     elif user.password != request_data['password']:
-        return jsonify({
-            'result': 'incorrect password'
-        })
+        errors.append("Incorrect password")
+        return errors
     else:
         # login user ??
         return jsonify({
-            'result': 'succeded'
+            'username': user.username,
+            'email': user.email,
+            'photo': user.photo
         })
