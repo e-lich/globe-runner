@@ -37,16 +37,19 @@ function CartographerRegister() {
     }
   }
 
-  const baseURL = "localhost:3000";
+  const baseURL = "127.0.0.1:5000";
 
+  // TODO
   function handleRegister() {
     axios
       .post(baseURL + "/register", {
-        email: email,
-        fullName: fullName,
-        IBAN: IBAN,
-        username: username,
-        password: password,
+        "email": email,
+        "name": fullName,
+        "iban": IBAN,
+        "username": username,
+        "password": password,
+        "photo": "slika",
+        "id": "slika osobne"
       })
       .then(function (response) {
         console.log(response); // only for testing

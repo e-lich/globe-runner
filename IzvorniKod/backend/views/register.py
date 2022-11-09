@@ -42,11 +42,15 @@ def register_user():
     # return if input is invalid
     # TODO: imena polja
     if not username_valid or not email_valid or not iban_valid:
-        return  jsonify({
-            'username_valid': username_valid,
-            'email_valid': email_valid,
-            'iban_valid': iban_valid
-        })
+        errors = []
+        if not username_valid:
+            errors.append("User with this username already exists")
+        if not email_valid:
+            errors.append("User with this email already exists")
+        if not iban_valid:
+            errors.append("Iban is not valid. Expected HR + 19 digits.")
+
+        return errors
 
     db.session.add(new_user)
     db.session.commit()
@@ -60,5 +64,6 @@ def register_user():
     # TODO: returnanje
     return jsonify({
         'username': new_user.username,
-        'email': new_user.email
+        'email': new_user.email,
+        'photo': new_user.photo
     })

@@ -37,17 +37,16 @@ function BasicRegister() {
     }
   }
 
-  const baseURL = "localhost:3000";
+  const baseURL = "localhost:5000";
 
   function handleRegister() {
     axios
       .post(baseURL + "/register", {
-        email: email,
-        fullName: fullName,
-        IBAN: IBAN,
-        username: username,
-        password: password,
-        imageString: file,
+        "email": email,
+        "name": fullName,
+        "username": username,
+        "password": password,
+        "photo": "slika",
       })
       .then(function (response) {
         console.log(response); // only for testing

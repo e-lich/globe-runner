@@ -10,7 +10,7 @@ export default function SignIn() {
   let [submitDisabled, setSubmitDisabled] = useState(true);
 
   const navigate = useNavigate();
-  const baseURL = "localhost:3000";
+  const baseURL = "localhost:5000";
 
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setEmail(e.target.value);
@@ -23,8 +23,8 @@ export default function SignIn() {
   function handleLogin() {
     axios
       .post(baseURL + "/singIn", {
-        email: email,
-        password: password,
+        "username_or_email": email,
+        "password": password,
       })
       .then(function (response) {
         console.log(response); // only for testing
