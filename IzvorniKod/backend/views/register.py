@@ -4,6 +4,10 @@ from backend.models import Player, Cartographer
 from backend.send_email import send_email
 from backend.views.email_confirmation import generate_confirmation_token, confirm_email
 
+@app.route('/register', methods=['GET'])
+def hello():
+    return "Hello!"
+
 # register basic user
 @app.route('/register', methods=['POST'])
 def register_user():
