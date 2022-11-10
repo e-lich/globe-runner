@@ -102,7 +102,8 @@ export default function SignIn() {
             <button
               type="submit"
               className="btn btn-primary"
-              onClick={() => handleLogin()}
+              onClick={(event) => {event.preventDefault();
+                handleLogin()}}
               disabled={submitDisabled}
             >
               Submit
