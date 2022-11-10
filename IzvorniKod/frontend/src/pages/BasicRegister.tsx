@@ -42,11 +42,11 @@ function BasicRegister() {
   function handleRegister() {
     axios
       .post(baseURL + "/register", {
-        "email": email,
-        "name": fullName,
-        "username": username,
-        "password": password,
-        "photo": "slika",
+        email: email,
+        name: fullName,
+        username: username,
+        password: password,
+        photo: "slika",
       })
       .then(function (response) {
         console.log(response); // only for testing
@@ -88,11 +88,7 @@ function BasicRegister() {
           </div>
           <div className="form-group mt-3">
             <label>Full Name</label>
-            <input
-              type="email"
-              className="form-control mt-1"
-              placeholder="e.g Jane Doe"
-            />
+            <input className="form-control mt-1" placeholder="e.g Jane Doe" />
           </div>
           <div className="form-group mt-3">
             <label>Email address</label>
@@ -106,7 +102,6 @@ function BasicRegister() {
           <div className="form-group mt-3">
             <label>Username</label>
             <input
-              type="username"
               className="form-control mt-1"
               placeholder="e.g CoolKid69420"
               onChange={(e) => handleUsernameChange(e)}

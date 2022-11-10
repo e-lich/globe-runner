@@ -43,13 +43,13 @@ function CartographerRegister() {
   function handleRegister() {
     axios
       .post(baseURL + "/register", {
-        "email": email,
-        "name": fullName,
-        "iban": IBAN,
-        "username": username,
-        "password": password,
-        "photo": "slika",
-        "id": "slika osobne"
+        email: email,
+        name: fullName,
+        iban: IBAN,
+        username: username,
+        password: password,
+        photo: "slika",
+        id: "slika osobne",
       })
       .then(function (response) {
         console.log(response); // only for testing
@@ -92,7 +92,6 @@ function CartographerRegister() {
           <div className="form-group mt-3">
             <label>Full Name</label>
             <input
-              type="email"
               className="form-control mt-1"
               placeholder="e.g Jane Doe"
               onChange={(e) => handleFullNameChange(e)}
@@ -101,7 +100,6 @@ function CartographerRegister() {
           <div className="form-group mt-3">
             <label>Username</label>
             <input
-              type="username"
               className="form-control mt-1"
               placeholder="e.g Jane Doe"
               onChange={(e) => handleUsernameChange(e)}
