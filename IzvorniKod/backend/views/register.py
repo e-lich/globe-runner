@@ -5,7 +5,7 @@ from backend.send_email import send_email
 from backend.views.email_confirmation import generate_confirmation_token, confirm_email
 
 @app.route('/register', methods=['GET'])
-def hello():
+def helloRegister():
     return "Hello!"
 
 # register basic user

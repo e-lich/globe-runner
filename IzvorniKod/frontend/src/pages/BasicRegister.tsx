@@ -37,25 +37,27 @@ function BasicRegister() {
     }
   }
 
-  const baseURL = "localhost:5000";
+  const baseURL = "http://127.0.0.1:5000";
 
   function handleRegister() {
-    axios
-      .post(baseURL + "/register", {
-        email: email,
-        name: fullName,
-        username: username,
-        password: password,
-        photo: "slika",
-      })
-      .then(function (response) {
-        console.log(response); // only for testing
-        // set session user to response's user
-        navigate("/home");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    return new Promise((resolve, reject) => {
+      axios
+        .post(baseURL + "/register", {
+          name: fullName,
+          email: email,
+          username: username,
+          photo: "photohihi",
+          password: password,
+        })
+        .then(
+          (res) => {
+            console.log(res); // only for testing
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+    });
   }
 
   useEffect(() => {
@@ -128,7 +130,10 @@ function BasicRegister() {
             <button
               type="submit"
               className="btn btn-primary"
-              onClick={() => handleRegister()}
+              onClick={(e) => {
+                e.preventDefault();
+                handleRegister();
+              }}
               disabled={submitDisabled}
             >
               Submit

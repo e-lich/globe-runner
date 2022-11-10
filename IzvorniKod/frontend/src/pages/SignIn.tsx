@@ -9,7 +9,7 @@ export default function SignIn() {
   let [submitDisabled, setSubmitDisabled] = useState(true);
 
   const navigate = useNavigate();
-  const baseURL = "http://localhost:5000";
+  const baseURL = "http://127.0.0.1:5000";
 
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setEmail(e.target.value);
@@ -19,25 +19,10 @@ export default function SignIn() {
     setPassword(e.target.value);
   }
 
-  // function handleLogin() {
-  //   axios
-  //     .post(baseURL + "/register", {
-  //       username_or_email: email,
-  //       password: password,
-  //     })
-  //     .then(function (response) {
-  //       console.log(response); // only for testing
-  //       // set session user to response's user
-  //       navigate("/home");
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
   function handleLogin() {
     return new Promise((resolve, reject) => {
       axios
-        .post("http://127.0.0.1:5000/signIn", {
+        .post(baseURL + "/signIn", {
           username_or_email: email,
           password: password,
         })

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function CartographerRegister() {
   const [file, setFile] = useState<string | Blob>("");
+  const [fileID, setFileID] = useState<string | Blob>("");
 
   let [email, setEmail] = useState("");
   let [fullName, setFullName] = useState("");
@@ -37,19 +38,25 @@ function CartographerRegister() {
     }
   }
 
-  const baseURL = "127.0.0.1:5000";
+  function IDPictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    if (e.target.files && e.target.files[0]) {
+      setFileID(e.target.files[0]);
+    }
+  }
+
+  const baseURL = "http://127.0.0.1:5000";
 
   // TODO
   function handleRegister() {
     axios
       .post(baseURL + "/register", {
-        email: email,
         name: fullName,
-        iban: IBAN,
         username: username,
-        password: password,
+        iban: IBAN,
+        email: email,
         photo: "slika",
         id: "slika osobne",
+        password: password,
       })
       .then(function (response) {
         console.log(response); // only for testing
@@ -126,9 +133,17 @@ function CartographerRegister() {
           <div className="form-group mt-3">
             <label>Profile Picture</label>
             <input
-              id="file"
+              id="profile_file"
               type="file"
               onChange={(e) => profilePictureChange(e)}
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label>ID Picture</label>
+            <input
+              id="id_file"
+              type="file"
+              onChange={(e) => IDPictureChange(e)}
             />
           </div>
           <div className="form-group mt-3">
