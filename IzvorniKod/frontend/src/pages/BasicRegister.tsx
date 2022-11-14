@@ -7,22 +7,21 @@ function BasicRegister() {
 
   let [email, setEmail] = useState("");
   let [fullName, setFullName] = useState("");
-  let [IBAN, setIBAN] = useState("");
   let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
   let [submitDisabled, setSubmitDisabled] = useState(true);
+  let [error, setError] = useState([]);
 
   const navigate = useNavigate();
 
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setEmail(e.target.value);
   }
+
   function handleFullNameChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setFullName(e.target.value);
   }
-  function handleIBANChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    setIBAN(e.target.value);
-  }
+
   function handleUsernameChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setUsername(e.target.value);
   }
@@ -51,13 +50,23 @@ function BasicRegister() {
         })
         .then(
           (res) => {
-            console.log(res); // only for testing
+            console.log(res);
+            if (res.data.email === undefined) {
+              setError(res.data);
+            } else {
+              saveUserData(res.data);
+              navigate("/home");
+            }
           },
           (err) => {
             console.log(err);
           }
         );
     });
+  }
+
+  function saveUserData(data: any) {
+    localStorage.setItem("user", JSON.stringify(data));
   }
 
   useEffect(() => {
@@ -72,6 +81,7 @@ function BasicRegister() {
       setSubmitDisabled(false);
     else setSubmitDisabled(true);
   }, [email, password]);
+
   return (
     <div className="Auth-form-container">
       <form className="Auth-form">
@@ -88,9 +98,19 @@ function BasicRegister() {
               Sign In
             </span>
           </div>
+          {error.length > 0 &&
+            error.map((err, key) => (
+              <div className="alert-danger" style={{}} key={key}>
+                {err}
+              </div>
+            ))}
           <div className="form-group mt-3">
             <label>Full Name</label>
-            <input className="form-control mt-1" placeholder="e.g Jane Doe" />
+            <input
+              className="form-control mt-1"
+              placeholder="e.g Jane Doe"
+              onChange={(e) => handleFullNameChange(e)}
+            />
           </div>
           <div className="form-group mt-3">
             <label>Email address</label>

@@ -1,13 +1,20 @@
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate();
-  let user = false;
+  let user = JSON.parse(localStorage.getItem("user") || "{}");
 
   useEffect(() => {
-    if (!user) navigate("/signIn");
+    if (localStorage.getItem("user") === null) navigate("/signIn");
   });
 
-  return <p>Home is here!</p>;
+  return (
+    <div>
+      Home is here! User data:
+      <p>{user.username}</p>
+      <p>{user.email}</p>
+      <p>{user.photo}</p>
+    </div>
+  );
 }

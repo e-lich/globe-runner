@@ -7,6 +7,7 @@ export default function SignIn() {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [submitDisabled, setSubmitDisabled] = useState(true);
+  let [error, setError] = useState([]);
 
   const navigate = useNavigate();
   const baseURL = "http://127.0.0.1:5000";
@@ -26,15 +27,23 @@ export default function SignIn() {
           username_or_email: email,
           password: password,
         })
-        .then(
-          (res) => {
-            console.log(res); // only for testing
-          },
-          (err) => {
-            console.log(err);
+        .then((res) => {
+          console.log(res);
+          if (res.data.email === undefined) {
+            setError(res.data);
+          } else {
+            saveUserData(res.data);
+            navigate("/home");
           }
-        );
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
+  }
+
+  function saveUserData(data: any) {
+    localStorage.setItem("user", JSON.stringify(data));
   }
 
   useEffect(() => {

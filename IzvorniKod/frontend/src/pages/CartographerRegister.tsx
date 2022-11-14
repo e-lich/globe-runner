@@ -12,6 +12,7 @@ function CartographerRegister() {
   let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
   let [submitDisabled, setSubmitDisabled] = useState(true);
+  let [error, setError] = useState([]);
 
   const navigate = useNavigate();
 
@@ -46,26 +47,36 @@ function CartographerRegister() {
 
   const baseURL = "http://127.0.0.1:5000";
 
+  function saveUserData(data: any) {
+    localStorage.setItem("user", JSON.stringify(data));
+  }
+
   // TODO
   function handleRegister() {
-    axios
-      .post(baseURL + "/register", {
-        name: fullName,
-        username: username,
-        iban: IBAN,
-        email: email,
-        photo: "slika",
-        id: "slika osobne",
-        password: password,
-      })
-      .then(function (response) {
-        console.log(response); // only for testing
-        // set session user to response's user
-        navigate("/home");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    return new Promise((resolve, reject) => {
+      axios
+        .post(baseURL + "/register", {
+          name: fullName,
+          username: username,
+          iban: IBAN,
+          email: email,
+          photo: "slika",
+          id: "slika osobne",
+          password: password,
+        })
+        .then(function (response) {
+          console.log(response);
+          if (response.data.email === undefined) {
+            setError(response.data);
+          } else {
+            saveUserData(response.data);
+            navigate("/home");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    });
   }
 
   useEffect(() => {
@@ -96,6 +107,12 @@ function CartographerRegister() {
               Sign In
             </span>
           </div>
+          {error.length > 0 &&
+            error.map((err, key) => (
+              <div className="alert-danger" style={{}} key={key}>
+                {err}
+              </div>
+            ))}
           <div className="form-group mt-3">
             <label>Full Name</label>
             <input
