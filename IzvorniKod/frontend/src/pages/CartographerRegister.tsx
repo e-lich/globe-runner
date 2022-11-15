@@ -34,15 +34,15 @@ function CartographerRegister() {
   }
 
   function profilePictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setError((prev) =>
+      prev.filter((e) => e !== "Image must be a jpeg and less than 1MB")
+    );
     if (
       e.target.files &&
       e.target.files[0] &&
       e.target.files[0].size < 1000000 &&
       e.target.files[0].type === "image/jpeg"
     ) {
-      setError((prev) =>
-        prev.filter((e) => e !== "Image must be a jpeg and less than 1MB")
-      );
       setFile(e.target.files[0]);
     } else {
       setError((previousValue) => [
@@ -120,11 +120,12 @@ function CartographerRegister() {
       IBAN !== "" &&
       username !== "" &&
       file !== "" &&
-      fileID !== ""
+      fileID !== "" &&
+      !error.includes("Image must be a jpeg and less than 1MB")
     )
       setSubmitDisabled(false);
     else setSubmitDisabled(true);
-  }, [email, password]);
+  }, [email, password, fullName, IBAN, username, file, fileID, error]);
   return (
     <div className="Auth-form-container">
       <form className="Auth-form">
@@ -210,7 +211,10 @@ function CartographerRegister() {
             <button
               type="submit"
               className="btn btn-primary"
-              onClick={() => handleRegister()}
+              onClick={(e) => {
+                e.preventDefault();
+                handleRegister();
+              }}
               disabled={submitDisabled}
             >
               Submit

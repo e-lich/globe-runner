@@ -1,4 +1,5 @@
 import axios from "axios";
+import { errorMonitor } from "events";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -31,20 +32,17 @@ function BasicRegister() {
   }
 
   function profilePictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setError((prev) =>
+      prev.filter((e) => e !== "Image must be a jpeg and less than 1MB")
+    );
     if (
       e.target.files &&
       e.target.files[0] &&
       e.target.files[0].size < 1000000 &&
       e.target.files[0].type === "image/jpeg"
     ) {
-      setError((prev) =>
-        prev.filter((e) => e !== "Image must be a jpeg and less than 1MB")
-      );
       setFile(e.target.files[0]);
     } else {
-      setError((prev) =>
-        prev.filter((e) => e !== "Image must be a jpeg and less than 1MB")
-      );
       setError((previousValue) => [
         ...previousValue,
         "Image must be a jpeg and less than 1MB",
@@ -95,11 +93,12 @@ function BasicRegister() {
       password.length >= 8 &&
       fullName !== "" &&
       username !== "" &&
-      file !== ""
+      file !== "" &&
+      !error.includes("Image must be a jpeg and less than 1MB")
     )
       setSubmitDisabled(false);
     else setSubmitDisabled(true);
-  }, [email, password]);
+  }, [email, password, fullName, username, file, error]);
 
   return (
     <div className="Auth-form-container">
