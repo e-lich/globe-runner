@@ -5,4 +5,3 @@ Dobrodošli!
 Globerunner je igrica koja nam omogucuje da igramo igrice i ostanemo aktivni! Pridruzi se sad :)
 
 Uživajte!
-Dev test test test

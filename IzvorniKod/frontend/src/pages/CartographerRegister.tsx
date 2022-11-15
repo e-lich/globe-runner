@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function CartographerRegister() {
-  const [file, setFile] = useState<string | Blob>("");
+  const [file, setFile] = useState<Blob | MediaSource>();
+  const [fileID, setFileID] = useState<Blob | MediaSource>();
 
   let [email, setEmail] = useState("");
   let [fullName, setFullName] = useState("");
@@ -11,6 +12,7 @@ function CartographerRegister() {
   let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
   let [submitDisabled, setSubmitDisabled] = useState(true);
+  let [error, setError] = useState<Array<String>>([]);
 
   const navigate = useNavigate();
 
@@ -32,33 +34,78 @@ function CartographerRegister() {
   }
 
   function profilePictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    if (e.target.files && e.target.files[0]) {
+    setError((prev) =>
+      prev.filter((e) => e !== "Image must be less than 1MB!")
+    );
+    if (
+      e.target.files &&
+      e.target.files[0] &&
+      e.target.files[0].size < 1000000 &&
+      e.target.files[0].type === "image/jpeg"
+    ) {
       setFile(e.target.files[0]);
+    } else {
+      setError((previousValue) => [
+        ...previousValue,
+        "Image must be less than 1MB!",
+      ]);
     }
   }
 
-  const baseURL = "127.0.0.1:5000";
+  function IDPictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    if (
+      e.target.files &&
+      e.target.files[0] &&
+      e.target.files[0].size < 1000000 &&
+      e.target.files[0].type === "image/jpeg"
+    ) {
+      setError((prev) =>
+        prev.filter((e) => e !== "Image must be less than 1MB!")
+      );
+      setFileID(e.target.files[0]);
+    } else {
+      setError((prev) =>
+        prev.filter((e) => e !== "Image must be less than 1MB!")
+      );
+      setError((previousValue) => [
+        ...previousValue,
+        "Image must be less than 1MB!",
+      ]);
+    }
+  }
+
+  const baseURL = "http://127.0.0.1:5000";
+
+  function saveUserData(data: any) {
+    localStorage.setItem("user", JSON.stringify(data));
+  }
 
   // TODO
   function handleRegister() {
-    axios
-      .post(baseURL + "/register", {
-        "email": email,
-        "name": fullName,
-        "iban": IBAN,
-        "username": username,
-        "password": password,
-        "photo": "slika",
-        "id": "slika osobne"
-      })
-      .then(function (response) {
-        console.log(response); // only for testing
-        // set session user to response's user
-        navigate("/home");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    return new Promise((resolve, reject) => {
+      axios
+        .post(baseURL + "/register", {
+          name: fullName,
+          username: username,
+          iban: IBAN,
+          email: email,
+          photo: "slika",
+          id: "slika osobne",
+          password: password,
+        })
+        .then(function (response) {
+          console.log(response);
+          if (response.data.email === undefined) {
+            setError(response.data);
+          } else {
+            saveUserData(response.data);
+            navigate("/home");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    });
   }
 
   useEffect(() => {
@@ -68,13 +115,20 @@ function CartographerRegister() {
       email.substring(0, email.indexOf("@")).length > 0 &&
       email.substring(email.indexOf("@"), email.length - 1).length > 0 &&
       password !== "" &&
-      password.length >= 8
+      password.length >= 8 &&
+      fullName !== "" &&
+      IBAN !== "" &&
+      username !== "" &&
+      file !== undefined &&
+      fileID !== undefined &&
+      !error.includes("Image must be less than 1MB!")
     )
       setSubmitDisabled(false);
     else setSubmitDisabled(true);
-  }, [email, password]);
+  }, [email, password, fullName, IBAN, username, file, fileID, error]);
+
   return (
-    <div className="Auth-form-container">
+    <div className="d-flex justify-content-center m-4">
       <form className="Auth-form">
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Register as Cartographer</h3>
@@ -89,10 +143,15 @@ function CartographerRegister() {
               Sign In
             </span>
           </div>
+          {error.length > 0 &&
+            error.map((err, key) => (
+              <div className="alert-danger alert p-1" role="alert" key={key}>
+                {err}
+              </div>
+            ))}
           <div className="form-group mt-3">
             <label>Full Name</label>
             <input
-              type="email"
               className="form-control mt-1"
               placeholder="e.g Jane Doe"
               onChange={(e) => handleFullNameChange(e)}
@@ -101,7 +160,6 @@ function CartographerRegister() {
           <div className="form-group mt-3">
             <label>Username</label>
             <input
-              type="username"
               className="form-control mt-1"
               placeholder="e.g Jane Doe"
               onChange={(e) => handleUsernameChange(e)}
@@ -128,10 +186,34 @@ function CartographerRegister() {
           <div className="form-group mt-3">
             <label>Profile Picture</label>
             <input
-              id="file"
+              id="profile_file"
               type="file"
+              accept="image/jpeg"
               onChange={(e) => profilePictureChange(e)}
             />
+            {file !== undefined && (
+              <img
+                alt="profile pic"
+                src={URL.createObjectURL(file)}
+                className="img-fluid mt-2 border border-dark rounded"
+              ></img>
+            )}
+          </div>
+          <div className="form-group mt-3">
+            <label>ID Picture</label>
+            <input
+              id="id_file"
+              type="file"
+              accept="image/jpeg"
+              onChange={(e) => IDPictureChange(e)}
+            />
+            {fileID !== undefined && (
+              <img
+                alt="id pic"
+                src={URL.createObjectURL(fileID)}
+                className="img-fluid mt-2 border border-dark rounded"
+              ></img>
+            )}
           </div>
           <div className="form-group mt-3">
             <label>Password</label>
@@ -146,7 +228,10 @@ function CartographerRegister() {
             <button
               type="submit"
               className="btn btn-primary"
-              onClick={() => handleRegister()}
+              onClick={(e) => {
+                e.preventDefault();
+                handleRegister();
+              }}
               disabled={submitDisabled}
             >
               Submit

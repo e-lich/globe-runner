@@ -3,26 +3,25 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function BasicRegister() {
-  const [file, setFile] = useState<string | Blob>("");
+  const [file, setFile] = useState<Blob | MediaSource>();
 
   let [email, setEmail] = useState("");
   let [fullName, setFullName] = useState("");
-  let [IBAN, setIBAN] = useState("");
   let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
   let [submitDisabled, setSubmitDisabled] = useState(true);
+  let [error, setError] = useState<Array<String>>([]);
 
   const navigate = useNavigate();
 
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setEmail(e.target.value);
   }
+
   function handleFullNameChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setFullName(e.target.value);
   }
-  function handleIBANChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    setIBAN(e.target.value);
-  }
+
   function handleUsernameChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setUsername(e.target.value);
   }
@@ -32,30 +31,55 @@ function BasicRegister() {
   }
 
   function profilePictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    if (e.target.files && e.target.files[0]) {
+    setError((prev) =>
+      prev.filter((e) => e !== "Image must be less than 1MB!")
+    );
+    if (
+      e.target.files &&
+      e.target.files[0] &&
+      e.target.files[0].size < 1000000 &&
+      e.target.files[0].type === "image/jpeg"
+    ) {
       setFile(e.target.files[0]);
+    } else {
+      setError((previousValue) => [
+        ...previousValue,
+        "Image must be less than 1MB!",
+      ]);
     }
   }
 
-  const baseURL = "localhost:5000";
+  const baseURL = "http://127.0.0.1:5000";
 
   function handleRegister() {
-    axios
-      .post(baseURL + "/register", {
-        "email": email,
-        "name": fullName,
-        "username": username,
-        "password": password,
-        "photo": "slika",
-      })
-      .then(function (response) {
-        console.log(response); // only for testing
-        // set session user to response's user
-        navigate("/home");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    return new Promise((resolve, reject) => {
+      axios
+        .post(baseURL + "/register", {
+          name: fullName,
+          email: email,
+          username: username,
+          photo: "photohihi",
+          password: password,
+        })
+        .then(
+          (res) => {
+            console.log(res);
+            if (res.data.email === undefined) {
+              setError(res.data);
+            } else {
+              saveUserData(res.data);
+              navigate("/home");
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+    });
+  }
+
+  function saveUserData(data: any) {
+    localStorage.setItem("user", JSON.stringify(data));
   }
 
   useEffect(() => {
@@ -65,13 +89,18 @@ function BasicRegister() {
       email.substring(0, email.indexOf("@")).length > 0 &&
       email.substring(email.indexOf("@"), email.length - 1).length > 0 &&
       password !== "" &&
-      password.length >= 8
+      password.length >= 8 &&
+      fullName !== "" &&
+      username !== "" &&
+      file !== undefined &&
+      !error.includes("Image must be less than 1MB!")
     )
       setSubmitDisabled(false);
     else setSubmitDisabled(true);
-  }, [email, password]);
+  }, [email, password, fullName, username, file, error]);
+
   return (
-    <div className="Auth-form-container">
+    <div className="d-flex justify-content-center m-4">
       <form className="Auth-form">
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Register as User</h3>
@@ -86,12 +115,18 @@ function BasicRegister() {
               Sign In
             </span>
           </div>
+          {error.length > 0 &&
+            error.map((err, key) => (
+              <div className="alert-danger alert p-1" role="alert" key={key}>
+                {err}
+              </div>
+            ))}
           <div className="form-group mt-3">
             <label>Full Name</label>
             <input
-              type="email"
               className="form-control mt-1"
               placeholder="e.g Jane Doe"
+              onChange={(e) => handleFullNameChange(e)}
             />
           </div>
           <div className="form-group mt-3">
@@ -106,7 +141,6 @@ function BasicRegister() {
           <div className="form-group mt-3">
             <label>Username</label>
             <input
-              type="username"
               className="form-control mt-1"
               placeholder="e.g CoolKid69420"
               onChange={(e) => handleUsernameChange(e)}
@@ -117,8 +151,16 @@ function BasicRegister() {
             <input
               id="file"
               type="file"
+              accept="image/jpeg"
               onChange={(e) => profilePictureChange(e)}
             />
+            {file !== undefined && (
+              <img
+                alt="profile pic"
+                src={URL.createObjectURL(file)}
+                className="img-fluid mt-2 border border-dark rounded"
+              ></img>
+            )}
           </div>
           <div className="form-group mt-3">
             <label>Password</label>
@@ -133,7 +175,10 @@ function BasicRegister() {
             <button
               type="submit"
               className="btn btn-primary"
-              onClick={() => handleRegister()}
+              onClick={(e) => {
+                e.preventDefault();
+                handleRegister();
+              }}
               disabled={submitDisabled}
             >
               Submit

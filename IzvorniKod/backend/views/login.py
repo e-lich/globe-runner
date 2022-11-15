@@ -2,6 +2,10 @@ from backend import app, db
 from flask import request, jsonify
 from backend.models import Player, Cartographer
 
+@app.route('/signIn', methods=['GET'])
+def hello():
+    return "Hello!"
+
 @app.route('/signIn', methods=['POST'])
 def login():
     request_data = request.get_json()

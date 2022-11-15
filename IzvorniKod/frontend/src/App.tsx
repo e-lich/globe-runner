@@ -1,6 +1,3 @@
-import axios from "axios";
-import { format } from "date-fns";
-import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -24,6 +21,7 @@ function App() {
           path="/register/cartographer"
           element={<CartographerRegister />}
         />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );
