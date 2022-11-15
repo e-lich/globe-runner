@@ -1,4 +1,4 @@
-from flask import request, jsonify, render_template, url_for
+from flask import request, jsonify, render_template, url_for, redirect
 from __init__ import app, db
 from models import Player, Cartographer
 from send_email import send_email
@@ -65,7 +65,6 @@ def register_user():
     subject = "Please confirm your email for GlobeRunner"
     send_email(new_user.email, subject, html)
     
-    # TODO: returnanje
     return jsonify({
         'username': new_user.username,
         'email': new_user.email,
