@@ -1,10 +1,9 @@
 import axios from "axios";
-import { errorMonitor } from "events";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function BasicRegister() {
-  const [file, setFile] = useState<string | Blob>("");
+  const [file, setFile] = useState<Blob | MediaSource>();
 
   let [email, setEmail] = useState("");
   let [fullName, setFullName] = useState("");
@@ -33,7 +32,7 @@ function BasicRegister() {
 
   function profilePictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setError((prev) =>
-      prev.filter((e) => e !== "Image must be a jpeg and less than 1MB")
+      prev.filter((e) => e !== "Image must be less than 1MB!")
     );
     if (
       e.target.files &&
@@ -45,7 +44,7 @@ function BasicRegister() {
     } else {
       setError((previousValue) => [
         ...previousValue,
-        "Image must be a jpeg and less than 1MB",
+        "Image must be less than 1MB!",
       ]);
     }
   }
@@ -93,8 +92,8 @@ function BasicRegister() {
       password.length >= 8 &&
       fullName !== "" &&
       username !== "" &&
-      file !== "" &&
-      !error.includes("Image must be a jpeg and less than 1MB")
+      file !== undefined &&
+      !error.includes("Image must be less than 1MB!")
     )
       setSubmitDisabled(false);
     else setSubmitDisabled(true);
@@ -152,8 +151,16 @@ function BasicRegister() {
             <input
               id="file"
               type="file"
+              accept="image/jpeg"
               onChange={(e) => profilePictureChange(e)}
             />
+            {file !== undefined && (
+              <img
+                alt="profile pic"
+                src={URL.createObjectURL(file)}
+                className="img-fluid mt-2 border border-dark rounded"
+              ></img>
+            )}
           </div>
           <div className="form-group mt-3">
             <label>Password</label>

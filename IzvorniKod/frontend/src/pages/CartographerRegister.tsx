@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function CartographerRegister() {
-  const [file, setFile] = useState<string | Blob>("");
-  const [fileID, setFileID] = useState<string | Blob>("");
+  const [file, setFile] = useState<Blob | MediaSource>();
+  const [fileID, setFileID] = useState<Blob | MediaSource>();
 
   let [email, setEmail] = useState("");
   let [fullName, setFullName] = useState("");
@@ -35,7 +35,7 @@ function CartographerRegister() {
 
   function profilePictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setError((prev) =>
-      prev.filter((e) => e !== "Image must be a jpeg and less than 1MB")
+      prev.filter((e) => e !== "Image must be less than 1MB!")
     );
     if (
       e.target.files &&
@@ -47,7 +47,7 @@ function CartographerRegister() {
     } else {
       setError((previousValue) => [
         ...previousValue,
-        "Image must be a jpeg and less than 1MB",
+        "Image must be less than 1MB!",
       ]);
     }
   }
@@ -60,16 +60,16 @@ function CartographerRegister() {
       e.target.files[0].type === "image/jpeg"
     ) {
       setError((prev) =>
-        prev.filter((e) => e !== "Image must be a jpeg and less than 1MB")
+        prev.filter((e) => e !== "Image must be less than 1MB!")
       );
       setFileID(e.target.files[0]);
     } else {
       setError((prev) =>
-        prev.filter((e) => e !== "Image must be a jpeg and less than 1MB")
+        prev.filter((e) => e !== "Image must be less than 1MB!")
       );
       setError((previousValue) => [
         ...previousValue,
-        "Image must be a jpeg and less than 1MB",
+        "Image must be less than 1MB!",
       ]);
     }
   }
@@ -119,16 +119,17 @@ function CartographerRegister() {
       fullName !== "" &&
       IBAN !== "" &&
       username !== "" &&
-      file !== "" &&
-      fileID !== "" &&
-      !error.includes("Image must be a jpeg and less than 1MB")
+      file !== undefined &&
+      fileID !== undefined &&
+      !error.includes("Image must be less than 1MB!")
     )
       setSubmitDisabled(false);
     else setSubmitDisabled(true);
   }, [email, password, fullName, IBAN, username, file, fileID, error]);
+
   return (
     <div className="d-flex justify-content-center m-4">
-      <form className="Auth-form" style={{ width: "40%" }}>
+      <form className="Auth-form">
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Register as Cartographer</h3>
           <div className="text-center">
@@ -187,16 +188,32 @@ function CartographerRegister() {
             <input
               id="profile_file"
               type="file"
+              accept="image/jpeg"
               onChange={(e) => profilePictureChange(e)}
             />
+            {file !== undefined && (
+              <img
+                alt="profile pic"
+                src={URL.createObjectURL(file)}
+                className="img-fluid mt-2 border border-dark rounded"
+              ></img>
+            )}
           </div>
           <div className="form-group mt-3">
             <label>ID Picture</label>
             <input
               id="id_file"
               type="file"
+              accept="image/jpeg"
               onChange={(e) => IDPictureChange(e)}
             />
+            {fileID !== undefined && (
+              <img
+                alt="id pic"
+                src={URL.createObjectURL(fileID)}
+                className="img-fluid mt-2 border border-dark rounded"
+              ></img>
+            )}
           </div>
           <div className="form-group mt-3">
             <label>Password</label>

@@ -30,7 +30,7 @@ function Register(props: any) {
 
   return (
     <>
-      <div className="Auth-form-container form">
+      <div className="Auth-form-container align-items-center">
         <form className="Auth-form">
           <div className="Auth-form-content">
             <div className="text-center">
