@@ -8,6 +8,16 @@ from backend.views.email_confirmation import generate_confirmation_token, confir
 def helloRegister():
     return "Hello!"
 
+# geting rid of 403 error    
+@app.route('/register/basic', methods=['GET'])
+def helloRegisterBasic():
+    return "Hello!"
+
+# geting rid of 403 error
+@app.route('/register/cartographer', methods=['GET'])
+def helloRegisterCartographer():
+    return "Hello!"
+
 # register basic user
 @app.route('/register', methods=['POST'])
 def register_user():

@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Alert from "react-bootstrap/Alert";
 
 export default function SignIn() {
   let [email, setEmail] = useState("");
