@@ -127,7 +127,7 @@ function CartographerRegister() {
     else setSubmitDisabled(true);
   }, [email, password, fullName, IBAN, username, file, fileID, error]);
   return (
-    <div className="Auth-form-container">
+    <div className="d-flex justify-content-center m-4">
       <form className="Auth-form" style={{ width: "40%" }}>
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Register as Cartographer</h3>

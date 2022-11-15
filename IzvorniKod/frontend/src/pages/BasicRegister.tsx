@@ -101,7 +101,7 @@ function BasicRegister() {
   }, [email, password, fullName, username, file, error]);
 
   return (
-    <div className="Auth-form-container">
+    <div className="d-flex justify-content-center m-4">
       <form className="Auth-form">
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Register as User</h3>
