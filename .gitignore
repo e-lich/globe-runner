@@ -1,0 +1,6 @@
+IzvorniKod/backend/__pycache__
+IzvorniKod/backend/views/__pycache__
+.vscode
+IzvorniKod/backend/.env
+IzvorniKod/.env
+IzvorniKod/.postgres_data
