@@ -118,7 +118,7 @@ function BasicRegister() {
           </div>
           {error.length > 0 &&
             error.map((err, key) => (
-              <div className="alert-danger" style={{}} key={key}>
+              <div className="alert-danger alert p-1" role="alert" key={key}>
                 {err}
               </div>
             ))}

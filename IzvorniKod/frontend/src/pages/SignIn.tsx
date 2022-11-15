@@ -75,6 +75,12 @@ export default function SignIn() {
               Register
             </span>
           </div>
+          {error.length > 0 &&
+            error.map((err, key) => (
+              <div className="alert-danger alert p-1" role="alert" key={key}>
+                {err}
+              </div>
+            ))}
           <div className="form-group mt-3">
             <label>Email address</label>
             <input

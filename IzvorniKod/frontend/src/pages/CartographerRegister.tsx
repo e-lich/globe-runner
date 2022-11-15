@@ -128,7 +128,7 @@ function CartographerRegister() {
   }, [email, password, fullName, IBAN, username, file, fileID, error]);
   return (
     <div className="Auth-form-container">
-      <form className="Auth-form">
+      <form className="Auth-form" style={{ width: "40%" }}>
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Register as Cartographer</h3>
           <div className="text-center">
@@ -144,7 +144,7 @@ function CartographerRegister() {
           </div>
           {error.length > 0 &&
             error.map((err, key) => (
-              <div className="alert-danger" style={{}} key={key}>
+              <div className="alert-danger alert p-1" role="alert" key={key}>
                 {err}
               </div>
             ))}
