@@ -10,7 +10,7 @@ function BasicRegister() {
   let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
   let [submitDisabled, setSubmitDisabled] = useState(true);
-  let [error, setError] = useState([]);
+  let [error, setError] = useState<Array<String>>([]);
 
   const navigate = useNavigate();
 
@@ -31,8 +31,24 @@ function BasicRegister() {
   }
 
   function profilePictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    if (e.target.files && e.target.files[0]) {
+    if (
+      e.target.files &&
+      e.target.files[0] &&
+      e.target.files[0].size < 1000000 &&
+      e.target.files[0].type === "image/jpeg"
+    ) {
+      setError((prev) =>
+        prev.filter((e) => e !== "Image must be a jpeg and less than 1MB")
+      );
       setFile(e.target.files[0]);
+    } else {
+      setError((prev) =>
+        prev.filter((e) => e !== "Image must be a jpeg and less than 1MB")
+      );
+      setError((previousValue) => [
+        ...previousValue,
+        "Image must be a jpeg and less than 1MB",
+      ]);
     }
   }
 
@@ -76,7 +92,10 @@ function BasicRegister() {
       email.substring(0, email.indexOf("@")).length > 0 &&
       email.substring(email.indexOf("@"), email.length - 1).length > 0 &&
       password !== "" &&
-      password.length >= 8
+      password.length >= 8 &&
+      fullName !== "" &&
+      username !== "" &&
+      file !== ""
     )
       setSubmitDisabled(false);
     else setSubmitDisabled(true);
