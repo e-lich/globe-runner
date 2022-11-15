@@ -14,7 +14,7 @@ app = Flask(__name__)
 path_to_env = Path('../.env')
 load_dotenv(dotenv_path=path_to_env)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://postgres:{os.getenv('POSTGRES_PASSWORD')}@postgres:5432/{os.getenv('POSTGRES_DB')}"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://admin:QaaYHfm5xyh56kfIAYRVq0tyNwPMwjGy@dpg-cdpslden6mppiadlda80-a.frankfurt-postgres.render.com/globe_runner_bhsp"
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
