@@ -1,0 +1,8 @@
+flask
+gunicorn
+flask-sqlalchemy
+python-dotenv
+flask-cors
+psycopg2
+flask-mail
+debugpy

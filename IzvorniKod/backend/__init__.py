@@ -2,10 +2,19 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_mail import Mail
+from dotenv import load_dotenv
+from pathlib import Path
+import os
+import time
+
+time.sleep(5)
 
 app = Flask(__name__)
-# ovaj link morate urediti u 'postgresql://postgres:<insert-password>@localhost/<insert-ime-baze>'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:elajekul@localhost/globe-runner'
+
+path_to_env = Path('../.env')
+load_dotenv(dotenv_path=path_to_env)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://admin:QaaYHfm5xyh56kfIAYRVq0tyNwPMwjGy@dpg-cdpslden6mppiadlda80-a.frankfurt-postgres.render.com/globe_runner_bhsp"
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -28,10 +37,10 @@ mail = Mail(app)
 CORS(app)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host="0.0.0.0")
 
 # import all views (+ db models?)
-import backend.models
-import backend.views.register
-import backend.views.email_confirmation
-import backend.views.login
+import models
+import views.register
+import views.email_confirmation
+import views.login

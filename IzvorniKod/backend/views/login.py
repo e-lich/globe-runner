@@ -1,6 +1,6 @@
-from backend import app, db
-from flask import request, jsonify
-from backend.models import Player, Cartographer
+from __init__ import app, db
+from flask import request, jsonify, redirect
+from models import Player, Cartographer
 
 @app.route('/signIn', methods=['GET'])
 def hello():
@@ -33,6 +33,7 @@ def login():
         return errors
     else:
         # login user ??
+
         return jsonify({
             'username': user.username,
             'email': user.email,
