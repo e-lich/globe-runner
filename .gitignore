@@ -8,23 +8,23 @@ IzvorniKod/backend/Pipfile.lock
 # Frontend dio:
 
 # dependencies
-frontend/node_modules
-frontend/.pnp
-frontend/.pnp.js
+IzvorniKod/frontend/node_modules
+IzvorniKod/frontend/.pnp
+IzvorniKod/frontend/.pnp.js
 
 # testing
-frontend/coverage
+IzvorniKod/frontend/coverage
 
 # production
-frontend/build
+IzvorniKod/frontend/build
 
 # misc
-frontend/.DS_Store
-frontend/.env.local
-frontend/.env.development.local
-frontend/.env.test.local
-frontend/.env.production.local
+IzvorniKod/frontend/.DS_Store
+IzvorniKod/frontend/.env.local
+IzvorniKod/frontend/.env.development.local
+IzvorniKod/frontend/.env.test.local
+IzvorniKod/frontend/.env.production.local
 
-frontend/npm-debug.log*
-frontend/yarn-debug.log*
-frontend/yarn-error.log*
+IzvorniKod/frontend/npm-debug.log*
+IzvorniKod/frontend/yarn-debug.log*
+IzvorniKod/frontend/yarn-error.log*
