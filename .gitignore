@@ -3,6 +3,7 @@ IzvorniKod/backend/views/__pycache__
 .vscode
 IzvorniKod/.env
 IzvorniKod/frontend/.env
+IzvorniKod/backend/Pipfile.lock
 
 # Frontend dio:
 
