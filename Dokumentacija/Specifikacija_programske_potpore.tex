@@ -113,11 +113,13 @@
 		            
 		        \end{packed_enum}
 		        
-	        \item \underbar{Baza podataka (inicijator) može:}
+	        \item \underbar{Baza podataka (sudionik):}
 		    
 		        \begin{packed_enum}
 		            
-		            \item 
+		            \item pohranjuje sve podatke o korisnicima i njihovim ovlastima
+		            \item pohranjuje sve podatke o lokacijama
+		            \item pohranjuje sve  podatke o provedenim borbama i izazovima
 		            
 		        \end{packed_enum}
 		        
@@ -254,18 +256,10 @@
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
-	
-							\item 
-
+							\item Korisnik se nalazi na bilo kojoj stranici koja mu prikazuje korisničko ime drugog igrača
+							\item Korisnik klikom na korisničko ime igrača zahtijeva pregled njegovog profila
+							\item Korisniku se prikazuje javni profil odabranog korisnika
 						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-	
-							\item
-							
-						\end{packed_item}
 					\end{packed_item}
 					
 					\noindent \underbar{\textbf{UC6 - Uređivanje vlastitih podataka}}
@@ -334,7 +328,7 @@
 	
 							\item Korisnik odabire karticu na karti
 							\item Korisnik odabire opciju "Collect"
-							\item Kartica se nalazi na stranici "My Profile -> Inventory" 
+							\item Kartica se nalazi na stranici "My Profile - > Inventory" 
 
 						\end{packed_enum}
 						
@@ -418,7 +412,7 @@
 						\item[] \begin{packed_enum}
 	
 							\item Igrač dobiva obavijest o pristiglom izazovu
-							\item Igrač označava "Accept" ako prihvaća izazov ili "Deny" ako odbija
+							\item Igrač označava "\textit{Accept}" ako prihvaća izazov ili "\textit{Deny}" ako odbija
 
 						\end{packed_enum}
 						
@@ -430,15 +424,14 @@
 						\item \textbf{Glavni sudionik: }Igrač
 						\item  \textbf{Cilj:} Izabrati karte i boriti se s drugim igračem
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Igrač je prijavljen
+						\item  \textbf{Preduvjet:} Igrač je prijavljen i prihvatio je izazov ili je njegov izazov prihvaćen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item Korisnik odabire opciju za registraciju
-							\item Korisnik unosi potrebne korisničke podatke
-							\item Korisnik dobiva e-mail kojim potvrđuje svoj račun
-
+							\item Korisnik odabire tri kartice među onima koje je prikupio
+							\item Korisnik klikom na gumb "\textit{Fight!}" ulazi u borbu
+							\item Korisniku se prikazuje ishod borbe i ažurirani broj njegovih bodova
 						\end{packed_enum}
 						
 					\end{packed_item}
@@ -922,8 +915,8 @@ UC						\item  \textbf{Sudionici:} Baza podataka, OSRM servis
         		\end{figure}
 	
 		\section{Ostali zahtjevi}
-		
-			\item Sustav treba omogućiti rad više korisnika u stvarnom vremenu
+		\begin{packed_item}
+		    \item Sustav treba omogućiti rad više korisnika u stvarnom vremenu
 			\item Korisničko sučelje i sustav moraju podržavati hrvatsku abecedu (dijakritičke znakove) pri unosu i prikazu tekstualnog sadržaja
 			\item Izvršavanje dijela programa u kojem se pristupa bazi podataka ne smije trajati duže od nekoliko sekundi
 			\item Sustav treba biti implementiran kao web aplikacija koristeći objektno-orijentirane jezike
@@ -931,5 +924,8 @@ UC						\item  \textbf{Sudionici:} Baza podataka, OSRM servis
 			\item Sustav treba biti jednostavan za korištenje, korisnici se moraju znati koristiti sučeljem bez opširnih uputa
 			\item Nadogradnja sustava ne smije narušavati postojeće funkcionalnosti sustava
 			\item Sustav kao valutu koristi EURO
-			\item Veza s bazom podataka mora biti kvalitetno zaštićena brza i otporna na vanjske greške
+			\item Veza s bazom podataka mora biti kvalitetno zaštićena, brza i otporna na vanjske greške
 			\item Pristup sustavu mora biti omogućen iz javne mreže pomoću HTTPS
+			\item Rukovanje osobnim podatcima treba biti usklađeno s važećim direktivama
+			
+		\end{packed_item}
