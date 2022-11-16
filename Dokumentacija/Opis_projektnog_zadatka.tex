@@ -3,7 +3,13 @@
 		
 		Igra \textit{GlobeRunner} zamišljena je kao način da se ljude potakne na istraživanje lokalnih povijesnih i prirodnih znamenitosti. Pri posjetima znamenitostima igrači će se kretati na otvorenom, što je svakako bolja alternativa provođenju vremena u zatvorenom prostoru. Kroz same bitke, odnosno odabir kartica za njih, igrači će bolje upoznati bitne atribute lokalnih znamenitosti kraj kojih često prolaze bez razmišljanja jer će im upravo pažljiv odabir znamenitosti donositi pobjede u bitkama protiv drugih igrača.\par
 		
-		Platforme sa sličnom vizijom već postoje, jedna od njih je \textit{Geocaching}. Radi se o igri koja se zasniva na skrivenim spremnicima (eng. \textit{geocaches}) koji sadrže mali dnevnik u koji se posjetitelji zapisuju kada ga pronađu. Igrači u samoj aplikaciji biraju koji spremnik žele pronaći i zatim se upute u potragu. Prilikom pronalaska u spremniku mogu ostaviti i neku sitnicu, ili pak uzeti nešto iz njega, a nakon pronalaska svoje dojmove mogu objaviti na platformi. Razlika u odnosu na igru \textit{GlobeRunner} jest u tome da postoje fizički artefakti koji se skrivaju na proizvoljna mjesta i zatim pronalaze, dok je cilj ove igre sam posjet lokaciji koja treba biti na neki način značajna, povijesno ili pak geografski. Po pitanju nepostojanja fizičkih artefakata, \textit{GlobeRunner} je sličniji igri \textit{Pokémon GO} u kojoj se uz mjesta lokalnih znamenitosti vežu zamišljena bića iz animirane japanske franšize \textit{Pokémon}, zbog čega se pak razlikuje po značenju samih virtualnih artefakata. Sam tijek igre, kroz bitke u kojima se koriste kartice, podsjeća na kolekcionarsku igru \textit{Yu-Gi-Oh!}, no cijela premisa igre u potpunosti je drugačija.
+		Platforme sa sličnom vizijom već postoje, jedna od njih je \textit{Geocaching}, Slika \ref{fig:geocaching}. Radi se o igri koja se zasniva na skrivenim spremnicima (eng. \textit{geocaches}) koji sadrže mali dnevnik u koji se posjetitelji zapisuju kada ga pronađu. Igrači u samoj aplikaciji biraju koji spremnik žele pronaći i zatim se upute u potragu. Prilikom pronalaska u spremniku mogu ostaviti i neku sitnicu, ili pak uzeti nešto iz njega, a nakon pronalaska svoje dojmove mogu objaviti na platformi. Razlika u odnosu na igru \textit{GlobeRunner} jest u tome da postoje fizički artefakti koji se skrivaju na proizvoljna mjesta i zatim pronalaze, dok je cilj ove igre sam posjet lokaciji koja treba biti na neki način značajna, povijesno ili pak geografski. Po pitanju nepostojanja fizičkih artefakata, \textit{GlobeRunner} je sličniji igri \textit{Pokémon GO} u kojoj se uz mjesta lokalnih znamenitosti vežu zamišljena bića iz animirane japanske franšize \textit{Pokémon}, zbog čega se pak razlikuje po značenju samih virtualnih artefakata. Sam tijek igre, kroz bitke u kojima se koriste kartice, podsjeća na kolekcionarsku igru \textit{Yu-Gi-Oh!}, no cijela premisa igre u potpunosti je drugačija.
+		
+		\begin{figure}[H]
+			\includegraphics[width=\textwidth]{slike/Uvod/Geocaching.png} 
+			\caption{Web sjedište platforme \textit{Geocaching}}
+			\label{fig:geocaching}
+		\end{figure}
 		
 		Upravo bi iz navedenih razloga \textit{GlobeRunner} mogao privući igrače koji žele na zabavan način upoznati područja u kojima borave i kojima se kreću, kojeg god uzrasta bili, dok god paze na svoju sigurnost, posebno pri posjeti izazovnijim lokacijama poput planinskih vrhova. Ova aplikacija otvara svoja vrata i onim najznatiželjnijima koji žele poboljšati igru, odnosno predložiti nove lokacije i tako istaknuti njihov značaj.
 		
@@ -28,7 +34,7 @@
 		
 		Nakon ispunjavanja obrasca za registraciju, novi igrač treba potvrditi svoju e-mail adresu klikom na dostavljenu poveznicu. Tako potvrđen igrač može krenuti s upotrebom web aplikacije, dok registraciju kartografa naknadno mora odobriti administrator.
 		
-		\underbar{Igrač} nakon registracije započinje igru s predefiniranim početnim brojem bodova u ELO sustavu (npr. u šahu je 1500). Nakon prijave igrač vidi početnu stranicu koja prikazuje kartu na kojoj su označene lokacije s karticama koje još nije prikupio. Kada se igrač nađe u blizini neskupljenih kartica, ispod karte se pojavi popis kartica u neposrednoj blizini, njih onda može pokušati pokupiti pritiskom na gumb "Pokupi" koji će to dopustiti samo ako je igrač jako blizu kartici. Na početnoj (i svim ostalim) stranici igrač vidi i izbornik koji mu omogućuje navigaciju kroz web aplikaciju. Sadržaj izbornika je sljedeći:
+		\underbar{Igrač} nakon registracije započinje igru s predefiniranim početnim brojem bodova u ELO sustavu (npr. u šahu je 1500). Nakon prijave igrač vidi početnu stranicu koja prikazuje kartu na kojoj su označene lokacije s karticama koje još nije prikupio. Kada se igrač nađe u blizini neskupljenih kartica, ispod karte se pojavi popis kartica u neposrednoj blizini, njih onda može pokušati pokupiti pritiskom na gumb "Pokupi" koji će to dopustiti samo ako je igrač jako blizu kartici. Na početnoj stranici, kao i na ostalima, igrač vidi i izbornik koji mu omogućuje navigaciju kroz web aplikaciju. Sadržaj izbornika je sljedeći:
 		
 		\begin{packed_item}
 		    \item Vlastiti profil
@@ -36,7 +42,7 @@
 		    \item Igrači u blizini
 		\end{packed_item}
 		
-		Kroz izbornik igrač može pristupiti vlastitom profilu na kojem vidi statistiku svojih borbi i sve karte koje je skupio. U izborniku se također nalazi i poveznica na stranicu "Globalna statistika" koja prikazuje ljestvicu svih igrača sortiranu po ELO bodovnom sustavu, a uz to prikazuje i statistiku svih odigranih bitki i skupljenih kartica u igri. Do stranice koja prikazuje popis drugih igrača u blizini igrač također dolazi preko spomenutog izbornika. Na tom popisu igrač odabire koga će izazvati, a nakon što drugi igrač prihvati izazov, svaki odabire karte s kojima će ići u bitku. Iznad spomenutog popisa igraču se pojave zahtjevi za bitke kada ih drugi igrači izazovu, a on ih onda može prihvatiti ili odbiti. Nakon svake bitke igračima se ažurira njihov broj bodova shodno ELO sustavu. Svakog dana u ponoć (CET) izdvaja se prvih 10\% igrača s ljestvice i njima se dodjeljuje status naprednog igrača.
+		Kroz izbornik igrač može pristupiti vlastitom profilu na kojem vidi statistiku svojih borbi i sve karte koje je skupio. U izborniku se također nalazi i poveznica na stranicu "Globalna statistika" koja prikazuje ljestvicu svih igrača sortiranu po ELO bodovnom sustavu, a uz to prikazuje i statistiku svih odigranih bitki i skupljenih kartica u igri. Do stranice koja prikazuje popis drugih igrača u blizini igrač također dolazi preko spomenutog izbornika. Na tom popisu igrač odabire koga će izazvati, a nakon što drugi igrač prihvati izazov, svaki odabire karte s kojima će ići u bitku. Iznad spomenutog popisa igraču se pojave zahtjevi za bitke kada ih drugi igrači izazovu, a on ih onda može prihvatiti ili odbiti. Bitka se provodi usporedbom površina koje razapinju tri kartice koje pojedini igrač odabere, uz napomenu da se površina skalira prosjekom jačina tih triju kartica. Jačina kartice smanjuje se nakon svakog korištenja i to smanjenje vrijedi samo za korisnika koji ju koristi. Nakon svake bitke igračima se ažurira njihov broj bodova shodno ELO sustavu. Ako igrač pređe određeni prag bodova, dodjeljuje mu se status naprednog igrača.
 		
 		\underbar{Napredni igrač}, uz sve spomenute funkcionalnosti običnog igrača, u svom izborniku ima i opciju "Dodaj lokaciju" koja ga vodi na stranicu za predlaganje nove lokacije, odnosno kartice. Kako bi dodao neku lokaciju, napredni igrač mora biti u njezinoj blizini. U obrazac za dodavanje lokacije mora unijeti sve podatke koje kartica treba imati - naziv, opis i fotografiju. Nakon što predloži novu lokaciju, ona mu postaje vidljiva na njegovoj karti za dodavanje, ali uz naznaku da još nije odobrena.
 		
@@ -47,9 +53,9 @@
 		    \item Provjera na terenu
 		\end{packed_item}
 		
-		Na stranici vlastitog profila kartograf ima uvid u kartice koje je već odobrio i rute koje je već obišao kako bi na terenu potvrdio kartice. Stranica za provjeru na terenu daje kartografu priliku da iz liste kartica koje treba provjeriti na terenu odabere one koje će on provjeriti. Tako dopunjava svoju listu kartica za obići. Kada označi željeni broj lokacija za provjeru, kartograf klikom na gumb "generiraj rutu" zadaje sustavu problem trgovačkog putnika koji sustav rješava koristeći vanjski servis OSRM te kartografu prikazuje rutu koju treba obići da bi na terenu provjerio sve kartice koje je odabrao.
+		Na stranici vlastitog profila kartograf ima uvid u kartice koje je već odobrio. Stranica za provjeru na terenu daje kartografu priliku da iz liste kartica koje treba provjeriti na terenu odabere one koje će on provjeriti. Tako dopunjava svoju listu kartica za obići. Kada označi željeni broj lokacija za provjeru, kartograf klikom na gumb "generiraj rutu" zadaje sustavu problem trgovačkog putnika koji sustav rješava koristeći vanjski servis OSRM te kartografu prikazuje rutu koju treba obići da bi na terenu provjerio sve kartice koje je odabrao.
 		
-		\underbar{Administrator} može igrati igru kao i obični igrači, predlagati kartice poput naprednih, ali uz to ima na izborniku i stavku "Administracija" koja mu daje pristup sljedećim stranicama:
+		\underbar{Administrator} ima ulogu nadgledanja korisnika, lokacija i kartografa, a u tu svrhu u svom izborniku ima pristup sljedećim stranicama:
 		
 		\begin{packed_item}
 		    \item Svi korisnici
@@ -59,20 +65,13 @@
 		
 		Na stranici "Svi korisnici" administratoru se prikazuje popis svih korisnika. Za svakog korisnika nudi mu se opcija uređivanja osobnih podataka i opcija isključenja iz igre koje ga vode na pripadne stranice s tim funkcionalnostima. Na stranici "Sve kartice" administratoru je prikazana karta sa svim karticama u igri, a klikom na bilo koju od njih administrator dobiva opciju uređivanja kartice izmjenom bilo kojeg atributa same kartice. "Odobravanje kartografa" je stranica putem koje administrator dobiva uvid u registracije kartografa koje još nisu odobrene. Za svaku od njih nudi mu se opcija da ju odobri.
 		
+		Uz očekivane funkcionalnosti, identificirali smo i nadogradnje sustava koje bi poboljšale sigurnost, performanse i iskustvo korisnika, a čiji razvoj nije dio ovog projekta. Neke od njih su:
 		
-		\section{UPUTE - OBRISATI KASNIJE}
-		Na osnovi projektnog zadatka detaljno opisati korisničke zahtjeve. Što jasnije opisati cilj projektnog zadatka, razraditi problematiku zadatka, dodati nove aspekte problema i potencijalnih rješenja. Očekuje se minimalno 3, a poželjno 4-5 stranica opisa.	Teme koje treba dodatno razraditi u ovom poglavlju su:
 		\begin{packed_item}
-			\item \textit{potencijalna korist ovog projekta}
-			\item \textit{postojeća slična rješenja (istražiti i ukratko opisati razlike u odnosu na zadani zadatak). Dodajte slike koja predočavaju slična rješenja.}
-			\item \textit{skup korisnika koji bi mogao biti zainteresiran za ostvareno rješenje.}
-			\item \textit{mogućnost prilagodbe rješenja }
-			\item \textit{opseg projektnog zadatka}
-			\item \textit{moguće nadogradnje projektnog zadatka}
+		    \item Složeniji proces borbe
+		    \item Funkcija obnavljanja snage kartice ponovnim skupljanjem
+		    \item ...
 		\end{packed_item}
-		
-		\textit{Za pomoć pogledati reference navedene u poglavlju „Popis literature“, a po potrebi konzultirati sadržaj na internetu koji nudi dobre smjernice u tom pogledu.}
-		\eject
 		
 		\section{Primjeri u \LaTeX u}
 		
@@ -155,6 +154,7 @@
 		
 		%unos slike
 		\begin{figure}[H]
+		    \centering
 			\includegraphics[scale=0.4]{slike/aktivnost.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 			\centering
 			\caption{Primjer slike s potpisom}
