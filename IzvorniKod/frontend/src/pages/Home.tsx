@@ -31,6 +31,7 @@ export default function Home() {
       username: "Player_04",
     },
   ];
+
   const listItems = closestPlayers.map((closestPlayer) => (
     <li>
       <div className="player-information">

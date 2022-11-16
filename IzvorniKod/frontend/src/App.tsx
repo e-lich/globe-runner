@@ -8,7 +8,6 @@ import BasicRegister from "./pages/BasicRegister";
 import CartographerRegister from "./pages/CartographerRegister";
 import Register from "./pages/Register";
 import SignIn from "./pages/SignIn";
-import Map from "./components/Map";
 import About from "./pages/About";
 import Stats from "./pages/Stats";
 import Profile from "./pages/Profile";
