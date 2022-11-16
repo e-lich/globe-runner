@@ -37,7 +37,7 @@ function BasicRegister() {
     }
   }
 
-  const baseURL = "http://46.101.253.22:4000";
+  const baseURL = "http://127.0.0.1:4000";
 
   function handleRegister() {
     return new Promise((resolve, reject) => {
