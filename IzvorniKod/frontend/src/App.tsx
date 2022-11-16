@@ -18,7 +18,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/test" element={<Map />} />
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/register/basic" element={<BasicRegister />} />

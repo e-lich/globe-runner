@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import axios from "axios";
 
 export default function Profile() {
-  let user = JSON.parse(localStorage.getItem("user") || "{}");
   const [userData, setData] = useState({
-    passwordConfirmation: "",
     username: "username",
     password: "",
+    passwordConfirmation: "",
   });
+
+  // TODO Handle password changes
+
   const navigate = useNavigate();
   const [submitDisabled, setSubmitDisabled] = useState(true);
   const [authMode, setAuthMode] = useState("basic");
@@ -51,18 +52,7 @@ export default function Profile() {
                   type="text"
                   name="username"
                   className="form-control mt-1"
-                  value={"pero@zmaj"}
-                  disabled={true}
-                />
-              </div>
-              <div className="form-group mt-3">
-                <label>Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  className="form-control mt-1"
-                  placeholder="*********"
-                  onChange={(e) => handleChanges(e)}
+                  value={"username"}
                   disabled={true}
                 />
               </div>

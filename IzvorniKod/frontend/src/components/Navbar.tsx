@@ -7,13 +7,8 @@ export default function Navbar() {
   let user = JSON.parse(localStorage.getItem("user") || "{}");
 
   useEffect(() => {
-    // if (localStorage.getItem("user") === null) navigate("/signIn"); TODO - removed for testing
+    if (localStorage.getItem("user") === null) navigate("/signIn");
   });
-
-  function handleLogout() {
-    localStorage.removeItem("user");
-    navigate("/signIn");
-  }
 
   return (
     <div className="nav">
