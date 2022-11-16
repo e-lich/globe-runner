@@ -57,3 +57,65 @@ label {
   display: flex;
   flex-direction: column;
 }
+
+.main {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  padding: 20px;
+  height: 80vh;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
+  padding: 5px 10px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  height: 10vh;
+  min-height: 100px;
+}
+
+.output {
+  box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
+  margin: 15px;
+  width: 95%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.device-status {
+  margin-top: 12px;
+}
+
+.output--image {
+  width: 100%;
+}
+
+.camera-output {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+.output--timestamp {
+  display: flex;
+  justify-content: end;
+  padding-right: 30px;
+}
+
+.nav > h1 {
+  padding-left: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+ul.nav--links > li {
+  display: inline;
+  padding: 20px;
+
+  justify-content: center;
+  align-items: center;
+}
+ul.nav--links {
+  padding-top: 15px;
+}
