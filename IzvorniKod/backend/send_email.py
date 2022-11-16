@@ -1,5 +1,5 @@
 from flask_mail import Message
-from __init__ import app, mail
+from backend import app, mail
 
 def send_email(to, subject, template):
     msg = Message(

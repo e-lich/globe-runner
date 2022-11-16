@@ -1,7 +1,7 @@
 import enum
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
-from __init__ import db, app
+from backend import db, app
 
 # defining all db models
 

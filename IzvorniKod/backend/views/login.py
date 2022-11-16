@@ -1,6 +1,6 @@
-from __init__ import app, db
+from backend import app, db
 from flask import request, jsonify, redirect
-from models import Player, Cartographer
+from backend.models import Player, Cartographer
 
 @app.route('/signIn', methods=['GET'])
 def hello():

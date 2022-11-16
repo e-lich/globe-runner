@@ -1,8 +1,8 @@
 from flask import request, jsonify, render_template, url_for, redirect
-from __init__ import app, db
-from models import Player, Cartographer
-from send_email import send_email
-from views.email_confirmation import generate_confirmation_token, confirm_email
+from backend import app, db
+from backend.models import Player, Cartographer
+from backend.send_email import send_email
+from backend.views.email_confirmation import generate_confirmation_token, confirm_email
 
 @app.route('/register', methods=['GET'])
 def helloRegister():

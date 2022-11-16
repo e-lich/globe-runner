@@ -37,7 +37,7 @@ if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")
 
 # import all views (+ db models?)
-import models
-import views.register
-import views.email_confirmation
-import views.login
+import backend.models
+import backend.views.register
+import backend.views.email_confirmation
+import backend.views.login
