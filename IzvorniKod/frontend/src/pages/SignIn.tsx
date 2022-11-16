@@ -111,9 +111,6 @@ export default function SignIn() {
               Submit
             </button>
           </div>
-          <p className="text-center mt-2">
-            <a href="#">Forgot password?</a>
-          </p>
         </div>
       </form>
     </div>
