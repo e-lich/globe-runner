@@ -5,9 +5,6 @@ from flask_mail import Mail
 from dotenv import load_dotenv
 from pathlib import Path
 import os
-import time
-
-time.sleep(5)
 
 app = Flask(__name__)
 
