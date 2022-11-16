@@ -59,7 +59,7 @@ export default function SignIn() {
   }, [email, password]);
 
   return (
-    <div className="d-flex justify-content-center m-4">
+    <div className="d-flex justify-content-center m-4 Auth-form-container align-items-center">
       <form className="Auth-form">
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign In</h3>
@@ -111,9 +111,6 @@ export default function SignIn() {
               Submit
             </button>
           </div>
-          <p className="text-center mt-2">
-            <a href="#">Forgot password?</a>
-          </p>
         </div>
       </form>
     </div>

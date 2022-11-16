@@ -8,6 +8,10 @@ import BasicRegister from "./pages/BasicRegister";
 import CartographerRegister from "./pages/CartographerRegister";
 import Register from "./pages/Register";
 import SignIn from "./pages/SignIn";
+import Map from "./components/Map";
+import About from "./pages/About";
+import Stats from "./pages/Stats";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -22,6 +26,9 @@ function App() {
           element={<CartographerRegister />}
         />
         <Route path="/home" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/stats" element={<Stats />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
