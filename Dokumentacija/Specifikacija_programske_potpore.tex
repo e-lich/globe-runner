@@ -885,35 +885,44 @@ UC						\item  \textbf{Sudionici:} Baza podataka, OSRM servis
         			\label{fig:promjene}
         		\end{figure}
 				
+			\pagebreak
 			\subsection{Sekvencijski dijagrami}
 				
-				\subsubsection{Obrazci uporabe UC11-Izazov igrača i UC12-Odgovor na izazov igrača}
+				\subsubsection{Obrazac uporabe UC14 - Prijava nove lokacije}
+				
+				Napredni igrač šalje zahtjev za dodavanje kartice te mu poslužitelj prikazuje sučelje za unos podataka o novoj kartici/lokaciji. Napredni igrač unosi sve podatke o kartici koju želi dodati te sprema provjere. Poslužitelj tada provjerava ispravnost unesenih podataka te ih, u slučaju uspješne validacije, sprema u bazu. Nakon toga, poslužitelj naprednom igraču ispisuje poruku o uspješnom dodavanju nove kartice/lokacije.
 				
 				\begin{figure}[H]
-        			\includegraphics[scale=0.4]{slike/Sekvencijski dijagrami/UC11, UC12.png}
-        			\centering
-        			\caption{Sekvencijski dijagram za UC11, UC12}
-        			\label{fig:promjene}
-        		\end{figure}
-				
-				\subsubsection{Obrazci uporabe UC17, UC18, UC20, UC21 i UC22}
-				
-				\begin{figure}[H]
-        			\includegraphics[scale=0.3]{slike/Sekvencijski dijagrami/UC17, UC18, UC20, UC21, UC23.png}
-        			\centering
-        			\caption{Sekvencijski dijagram za UC17, UC18, UC20, UC21, UC22}
-        			\label{fig:promjene}
-        		\end{figure}
-        		
-        		\subsubsection{Obrazac uporabe UC14-Prijava nove lokacije}
-				
-				\begin{figure}[H]
-        			\includegraphics[scale=0.4]{slike/Sekvencijski dijagrami/UC14-Prijava nove lokacije.png}
+        			\includegraphics[scale=0.4]{slike/Sekvencijski dijagrami/UC14 - Prijava nove lokacije.png}
         			\centering
         			\caption{Sekvencijski dijagram za UC14}
         			\label{fig:promjene}
         		\end{figure}
-	
+				
+				\pagebreak
+				\subsubsection{Obrasci uporabe UC17 - Pregled prijedloga i UC18 - Uređivanje prijedloga}
+				
+				Kartograf šalje zahtjev za prikaz neodobrenih lokacija. Poslužitelj dohvaća neodobrene lokacije iz baze te ih prikazuje kartografu. Kartograf šalje zahtjev za izmjenu podataka o odabranoj lokaciji/kartici. Poslužitelj prikazuje kartografu sučelje za uređivanje postojećih podataka o neodobrenoj lokaciji. Kartograf unosi izmjene u prikazano sučelje. Ako kartograf pokuša zatvoriti prozor prije spremanja unesenih izmjena, poslužitelj ga upozorava da promjene nisu spremljene. Tada kartograf može odabrati svejedno zatvoriti prozor ili spremiti promjene. Ako odabere zatvoriti prozor prije spremanja, unesene izmjene neće biti spremljene u bazu. Ako odabere spremiti promjene, poslužitelj unesene podatke o lokaciji sprema u bazu te ispisuje poruku o uspješnoj izmjeni podataka.
+				
+				\begin{figure}[H]
+        			\includegraphics[scale=0.3]{slike/Sekvencijski dijagrami/UC17 - Pregled prijedloga, UC18 - Uređivanje prijedloga.png}
+        			\centering
+        			\caption{Sekvencijski dijagram za UC17, UC18}
+        			\label{fig:promjene}
+        		\end{figure}
+        		
+        		\pagebreak
+        		\subsubsection{Obrasci uporabe UC21 - Preuzimanje kartice za provjeru i UC23 - Generiranje rute}
+        		
+        		Kartograf šalje zahtjev za prikaz kartica koje trebaju terensku provjeru. Poslužitelj dohvaća kartice koje trebaju terensku provjeru iz baze te ih prikazuje kartografu. Kartograf šalje zahtjev za preuzimanjem kartice za provjeru. Poslužitelj u bazu podataka bilježi da je kartica preuzeta za provjeru te bilježi koji kartograf ju je preuzeo. Kartograf prije generiranja rute još jednom šalje zahtjev za prikaz neodobrenih lokacija. Poslužitelj ih dohvaća iz baze podataka te prikazuje kartografu. Kartograf šalje zahtjev za generiranje rute. Poslužitelj iz baze dohvaća kartice koje je taj kartograf preuzeo za provjeru te ih šalje OSRM servisu i zahtjeva generiranje rute. OSRM servis poslužitelju vraća generiranu rutu, a poslužitelj ju prikazuje kartografu.
+				
+				\begin{figure}[H]
+        			\includegraphics[scale=0.4]{slike/Sekvencijski dijagrami/UC14 - Prijava nove lokacije.png}
+        			\centering
+        			\caption{Sekvencijski dijagram za UC21, UC23}
+        			\label{fig:promjene}
+        		\end{figure}
+	    \pagebreak
 		\section{Ostali zahtjevi}
 		\begin{packed_item}
 		    \item Sustav treba omogućiti rad više korisnika u stvarnom vremenu
