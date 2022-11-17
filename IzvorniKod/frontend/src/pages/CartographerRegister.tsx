@@ -110,7 +110,7 @@ function CartographerRegister() {
             setError(response.data);
           } else {
             saveUserData(response.data);
-            navigate("/home");
+            navigate("/confirm");
           }
         })
         .catch(function (error) {

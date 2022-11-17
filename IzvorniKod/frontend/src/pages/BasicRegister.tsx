@@ -78,7 +78,7 @@ function BasicRegister() {
               setError(res.data);
             } else {
               saveUserData(res.data);
-              navigate("/home");
+              navigate("/confirm");
             }
           },
           (err) => {

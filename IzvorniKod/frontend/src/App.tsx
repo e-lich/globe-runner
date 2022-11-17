@@ -11,6 +11,7 @@ import SignIn from "./pages/SignIn";
 import About from "./pages/About";
 import Stats from "./pages/Stats";
 import Profile from "./pages/Profile";
+import EmailConfirm from "./pages/EmailConfirm";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/stats" element={<Stats />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/confirm" element={<EmailConfirm />} />
       </Routes>
     </BrowserRouter>
   );

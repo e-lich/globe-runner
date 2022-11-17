@@ -31,6 +31,9 @@ def login():
     elif user.password != request_data['password']:
         errors.append("Incorrect password")
         return errors
+    elif not user.confirmed:
+        errors.append("Email not confirmed")
+        return errors
     else:
         # login user ??
 

@@ -60,7 +60,7 @@ export default function Profile() {
                   type="text"
                   name="username"
                   className="form-control mt-1"
-                  value={"username"}
+                  value={user ? JSON.parse(user).username : "username"}
                   disabled={true}
                 />
               </div>
@@ -101,7 +101,7 @@ export default function Profile() {
               <input
                 type="email"
                 className="form-control mt-1"
-                placeholder="Username"
+                placeholder={user ? JSON.parse(user).email : "email"}
                 disabled={true}
               />
             </div>
