@@ -14,6 +14,7 @@ export default function Profile() {
   const navigate = useNavigate();
   const [submitDisabled, setSubmitDisabled] = useState(true);
   const [authMode, setAuthMode] = useState("basic");
+  const [user, setUser] = useState(localStorage.getItem("user"));
 
   function handleLogout() {
     localStorage.removeItem("user");
@@ -30,9 +31,9 @@ export default function Profile() {
 
   useEffect(() => {
     if (
-      userData.password != "" &&
+      userData.password !== "" &&
       userData.password.length >= 8 &&
-      userData.password == userData.passwordConfirmation
+      userData.password === userData.passwordConfirmation
     )
       setSubmitDisabled(false);
     else setSubmitDisabled(true);
@@ -46,6 +47,13 @@ export default function Profile() {
           <form className="Auth-form">
             <div className="Auth-form-content">
               <h3 className="Auth-form-title">Profile information</h3>
+              {user && (
+                <img
+                  src={JSON.parse(user).photo}
+                  alt="profile"
+                  className="img-fluid mt-2 border border-dark rounded"
+                />
+              )}
               <div className="form-group mt-3">
                 <label>Username</label>
                 <input

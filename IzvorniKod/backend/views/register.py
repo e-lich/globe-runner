@@ -1,3 +1,4 @@
+import json
 from flask import request, jsonify, render_template, url_for, redirect
 from backend import app, db
 from backend.models import Player, Cartographer
@@ -74,6 +75,8 @@ def register_user():
     html = render_template('activate.html', confirm_url=confirm_url, username=new_user.username)
     subject = "Please confirm your email for GlobeRunner"
     send_email(new_user.email, subject, html)
+
+    # .tobytes().decode('utf-8') is used to convert bytes to string
     
     return jsonify({
         'username': new_user.username,

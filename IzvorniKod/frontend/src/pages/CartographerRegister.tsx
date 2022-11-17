@@ -82,6 +82,17 @@ function CartographerRegister() {
 
   // TODO
   function handleRegister() {
+    if (!file || !fileID) {
+      setError((previousValue) => [
+        ...previousValue,
+        "You must upload a profile picture and ID picture!",
+      ]);
+      return;
+    }
+
+    let photoString = URL.createObjectURL(file);
+    let photoIDString = URL.createObjectURL(fileID);
+
     return new Promise((resolve, reject) => {
       axios
         .post(baseURL + "/register", {
@@ -89,8 +100,8 @@ function CartographerRegister() {
           username: username,
           iban: IBAN,
           email: email,
-          photo: "slika",
-          id: "slika osobne",
+          photo: photoString,
+          id: photoIDString,
           password: password,
         })
         .then(function (response) {

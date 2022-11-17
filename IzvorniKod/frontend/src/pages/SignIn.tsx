@@ -46,15 +46,7 @@ export default function SignIn() {
   }
 
   useEffect(() => {
-    if (
-      email !== "" &&
-      email.includes("@") &&
-      email.substring(0, email.indexOf("@")).length > 0 &&
-      email.substring(email.indexOf("@"), email.length - 1).length > 0 &&
-      password !== "" &&
-      password.length >= 8
-    )
-      setSubmitDisabled(false);
+    if (password !== "" && password.length >= 8) setSubmitDisabled(false);
     else setSubmitDisabled(true);
   }, [email, password]);
 
@@ -81,7 +73,7 @@ export default function SignIn() {
               </div>
             ))}
           <div className="form-group mt-3">
-            <label>Email address</label>
+            <label>Email address or username</label>
             <input
               type="email"
               className="form-control mt-1"

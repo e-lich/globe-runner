@@ -52,13 +52,23 @@ function BasicRegister() {
   const baseURL = "http://127.0.0.1:5000";
 
   function handleRegister() {
+    if (!file) {
+      setError((previousValue) => [
+        ...previousValue,
+        "You must upload a profile picture!",
+      ]);
+      return;
+    }
+
+    let photoString = URL.createObjectURL(file);
+
     return new Promise((resolve, reject) => {
       axios
         .post(baseURL + "/register", {
           name: fullName,
           email: email,
           username: username,
-          photo: "photohihi",
+          photo: photoString,
           password: password,
         })
         .then(
