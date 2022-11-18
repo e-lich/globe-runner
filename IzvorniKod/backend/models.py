@@ -56,7 +56,7 @@ class Player(User):
         self.password = password
         self.profilePhoto = photo
         self.playerLocation = None
-        self.authority = False
+        self.advanced = False
         self.eloScore = 0
         self.banned = False
         self.confirmed = False
