@@ -3,12 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from backend import db, app
 
-# id counters
-userIDCounter = 0
-adminIDCounter = 0
-cardIDCounter = 0
-fightIDCounter = 0
-challengeIDCounter = 0
 
 # User db model
 class User(db.Model):
@@ -34,9 +28,6 @@ class Cartographer(User):
     verified = db.Column(db.Boolean)
 
     def __init__(self, username, name, email, password, photo, iban, id):
-        userIDCounter += 1
-
-        self.userID = userIDCounter
         self.username = username
         self.name = name
         self.email = email
@@ -58,9 +49,7 @@ class Player(User):
     signedIn = db.Column(db.Boolean)
 
     def __init__(self, username, name, email, password, photo):
-        userIDCounter += 1
 
-        self.userID = userIDCounter
         self.username = username
         self.name = name
         self.email = email
@@ -84,9 +73,6 @@ class Admin(db.Model):
     password = db.Column(db.String(30))
 
     def __init__(self, username, name, email, password, photo):
-        adminIDCounter += 1
-
-        self.adminID = adminIDCounter
         self.username = username
         self.name = name
         self.email = email

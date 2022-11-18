@@ -42,5 +42,5 @@ def login():
         return jsonify({
             'username': user.username,
             'email': user.email,
-            'photo': user.photo
+            'photo': user.profilePhoto
         })

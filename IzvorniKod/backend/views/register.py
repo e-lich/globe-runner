@@ -81,5 +81,5 @@ def register_user():
     return jsonify({
         'username': new_user.username,
         'email': new_user.email,
-        'photo': new_user.photo
+        'photo': new_user.profilePhoto
     })
