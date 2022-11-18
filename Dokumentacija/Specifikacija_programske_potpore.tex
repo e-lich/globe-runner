@@ -37,7 +37,7 @@
 				\begin{packed_enum}
 					
 					\item sakupljati lokacije, tj. kartice
-					\item vidjeti popis ostalih aktivnih igrača koji se nalaze unutar 50km i s njima ući u borbu
+					\item vidjeti popis ostalih aktivnih igrača koji se nalaze unutar 50 km i s njima ući u borbu
 					
 					\begin{packed_enum}
 					    
@@ -62,7 +62,7 @@
 				\begin{packed_enum}
 					
 					\item sakupljati lokacije, tj. kartice
-					\item vidjeti popis ostalih aktivnih igrača koji se nalaze unutar 50km i s njima ući u borbu
+					\item vidjeti popis ostalih aktivnih igrača koji se nalaze unutar 50 km i s njima ući u borbu
 					
 					\begin{packed_enum}
 					    
@@ -186,7 +186,7 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[2.a] Odabir već zauzetog korisničkog imena i/ili e-maila, unos korisničkog podatka u nedozvoljenom formatu, pružanje neispravnog e-maila ili IBAN-a
+							\item[2.a] Odabir već zauzetog korisničkog imena i/ili e-maila, unos korisničkog podatka u nedozvoljenom formatu, pružanje neispravnog e-maila ili unos neispravnog IBAN-a
 							\item[] \begin{packed_enum}
 								
 								\item Sustav obavještava korisnika o neuspjelom upisu i vraća ga na stranicu za registraciju
@@ -239,7 +239,7 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Korisnik odabire opciju "My Profile"
+							\item Korisnik odabire opciju \textit{My Profile}
 							\item Aplikacija prikazuje osobne podatke korisnika i njegovu statistiku
 
 						\end{packed_enum}
@@ -284,7 +284,7 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[2.a] Korisnik promijeni svoje osobne podatke, ali ne odabere opciju "Spremi promjene"
+							\item[2.a] Korisnik promijeni svoje osobne podatke, ali ne odabere opciju \textit{Save changes}
 							\item[] \begin{packed_enum}
 								
 								\item Sustav obavještava korisnika da nije spremio podatke prije izlaska iz prozora
@@ -327,8 +327,8 @@
 						\item[] \begin{packed_enum}
 	
 							\item Korisnik odabire karticu na karti
-							\item Korisnik odabire opciju "Collect"
-							\item Kartica se nalazi na stranici "My Profile - > Inventory" 
+							\item Korisnik odabire opciju \textit{Collect}
+							\item Kartica se nalazi na stranici \textit{My Profile -$>$ Inventory} 
 
 						\end{packed_enum}
 						
@@ -352,16 +352,14 @@
 						\item \textbf{Glavni sudionik: }Korisnik
 						\item  \textbf{Cilj:} Pregledati globalnu statistiku
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item 
+							\item Korisnik odabire opciju \textit{Global stats} koja ga vodi na stranicu gdje dobiva uvid u globalnu statistiku
 
 						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
 						
 					\end{packed_item}
 				
@@ -382,13 +380,13 @@
 						
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC11 - Izazov igrača}}
+					\noindent \underbar{\textbf{UC11 - Izazivanje igrača}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Igrač
 						\item  \textbf{Cilj:} Izazvati drugog igrača
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Igrač je prijavljen i nalazi se unutar 50km udaljenosti od drugog igrača
+						\item  \textbf{Preduvjet:} Igrač je prijavljen i nalazi se unutar 50 km udaljenosti od drugog igrača
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -399,6 +397,7 @@
 						\end{packed_enum}
 						
 					\end{packed_item}
+					\pagebreak
 					
 					\noindent \underbar{\textbf{UC12 - Odgovor na izazov igrača}}
 					\begin{packed_item}
@@ -412,7 +411,7 @@
 						\item[] \begin{packed_enum}
 	
 							\item Igrač dobiva obavijest o pristiglom izazovu
-							\item Igrač označava "\textit{Accept}" ako prihvaća izazov ili "\textit{Deny}" ako odbija
+							\item Igrač označava \textit{Accept} ako prihvaća izazov ili \textit{Deny} ako odbija
 
 						\end{packed_enum}
 						
@@ -430,7 +429,7 @@
 						\item[] \begin{packed_enum}
 	
 							\item Korisnik odabire tri kartice među onima koje je prikupio
-							\item Korisnik klikom na gumb "\textit{Fight!}" ulazi u borbu
+							\item Korisnik klikom na gumb \textit{Fight!} ulazi u borbu
 							\item Korisniku se prikazuje ishod borbe i ažurirani broj njegovih bodova
 						\end{packed_enum}
 						
@@ -442,12 +441,12 @@
 						\item \textbf{Glavni sudionik: }Napredni igrač
 						\item  \textbf{Cilj:} Prijaviti novu lokaciju
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Igrač je prijavljen i ima dovoljno iskustva (smatra se naprednim igračem)
+						\item  \textbf{Preduvjet:} Igrač je prijavljen i ima dovoljno visok \textit{ELO score}
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item Igrač odabire opciju "Add location"
+							\item Igrač odabire opciju \textit{Add location}
 							\item Igrač unosi naziv i opis te dodaje fotografiju
 
 						\end{packed_enum}
@@ -511,7 +510,7 @@
 						
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC17 - Pregled prijedloga}}
+					\noindent \underbar{\textbf{UC17 - Pregled prijedloga lokacija}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Kartograf
@@ -529,8 +528,9 @@
 						\end{packed_enum}
 						
 					\end{packed_item}
+					\pagebreak
 					
-					\noindent \underbar{\textbf{UC18 - Uređivanje prijedloga}}
+					\noindent \underbar{\textbf{UC18 - Uređivanje prijedloga lokacija}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Kartograf
@@ -554,7 +554,7 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[2.a] Kartograf promijeni podatke o lokaciji, ali ne odabere opciju "Spremi promjene"
+							\item[2.a] Kartograf promijeni podatke o lokaciji, ali ne odabere opciju \textit{Save changes}
 							\item[] \begin{packed_enum}
 								
 								\item Sustav obavještava kartografa da nije spremio podatke prije izlaska iz prozora
@@ -564,7 +564,7 @@
 						\end{packed_item}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC19 - Odobravanje prijedloga}}
+					\noindent \underbar{\textbf{UC19 - Odobravanje prijedloga lokacija}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Kartograf
@@ -579,12 +579,13 @@
 							\item Kartograf odabire filtar neodobrenih lokacija
 							\item Kartografu se na karti prikazuju predložene lokacije koje još nisu odobrene
 							\item Kartograf odabire lokaciju koju želi odobriti
-							\item Kartograf odobrava lokaciju klikom na gumb "Odobri lokaciju"
+							\item Kartograf odobrava lokaciju klikom na gumb \textit{Approve card}
 							\item Baza podataka se ažurira
 
 						\end{packed_enum}
 						
 					\end{packed_item}
+					\pagebreak
 					
 					\noindent \underbar{\textbf{UC20 - Označavanje lokacije za provjeru}}
 					\begin{packed_item}
@@ -601,7 +602,7 @@
 							\item Kartograf odabire filtar neodobrenih lokacija
 							\item Kartografu se na karti prikazuju predložene lokacije koje još nisu odobrene
 							\item Kartograf odabire lokaciju koju želi označiti za terensku provjeru
-							\item Kartograf označava da je potrebna terenska provjera lokacije klikom na gumb "Zatraži provjeru"
+							\item Kartograf označava da je potrebna terenska provjera lokacije klikom na gumb \textit{Request on-site check}
 							\item Baza podataka se ažurira
 
 						\end{packed_enum}
@@ -619,17 +620,17 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Kartograf se nalazi na stranici "Provjera na terenu"
+							\item Kartograf se nalazi na stranici \textit{On-site approval}
 							\item Kartograf odabire filtar koji će prikazati lokacije koje trebaju terensku provjeru
 							\item Kartografu se na karti prikazuju predložene lokacije koje trebaju provjeru na terenu
-							\item Kartograf klikom odabire lokaciju koju želi osobno obići, zatim klikne na gumb "Dodaj u rutu"
+							\item Kartograf klikom odabire lokaciju koju želi osobno obići, zatim klikne na gumb \textit{Add to my route}
 							\item Baza podataka se ažurira
 
 						\end{packed_enum}
 						
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC22 - Uklanjanje lokacija}}
+					\noindent \underbar{\textbf{UC22 - Uklanjanje lokacija}} %Odustajanje od provjere?
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Kartograf
@@ -640,10 +641,10 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Kartograf se nalazi na stranici "Provjera na terenu"
+							\item Kartograf se nalazi na stranici \textit{On-site approval}
 							\item Kartograf odabire filtar koji će prikazati lokacije koje je dodao na vlastitu listu za provjeru na terenu
 							\item Kartografu se na karti prikazuju njegove lokacije koje trebaju provjeru na terenu
-							\item Kartograf klikom odabire lokaciju koju želi ukloniti iz rute, a uklanja ju klikom na gumb "Ukloni"
+							\item Kartograf klikom odabire lokaciju koju želi ukloniti iz rute, a uklanja ju klikom na gumb \textit{Remove}
 							\item Baza podataka se ažurira
 
 						\end{packed_enum}
@@ -661,10 +662,10 @@ UC						\item  \textbf{Sudionici:} Baza podataka, OSRM servis
 						
 						\item[] \begin{packed_enum}
 	
-							\item Kartograf se nalazi na stranici "Provjera na terenu"
+							\item Kartograf se nalazi na stranici \textit{On-site approval}
 							\item Kartografu se na karti prikazuju predložene lokacije koje trebaju provjeru na terenu
 							\item Kartograf odabire filtre po želji - može prikazati lokacije koje je dodao na vlastitu listu za provjeru na terenu i/ili lokacije koje trebaju terensku provjeru, ali ih nitko nije zadužio
-							\item Kartograf izražava zahtjev za generiranjem rute koja će obići sve odabrane lokacije klikom na gumb "Generiraj rutu"
+							\item Kartograf izražava zahtjev za generiranjem rute koja će obići sve odabrane lokacije klikom na gumb \textit{Generate route}
 							\item Sustav rješava problem trgovačkog putnika putem vanjskog servisa i prikazuje kartografu generiranu rutu
 							
 						\end{packed_enum}
@@ -682,9 +683,9 @@ UC						\item  \textbf{Sudionici:} Baza podataka, OSRM servis
 						
 						\item[] \begin{packed_enum}
 	
-							\item Kartograf se nalazi na stranici "Provjera na terenu"
+							\item Kartograf se nalazi na stranici \textit{On-site approval}
 							\item Kartografu se ispod karte prikazuje lista lokacija koje je dodao na vlastitu listu za provjeru na terenu
-							\item Kartograf pojedinu lokaciju odobrava klikom na gumb "Odobri"
+							\item Kartograf pojedinu lokaciju odobrava klikom na gumb \textit{Approve}
 							\item Baza podataka se ažurira
 							
 						\end{packed_enum}
@@ -702,7 +703,7 @@ UC						\item  \textbf{Sudionici:} Baza podataka, OSRM servis
 						
 						\item[] \begin{packed_enum}
 	
-							\item Kartograf se nalazi na stranici "Vlastiti profil"
+							\item Kartograf se nalazi na stranici \textit{My profile}
 							\item Kartografu se na njegovom profilu prikazuje lista svih lokacija koje je odobrio
 							
 						\end{packed_enum}
@@ -720,7 +721,7 @@ UC						\item  \textbf{Sudionici:} Baza podataka, OSRM servis
 						
 						\item[] \begin{packed_enum}
 	
-							\item Administrator se nalazi na stranici "Svi korisnici"
+							\item Administrator se nalazi na stranici \textit{All users}
 							\item Administrator vidi popis svih korisnika i klikom na korisničko ime pojedinog korisnika biva odveden na stranicu gdje dobiva uvid u njegove osobne podatke
 							
 						\end{packed_enum}
@@ -738,11 +739,12 @@ UC						\item  \textbf{Sudionici:} Baza podataka, OSRM servis
 						
 						\item[] \begin{packed_enum}
 	
-							\item Administrator se nalazi na stranici "Svi korisnici"
+							\item Administrator se nalazi na stranici \textit{All users}
 							\item Administrator vidi popis svih korisnika i klikom na gumb za uređivanje pored korisničkog imena pojedinog korisnika biva odveden na stranicu gdje dobiva mogućnost izmjene njegovih osobnih podataka
 							
 						\end{packed_enum}
 						
+						\pagebreak
 						\item  \textbf{Opis mogućih odstupanja:}
 						\item[] \begin{packed_item}
 	
@@ -766,7 +768,7 @@ UC						\item  \textbf{Sudionici:} Baza podataka, OSRM servis
 						
 						\item[] \begin{packed_enum}
 	
-							\item Administrator se nalazi na stranici "Svi korisnici"
+							\item Administrator se nalazi na stranici \textit{All users}
 							\item Administrator vidi popis svih korisnika i klikom na gumb za isključenje isključuje korisnika na konačan vremenski period
 							
 						\end{packed_enum}
@@ -783,7 +785,7 @@ UC						\item  \textbf{Sudionici:} Baza podataka, OSRM servis
 						
 						\item[] \begin{packed_enum}
 	
-							\item Administrator se nalazi na stranici "Sve kartice"
+							\item Administrator se nalazi na stranici \textit{All cards}
 							\item Administrator vidi popis svih kartica i klikom na pojedinu biva odveden na stranicu gdje dobiva uvid u podatke o njoj
 							
 						\end{packed_enum}
@@ -801,7 +803,7 @@ UC						\item  \textbf{Sudionici:} Baza podataka, OSRM servis
 						
 						\item[] \begin{packed_enum}
 	
-							\item Administrator se nalazi na stranici "Sve kartice"
+							\item Administrator se nalazi na stranici \textit{All cards}
 							\item Administrator vidi popis svih korisnika i klikom na gumb za uređivanje pored pojedine kartice biva odveden na stranicu gdje dobiva mogućnost izmjene podataka o lokaciji
 							
 						\end{packed_enum}
@@ -829,7 +831,7 @@ UC						\item  \textbf{Sudionici:} Baza podataka, OSRM servis
 						
 						\item[] \begin{packed_enum}
 	
-							\item Administrator se nalazi na stranici "Odobravanje kartografa"
+							\item Administrator se nalazi na stranici \textit{Cartograph approvals}
 							\item Administrator vidi popis svih neodobrenih registracija kartografa i klikom na pojedinu biva odveden na stranicu gdje dobiva uvid u podatke koje je kartograf predao u prijavi
 							
 						\end{packed_enum}
@@ -847,8 +849,8 @@ UC						\item  \textbf{Sudionici:} Baza podataka, OSRM servis
 						
 						\item[] \begin{packed_enum}
 	
-							\item Administrator se nalazi na na kojoj ima uvid u podatke koje je kartograf predao u prijavi (UC3)
-							\item Klikom na gumb "Odobri" administrator odobrava registraciju kartografa
+							\item Administrator se nalazi na na kojoj ima uvid u podatke koje je kartograf predao u prijavi (UC31)
+							\item Klikom na gumb \textit{Approve} administrator odobrava registraciju kartografa
 							
 						\end{packed_enum}
 						
@@ -936,5 +938,7 @@ UC						\item  \textbf{Sudionici:} Baza podataka, OSRM servis
 			\item Veza s bazom podataka mora biti kvalitetno zaštićena, brza i otporna na vanjske greške
 			\item Pristup sustavu mora biti omogućen iz javne mreže pomoću HTTPS
 			\item Rukovanje osobnim podatcima treba biti usklađeno s važećim direktivama
+			\item Sustav treba koristiti GPS za pozicioniranje igrača i kartica na karti
+			\item Sustav treba koristiti OSRM servis za rješavanje problema trgovačkog putnika
 			
 		\end{packed_item}

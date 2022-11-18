@@ -1,19 +1,19 @@
 \chapter{Arhitektura i dizajn sustava}
 		
-		Arhitektura se može podijeliti na tri podsustava:
+		Korištena arhitektura se može podijeliti na tri podsustava:
 		    \begin{packed_item}
 		        \item Web poslužitelj
     		    \item Web aplikacija
     		    \item Baza podataka
 		    \end{packed_item}
 		    
-	    \underline{\textit{Web preglednik}} je program koji korisniku omogućuje pregled web-stranica i multimedijalnih sadržaja vezanih uz njih. Svaki internetski preglednik je prevoditelj što znači da preglednik interpretira kod kojim je stranica napisana kao nešto razumljivo. Korisnik putem web preglednika šalje zahtjev web poslužitelju.
+	    \underline{\textit{Web preglednik}} program je koji omogućuje pregled web-stranica i multimedijalnih sadržaja vezanih uz njih. Svaki internetski preglednik ima i ulogu prevoditelja, odnosno on interpretira kod kojim je stranica napisana i tako realizira grafičko sučelje i neke jednostavnije funkcionalnosti. Korisnik putem web preglednika šalje zahtjeve web poslužitelju.
 	    
-	    \underline{\textit{Web poslužitelj}} je osnova rada web aplikacije. Njegova primarna zadaća je komunikacija klijenta s aplikacijom. Komunikacija se odvija preko HTTP (engl. \textit{Hyper Text Transfer Protocol}) protokola, što je protokol u prijenosu informacija na webu. Poslužitelj je onaj koji pokreće web aplikaciju te joj prosljeđuje zahtjev.
+	    \underline{\textit{Web poslužitelj}} centralna je komponenta za rad web aplikacije. Njegova je glavna zadaća komunikacija klijenta s aplikacijom. Komunikacija se odvija preko HTTP (engl. \textit{Hyper Text Transfer Protocol}) protokola koji se koristi u prijenosu informacija na webu. Poslužitelj je onaj koji pokreće web aplikaciju, zaprima korisničke zahtjeve i prosljeđuje ih aplikaciji na obradu. Web poslužitelj koji smo odabrali za našu web aplikaciju je DigitalOcean. Na njega smo postavili naše \textit{frontend} i \textit{backend} komponente, a kao poslužitelj baze podataka odlučili smo koristiti Render.
 
 	    Korisnik koristi \underline{\textit{web aplikaciju}} za obrađivanje željenih zahtijeva. Web aplikacija obrađuje zahtjev te ovisno o zahtjevu, pristupa bazi podataka nakon čega preko poslužitelja vraća korisniku odgovor u obliku HTML dokumenta vidljivog u web pregledniku.
 		
-		Programski jezik kojeg smo odabrali za izradu naše web aplikacije je Python zajedno s Flask radnim okvirom te programski jezik TypeScript s React radnim okvirom. Odabrano razvojno okruženje je Microsoft visual studio. Arhitektura sustava temeljit će se na MVC (Model-View-Controller) konceptu. MVC koncept podržan je od strane Flask radnog okvira i kao takav ima gotove predloške koji nam olakšavaju razvoj razvoj web aplikacije.
+		Programski jezik kojeg smo odabrali za izradu naše web aplikacije je Python zajedno s Flask radnim okvirom te programski jezik TypeScript s React radnim okvirom u sklopu kojeg smo koristili CSS radni okvir Bootstrap. Odabrano razvojno okruženje je Microsoft Visual Studio. Arhitektura sustava temeljit će se na MVC (Model-View-Controller) konceptu. MVC koncept podržan je od strane Flask radnog okvira i kao takav ima gotove predloške koji nam olakšavaju razvoj razvoj web aplikacije.
 		
         Karakteristika MVC koncepta je nezavisan razvoj pojedinih dijelova aplikacije što za posljedicu ima jednostavnije ispitivanje kao i jednostavno razvijanje i dodavanje novih svojstava u sustav.
         MVC koncept sastoji se od:
@@ -23,7 +23,7 @@
             \item \textbf{Controller} – prima ulaze i prilagođava ih za prosljeđivanje Modelu ili Viewu. Upravlja korisničkim zahtjevima i temeljem njih izvodi daljnju interakciju s ostalim elementima sustava.
         \end{packed_item}
 
-				
+		\pagebreak	
 		\section{Baza podataka}
 			
 			Za potrebe našeg sustava koristit ćemo relacijsku bazu podataka koja svojom strukturom olakšava modeliranje stvarnog svijeta. Gradivna jedinka baze je relacija, odnosno tablica koja je definirana svojim imenom i skupom atributa. Zadaća baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za daljnju obradu. Baza podataka ove aplikacije sastoji se od sljedećih entiteta:
@@ -33,7 +33,7 @@
                 \item Player
                 \item Admin
                 \item Card
-                \item Inventroy
+                \item Inventory
                 \item Fight
                 \item Challenge
 			\end{packed_item}
@@ -59,7 +59,7 @@
 					username & VARCHAR & korisničko ime\\ \hline 
 					name & VARCHAR & ime i prezime korisnika\\ \hline 
 					email & VARCHAR	& email korisnika\\ \hline
-					profilePhoto & BYTEA & fotografija korisnika\\ \hline
+					profilePhoto & VARCHAR & fotografija korisnika\\ \hline
 					password & VARCHAR & lozinka korisnika\\ \hline
 					confirmed & BOOLEAN & je li korisnik potvrđen putem emaila\\ \hline 
 				\end{longtblr}
@@ -77,9 +77,9 @@
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Cartographer}}	& \textbf{Type} & \textbf{Description}\\ \hline[3pt]
-					\SetCell{LightGreen}userID & INT & jedinstveni identifikator korisnika\\ \hline
+					\SetCell{LightGreen}userID & INT & \SetCell{LightBlue}jedinstveni identifikator korisnika (user.userID)\\ \hline
 					IBAN & VARCHAR & IBAN kartografa\\ \hline 
-					document & BYTEA & fotografija osobne iskaznice kartografa\\ \hline 
+					document & VARCHAR & fotografija osobne iskaznice kartografa\\ \hline 
 					verified & BOOLEAN	& je li administrator odobrio kartografa\\ \hline
 				\end{longtblr}
 				
@@ -96,13 +96,14 @@
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Player}}	& \textbf{Type} & \textbf{Description}\\ \hline[3pt]
-					\SetCell{LightGreen}userID & INT & jedinstveni identifikator korisnika\\ \hline
+					\SetCell{LightGreen}userID & INT & \SetCell{LightBlue}jedinstveni identifikator korisnika (user.userID)\\ \hline
 					advanced	& BOOLEAN & razina ovlasti igrača može biti ordinary ili advanced\\ \hline 
 					eloScore & INT & ELO score igrača\\ \hline 
 					banned & BOOLEAN	& je li igrač isključen iz igre\\ \hline
 					playerLocation & VARCHAR & aktivna lokacija korisnika\\ \hline
-					signedIn & BOOLEAN & je li korisnik ulogiran\\ \hline
+					signedIn & BOOLEAN & je li korisnik prijavljen u sustav\\ \hline
 				\end{longtblr}
+			\pagebreak
 			
 			\textbf{Admin}   Ovaj entitet sadržava sve važne informacije o adminu. Sadrži atribute: adminID, username, name, email, password.
 				
@@ -132,20 +133,20 @@
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[12,l]|X[8, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Card}}	& \textbf{Type} & \textbf{Description}\\ \hline[3pt]
 					\SetCell{LightGreen}cardID & INT & šifra kartice\\ \hline
 					cardLocation & VARCHAR & lokacija kartice\\ \hline 
-					locationPhoto & BYTEA & fotografija kartice\\ \hline 
+					locationPhoto & VARCHAR & fotografija kartice\\ \hline 
 					title & VARCHAR	& naziv kartice\\ \hline
 					description & VARCHAR & opis kartice\\ \hline
 					cardStatus & ENUM & status kartice može biti: submitted, unclaimed, claimed, verified\\ \hline
-					authorUserID & INT & koji igrač je predložio dodavanje nove kartice u igru\\ \hline 
-					approvedByUserID & INT & koji kartograf je odobrio zahtjev za izradu nove kartice\\ \hline
+					\SetCell{LightBlue}authorUserID & INT & koji igrač je predložio dodavanje nove kartice u igru (user.userID)\\ \hline 
+					\SetCell{LightBlue}approvedByUserID & INT & koji kartograf je odobrio zahtjev za izradu nove kartice (user.userID)\\ \hline
 				\end{longtblr}
-				
+			\pagebreak
 				
 			\textbf{Inventory}   Ovaj entitet sadržava sve važne informacije o karticama koje pojedini igrači posjeduju. Sadrži atribute: userID, cardID i strength. Ovaj entitet je u \textit{Many-to-One} vezi s entitetom Player preko atributa userID te u \textit{Many-to-One} vezi s entitetom Card preko atributa cardID.
 				
@@ -159,8 +160,8 @@
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Inventory}}	& \textbf{Type} & \textbf{Description}\\ \hline[3pt]
-					\SetCell{LightGreen}userID & INT & identifikacijski broj korisnika koji posjeduje karticu\\ \hline
-					cardID	& INT & šifra kartice\\ \hline 
+					\SetCell{LightGreen}userID & INT & \SetCell{LightBlue}identifikacijski broj korisnika koji posjeduje karticu (user.userID)\\ \hline
+					\SetCell{LightGreen}cardID	& INT & \SetCell{LightBlue}šifra kartice\\ \hline 
 					strength & INT & jačina kartice\\ \hline
 				\end{longtblr}
 				
@@ -173,23 +174,23 @@
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[12,l]|X[8, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Fight}}	& \textbf{Type} & \textbf{Description}\\ \hline[3pt]
 					\SetCell{LightGreen}fightID & INT & šifra borbe\\ \hline
-					player1UserID & INT & pobjednik borbe\\ \hline
-					player2UserID & INT & gubitnik borbe\\ \hline
-					cardID11 & INT & prva kartica igrana od strane prvog igrača\\ \hline
-					cardID12 & INT & druga kartica igrana od strane prvog igrača\\ \hline 
-					cardID13 & INT & treća kartica igrana od strane prvog igrača\\ \hline 
-					cardID21 & INT & prva kartica igrana od strane drugog igrača\\ \hline 
-					cardID22 & INT & druga kartica igrana od strane drugog igrača\\ \hline 
-					cardID23 & INT & treća kartica igrana od strane drugog igrača\\ \hline 
+					\SetCell{LightBlue}player1UserID & INT & pobjednik borbe (user.userID)\\ \hline
+					\SetCell{LightBlue}player2UserID & INT & gubitnik borbe (user.userID)\\ \hline
+					\SetCell{LightBlue}cardID11 & INT & prva kartica igrana od strane prvog igrača (card.cardID)\\ \hline
+					\SetCell{LightBlue}cardID12 & INT & druga kartica igrana od strane prvog igrača (card.cardID)\\ \hline 
+					\SetCell{LightBlue}cardID13 & INT & treća kartica igrana od strane prvog igrača (card.cardID)\\ \hline 
+					\SetCell{LightBlue}cardID21 & INT & prva kartica igrana od strane drugog igrača (card.cardID)\\ \hline 
+					\SetCell{LightBlue}cardID22 & INT & druga kartica igrana od strane drugog igrača (card.cardID)\\ \hline 
+					\SetCell{LightBlue}cardID23 & INT & treća kartica igrana od strane drugog igrača (card.cardID)\\ \hline 
 					points1 & FLOAT	& broj bodova prvog igrača\\ \hline
 					points2 & FLOAT & broj bodova drugog igrača\\ \hline
 					fightTimestamp & TIMESTAMP & trenutak u kojem je provedena borba\\ \hline
-					challengeID & INT & šifra izazova\\ \hline
+					\SetCell{LightBlue}challengeID & INT & šifra izazova (challenge.challengeID)\\ \hline
 				\end{longtblr}
 				
 				
@@ -201,21 +202,21 @@
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[12,l]|X[8, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Challenge}}	& \textbf{Type} & \textbf{Description}\\ \hline[3pt]
 					\SetCell{LightGreen}challengeID & INT & šifra izazova\\ \hline
-					challengerUserID & INT & igrač koji šalje zahtjev za borbu\\ \hline 
-					victimUserID & INT & igrač koji je izazvan na borbu\\ \hline
+					\SetCell{LightBlue}challengerUserID & INT & igrač koji šalje zahtjev za borbu (user.userID)\\ \hline 
+					\SetCell{LightBlue}victimUserID & INT & igrač koji je izazvan na borbu (user.userID)\\ \hline
 					challengeTimestamp & TIMESTAMP & trenutak u kojem je nastao izazov\\ \hline
-					challengeStatus & ENUM & je li izazov accepted, rejected ili pendning\\ \hline
+					challengeStatus & ENUM & je li izazov accepted, rejected ili pending\\ \hline
 				\end{longtblr}
 			
 			\subsection{Dijagram baze podataka}
 				
 				\begin{figure}[H]
-        			\includegraphics[scale=0.4]{slike/ERdiagram.png}
+        			\includegraphics[scale=0.45]{slike/ERdiagram.png}
         			\centering
         			\caption{Dijagram baze podataka}
         			\label{fig:DBmodel}
@@ -226,7 +227,7 @@
 			
 		\section{Dijagram razreda}
 		
-			\textit{Potrebno je priložiti dijagram razreda s pripadajućim opisom. Zbog preglednosti je moguće dijagram razlomiti na više njih, ali moraju biti grupirani prema sličnim razinama apstrakcije i srodnim funkcionalnostima.}\\
+%	\textit{Potrebno je priložiti dijagram razreda s pripadajućim opisom. Zbog preglednosti je moguće dijagram razlomiti na više njih, ali moraju biti grupirani prema sličnim razinama apstrakcije i srodnim funkcionalnostima.}\\
 			
 			Slike \ref{fig:classDiagramControllers}, \ref{fig:classDiagramDTO} i \ref{fig:classDiagramModels} prikazuju razrede u \textit{backend} dijelu implementirane MVC arhitekture. S ulogom obrade dolaznih HTTP zahtjeva implementirane su metode u razredima koji nasljeđuju klasu \textit{Controllers}, prikazani na slici \ref{fig:classDiagramControllers}. Pri posluživanju sadržaja i isporuci podataka razredi sa slike \ref{fig:classDiagramControllers} koriste i izmjenjuju \textit{Data transfer objects}, čiji su razredi prikazani na slici \ref{fig:classDiagramDTO}, koje naposlijetku isporučuju u JSON formatu. Za dohvaćanje i implementiranje interakcija među entitetima poput izazova i borbi služe razredi sa slike \ref{fig:classDiagramModels}. 
 			\begin{figure}[H]
@@ -237,7 +238,7 @@
         		\end{figure}
         		
     		\begin{figure}[H]
-    			\includegraphics[width=\textwidth]{slike/ClassDiagrams/DTO.png}
+    			\includegraphics[scale=1]{slike/ClassDiagrams/DTO.png}
     			\centering
     			\caption{Dijagram razreda - dio Data transfer objects}
     			\label{fig:classDiagramDTO}
@@ -251,11 +252,16 @@
         			\caption{Dijagram razreda - dio Models}
         			\label{fig:classDiagramModels}
         		\end{figure}
-			
+        		
+        	
+			\iffalse %block com za 1. reviziju
 			\textbf{\textit{dio 1. revizije}}\\
 			
 			\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
 			
+			\fi %end block com
+			
+			\pagebreak
 			\textbf{\textit{dio 2. revizije}}\\			
 			
 			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
