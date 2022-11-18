@@ -14,8 +14,8 @@ function BasicRegister() {
 
   const navigate = useNavigate();
 
-  function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    setEmail(e.target.value);
+  function handleEmailChange(e: React.FormEvent<HTMLInputElement>): void {
+    setEmail(e.currentTarget.value);
     setError(error.filter((e) => e !== "Enter a valid email!"));
     if (
       !(
@@ -113,6 +113,9 @@ function BasicRegister() {
   }
 
   useEffect(() => {
+    setError((prev) =>
+      prev.filter((e) => e !== "Password must be at least 8 characters long!")
+    );
     if (
       email !== "" &&
       email.includes("@") &&
@@ -124,10 +127,18 @@ function BasicRegister() {
       username !== "" &&
       file !== undefined &&
       !error.includes("Image must be less than 1MB!")
-    )
+    ) {
       setSubmitDisabled(false);
-    else setSubmitDisabled(true);
-  }, [email, password, fullName, username, file, error]);
+    } else {
+      if (password.length < 8) {
+        setError((prevValue) => [
+          ...prevValue,
+          "Password must be at least 8 characters long!",
+        ]);
+      }
+      setSubmitDisabled(true);
+    }
+  }, [email, password, fullName, username, file]);
 
   return (
     <div className="d-flex justify-content-center m-4">
@@ -165,7 +176,7 @@ function BasicRegister() {
               type="email"
               className="form-control mt-1"
               placeholder="Email Address"
-              onChange={(e) => handleEmailChange(e)}
+              onInput={(e) => handleEmailChange(e)}
             />
           </div>
           <div className="form-group mt-3">

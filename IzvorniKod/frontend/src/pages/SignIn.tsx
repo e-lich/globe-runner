@@ -48,15 +48,15 @@ export default function SignIn() {
   }
 
   useEffect(() => {
+    setError((prev) =>
+      prev.filter((e) => e !== "Password must be at least 8 characters long!")
+    );
     if (email !== "" && password !== "" && password.length >= 8) {
-      setError((prev) =>
-        prev.filter((e) => e !== "Password must be at least 8 characters long!")
-      );
       setSubmitDisabled(false);
     } else {
+      setSubmitDisabled(true);
       if (password.length < 8) {
         setError(["Password must be at least 8 characters long!"]);
-        setSubmitDisabled(true);
       }
     }
   }, [email, password]);
@@ -84,7 +84,6 @@ export default function SignIn() {
               </div>
             ))}
           <div className="form-group mt-3">
-            <label>Email address or username</label>
             <label>Email address or username</label>
             <input
               type=""
