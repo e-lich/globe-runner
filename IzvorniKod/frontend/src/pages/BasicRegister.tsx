@@ -16,6 +16,17 @@ function BasicRegister() {
 
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setEmail(e.target.value);
+    setError(error.filter((e) => e !== "Enter a valid email!"));
+    if (
+      !(
+        email !== "" &&
+        email.includes("@") &&
+        email.substring(0, email.indexOf("@")).length > 0 &&
+        email.substring(email.indexOf("@"), email.length - 1).length > 0
+      )
+    ) {
+      setError((prev) => [...prev, "Enter a valid email!"]);
+    }
   }
 
   function handleFullNameChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -28,6 +39,15 @@ function BasicRegister() {
 
   function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setPassword(e.target.value);
+    setError((prev) =>
+      prev.filter((e) => e !== "Password must be at least 8 characters long!")
+    );
+    if (password.length <= 6) {
+      setError((prevValue) => [
+        ...prevValue,
+        "Password must be at least 8 characters long!",
+      ]);
+    }
   }
 
   function profilePictureChange(e: React.ChangeEvent<HTMLInputElement>): void {

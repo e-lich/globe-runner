@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Z_STREAM_ERROR } from "zlib";
 
 function CartographerRegister() {
-  const [file, setFile] = useState<Blob | MediaSource>();
-  const [fileID, setFileID] = useState<Blob | MediaSource>();
+  let [file, setFile] = useState<Blob | MediaSource>();
+  let [fileID, setFileID] = useState<Blob | MediaSource>();
 
   let [email, setEmail] = useState("");
   let [fullName, setFullName] = useState("");
@@ -17,6 +18,18 @@ function CartographerRegister() {
   const navigate = useNavigate();
 
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setError(error.filter((e) => e !== "Enter a valid email!"));
+    if (
+      !(
+        email !== "" &&
+        email.includes("@") &&
+        email.substring(0, email.indexOf("@")).length > 0 &&
+        email.substring(email.indexOf("@"), email.length - 1).length > 0
+      )
+    ) {
+      setError((prev) => [...prev, "Enter a valid email!"]);
+    }
+
     setEmail(e.target.value);
   }
   function handleFullNameChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -30,7 +43,16 @@ function CartographerRegister() {
   }
 
   function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setError((prev) =>
+      prev.filter((e) => e !== "Password must be at least 8 characters long!")
+    );
     setPassword(e.target.value);
+    if (password.length < 8) {
+      setError((prevValue) => [
+        ...prevValue,
+        "Password must be at least 8 characters long!",
+      ]);
+    }
   }
 
   function profilePictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -53,20 +75,17 @@ function CartographerRegister() {
   }
 
   function IDPictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setError((prev) =>
+      prev.filter((e) => e !== "Image must be less than 1MB!")
+    );
     if (
       e.target.files &&
       e.target.files[0] &&
       e.target.files[0].size < 1000000 &&
       e.target.files[0].type === "image/jpeg"
     ) {
-      setError((prev) =>
-        prev.filter((e) => e !== "Image must be less than 1MB!")
-      );
       setFileID(e.target.files[0]);
     } else {
-      setError((prev) =>
-        prev.filter((e) => e !== "Image must be less than 1MB!")
-      );
       setError((previousValue) => [
         ...previousValue,
         "Image must be less than 1MB!",
@@ -135,7 +154,9 @@ function CartographerRegister() {
       !error.includes("Image must be less than 1MB!")
     )
       setSubmitDisabled(false);
-    else setSubmitDisabled(true);
+    else {
+      setSubmitDisabled(true);
+    }
   }, [email, password, fullName, IBAN, username, file, fileID, error]);
 
   return (
