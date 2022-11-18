@@ -183,7 +183,7 @@ function BasicRegister() {
             <label>Username</label>
             <input
               className="form-control mt-1"
-              placeholder="e.g CoolKid69420"
+              placeholder="e.g CoolKid123"
               onChange={(e) => handleUsernameChange(e)}
             />
           </div>

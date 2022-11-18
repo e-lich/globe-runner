@@ -193,7 +193,7 @@ function CartographerRegister() {
             <label>Username</label>
             <input
               className="form-control mt-1"
-              placeholder="e.g Jane Doe"
+              placeholder="e.g CoolKid123"
               onChange={(e) => handleUsernameChange(e)}
             />
           </div>
