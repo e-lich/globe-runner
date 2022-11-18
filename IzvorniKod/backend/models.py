@@ -3,7 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from backend import db, app
 
-# defining all db models
+# id counters
+userIDCounter = 0
+adminIDCounter = 0
+cardIDCounter = 0
+fightIDCounter = 0
+challengeIDCounter = 0
 
 # User db model
 class User(db.Model):
@@ -11,79 +16,130 @@ class User(db.Model):
 
     __abstract__ = True
 
-    username = db.Column(db.String(32), primary_key=True, unique=True)
+    userID = db.Column(db.Integer, primary_key=True, unique=True)
+    username = db.Column(db.String(32), unique=True)
     name = db.Column(db.String(50))
     email = db.Column(db.String(345), unique=True)
-    photo = db.Column(db.String(100))
+    profilePhoto = db.Column(db.String(100))
     password = db.Column(db.String(30))
-    location = db.Column(db.String(50))
     confirmed = db.Column(db.Boolean)
+    
 
 # Cartographer db model
 class Cartographer(User):
     __tablename__ = "Cartographers"
 
-    iban = db.Column(db.String(21))
-    id = db.Column(db.String(100))
+    IBAN = db.Column(db.String(21))
+    document = db.Column(db.String(100))
     verified = db.Column(db.Boolean)
 
     def __init__(self, username, name, email, password, photo, iban, id):
+        userIDCounter += 1
+
+        self.userID = userIDCounter
         self.username = username
         self.name = name
         self.email = email
-        self.photo = photo
+        self.profilePhoto = photo
         self.password = password
-        self.iban = iban
-        self.location = None
+        self.IBAN = iban
         self.confirmed = False
         self.verified = False
-        self.id = id
+        self.document = id
 
 # Player db model
 class Player(User):
     __tablename__ = "Players"
 
-    authority = db.Column(db.Enum("ordinary", "advanced", "admin", name="authority_type"))
+    advanced = db.Column(db.Boolean)
     eloScore = db.Column(db.Integer)
     banned = db.Column(db.Boolean)
-    cards = relationship("Card", foreign_keys="Card.owned_by")
+    playerLocation = db.Column(db.String(100))
+    signedIn = db.Column(db.Boolean)
 
     def __init__(self, username, name, email, password, photo):
+        userIDCounter += 1
+
+        self.userID = userIDCounter
         self.username = username
         self.name = name
         self.email = email
         self.password = password
-        self.photo = photo
-        self.location = None
-        self.authority = "ordinary"
+        self.profilePhoto = photo
+        self.playerLocation = None
+        self.authority = False
         self.eloScore = 0
         self.banned = False
         self.confirmed = False
+        self.signedIn = False
+
+# Admin db model
+class Admin(db.Model):
+    __tablename__ = "Admins"
+
+    adminID = db.Column(db.Integer, primary_key=True, unique=True)
+    username = db.Column(db.String(32), unique=True)
+    name = db.Column(db.String(50))
+    email = db.Column(db.String(345), unique=True)
+    password = db.Column(db.String(30))
+
+    def __init__(self, username, name, email, password, photo):
+        adminIDCounter += 1
+
+        self.adminID = adminIDCounter
+        self.username = username
+        self.name = name
+        self.email = email
+        self.password = password
 
 # Card db model
 class Card(db.Model):
     __tablename__ = "Cards"
 
-    cipher = db.Column(db.Integer, primary_key=True, unique=True)
-    address = db.Column(db.String(100))
-    strength = db.Column(db.Integer)
-    picture = db.Column(db.String(100))
-    name = db.Column(db.String(50))
+    cardID = db.Column(db.Integer, primary_key=True, unique=True)
+    cardLocation = db.Column(db.String(100))
+    locationPhoto = db.Column(db.String(100))
+    title = db.Column(db.String(50))
     description = db.Column(db.String(250))
-    status = db.Column(db.Enum("submitted", "unclaimed", "claimed", "verified", name="status_type"))
-    author = db.Column(db.String(32), db.ForeignKey("Players.username"))
-    approved_by = db.Column(db.String(32), db.ForeignKey("Cartographers.username"))
-    owned_by = db.Column(db.String(32), db.ForeignKey("Players.username"))
+    cardStatus = db.Column(db.Enum("submitted", "unclaimed", "claimed", "verified", name="card_status_type"))
+    authorUserID = db.Column(db.Integer, db.ForeignKey("Players.userID"))
+    approvedByUserID = db.Column(db.Integer, db.ForeignKey("Cartographers.userID"))
+
+# Inventory db model
+class Inventory(db.Model):
+    __tablename__ = "Inventories"
+
+    userID = db.Column(db.Integer, db.ForeignKey("Players.userID"), primary_key=True)
+    cardID = db.Column(db.Integer, db.ForeignKey("Cards.cardID"), primary_key=True)
+    strength = db.Column(db.Integer)
+
+# Challenge db model
+class Challenge(db.Model):
+    __tablename__ = "Challenges"
+
+    challengeID = db.Column(db.Integer, primary_key=True, unique=True)
+    challengerUserID = db.Column(db.Integer, db.ForeignKey("Players.userID"))
+    victimUserID = db.Column(db.Integer, db.ForeignKey("Players.userID"))
+    challengeTimestamp = db.Column(db.DateTime)
+    challengeStatus = db.Column(db.Enum("pending", "accepted", "rejected", name="challenge_status_type"))
 
 # Fight db model   
 class Fight(db.Model):
-    __tablename__ = "Fight"
+    __tablename__ = "Fights"
     
-    codeno = db.Column(db.Integer, primary_key=True)
-    player_one = username = db.Column(db.String(32), db.ForeignKey("Players.username"))
-    player_two = db.Column(db.String(32), db.ForeignKey("Players.username"))
-    winner = db.Column(db.String(32), db.ForeignKey("Players.username"))
-    #kartice???
+    fightID = db.Column(db.Integer, primary_key=True, unique=True)
+    player1UserID = db.Column(db.Integer, db.ForeignKey("Players.userID"))
+    player2UserID = db.Column(db.Integer, db.ForeignKey("Players.userID"))
+    cardID11 = db.Column(db.Integer, db.ForeignKey("Cards.cardID"))
+    cardID12 = db.Column(db.Integer, db.ForeignKey("Cards.cardID"))
+    cardID13 = db.Column(db.Integer, db.ForeignKey("Cards.cardID"))
+    cardID21 = db.Column(db.Integer, db.ForeignKey("Cards.cardID"))
+    cardID22 = db.Column(db.Integer, db.ForeignKey("Cards.cardID"))
+    cardID23 = db.Column(db.Integer, db.ForeignKey("Cards.cardID"))
+    points1 = db.Column(db.Float)
+    points2 = db.Column(db.Float)
+    fightTimestamp = db.Column(db.DateTime)
+    challengeID = db.Column(db.Integer, db.ForeignKey("Challenges.challengeID"))
 
 # adding all models to db
 db.init_app(app)
