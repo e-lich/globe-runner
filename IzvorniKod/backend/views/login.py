@@ -39,8 +39,12 @@ def login():
         errors.append("Email not confirmed")
         return errors
     else:
+        if type(user) == Admin:
+            photo = None
+        else:
+            photo = user.photo
         return jsonify({
             'username': user.username,
             'email': user.email,
-            'photo': user.profilePhoto
+            'photo': photo
         })
