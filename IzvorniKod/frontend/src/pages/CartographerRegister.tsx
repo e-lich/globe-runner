@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function CartographerRegister() {
-  const [file, setFile] = useState<Blob | MediaSource>();
-  const [fileID, setFileID] = useState<Blob | MediaSource>();
+  let [file, setFile] = useState<Blob | MediaSource>();
+  let [fileID, setFileID] = useState<Blob | MediaSource>();
 
   let [email, setEmail] = useState("");
   let [fullName, setFullName] = useState("");
@@ -53,20 +53,17 @@ function CartographerRegister() {
   }
 
   function IDPictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setError((prev) =>
+      prev.filter((e) => e !== "Image must be less than 1MB!")
+    );
     if (
       e.target.files &&
       e.target.files[0] &&
       e.target.files[0].size < 1000000 &&
       e.target.files[0].type === "image/jpeg"
     ) {
-      setError((prev) =>
-        prev.filter((e) => e !== "Image must be less than 1MB!")
-      );
       setFileID(e.target.files[0]);
     } else {
-      setError((prev) =>
-        prev.filter((e) => e !== "Image must be less than 1MB!")
-      );
       setError((previousValue) => [
         ...previousValue,
         "Image must be less than 1MB!",
@@ -120,6 +117,10 @@ function CartographerRegister() {
   }
 
   useEffect(() => {
+    setError((prev) =>
+      prev.filter((e) => e !== "Password must be at least 8 characters long!")
+    );
+    setError((prev) => prev.filter((e) => e !== "Enter a valid email!"));
     if (
       email !== "" &&
       email.includes("@") &&
@@ -135,8 +136,25 @@ function CartographerRegister() {
       !error.includes("Image must be less than 1MB!")
     )
       setSubmitDisabled(false);
-    else setSubmitDisabled(true);
-  }, [email, password, fullName, IBAN, username, file, fileID, error]);
+    else {
+      setSubmitDisabled(true);
+      if (password.length < 8) {
+        setError((prevValue) => [
+          ...prevValue,
+          "Password must be at least 8 characters long!",
+        ]);
+      }
+      if (
+        email === "" ||
+        !email.includes("@") ||
+        email.substring(0, email.indexOf("@")).length === 0 ||
+        email.substring(email.indexOf("@"), email.length - 1).length === 0
+      ) {
+        setError((prevValue) => [...prevValue, "Enter a valid email!"]);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [email, password, fullName, IBAN, username, file, fileID]);
 
   return (
     <div className="d-flex justify-content-center m-4">
@@ -172,7 +190,7 @@ function CartographerRegister() {
             <label>Username</label>
             <input
               className="form-control mt-1"
-              placeholder="e.g Jane Doe"
+              placeholder="e.g CoolKid123"
               onChange={(e) => handleUsernameChange(e)}
             />
           </div>

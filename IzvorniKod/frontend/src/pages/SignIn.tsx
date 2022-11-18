@@ -6,12 +6,14 @@ export default function SignIn() {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [submitDisabled, setSubmitDisabled] = useState(true);
-  let [error, setError] = useState([]);
+  let [error, setError] = useState<Array<String>>([]);
 
   const navigate = useNavigate();
   const baseURL = "http://127.0.0.1:5000";
 
-  function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>): void {
+  function handleEmailAndUsernameChange(
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void {
     setEmail(e.target.value);
   }
 
@@ -46,8 +48,17 @@ export default function SignIn() {
   }
 
   useEffect(() => {
-    if (password !== "" && password.length >= 8) setSubmitDisabled(false);
-    else setSubmitDisabled(true);
+    setError((prev) =>
+      prev.filter((e) => e !== "Password must be at least 8 characters long!")
+    );
+    if (email !== "" && password !== "" && password.length >= 8) {
+      setSubmitDisabled(false);
+    } else {
+      setSubmitDisabled(true);
+      if (password.length < 8) {
+        setError(["Password must be at least 8 characters long!"]);
+      }
+    }
   }, [email, password]);
 
   return (
@@ -75,10 +86,10 @@ export default function SignIn() {
           <div className="form-group mt-3">
             <label>Email address or username</label>
             <input
-              type="email"
+              type=""
               className="form-control mt-1"
               placeholder="Email Address"
-              onChange={(e) => handleEmailChange(e)}
+              onChange={(e) => handleEmailAndUsernameChange(e)}
             />
           </div>
           <div className="form-group mt-3">
