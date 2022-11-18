@@ -16,17 +16,6 @@ function BasicRegister() {
 
   function handleEmailChange(e: React.FormEvent<HTMLInputElement>): void {
     setEmail(e.currentTarget.value);
-    setError(error.filter((e) => e !== "Enter a valid email!"));
-    if (
-      !(
-        email !== "" &&
-        email.includes("@") &&
-        email.substring(0, email.indexOf("@")).length > 0 &&
-        email.substring(email.indexOf("@"), email.length - 1).length > 0
-      )
-    ) {
-      setError((prev) => [...prev, "Enter a valid email!"]);
-    }
   }
 
   function handleFullNameChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -39,15 +28,6 @@ function BasicRegister() {
 
   function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setPassword(e.target.value);
-    setError((prev) =>
-      prev.filter((e) => e !== "Password must be at least 8 characters long!")
-    );
-    if (password.length <= 6) {
-      setError((prevValue) => [
-        ...prevValue,
-        "Password must be at least 8 characters long!",
-      ]);
-    }
   }
 
   function profilePictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -84,13 +64,22 @@ function BasicRegister() {
 
     return new Promise((resolve, reject) => {
       axios
-        .post(baseURL + "/register", {
-          name: fullName,
-          email: email,
-          username: username,
-          photo: photoString,
-          password: password,
-        })
+        .post(
+          baseURL + "/register",
+          {
+            name: fullName,
+            email: email,
+            username: username,
+            photo: photoString,
+            password: password,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        )
         .then(
           (res) => {
             console.log(res);
@@ -116,6 +105,7 @@ function BasicRegister() {
     setError((prev) =>
       prev.filter((e) => e !== "Password must be at least 8 characters long!")
     );
+    setError((prev) => prev.filter((e) => e !== "Enter a valid email!"));
     if (
       email !== "" &&
       email.includes("@") &&
@@ -130,14 +120,24 @@ function BasicRegister() {
     ) {
       setSubmitDisabled(false);
     } else {
+      setSubmitDisabled(true);
       if (password.length < 8) {
         setError((prevValue) => [
           ...prevValue,
           "Password must be at least 8 characters long!",
         ]);
       }
-      setSubmitDisabled(true);
+      if (
+        email === "" ||
+        !email.includes("@") ||
+        email.substring(0, email.indexOf("@")).length === 0 ||
+        email.substring(email.indexOf("@"), email.length - 1).length === 0
+      ) {
+        setError((prevValue) => [...prevValue, "Enter a valid email!"]);
+      }
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password, fullName, username, file]);
 
   return (
@@ -173,7 +173,7 @@ function BasicRegister() {
           <div className="form-group mt-3">
             <label>Email address</label>
             <input
-              type="email"
+              type=""
               className="form-control mt-1"
               placeholder="Email Address"
               onInput={(e) => handleEmailChange(e)}
