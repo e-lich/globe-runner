@@ -42,7 +42,7 @@ def login():
         if type(user) == Admin:
             photo = None
         else:
-            photo = user.photo
+            photo = user.profilePhoto
         return jsonify({
             'username': user.username,
             'email': user.email,
