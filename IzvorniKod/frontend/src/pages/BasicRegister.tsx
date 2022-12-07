@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function BasicRegister() {
-  const [file, setFile] = useState<Blob | MediaSource>();
-
+  const [file, setFile] = useState<Blob>();
+  // TODO - Worked! , another important thing is to add responseType: "blob" to the request if using axios
   let [email, setEmail] = useState("");
   let [fullName, setFullName] = useState("");
   let [username, setUsername] = useState("");
@@ -60,40 +60,36 @@ function BasicRegister() {
       return;
     }
 
-    let photoString = URL.createObjectURL(file);
+    let formData = new FormData();
+
+    formData.append("name", fullName); //append the values with key, value pair
+    formData.append("email", email);
+    formData.append("username", username);
+    formData.append("file", file);
+    formData.append("password", password);
+
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
 
     return new Promise((resolve, reject) => {
-      axios
-        .post(
-          baseURL + "/register",
-          {
-            name: fullName,
-            email: email,
-            username: username,
-            photo: photoString,
-            password: password,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "*",
-            },
+      axios.post(baseURL + "/register", formData, config).then(
+        (res) => {
+          console.log(res);
+          if (res.data.email === undefined) {
+            setError(res.data);
+          } else {
+            saveUserData(res.data);
+            navigate("/confirm");
           }
-        )
-        .then(
-          (res) => {
-            console.log(res);
-            if (res.data.email === undefined) {
-              setError(res.data);
-            } else {
-              saveUserData(res.data);
-              navigate("/confirm");
-            }
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     });
   }
 
