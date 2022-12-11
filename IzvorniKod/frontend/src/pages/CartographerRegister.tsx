@@ -100,27 +100,24 @@ function CartographerRegister() {
 
     const config = {
       headers: {
-        "content-type": "multipart/form-data",
         "Access-Control-Allow-Origin": "*",
       },
     };
 
-    return new Promise((resolve, reject) => {
-      axios
-        .post(baseURL + "/register", formData, config)
-        .then(function (response) {
-          console.log(response);
-          if (response.data.email === undefined) {
-            setError(response.data);
-          } else {
-            saveUserData(response.data);
-            navigate("/confirm");
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    });
+    axios
+      .post(baseURL + "/register", formData, config)
+      .then((response) => {
+        console.log(response);
+        if (response.data.email === undefined) {
+          setError(response.data);
+        } else {
+          saveUserData(response.data);
+          navigate("/confirm");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   useEffect(() => {

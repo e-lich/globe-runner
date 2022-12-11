@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 function BasicRegister() {
   const [file, setFile] = useState<Blob>();
-  // TODO - Worked! , another important thing is to add responseType: "blob" to the request if using axios
   let [email, setEmail] = useState("");
   let [fullName, setFullName] = useState("");
   let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
   let [submitDisabled, setSubmitDisabled] = useState(true);
   let [error, setError] = useState<Array<String>>([]);
+  let fileString = undefined;
 
   const navigate = useNavigate();
 
@@ -65,32 +65,32 @@ function BasicRegister() {
     formData.append("name", fullName); //append the values with key, value pair
     formData.append("email", email);
     formData.append("username", username);
-    formData.append("file", file);
+    formData.append("photo", file);
     formData.append("password", password);
+    formData.append("iban", ""); // TODO - ovo je quick fix, bilo bi ljepse to hendlati na backendu
 
     const config = {
       headers: {
-        "content-type": "multipart/form-data",
         "Access-Control-Allow-Origin": "*",
       },
     };
 
-    return new Promise((resolve, reject) => {
-      axios.post(baseURL + "/register", formData, config).then(
-        (res) => {
-          console.log(res);
-          if (res.data.email === undefined) {
-            setError(res.data);
-          } else {
-            saveUserData(res.data);
-            navigate("/confirm");
-          }
-        },
-        (err) => {
-          console.log(err);
+    axios
+      .post(baseURL + "/register", formData, config)
+      .then((res) => {
+        console.log(res);
+        if (res.data.email === undefined) {
+          setError(res.data);
+        } else {
+          saveUserData(res.data);
+          navigate("/confirm");
         }
-      );
-    });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    return;
   }
 
   function saveUserData(data: any) {

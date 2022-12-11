@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
@@ -10,7 +9,7 @@ export default function Home() {
   let user = JSON.parse(localStorage.getItem("user") || "{}");
 
   useEffect(() => {
-    // if (localStorage.getItem("user") === null) navigate("/signIn"); TODO - removed for testing
+    if (localStorage.getItem("user") === null) navigate("/signIn");
   });
 
   const closestPlayers = [
@@ -32,8 +31,8 @@ export default function Home() {
     },
   ];
 
-  const listItems = closestPlayers.map((closestPlayer) => (
-    <li>
+  const listItems = closestPlayers.map((closestPlayer, key) => (
+    <li key={key}>
       <div className="player-information">
         <img className="player--image" src={placeholder} alt=""></img>
         <div className="player--username">
