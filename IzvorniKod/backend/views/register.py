@@ -4,6 +4,7 @@ from backend import app, db
 from backend.models import Player, Cartographer
 from backend.send_email import send_email
 from backend.views.email_confirmation import generate_confirmation_token, confirm_email
+import base64
 
 @app.route('/register', methods=['GET'])
 def helloRegister():
@@ -27,26 +28,30 @@ def register_user():
     email_valid = True
     iban_valid = True
 
-    request_data = request.get_json()
+    files = request.files
 
-    name = request_data['name']
-    username = request_data['username']
-    email = request_data['email']
-    password = request_data['password']
-    photo = request_data['photo']
+    name = request.form['name']
+    username = request.form['username']
+    email = request.form['email']
+    password = request.form['password']
+    iban = request.form.get('iban')
+    id = files.get('id')
+    photo = files.get('photo')
 
-    if 'iban' in request_data:
-        iban = request_data['iban']
-        id = request_data['id']
+    # iban will be an emtpy string if not provided 
+    if iban:
 
         # checking iban format
         if iban[0:2] != 'HR' or len(iban[2:]) != 19 or not iban[2:].isnumeric():
             iban_valid = False
 
-        new_user = Cartographer(username=username, name=name, email=email, password=password, photo=photo, iban=iban, id=id)
+        photo_string = base64.b64encode(photo.read()).decode('utf-8')
+        id_string = base64.b64encode(id.read()).decode('utf-8')
+        new_user = Cartographer(username=username, name=name, email=email, password=password, photo=photo_string, iban=iban, id=id_string)
 
     else:
-        new_user = Player(username=username, email=email, password=password, photo=photo, name=name)
+        photo_string = base64.b64encode(photo.read()).decode('utf-8')
+        new_user = Player(username=username, email=email, password=password, photo=photo_string, name=name)
 
     # checking username and email
     if db.session.query(Player.username).filter_by(username=username).first() is not None or db.session.query(Cartographer.username).filter_by(username=username).first() is not None:
@@ -75,11 +80,9 @@ def register_user():
     html = render_template('activate.html', confirm_url=confirm_url, username=new_user.username)
     subject = "Please confirm your email for GlobeRunner"
     send_email(new_user.email, subject, html)
-
-    # .tobytes().decode('utf-8') is used to convert bytes to string
     
     return jsonify({
         'username': new_user.username,
         'email': new_user.email,
         'photo': new_user.profilePhoto
-    })
+    }) 
