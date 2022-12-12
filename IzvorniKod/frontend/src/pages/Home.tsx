@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import LeafletMap from "../components/LeafletMap";
 
 import Navbar from "../components/Navbar";
 const placeholder = require("../images/profile_picture.jpg");
@@ -32,8 +33,8 @@ export default function Home() {
     },
   ];
 
-  const listItems = closestPlayers.map((closestPlayer) => (
-    <li>
+  const listItems = closestPlayers.map((closestPlayer, key) => (
+    <li key={key}>
       <div className="player-information">
         <img className="player--image" src={placeholder} alt=""></img>
         <div className="player--username">
@@ -52,11 +53,7 @@ export default function Home() {
     <>
       <Navbar />
       <section className="main">
-        {/* <Map /> */}
-        <div id="map">
-          <h1 className="map-placeholder">Map Placeholder</h1>
-          <h1>Map currently doesn't work!</h1>
-        </div>
+        <LeafletMap />
         <div className="closest-player-list">
           <div className="closest-players-title">
             <h2>Closest Players:</h2>
