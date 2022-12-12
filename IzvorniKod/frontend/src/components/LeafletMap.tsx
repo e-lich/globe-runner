@@ -55,7 +55,7 @@ export default function LeafletMap() {
         "https://www.shareicon.net/data/512x512/2016/03/13/733024_people_512x512.png",
       iconSize: [30, 35], // size of the icon
       shadowSize: [50, 64], // size of the shadow
-      iconAnchor: [12, 35], // point of the icon which will correspond to marker's location
+      iconAnchor: [15, 35], // point of the icon which will correspond to marker's location
       shadowAnchor: [4, 62], // the same for the shadow
       popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
     });
@@ -80,7 +80,7 @@ export default function LeafletMap() {
         var marker = L.marker([e.latlng.lat, e.latlng.lng], {
           icon: myIcon,
         }).bindPopup("Your are here :)");
-        var circle = L.circle([e.latlng.lat, e.latlng.lng], e.accuracy / 4, {
+        var circle = L.circle([e.latlng.lat, e.latlng.lng], e.accuracy / 2, {
           weight: 1,
           color: "blue",
           fillColor: "#cacaca",
