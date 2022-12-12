@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
@@ -49,7 +49,7 @@ export default function Profile() {
               <h3 className="Auth-form-title">Profile information</h3>
               {user && (
                 <img
-                  src={JSON.parse(user).photo}
+                  src={`data:image/jpeg;base64,${JSON.parse(user).photo}`}
                   alt="profile"
                   className="img-fluid mt-2 border border-dark rounded"
                 />

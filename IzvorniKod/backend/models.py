@@ -14,7 +14,7 @@ class User(db.Model):
     username = db.Column(db.String(32), unique=True)
     name = db.Column(db.String(50))
     email = db.Column(db.String(345), unique=True)
-    profilePhoto = db.Column(db.String(100))
+    profilePhoto = db.Column(db.Text)
     password = db.Column(db.String(30))
     confirmed = db.Column(db.Boolean)
     
@@ -24,7 +24,7 @@ class Cartographer(User):
     __tablename__ = "Cartographers"
 
     IBAN = db.Column(db.String(21))
-    document = db.Column(db.String(100))
+    document = db.Column(db.Text)
     verified = db.Column(db.Boolean)
 
     def __init__(self, username, name, email, password, photo, iban, id):
@@ -84,7 +84,7 @@ class Card(db.Model):
 
     cardID = db.Column(db.Integer, primary_key=True, unique=True)
     cardLocation = db.Column(db.String(100))
-    locationPhoto = db.Column(db.String(100))
+    locationPhoto = db.Column(db.Text)
     title = db.Column(db.String(50))
     description = db.Column(db.String(250))
     cardStatus = db.Column(db.Enum("submitted", "unclaimed", "claimed", "verified", name="card_status_type"))

@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function BasicRegister() {
-  const [file, setFile] = useState<Blob | MediaSource>();
-
+  const [file, setFile] = useState<Blob>();
   let [email, setEmail] = useState("");
   let [fullName, setFullName] = useState("");
   let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
   let [submitDisabled, setSubmitDisabled] = useState(true);
   let [error, setError] = useState<Array<String>>([]);
+  let fileString = undefined;
 
   const navigate = useNavigate();
 
@@ -60,41 +60,37 @@ function BasicRegister() {
       return;
     }
 
-    let photoString = URL.createObjectURL(file);
+    let formData = new FormData();
 
-    return new Promise((resolve, reject) => {
-      axios
-        .post(
-          baseURL + "/register",
-          {
-            name: fullName,
-            email: email,
-            username: username,
-            photo: photoString,
-            password: password,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "*",
-            },
-          }
-        )
-        .then(
-          (res) => {
-            console.log(res);
-            if (res.data.email === undefined) {
-              setError(res.data);
-            } else {
-              saveUserData(res.data);
-              navigate("/confirm");
-            }
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
-    });
+    formData.append("name", fullName); //append the values with key, value pair
+    formData.append("email", email);
+    formData.append("username", username);
+    formData.append("photo", file);
+    formData.append("password", password);
+    formData.append("iban", ""); // TODO - ovo je quick fix, bilo bi ljepse to hendlati na backendu
+
+    const config = {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+
+    axios
+      .post(baseURL + "/register", formData, config)
+      .then((res) => {
+        console.log(res);
+        if (res.data.email === undefined) {
+          setError(res.data);
+        } else {
+          saveUserData(res.data);
+          navigate("/confirm");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    return;
   }
 
   function saveUserData(data: any) {
