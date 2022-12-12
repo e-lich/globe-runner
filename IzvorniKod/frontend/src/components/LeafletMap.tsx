@@ -108,10 +108,11 @@ export default function LeafletMap() {
         };
 
         var customPopup =
-          '<div className="cardpopup" style={{display: "flex"; justify-content: "center"; align-items: "center"}}>' +
+          '<div className="cardpopup">' +
           `   <img className="cardpopup--image" src=${locationData.image} height="100px" width="100px" alt=""></img>` +
-          '   <div className="cardpopup--label">' +
-          `     <div>${locationData.name}</div>` +
+          "   <hr>" +
+          `   <div class="cardpopup--name">` +
+          `     <span>${locationData.name}</span>` +
           "   </div>" +
           "</div>";
 
