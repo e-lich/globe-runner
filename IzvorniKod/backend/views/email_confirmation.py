@@ -1,7 +1,7 @@
 from backend import app, db
 from itsdangerous import URLSafeTimedSerializer
 from flask import flash, redirect, url_for
-from backend.models import Player, Cartographer
+from backend.database.models import Player, Cartographer
 import datetime
 
 # token for email confirmation

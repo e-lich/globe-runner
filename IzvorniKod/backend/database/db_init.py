@@ -1,11 +1,18 @@
 import geojson, sys, os, json, requests
 import hashlib
+from backend import db, app
+from backend.database.models import Card
 
 def loadLokacije():
     with open(lokacije_json_path, 'r', encoding="utf8") as f:
         gj = geojson.load(f)
 
     lokacije = gj['features']
+
+    for lokacija in lokacije:
+        card_id = lokacija['properties']['@id'].split('/')[1]
+
+        print(card_id)
 
     for lokacija in lokacije:
         card_id = lokacija['properties']['@id'].split('/')[1]
@@ -24,16 +31,28 @@ def loadLokacije():
                 img_url = f"https://upload.wikimedia.org/wikipedia/commons/{img_md5[0]}/{img_md5[0]}{img_md5[1]}/{img_name}"
                 location_photo = img_url
 
-        title = lokacija['properties']['name']
+        title = "no_name(clock, podsjeti lovru da makne)"
+        if "name" in lokacija["properties"]:
+            title = lokacija['properties']['name']
         description = None # https://www.wikidata.org/w/api.php?action=wbgetentities&props=descriptions&ids=Q2350879&languages=en isto kao i gore, nez jel ima smisla
 
         card_status = 'verified'
         authorUserId = None # neznam
-        apporvedByUserID = None # isto neznam
+        apporvedByUserID = None # isto 
 
-        # neradi mi nes import models
-        # new_card = Card(cardID=card_id, cardLocation=card_location, locationPhoto=location_photo, title=title, description=description, cardStatus=card_status)
+        new_card = Card(cardID=card_id, cardLocation=card_location, locationPhoto=str(location_photo), title=title, description=description, cardStatus=card_status)
+        print(card_id + "___________________")
 
+        if db.session.query(Card.cardID).filter_by(cardID=card_id).first() is None:
+            db.session.add(new_card)
+            db.session.commit()
 
-lokacije_json_path = os.path.join(sys.path[0], "lokacije.geojson")
-loadLokacije()
+        print("Backend odrađen :)")
+
+lokacije_json_path = os.path.join(sys.path[0], "backend\\database\\lokacije.geojson")
+
+# adding all models to db
+db.init_app(app)
+with app.app_context():
+    db.create_all()
+    loadLokacije()
