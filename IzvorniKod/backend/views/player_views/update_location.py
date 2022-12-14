@@ -4,11 +4,11 @@ from backend.database.models import Player, Cartographer, Admin, User
 
 # dummy rjesenje za rjesiti nedostatak GET metode
 @app.route('/updateUserLocation', methods=['GET'])
-def hello():
+def update_location_hello():
     return
 
 @app.route('/updateUserLocation', methods=['POST'])
-def login():
+def update_user_location():
     request_data = request.get_json()
 
     userID = request.form['userID']

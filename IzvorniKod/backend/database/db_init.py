@@ -64,7 +64,9 @@ def loadDummyPlayers():
     db.session.add(player4)
     db.session.commit()
 
-lokacije_json_path = os.path.join(sys.path[0], "backend\\database\\lokacije.geojson")
+# za win: lokacije_json_path = os.path.join(sys.path[0], "backend\\database\\lokacije.geojson")
+# za unix: lokacije_json_path = os.path.join(sys.path[0], "backend/database/lokacije.geojson")
+lokacije_json_path = os.path.join(sys.path[0], "backend/database/lokacije.geojson")
 
 # adding all models to db
 db.init_app(app)
@@ -72,4 +74,4 @@ with app.app_context():
     db.create_all()
     loadLokacije()
 
-    # loadDummyPlayers()
+    loadDummyPlayers()
