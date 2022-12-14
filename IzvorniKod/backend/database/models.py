@@ -83,7 +83,7 @@ class Card(db.Model):
     __tablename__ = "Cards"
 
     cardID = db.Column(db.BigInteger, primary_key=True, unique=True)
-    cardLocation = db.Column(db.String(100)) # latitude i longitude JSON
+    cardLocation = db.Column(db.String(100)) # latitude i longitude JSON: {'latitude':'15.124', 'longitude':'45.1323'}
     locationPhoto = db.Column(db.Text)
     title = db.Column(db.String(100))
     description = db.Column(db.String(250))

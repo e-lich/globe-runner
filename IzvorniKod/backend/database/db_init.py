@@ -1,7 +1,7 @@
 import geojson, sys, os, json, requests
 import hashlib
 from backend import db, app
-from backend.database.models import Card
+from backend.database.models import Card, Player
 
 def loadLokacije():
     with open(lokacije_json_path, 'r', encoding="utf8") as f:
@@ -46,8 +46,23 @@ def loadLokacije():
         if db.session.query(Card.cardID).filter_by(cardID=card_id).first() is None:
             db.session.add(new_card)
             db.session.commit()
+        else:
+            break
 
-        print("Backend odrađen :)")
+def loadDummyPlayers():
+    player1 = Player(username='video_lovro',name='Lovro',password='backendrules', email="lovro@lovro.lovro", photo=None)
+    player2 = Player(username='tech_lovro',name='Lovro 2',password='frontenddrools', email="lovro1@lovro.lovro", photo=None)
+    player3 = Player(username='foto_ela',name='Lovro 3',password='backendrules', email="lovro2@lovro.lovro", photo=None)
+    player4 = Player(username='???_pero',name='Lovro 4',password='frontenddrools', email="lovro3@lovro.lovro", photo=None)
+
+    if db.session.query(Player.username).filter_by(username=player1.username).first():
+        return
+
+    db.session.add(player1)
+    db.session.add(player2)
+    db.session.add(player3)
+    db.session.add(player4)
+    db.session.commit()
 
 lokacije_json_path = os.path.join(sys.path[0], "backend\\database\\lokacije.geojson")
 
@@ -56,3 +71,5 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
     loadLokacije()
+
+    # loadDummyPlayers()
