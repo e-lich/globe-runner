@@ -10,6 +10,8 @@ def hello():
 def login():
     request_data = request.get_json()
 
+    user_type = None
+
     # checking if email or username was entered
     if '@' in request_data['username_or_email']:
         email = request_data['username_or_email']
@@ -23,10 +25,17 @@ def login():
         username = request_data['username_or_email']
         
         user = db.session.query(Player).filter_by(username=username).first()
+        if user is not None:
+            user_type = 'player'
+            if user.advanced == True:
+                user_type = 'advancedPlayer'
+                
         if user is None:
             user = db.session.query(Cartographer).filter_by(username=username).first()
+            user_type = 'cartographer'
         if user is None:
             user = db.session.query(Admin).filter_by(username=username).first()
+            user_type = 'admin'
 
     errors = []
     if user is None:
@@ -46,5 +55,7 @@ def login():
         return jsonify({
             'username': user.username,
             'email': user.email,
-            'photo': photo
+            'photo': photo,
+            'userID': user.userID,
+            'userType': user_type
         })

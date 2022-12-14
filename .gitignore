@@ -5,6 +5,7 @@ IzvorniKod/backend/database/__pycache__
 IzvorniKod/.env
 IzvorniKod/frontend/.env
 IzvorniKod/backend/Pipfile.lock
+IzvorniKod/Pipfile.lock
 
 # Frontend dio:
 
