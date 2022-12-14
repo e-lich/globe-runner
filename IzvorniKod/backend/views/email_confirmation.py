@@ -23,8 +23,8 @@ def confirm_token(token, expiration=3600):
 
 # zamjena za home page dok se nemre redirectat na njega 
 @app.route('/')
-def wooo():
-    return "woooo"
+def home():
+    return
 
 @app.route('/confirm/<token>', methods=['GET'])
 def confirm_email(token):
