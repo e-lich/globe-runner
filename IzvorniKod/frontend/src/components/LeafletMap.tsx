@@ -77,16 +77,24 @@ export default function LeafletMap() {
         watch: true,
       }) /* This will return map so you can do chaining */
       .on("locationfound", function (e) {
-        var marker = L.marker([e.latlng.lat, e.latlng.lng], {
+        var currentMarker = L.marker([e.latlng.lat, e.latlng.lng], {
           icon: myIcon,
         }).bindPopup("Your are here :)");
+        var previousMarker: L.Marker<any> | undefined;
+
         var circle = L.circle([e.latlng.lat, e.latlng.lng], e.accuracy / 2, {
           weight: 1,
           color: "blue",
           fillColor: "#cacaca",
           fillOpacity: 0.2,
         });
-        myMap!.addLayer(marker);
+        var previousCircle: L.Circle<any> | undefined;
+
+        if (previousMarker !== undefined) myMap!.removeLayer(previousMarker);
+        if (previousCircle !== undefined) myMap!.removeLayer(previousCircle);
+
+        myMap!.addLayer(currentMarker);
+        previousMarker = currentMarker;
         myMap!.addLayer(circle);
       })
       .on("locationerror", function (e) {
