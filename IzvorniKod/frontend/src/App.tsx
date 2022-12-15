@@ -31,7 +31,7 @@ function App() {
         <Route path="/stats" element={<Stats />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/confirm" element={<EmailConfirm />} />
-        <Route path="/mapp" element={<LeafletMap />} />
+        <Route path="/map" element={<LeafletMap />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import LeafletMap from "../components/LeafletMap";
 
@@ -11,7 +10,7 @@ export default function Home() {
   let user = JSON.parse(localStorage.getItem("user") || "{}");
 
   useEffect(() => {
-    // if (localStorage.getItem("user") === null) navigate("/signIn"); TODO - removed for testing
+    if (localStorage.getItem("user") === null) navigate("/signIn");
   });
 
   const closestPlayers = [

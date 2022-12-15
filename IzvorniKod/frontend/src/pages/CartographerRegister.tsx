@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function CartographerRegister() {
-  let [file, setFile] = useState<Blob | MediaSource>();
-  let [fileID, setFileID] = useState<Blob | MediaSource>();
+  let [file, setFile] = useState<Blob>();
+  let [fileID, setFileID] = useState<Blob>();
 
   let [email, setEmail] = useState("");
   let [fullName, setFullName] = useState("");
@@ -87,33 +87,37 @@ function CartographerRegister() {
       return;
     }
 
-    let photoString = URL.createObjectURL(file);
-    let photoIDString = URL.createObjectURL(fileID);
+    let formData = new FormData();
 
-    return new Promise((resolve, reject) => {
-      axios
-        .post(baseURL + "/register", {
-          name: fullName,
-          username: username,
-          iban: IBAN,
-          email: email,
-          photo: photoString,
-          id: photoIDString,
-          password: password,
-        })
-        .then(function (response) {
-          console.log(response);
-          if (response.data.email === undefined) {
-            setError(response.data);
-          } else {
-            saveUserData(response.data);
-            navigate("/confirm");
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    });
+    formData.append("name", fullName);
+    formData.append("username", username);
+    formData.append("iban", IBAN);
+    formData.append("email", email);
+    formData.append("photo", file);
+    formData.append("id", fileID);
+    formData.append("username", username);
+    formData.append("password", password);
+
+    const config = {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+
+    axios
+      .post(baseURL + "/register", formData, config)
+      .then((response) => {
+        console.log(response);
+        if (response.data.email === undefined) {
+          setError(response.data);
+        } else {
+          saveUserData(response.data);
+          navigate("/confirm");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   useEffect(() => {
