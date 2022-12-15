@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import LeafletMap from "../components/LeafletMap";
 
 import Navbar from "../components/Navbar";
 const placeholder = require("../images/profile_picture.jpg");
@@ -51,11 +52,7 @@ export default function Home() {
     <>
       <Navbar />
       <section className="main">
-        {/* <Map /> */}
-        <div id="map">
-          <h1 className="map-placeholder">Map Placeholder</h1>
-          <h1>Map currently doesn't work!</h1>
-        </div>
+        <LeafletMap />
         <div className="closest-player-list">
           <div className="closest-players-title">
             <h2>Closest Players:</h2>

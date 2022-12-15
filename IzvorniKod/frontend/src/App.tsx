@@ -12,6 +12,7 @@ import About from "./pages/About";
 import Stats from "./pages/Stats";
 import Profile from "./pages/Profile";
 import EmailConfirm from "./pages/EmailConfirm";
+import LeafletMap from "./components/LeafletMap";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/stats" element={<Stats />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/confirm" element={<EmailConfirm />} />
+        <Route path="/map" element={<LeafletMap />} />
       </Routes>
     </BrowserRouter>
   );

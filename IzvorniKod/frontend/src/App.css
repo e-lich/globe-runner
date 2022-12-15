@@ -76,13 +76,8 @@ label {
   display: grid;
   grid-template-columns: 80% 20%;
   padding: 20px;
+  padding-top: 0px;
   height: 78vh;
-}
-
-#map {
-  width: 95%;
-  height: 100%;
-  margin: 20px;
 }
 
 .nav {
@@ -170,6 +165,12 @@ ul.nav--links {
   align-items: center;
 }
 
+#mapid {
+  margin-top: 20px;
+  width: 100%;
+  height: 95%;
+}
+
 .map-placeholder {
   font-weight: bolder;
   font-size: 80px;
@@ -193,4 +194,10 @@ ul.nav--links {
 .player--image {
   width: 20px;
   height: 20px;
+}
+
+.cardpopup--name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
