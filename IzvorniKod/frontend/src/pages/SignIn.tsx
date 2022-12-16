@@ -44,7 +44,18 @@ export default function SignIn() {
   }
 
   function saveUserData(data: any) {
-    localStorage.setItem("user", JSON.stringify(data));
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        email: "pero@zmaj",
+        photo: null,
+        username: "peroZmaj",
+        userType: "player",
+      })
+    );
+
+    // userType (“player”, “advancedPlayer”, “cartographer”, “admin”)
+    // TODO switch JSON.stringify(...) to JSON.stringify(data)
   }
 
   useEffect(() => {

@@ -13,6 +13,7 @@ import Stats from "./pages/Stats";
 import Profile from "./pages/Profile";
 import EmailConfirm from "./pages/EmailConfirm";
 import LeafletMap from "./components/LeafletMap";
+import AllUsers from "./pages/admin/AllUsers";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/confirm" element={<EmailConfirm />} />
         <Route path="/map" element={<LeafletMap />} />
+        <Route path="/allusers" element={<AllUsers />} />
       </Routes>
     </BrowserRouter>
   );
