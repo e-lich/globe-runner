@@ -34,7 +34,11 @@ export default function UserProfile() {
 
     if (userFromLocalStorage === null) navigate("/signIn");
 
-    if (!JSON.parse(userFromLocalStorage!).userType.includes("player"))
+    if (
+      !JSON.parse(userFromLocalStorage!)
+        .userType.toLowerCase()
+        .includes("player")
+    )
       navigate("/home");
   });
 

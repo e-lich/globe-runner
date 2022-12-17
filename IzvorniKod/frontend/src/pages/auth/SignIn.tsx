@@ -50,7 +50,7 @@ export default function SignIn() {
         email: "pero@zmaj",
         photo: null,
         username: "peroZmaj",
-        userType: "player",
+        userType: "cartographer",
       })
     );
 

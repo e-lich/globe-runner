@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import "./App.css";
-import Home from "./pages/user/UserHome";
+import Home from "./pages/Home";
 import BasicRegister from "./pages/auth/BasicRegister";
 import CartographerRegister from "./pages/auth/CartographerRegister";
 import Register from "./pages/auth/Register";
@@ -42,6 +42,7 @@ function App() {
         <Route path="/map" element={<LeafletMap />} />
 
         {/* user and advanced user only routes */}
+        <Route path="/userHome" element={<UserHome />} />
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path="/globalStats" element={<GlobalStats />} />
         <Route path="/nearbyPlayers" element={<NearbyPlayers />} />
