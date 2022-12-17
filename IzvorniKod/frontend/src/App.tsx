@@ -9,8 +9,6 @@ import CartographerRegister from "./pages/auth/CartographerRegister";
 import Register from "./pages/auth/Register";
 import SignIn from "./pages/auth/SignIn";
 import About from "./pages/About";
-import Stats from "./pages/Stats";
-import Profile from "./pages/user/UserProfile";
 import EmailConfirm from "./pages/auth/EmailConfirm";
 import LeafletMap from "./components/LeafletMap";
 import AllUsers from "./pages/admin/AllUsers";
@@ -38,11 +36,8 @@ function App() {
           path="/register/cartographer"
           element={<CartographerRegister />}
         />
-        <Route path="/home" element={<UserHome />} />
-
+        <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/stats" element={<Stats />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/confirm" element={<EmailConfirm />} />
         <Route path="/map" element={<LeafletMap />} />
 

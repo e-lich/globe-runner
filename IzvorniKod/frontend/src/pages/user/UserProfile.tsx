@@ -30,6 +30,15 @@ export default function UserProfile() {
   };
 
   useEffect(() => {
+    let userFromLocalStorage = localStorage.getItem("user");
+
+    if (userFromLocalStorage === null) navigate("/signIn");
+
+    if (!JSON.parse(userFromLocalStorage!).userType.includes("player"))
+      navigate("/home");
+  });
+
+  useEffect(() => {
     if (
       userData.password !== "" &&
       userData.password.length >= 8 &&

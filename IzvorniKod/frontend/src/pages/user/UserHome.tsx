@@ -7,10 +7,18 @@ const placeholder = require("../../images/profile_picture.jpg");
 
 export default function UserHome() {
   const navigate = useNavigate();
-  let user = JSON.parse(localStorage.getItem("user") || "{}");
 
   useEffect(() => {
-    if (localStorage.getItem("user") === null) navigate("/signIn");
+    let userFromLocalStorage = localStorage.getItem("user");
+
+    if (userFromLocalStorage === null) navigate("/signIn");
+
+    if (
+      !JSON.parse(userFromLocalStorage!)
+        .userType.toLowerCase()
+        .includes("player")
+    )
+      navigate("/home");
   });
 
   const closestPlayers = [

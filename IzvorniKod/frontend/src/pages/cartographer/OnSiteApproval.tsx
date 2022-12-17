@@ -1,7 +1,19 @@
 import Navbar from "../../components/Navbar";
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function OnSiteApproval() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let userFromLocalStorage = localStorage.getItem("user");
+
+    if (userFromLocalStorage === null) navigate("/signIn");
+
+    if (!(JSON.parse(userFromLocalStorage!).userType === "cartographer"))
+      navigate("/home");
+  });
+
   return (
     <>
       <Navbar />
