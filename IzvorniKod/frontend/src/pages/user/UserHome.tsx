@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import LeafletMap from "../components/LeafletMap";
+import LeafletMap from "../../components/LeafletMap";
 
-import Navbar from "../components/Navbar";
-const placeholder = require("../images/profile_picture.jpg");
+import Navbar from "../../components/Navbar";
+const placeholder = require("../../images/profile_picture.jpg");
 
-export default function Home() {
+export default function UserHome() {
   const navigate = useNavigate();
   let user = JSON.parse(localStorage.getItem("user") || "{}");
 
