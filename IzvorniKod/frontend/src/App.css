@@ -173,7 +173,11 @@ ul.nav--links {
 
 #addLocationMapId {
   margin: 50px;
+  height: 60vh;
+}
 
+#cartographerHomeMapId {
+  margin: 50px;
   height: 60vh;
 }
 
@@ -200,10 +204,4 @@ ul.nav--links {
 .player--image {
   width: 20px;
   height: 20px;
-}
-
-.cardpopup--name {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

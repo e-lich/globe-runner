@@ -1,9 +1,7 @@
 import Navbar from "../../components/Navbar";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import AddLocationMap from "../../components/AddLocationMap";
-import { Dropdown } from "react-bootstrap";
 
 export default function AddLocation() {
   const navigate = useNavigate();
