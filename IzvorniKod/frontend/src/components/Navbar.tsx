@@ -1,17 +1,9 @@
-import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  var user:
-    | {
-        email: String;
-        photo: String;
-        username: String;
-        userType: String;
-      }
-    | undefined = JSON.parse(localStorage.getItem("user")!);
+  var user = JSON.parse(localStorage.getItem("user") || "{}");
 
   if (user)
     return (
