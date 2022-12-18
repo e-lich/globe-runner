@@ -3,7 +3,7 @@ import L, { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect } from "react";
 
-export default function LeafletMap() {
+export default function UserHomeMap() {
   // map variable so we can clear it at the beginning of useEffect
   var myMap: L.Map | undefined;
   var closeByLocations:

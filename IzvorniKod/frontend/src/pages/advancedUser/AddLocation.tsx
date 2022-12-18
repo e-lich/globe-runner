@@ -1,6 +1,9 @@
 import Navbar from "../../components/Navbar";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import AddLocationMap from "../../components/AddLocationMap";
+import { Dropdown } from "react-bootstrap";
 
 export default function AddLocation() {
   const navigate = useNavigate();
@@ -17,10 +20,11 @@ export default function AddLocation() {
   return (
     <>
       <Navbar />
+      <AddLocationMap />
       <div className="align-items-center Auth-container">
         <form className="Auth-form">
           <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Add Location</h3>
+            <h3 className="Auth-form-title">Add Locations</h3>
           </div>
         </form>
       </div>

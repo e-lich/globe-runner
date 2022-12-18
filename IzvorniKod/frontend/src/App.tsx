@@ -10,7 +10,7 @@ import Register from "./pages/auth/Register";
 import SignIn from "./pages/auth/SignIn";
 import About from "./pages/About";
 import EmailConfirm from "./pages/auth/EmailConfirm";
-import LeafletMap from "./components/LeafletMap";
+import UserHomeMap from "./components/UserHomeMap";
 import AllUsers from "./pages/admin/AllUsers";
 import AdminHome from "./pages/admin/AdminHome";
 import CartographerRequests from "./pages/admin/CartographerRequests";
@@ -39,7 +39,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/confirm" element={<EmailConfirm />} />
-        <Route path="/map" element={<LeafletMap />} />
+        <Route path="/map" element={<UserHomeMap />} />
 
         {/* user and advanced user only routes */}
         <Route path="/userHome" element={<UserHome />} />

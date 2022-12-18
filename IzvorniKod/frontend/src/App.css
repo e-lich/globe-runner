@@ -171,6 +171,12 @@ ul.nav--links {
   height: 95%;
 }
 
+#addLocationMapId {
+  margin: 50px;
+
+  height: 60vh;
+}
+
 .map-placeholder {
   font-weight: bolder;
   font-size: 80px;

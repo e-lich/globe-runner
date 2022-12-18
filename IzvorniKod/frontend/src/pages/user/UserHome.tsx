@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LeafletMap from "../../components/LeafletMap";
+import UserHomeMap from "../../components/UserHomeMap";
 
 import Navbar from "../../components/Navbar";
 import PopupBasic from "../../components/PopupBasic";
@@ -68,7 +68,7 @@ export default function UserHome() {
     <>
       <Navbar />
       <section className="main">
-        <LeafletMap />
+        <UserHomeMap />
         <div className="closest-player-list">
           <div className="closest-players-title">
             <h2>Closest Players:</h2>
