@@ -1,12 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LeafletMap from "../../components/LeafletMap";
 
 import Navbar from "../../components/Navbar";
+import PopupBasic from "../../components/PopupBasic";
 const placeholder = require("../../images/profile_picture.jpg");
 
 export default function UserHome() {
   const navigate = useNavigate();
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
@@ -49,7 +51,13 @@ export default function UserHome() {
         </div>
       </div>
       <div className="player-buttons">
-        <button>View Profile</button>
+        <button
+          onClick={() => {
+            setIsPopupOpen(true);
+          }}
+        >
+          View Profile
+        </button>
         <button>Battle</button>
       </div>
       <hr />
@@ -70,6 +78,7 @@ export default function UserHome() {
           <ul className="closest-players">{listItems}</ul>
         </div>
       </section>
+      <PopupBasic open={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
     </>
   );
 }
