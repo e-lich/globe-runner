@@ -3,6 +3,8 @@ import React, { useEffect } from "react";
 import "./AllUsers.css";
 import { useNavigate } from "react-router-dom";
 
+// TODO - Ovaj kod je samo za testiranje, ovu cijelu komponentu treba reworkat vjerojatno ispočetka!!!
+
 export default function AllUsers() {
   const navigate = useNavigate();
 
@@ -67,10 +69,9 @@ export default function AllUsers() {
       <div className="align-items-center Auth-container">
         <form className="Auth-form">
           <div className="Auth-form-content">
-            <h3 className="Auth-form-title">All users</h3>
             <div className="closest-player-list">
               <div className="closest-players-title">
-                <h2>Closest Players:</h2>
+                <h2>All Users:</h2>
               </div>
               <hr />
               <hr />
