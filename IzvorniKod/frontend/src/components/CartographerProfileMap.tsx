@@ -1,18 +1,14 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 
-import PopupBasic from "./PopupBasic";
 import CartographerHomePopup from "./CartographerHomePopup";
 
-export default function CartographerHomeMap() {
+export default function CartographerProfileMap() {
   // map variable so we can clear it at the beginning of useEffect
-  var myCartographerHomeMap: L.Map | undefined;
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-
+  var myCartographerProfileMap: L.Map | undefined;
   // mock location data that we need to switch with an API call
-  var mockSubmittedLocations = [
+  var mockAcceptedLocations = [
     {
       lat: 45.8145,
       lng: 15.9798,
@@ -38,19 +34,22 @@ export default function CartographerHomeMap() {
 
   // MAP INITIALIZATION
   useEffect(() => {
-    if (myCartographerHomeMap !== undefined && myCartographerHomeMap !== null) {
-      myCartographerHomeMap.remove(); // should remove the map from UI and clean the inner children of DOM element
+    if (
+      myCartographerProfileMap !== undefined &&
+      myCartographerProfileMap !== null
+    ) {
+      myCartographerProfileMap.remove(); // should remove the map from UI and clean the inner children of DOM element
     }
 
-    myCartographerHomeMap = L.map("cartographerHomeMapId");
+    myCartographerProfileMap = L.map("cartographerProfileMapId");
     var tile_url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     var layer = L.tileLayer(tile_url, {
       maxZoom: 19,
       attribution:
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     });
-    myCartographerHomeMap.addLayer(layer);
-    myCartographerHomeMap.setView([45.8238, 15.9761], 13);
+    myCartographerProfileMap.addLayer(layer);
+    myCartographerProfileMap.setView([45.8238, 15.9761], 13);
 
     // MARKER OPTIONS FOR LOCATIONS
     var locationIcon = L.icon({
@@ -64,8 +63,8 @@ export default function CartographerHomeMap() {
     });
 
     // ADDING MOCK LOCATION DATA
-    if (mockSubmittedLocations)
-      mockSubmittedLocations.forEach(
+    if (mockAcceptedLocations)
+      mockAcceptedLocations.forEach(
         (locationData: {
           lat: number;
           lng: number;
@@ -77,51 +76,28 @@ export default function CartographerHomeMap() {
             className: "customPopup", // name custom popup
           };
 
-          /// TESTIRANJE HTMLA
-
-          let popupDiv = document.createElement("div");
-
-          let popupImg = document.createElement("img");
-          popupImg.style.cssText = "width:100px;height:100px;";
-          popupImg.src = locationData.image;
-
-          let popupHr = document.createElement("HR");
-
-          let popupName = document.createElement("div");
-          popupName.style.cssText =
-            "display:flex;align-items:center;justify-content:center;";
-          popupName.textContent = locationData.name;
-
-          let popupEditBtn = document.createElement("button");
-          popupEditBtn.onclick = function () {
-            setIsPopupOpen(true);
-            localStorage.setItem("locationData", JSON.stringify(locationData));
-          };
-          popupEditBtn.textContent = "Edit Location";
-
-          popupDiv.append(popupImg);
-          popupDiv.append(popupHr);
-          popupDiv.append(popupName);
-          popupDiv.append(popupHr);
-          popupDiv.append(popupEditBtn);
+          var customPopup =
+            '<div className="cardpopup">' +
+            `   <img className="cardpopup--image" src=${locationData.image} height="100px" width="100px" alt=""></img>` +
+            "   <hr>" +
+            `   <div class="cardpopup--name">` +
+            `     <span>${locationData.name}</span>` +
+            "   </div>" +
+            "</div>";
 
           L.marker([locationData.lat, locationData.lng], { icon: locationIcon }) // add the created marker to the desired coordinates with desired popup
-            .bindPopup(popupDiv, popupOptions)
-            .addTo(myCartographerHomeMap!);
+            .bindPopup(customPopup, popupOptions)
+            .addTo(myCartographerProfileMap!);
         }
       );
-  }, [myCartographerHomeMap]);
+  }, [myCartographerProfileMap]);
 
   return (
     <>
       <h1 style={{ textAlign: "center" }}>
-        Map for viewing players' suggested locations
+        Map for viewing the location you accepted
       </h1>
-      <div id="cartographerHomeMapId"></div>
-      <CartographerHomePopup
-        open={isPopupOpen}
-        onClose={() => setIsPopupOpen(false)}
-      />{" "}
+      <div id="cartographerProfileMapId"></div>
     </>
   );
 }
