@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import Navbar from "../../components/Navbar";
 
-export default function Profile() {
+export default function UserProfile() {
   const [userData, setData] = useState({
     username: "username",
     password: "",
@@ -28,6 +28,19 @@ export default function Profile() {
   const changeAuthMode = () => {
     setAuthMode(authMode === "basic" ? "change" : "basic");
   };
+
+  useEffect(() => {
+    let userFromLocalStorage = localStorage.getItem("user");
+
+    if (userFromLocalStorage === null) navigate("/signIn");
+
+    if (
+      !JSON.parse(userFromLocalStorage!)
+        .userType.toLowerCase()
+        .includes("player")
+    )
+      navigate("/home");
+  });
 
   useEffect(() => {
     if (
