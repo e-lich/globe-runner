@@ -78,6 +78,7 @@ export default function UserHome() {
           <ul className="closest-players">{listItems}</ul>
         </div>
       </section>
+
       <PopupBasic open={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
     </>
   );

@@ -8,13 +8,21 @@ type Props = {
 
 const OVERLAY: CSSProperties = {
   position: "fixed",
-  top: "0",
-  left: "0",
-  right: "0",
-  bottom: "0",
-  paddingTop: "50px",
-  backgroundColor: "rgba(0,0,0,0.7)",
+  display: "grid",
+  justifyContent: "center",
+
+  left: "50%",
+  top: "50%",
+  transform: "translate(-50%, -50%)",
+
+  backgroundColor: "#555",
+  color: "#fff",
+  textAlign: "center",
+  borderRadius: "6px",
+
   zIndex: "1000",
+  width: "450px",
+  height: "600px",
 };
 
 const PopupBasic = ({ open, onClose }: Props) => {
@@ -24,8 +32,13 @@ const PopupBasic = ({ open, onClose }: Props) => {
 
   return (
     <div style={OVERLAY}>
-      ALO ALO ALO
+      <h1>~ Profile Information ~</h1>
       {/* unutar ovo Contaier se moze stavljat sadrzaj Popup-a */}
+      <div style={{ width: "380px", fontSize: "30px" }}>
+        This is a beautiful profile inside a popup that is working, we can
+        display anything we want in here and pass any type of a property we
+        want! Love you all! &#60;3
+      </div>
       <Button onClick={onClose} variant="contained">
         Close
       </Button>

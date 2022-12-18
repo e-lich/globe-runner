@@ -39,7 +39,6 @@ export default function LeafletMap() {
   useEffect(() => {
     if (myMap !== undefined && myMap !== null) {
       myMap.remove(); // should remove the map from UI and clean the inner children of DOM element
-      console.log(myMap); // nothing should actually happen to the value of mymap
     }
 
     myMap = L.map("mapid");
@@ -138,7 +137,7 @@ export default function LeafletMap() {
             .addTo(myMap!);
         }
       );
-  });
+  }, [myMap]);
 
   function updateUserLocation(lat: number, lng: number) {
     // TODO change this with post request!
