@@ -181,6 +181,11 @@ ul.nav--links {
   height: 60vh;
 }
 
+#onSiteMapId {
+  margin: 50px;
+  height: 60vh;
+}
+
 .map-placeholder {
   font-weight: bolder;
   font-size: 80px;
