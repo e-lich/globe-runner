@@ -120,6 +120,9 @@ export default function CartographerHomeMap() {
 
   return (
     <>
+      <h1 style={{ textAlign: "center" }}>
+        Map for viewing players' suggested locations
+      </h1>
       <div id="cartographerHomeMapId"></div>
       <CartographerHomePopup
         open={isPopupOpen}

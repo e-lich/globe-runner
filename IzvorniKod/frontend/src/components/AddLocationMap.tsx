@@ -209,6 +209,9 @@ export default function AddLocationMap() {
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
+      <h1 style={{ textAlign: "center" }}>
+        Map for viewing your suggested and added locations
+      </h1>
       <div id="addLocationMapId"></div>
     </>
   );
