@@ -1,7 +1,23 @@
-import Navbar from "../components/Navbar";
-import React from "react";
+import Navbar from "../../components/Navbar";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function Stats() {
+export default function GlobalStats() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let userFromLocalStorage = localStorage.getItem("user");
+
+    if (userFromLocalStorage === null) navigate("/signIn");
+
+    if (
+      !JSON.parse(userFromLocalStorage!)
+        .userType.toLowerCase()
+        .includes("player")
+    )
+      navigate("/home");
+  });
+
   return (
     <>
       <Navbar />
