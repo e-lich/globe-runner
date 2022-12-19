@@ -10,13 +10,12 @@ import React from "react";
 import { useEffect } from "react";
 import { Navbar } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import ChallengeIcon from "../../components/ChallengeIcon";
 import NavbarCustom from "../../components/Navbar";
+import PlayerCard from "../../components/PlayerCard";
 
 export default function NearbyPlayers() {
   const navigate = useNavigate();
-
-  const placeholder = require("../../images/profile_picture.jpg");
-  const swords = require("../../images/swords.png");
 
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
@@ -49,58 +48,6 @@ export default function NearbyPlayers() {
       username: "Player_04",
     },
   ];
-
-  const listItems = closestPlayers.map((closestPlayer, key) => (
-    <ListItem alignItems="center" key={key} sx={{ justifyContent: "center" }}>
-      <ListItemAvatar sx={{ m: 0 }}>
-        <Avatar alt="profile picture" src={placeholder} />
-      </ListItemAvatar>
-      <div className="player-buttons">
-        <Button
-          size="medium"
-          color="primary"
-          onClick={() => {
-            console.log("DISPLAY USER PROFILE");
-          }}
-        >
-          {closestPlayer.username}
-        </Button>
-        <ChallengeIcon />
-      </div>
-    </ListItem>
-  ));
-
-  function ChallengeIcon() {
-    return (
-      <>
-        <Navbar />
-        <Button
-          variant="text"
-          color="primary"
-          size="large"
-          onClick={() => {
-            console.log("CHALLENGE THIS USER");
-          }}
-        >
-          <Icon>
-            <div style={{ width: "100%", height: "100%" }}>
-              <img
-                src={swords}
-                alt="battle"
-                style={{
-                  objectFit: "contain",
-                  width: "100%",
-                  height: "100%",
-                  verticalAlign: "top",
-                }}
-              />
-            </div>
-          </Icon>
-        </Button>
-      </>
-    );
-  }
-
   return (
     <>
       <NavbarCustom />
@@ -115,7 +62,13 @@ export default function NearbyPlayers() {
             <List
               sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
             >
-              {listItems}
+              {closestPlayers.map((closestPlayer, key) => (
+                <PlayerCard
+                  key={key}
+                  closestPlayer={closestPlayer}
+                  battle={true}
+                />
+              ))}
             </List>
           </div>
         </div>
