@@ -1,7 +1,7 @@
 from backend import app, db
 from itsdangerous import URLSafeTimedSerializer
 from flask import flash, redirect, url_for
-from backend.models import Player, Cartographer
+from backend.database.models import Player, Cartographer
 import datetime
 
 # token for email confirmation
@@ -23,8 +23,8 @@ def confirm_token(token, expiration=3600):
 
 # zamjena za home page dok se nemre redirectat na njega 
 @app.route('/')
-def wooo():
-    return "woooo"
+def home():
+    return
 
 @app.route('/confirm/<token>', methods=['GET'])
 def confirm_email(token):

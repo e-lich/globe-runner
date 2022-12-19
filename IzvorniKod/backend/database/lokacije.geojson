@@ -1,0 +1,2268 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-ide",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2022-12-12T23:18:21Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/321539863",
+        "amenity": "cinema",
+        "name": "Studentski centar",
+        "website": "http://www.sczg.unizg.hr/kultura/prostori/kino-sc/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9666725,
+          45.8036223
+        ]
+      },
+      "id": "node/321539863"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/324791027",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "16",
+        "addr:postcode": "10000",
+        "addr:street": "Avenija Dubrovnik",
+        "amenity": "cinema",
+        "layer": "2",
+        "name": "CineStar Zagreb - Avenue Mall",
+        "opening_hours": "Mo-Fr 13:00-22:00; Sa-Su 10:00-22:00",
+        "operator": "Blitz-Cinestar d.o.o.",
+        "phone": "+38560323233",
+        "screen": "9",
+        "website": "https://www.blitz-cinestar.hr/cinestar-novi-zagreb",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9784502,
+          45.7763726
+        ]
+      },
+      "id": "node/324791027"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/325705511",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "1",
+        "addr:postcode": "10000",
+        "addr:street": "Ulica Dimitrija Demetra",
+        "email": "hpm@hpm.hr",
+        "name": "Prirodoslovni muzej",
+        "name:en": "Museum Natural History",
+        "opening_hours": "Tu-We,Fr 10:00-17:00; Th 10:00-20:00; Sa 10:00-19:00; Su 10:00-13:00",
+        "phone": "+38514851700",
+        "tourism": "museum",
+        "website": "http://www.hpm.hr/",
+        "wheelchair": "yes",
+        "wikidata": "Q8366704"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9722497,
+          45.8171563
+        ]
+      },
+      "id": "node/325705511"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/419207577",
+        "addr:housenumber": "19",
+        "addr:postcode": "10000",
+        "addr:street": "Trg Nikole Šubića Zrinskog",
+        "email": "amz@amz.hr",
+        "name": "Arheološki muzej",
+        "opening_hours": "Tu-We,Fr-Sa 10:00-18:00; Th 10:00-20:00; Su 10:00-13:00",
+        "phone": "+38514873101",
+        "tourism": "museum",
+        "website": "http://www.amz.hr/",
+        "wheelchair": "no",
+        "wikidata": "Q2986831",
+        "wikipedia": "hr:Arheološki muzej u Zagrebu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9772888,
+          45.810981
+        ]
+      },
+      "id": "node/419207577"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/443433818",
+        "amenity": "cinema",
+        "name": "Kino \"Grič\"",
+        "wheelchair": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9797029,
+          45.8122932
+        ]
+      },
+      "id": "node/443433818"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/457889953",
+        "amenity": "college",
+        "name": "Tehničko veleučilište u Zagrebu - Informatičko računalni odjel"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9698737,
+          45.7953786
+        ]
+      },
+      "id": "node/457889953"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/507683451",
+        "amenity": "clock",
+        "check_date": "2022-03-30",
+        "display": "analog",
+        "name": "Savski most",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9529483,
+          45.7848343
+        ]
+      },
+      "id": "node/507683451"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/549521571",
+        "amenity": "clock",
+        "check_date": "2021-10-18",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9491624,
+          45.7909345
+        ]
+      },
+      "id": "node/549521571"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/812212795",
+        "amenity": "clock",
+        "display": "analog",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9192832,
+          45.795029
+        ]
+      },
+      "id": "node/812212795"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/965929214",
+        "amenity": "clock",
+        "display": "analog",
+        "faces": "4",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9765407,
+          45.8132279
+        ]
+      },
+      "id": "node/965929214"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/973778132",
+        "amenity": "cinema",
+        "name": "Tuškanac"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9692451,
+          45.8153221
+        ]
+      },
+      "id": "node/973778132"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/987835234",
+        "addr:housenumber": "63",
+        "addr:postcode": "10000",
+        "addr:street": "Ulica Vladimira Nazora",
+        "name": "Lovački muzej",
+        "opening_hours": "We, Fr-Sa 08:00-13:00; Tu, Th 12:00-17:00",
+        "phone": "+38514876567",
+        "tourism": "museum",
+        "website": "http://www.hls.com.hr/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9679399,
+          45.8212698
+        ]
+      },
+      "id": "node/987835234"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/990288980",
+        "addr:city": "Zagreb",
+        "addr:country": "HR",
+        "addr:housenumber": "2",
+        "addr:postcode": "10000",
+        "addr:street": "Praška ulica",
+        "email": "hrvatski.sportski.muzej@zg.t-com.hr",
+        "name": "Hrvatski športski muzej",
+        "opening_hours": "Mo-Fr 08:00-16:00",
+        "phone": "+38514833483",
+        "tourism": "museum",
+        "website": "https://sportski-muzej.hr/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9775051,
+          45.8124886
+        ]
+      },
+      "id": "node/990288980"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1299914198",
+        "amenity": "cinema",
+        "name": "Kic art kino",
+        "wheelchair": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9745123,
+          45.8114893
+        ]
+      },
+      "id": "node/1299914198"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1317466112",
+        "amenity": "college",
+        "name": "Pravni fakultet, studijski centar socijalnog rada"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9663001,
+          45.8182264
+        ]
+      },
+      "id": "node/1317466112"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1396431169",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "2",
+        "addr:postcode": "10000",
+        "addr:street": "Ulica svetog Ćirila i Metoda",
+        "email": "info@brokenships.com",
+        "internet_access": "wlan",
+        "name": "Muzej prekinutih veza",
+        "name:de": "Museum der zerbrochenen Beziehungen",
+        "name:en": "Museum of Broken Relationships",
+        "name:fr": "Musée des relations rompues",
+        "name:uk": "Музей розлучень",
+        "opening_hours": "Jun-Sep Mo-Su 09:00-22:00",
+        "phone": "+38514851021",
+        "tourism": "museum",
+        "website": "https://brokenships.com/",
+        "wheelchair": "limited",
+        "wikidata": "Q1954595",
+        "wikipedia": "en:Museum of Broken Relationships"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9735299,
+          45.8149694
+        ]
+      },
+      "id": "node/1396431169"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1410042684",
+        "amenity": "clock",
+        "barometer": "no",
+        "check_date": "2021-01-15",
+        "date": "no",
+        "display": "analog",
+        "hygrometer": "no",
+        "support": "pole",
+        "thermometer": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.961654,
+          45.7990302
+        ]
+      },
+      "id": "node/1410042684"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1511573876",
+        "amenity": "clock",
+        "display": "analog",
+        "support": "pole",
+        "visibility": "house"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9653039,
+          45.7723507
+        ]
+      },
+      "id": "node/1511573876"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1585806539",
+        "amenity": "clock",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9608341,
+          45.7970595
+        ]
+      },
+      "id": "node/1585806539"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1711392385",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "13",
+        "addr:postcode": "10000",
+        "addr:street": "Jurišićeva ulica",
+        "email": "htmuzej@t.ht.hr",
+        "name": "HT muzej",
+        "opening_hours": "Mo-We,Fr 10:00-14:00; Th 10:00-18:00",
+        "phone": "+38514911589",
+        "tourism": "museum",
+        "wheelchair": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9814336,
+          45.8124669
+        ]
+      },
+      "id": "node/1711392385"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1711410842",
+        "addr:housenumber": "9",
+        "addr:postcode": "10000",
+        "addr:street": "Ulica Antuna Gustava Matoša",
+        "email": "hismus@hismus.hr",
+        "name": "Hrvatski povijesni muzej",
+        "opening_hours": "Mo-Fr 10:00-18:00; Sa-Su 10:00-13:00",
+        "phone": "+38514851900",
+        "tourism": "museum",
+        "website": "http://www.hismus.hr/",
+        "wikidata": "Q2353812"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9723414,
+          45.8160204
+        ]
+      },
+      "id": "node/1711410842"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1711410885",
+        "addr:housenumber": "4",
+        "addr:postcode": "10000",
+        "addr:street": "Jezuitski trg",
+        "name": "Galerija Klovićevi dvori",
+        "name:ko": "클로비체비 드보리 갤러리",
+        "opening_hours": "Tu-Su 11:00-19:00",
+        "tourism": "museum",
+        "website": "http://gkd.hr/",
+        "wikidata": "Q6421422"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9746427,
+          45.8150278
+        ]
+      },
+      "id": "node/1711410885"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1718635555",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "80",
+        "addr:postcode": "10000",
+        "addr:street": "Ulica Janka Draškovića",
+        "email": "info@tifoloskimuzej.hr",
+        "level": "2",
+        "name": "Tiflološki muzej",
+        "opening_hours": "Mo-We,Fr 09:00-16:00; Th 09:00-18:00",
+        "phone": "+38514811102",
+        "tourism": "museum",
+        "website": "http://www.tifloloskimuzej.hr/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9838133,
+          45.806191
+        ]
+      },
+      "id": "node/1718635555"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1723384149",
+        "amenity": "college",
+        "name": "Stomatološki fakultet"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9722915,
+          45.8124659
+        ]
+      },
+      "id": "node/1723384149"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1881290053",
+        "amenity": "clock",
+        "display": "analog",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9543224,
+          45.7998699
+        ]
+      },
+      "id": "node/1881290053"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1882369896",
+        "amenity": "clock",
+        "display": "analog",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9365451,
+          45.7971435
+        ]
+      },
+      "id": "node/1882369896"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1896949788",
+        "amenity": "clock",
+        "display": "analog",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9555845,
+          45.8040375
+        ]
+      },
+      "id": "node/1896949788"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1896949797",
+        "amenity": "clock",
+        "check_date": "2021-03-12",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9962867,
+          45.8173185
+        ]
+      },
+      "id": "node/1896949797"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1902426216",
+        "amenity": "clock",
+        "barometer": "yes",
+        "check_date": "2020-12-29",
+        "date": "yes",
+        "display": "digital",
+        "hygrometer": "yes",
+        "thermometer": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9741918,
+          45.8003243
+        ]
+      },
+      "id": "node/1902426216"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1902426224",
+        "amenity": "clock",
+        "check_date": "2020-12-29",
+        "display": "analog",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9747835,
+          45.8003546
+        ]
+      },
+      "id": "node/1902426224"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1962380434",
+        "amenity": "clock",
+        "display": "sundial",
+        "support": "wall_mounted"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9763238,
+          45.8152289
+        ]
+      },
+      "id": "node/1962380434"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2172322659",
+        "amenity": "clock",
+        "display": "analog",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.0281116,
+          45.8220997
+        ]
+      },
+      "id": "node/2172322659"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2299708621",
+        "amenity": "cinema",
+        "name": "Cineplexx"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.0508768,
+          45.8017655
+        ]
+      },
+      "id": "node/2299708621"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2303266339",
+        "amenity": "clock",
+        "check_date": "2021-01-19"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9643668,
+          45.8027188
+        ]
+      },
+      "id": "node/2303266339"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2370739164",
+        "amenity": "clock",
+        "display": "analog",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9336916,
+          45.8148992
+        ]
+      },
+      "id": "node/2370739164"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2410466458",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9838739,
+          45.8104758
+        ]
+      },
+      "id": "node/2410466458"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2470850726",
+        "addr:city": "Zagreb",
+        "addr:country": "HR",
+        "addr:housenumber": "48",
+        "addr:postcode": "10000",
+        "addr:street": "Ulica kneza Ljudevita Posavskog",
+        "name": "Muzej automobila Ferdinand Budicki",
+        "opening_hours": "Mo-Su 10:00-19:00",
+        "phone": "+385992290161",
+        "tourism": "museum",
+        "website": "http://www.otk-ferdinandbudicki.hr/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9986474,
+          45.8087854
+        ]
+      },
+      "id": "node/2470850726"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2528733254",
+        "name": "Hrvatsko društvo likovnih umjetnika",
+        "office": "yes",
+        "tourism": "museum",
+        "website": "http://www.hdlu.hr/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9870252,
+          45.8099731
+        ]
+      },
+      "id": "node/2528733254"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2628126159",
+        "amenity": "clock",
+        "display": "analog"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.965616,
+          45.7768863
+        ]
+      },
+      "id": "node/2628126159"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2631788317",
+        "amenity": "clock",
+        "check_date": "2021-03-08",
+        "display": "analog",
+        "support": "wall_mounted",
+        "visibility": "house"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.928434,
+          45.8063632
+        ]
+      },
+      "id": "node/2631788317"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2750011731",
+        "addr:housenumber": "4",
+        "addr:postcode": "10000",
+        "addr:street": "Trg Republike Hrvatske",
+        "email": "hsm@hsmuzej.hr",
+        "name": "Hrvatski školski muzej",
+        "name:ko": "크로아티아 학교 박물관",
+        "opening_hours": "Tu-We,Fr 10:00-17:00; Th 10:00-20:00; Sa 09:00-14:00",
+        "phone": "+38514855716",
+        "tourism": "museum",
+        "website": "http://www.hsmuzej.hr/index.asp",
+        "wikidata": "Q1567326"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.971061,
+          45.8092347
+        ]
+      },
+      "id": "node/2750011731"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2884714406",
+        "addr:housenumber": "1",
+        "addr:street": "Ulica Andrije Hebranga",
+        "email": "moderna-galerija@zg.t-com.hr",
+        "name": "Moderna galerija",
+        "opening_hours": "Tu-Fr 11:00-19:00; Sa-Su 11:00-14:00",
+        "phone": "+38516041040",
+        "tourism": "museum",
+        "website": "https://www.moderna-galerija.hr/",
+        "wikidata": "Q2350879"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9775482,
+          45.8091324
+        ]
+      },
+      "id": "node/2884714406"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2995622281",
+        "amenity": "college",
+        "name": "Akademija dramskih umjetnosti",
+        "operator": "Sveučilište u Zagrebu",
+        "website": "http://www.adu.unizg.hr/",
+        "wikidata": "Q2618673",
+        "wikipedia": "hr:Akademija dramske umjetnosti u Zagrebu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9702948,
+          45.8086055
+        ]
+      },
+      "id": "node/2995622281"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3190084478",
+        "addr:housenumber": "31",
+        "addr:postcode": "10000",
+        "addr:street": "Kaptol",
+        "email": "muzejstepinac@zg-nadbiskupija.hr",
+        "name": "Muzej blaženog Alojzija Stepinca",
+        "opening_hours": "Tu-Fr 08:00-17:00; Sa 09:00-13:00",
+        "phone": "+38514894879",
+        "tourism": "museum"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.97908,
+          45.8143537
+        ]
+      },
+      "id": "node/3190084478"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3324113762",
+        "amenity": "college",
+        "name": "Tehničko veleučilište Zagreb"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9681046,
+          45.7965722
+        ]
+      },
+      "id": "node/3324113762"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3366766814",
+        "addr:housenumber": "16",
+        "addr:street": "Zagorska ulica",
+        "amenity": "college",
+        "name": "Akademija likovnih umjetnosti u Zagrebu, odsjek za animirani film i nove medije",
+        "operator": "Sveučilište u Zagrebu",
+        "website": "http://www.alu.unizg.hr"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9433294,
+          45.8070853
+        ]
+      },
+      "id": "node/3366766814"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3371599393",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.905922,
+          45.798232
+        ]
+      },
+      "id": "node/3371599393"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3617997605",
+        "addr:postcode": "10000",
+        "email": "info@muzejiluzija.hr",
+        "fee": "yes",
+        "name": "Muzej Iluzija",
+        "name:en": "Museum of ilusions",
+        "opening_hours": "Mo-Su 09:00-22:00",
+        "phone": "+385 1 7999 609",
+        "tourism": "museum",
+        "website": "https://muzejiluzija.com/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9664856,
+          45.8131143
+        ]
+      },
+      "id": "node/3617997605"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3762231457",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "119",
+        "addr:postcode": "10000",
+        "addr:street": "Selska cesta",
+        "amenity": "college",
+        "isced:level": "5",
+        "name": "Visoka škola za ekonomiju, poduzetništvo i upravljanje Nikola Šubić Zrinski",
+        "website": "http://www.zrinski.org/nikola/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9440001,
+          45.8011514
+        ]
+      },
+      "id": "node/3762231457"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3784402925",
+        "amenity": "college",
+        "name": "Katolički bogoslovni fakultet",
+        "operator": "Sveučilište u Zagrebu",
+        "website": "https://www.kbf.unizg.hr/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9823242,
+          45.8136871
+        ]
+      },
+      "id": "node/3784402925"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4020482944",
+        "amenity": "clock",
+        "check_date": "2021-05-01",
+        "display": "analog",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9057929,
+          45.8131474
+        ]
+      },
+      "id": "node/4020482944"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4162680828",
+        "addr:postcode": "10000",
+        "email": "info@drazenpetrovic.net",
+        "name": "Muzejsko-memorijalni centar Dražen Petrović",
+        "opening_hours": "Mo-Fr 10:00-17:00; Sa 10:00-14:00",
+        "phone": "+38514843146",
+        "tourism": "museum",
+        "website": "http://www.drazenpetrovic.net/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.963573,
+          45.803064
+        ]
+      },
+      "id": "node/4162680828"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4202221914",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "3",
+        "addr:postcode": "10000",
+        "addr:street": "Ulica svetog Ćirila i Metoda",
+        "email": "info@hmnu.hr",
+        "fee": "yes",
+        "name": "Hrvatski muzej naivne umjetnosti",
+        "name:en": "Museum of Naïve Art",
+        "opening_hours": "Mo-Sa 10:00-18:00; Su 10:00-13:00",
+        "phone": "+38514851911",
+        "tourism": "museum",
+        "website": "http://www.hmnu.hr/",
+        "wikidata": "Q5187140"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9732804,
+          45.8153802
+        ]
+      },
+      "id": "node/4202221914"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4281766192",
+        "email": "sgallery@hazu.hr",
+        "name": "Strossmayerova galerija starih majstora",
+        "opening_hours": "Tu 10:00-19:00; We-Fr 10:00-16:00; Sa-Su 10:00-13:00",
+        "phone": "+38514895117",
+        "tourism": "museum",
+        "website": "http://info.hazu.hr/hr/o-akademiji/jedinice/strossmayerova_galerija_starih_majstora/",
+        "wikidata": "Q1258421"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9785844,
+          45.8090793
+        ]
+      },
+      "id": "node/4281766192"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4281766193",
+        "addr:housenumber": "2",
+        "addr:postcode": "10000",
+        "addr:street": "Medvedgradska ulica",
+        "email": "gliptoteka@hazu.hr",
+        "name": "Gliptoteka HAZU",
+        "opening_hours": "Tu-Fr 11:00-19:00; Sa-Su 10:00-14:00",
+        "phone": "+38514686050",
+        "tourism": "museum",
+        "website": "http://gliptoteka.mdc.hr/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9774209,
+          45.8221083
+        ]
+      },
+      "id": "node/4281766193"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4281766490",
+        "addr:housenumber": "3",
+        "addr:postcode": "10000",
+        "addr:street": "Trg bana Josipa Jelačića",
+        "fee": "yes",
+        "name": "Muzej gljiva",
+        "opening_hours": "We 13:00-19:00; Fr, Sa 10:00-17:00; PH OFF",
+        "phone": "+38516383420",
+        "tourism": "museum"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.976565,
+          45.8136353
+        ]
+      },
+      "id": "node/4281766490"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4281801489",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "14",
+        "addr:postcode": "10000",
+        "addr:street": "Ulica Pavla Radića",
+        "email": "tortureum@gmail.com",
+        "name": "Tortureum - Muzej torture",
+        "opening_hours": "Mo-Su 11:00-19:00",
+        "phone": "+38516459803",
+        "tourism": "museum",
+        "website": "http://www.tortureum.com/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9758733,
+          45.8143495
+        ]
+      },
+      "id": "node/4281801489"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4507215050",
+        "amenity": "clock",
+        "display": "analog",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9791707,
+          45.8280614
+        ]
+      },
+      "id": "node/4507215050"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4511166256",
+        "amenity": "clock",
+        "display": "analog",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9483832,
+          45.7850876
+        ]
+      },
+      "id": "node/4511166256"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4622339860",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "6",
+        "addr:postcode": "10020",
+        "addr:street": "Ulica Vice Vukova",
+        "amenity": "cinema",
+        "brand": "CineStar",
+        "brand:wikidata": "Q321889",
+        "brand:wikipedia": "en:Cinestar",
+        "cinema:3D": "yes",
+        "name": "CineStar Zagreb - Arena centar IMAX",
+        "screen": "10",
+        "website": "https://www.blitz-cinestar.hr/",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9399242,
+          45.7702933
+        ]
+      },
+      "id": "node/4622339860"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4709140410",
+        "amenity": "clock",
+        "display": "analog",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.0190326,
+          45.8141637
+        ]
+      },
+      "id": "node/4709140410"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4741596386",
+        "leisure": "park",
+        "name": "Igralište"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9754407,
+          45.8527903
+        ]
+      },
+      "id": "node/4741596386"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4808681309",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9669229,
+          45.7955769
+        ]
+      },
+      "id": "node/4808681309"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4808683231",
+        "amenity": "clock",
+        "display": "analog",
+        "name:en": "Jelkovec Clock",
+        "support": "pole",
+        "visibility": "street"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.1079123,
+          45.8099002
+        ]
+      },
+      "id": "node/4808683231"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5233291190",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9457098,
+          45.7884082
+        ]
+      },
+      "id": "node/5233291190"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5266825062",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9518552,
+          45.786786
+        ]
+      },
+      "id": "node/5266825062"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5266825194",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9912804,
+          45.777575
+        ]
+      },
+      "id": "node/5266825194"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5266825195",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9855665,
+          45.780307
+        ]
+      },
+      "id": "node/5266825195"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5499889825",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "1",
+        "addr:postcode": "10000",
+        "addr:street": "Kordunska ulica",
+        "amenity": "cinema",
+        "email": "kinoteka@centarcesarec.hr",
+        "name": "Kinoteka",
+        "phone": "+385 1 6384 483",
+        "website": "http://kinokinoteka.hr/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9602188,
+          45.8112672
+        ]
+      },
+      "id": "node/5499889825"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6025339786",
+        "addr:postcode": "10000",
+        "amenity": "college",
+        "name": "Effectus",
+        "opening_hours": "Mo-Th 09:00-21:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.0088938,
+          45.8158412
+        ]
+      },
+      "id": "node/6025339786"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6049331348",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9960991,
+          45.7782134
+        ]
+      },
+      "id": "node/6049331348"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6283284063",
+        "amenity": "clock",
+        "display": "analog",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.0040288,
+          45.8013099
+        ]
+      },
+      "id": "node/6283284063"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6433265285",
+        "amenity": "clock",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9593773,
+          45.794769
+        ]
+      },
+      "id": "node/6433265285"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6539205356",
+        "amenity": "clock",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9536383,
+          45.7997827
+        ]
+      },
+      "id": "node/6539205356"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6553122285",
+        "name": "Zagreb 80's museum",
+        "tourism": "museum"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.975696,
+          45.8161624
+        ]
+      },
+      "id": "node/6553122285"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6713054210",
+        "charge": "20 HRK/adult;10 HRK/child",
+        "fee": "yes",
+        "name": "Kula Lotrščak",
+        "opening_hours": "Mo-Fr 09:00-21:00; Sa,Su 10:00-21:00",
+        "tourism": "museum",
+        "website": "http://gkd.hr/kula-lotrscak/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9732722,
+          45.8146362
+        ]
+      },
+      "id": "node/6713054210"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7057619585",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "4",
+        "addr:postcode": "10000",
+        "addr:street": "Gundulićeva ulica",
+        "museum": "transport",
+        "name": "Muzej vlakića Backo mini express",
+        "name:en": "Model train museum Backo Mini Express",
+        "opening_hours": "Tu-Sa 10:00-18:00",
+        "railway": "miniature",
+        "tourism": "museum",
+        "website": "https://www.backo.hr/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.97168,
+          45.8127042
+        ]
+      },
+      "id": "node/7057619585"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7282105712",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9643157,
+          45.8020931
+        ]
+      },
+      "id": "node/7282105712"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7333165078",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "77",
+        "addr:postcode": "10000",
+        "addr:street": "Savska cesta",
+        "amenity": "college",
+        "name": "Učiteljski fakultet",
+        "operator": "Sveučilište u Zagrebu",
+        "phone": "+385 1 6327 300",
+        "website": "https://www.ufzg.unizg.hr",
+        "wikidata": "Q5429082",
+        "wikipedia": "hr:Učiteljski fakultet u Zagrebu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9615763,
+          45.7972761
+        ]
+      },
+      "id": "node/7333165078"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7335274906",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "4",
+        "addr:postcode": "10000",
+        "addr:street": "Ulica Lavoslava Vukelića",
+        "amenity": "college",
+        "email": "fpz@fpz.unizg.hr",
+        "fax": "+385 1 2314 415",
+        "name": "Fakultet prometnih znanosti",
+        "note": "IBAN: HR6823600001101425998\nOIB: 25410051374",
+        "operator": "Sveučilište u Zagrebu",
+        "phone": "+385 1 2380 222",
+        "website": "https://www.fpz.unizg.hr/web/naslovna/novosti",
+        "wikidata": "Q14698600",
+        "wikipedia": "hr:Fakultet prometnih znanosti u Zagrebu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.009526,
+          45.8144704
+        ]
+      },
+      "id": "node/7335274906"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7335556389",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "14",
+        "addr:postcode": "10000",
+        "addr:street": "Trg Republike Hrvatske",
+        "amenity": "college",
+        "email": "szpfzg@gmail.com",
+        "name": "Pravni fakultet",
+        "operator": "Sveučilište u Zagrebu",
+        "phone": "+385 1 4564 302",
+        "website": "https://www.pravo.unizg.hr",
+        "wikidata": "Q1564297",
+        "wikipedia": "hr:Pravni fakultet u Zagrebu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9698786,
+          45.8105889
+        ]
+      },
+      "id": "node/7335556389"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7554091164",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9301651,
+          45.7894135
+        ]
+      },
+      "id": "node/7554091164"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7791059489",
+        "name": "Galerija Nova",
+        "tourism": "museum"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9762675,
+          45.8112587
+        ]
+      },
+      "id": "node/7791059489"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7791063885",
+        "name": "Greta Gallery",
+        "tourism": "museum"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9641344,
+          45.8124905
+        ]
+      },
+      "id": "node/7791063885"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7959132896",
+        "addr:housenumber": "12",
+        "addr:street": "Trg Republike Hrvatske",
+        "amenity": "college",
+        "name": "Muzička akademija",
+        "name:en": "Music Academy",
+        "website": "http://www.muza.unizg.hr"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9684322,
+          45.8100557
+        ]
+      },
+      "id": "node/7959132896"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8048952938",
+        "amenity": "clock",
+        "barometer": "no",
+        "date": "no",
+        "display": "analog",
+        "hygrometer": "no",
+        "support": "pole",
+        "thermometer": "no",
+        "visibility": "house"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.922601,
+          45.7980627
+        ]
+      },
+      "id": "node/8048952938"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8116576896",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9926427,
+          45.8065496
+        ]
+      },
+      "id": "node/8116576896"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8121862930",
+        "amenity": "clock",
+        "display": "analog",
+        "faces": "4",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9644798,
+          45.8134368
+        ]
+      },
+      "id": "node/8121862930"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8188500807",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.0094828,
+          45.8154299
+        ]
+      },
+      "id": "node/8188500807"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8201479496",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.951435,
+          45.7862015
+        ]
+      },
+      "id": "node/8201479496"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8319653148",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "209",
+        "addr:postcode": "10000",
+        "addr:street": "Ksaver",
+        "amenity": "college",
+        "department": "library",
+        "name": "Zdravstveno Veleučilište Zagreb"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.976313,
+          45.8316077
+        ]
+      },
+      "id": "node/8319653148"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8339286382",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.974951,
+          45.8417834
+        ]
+      },
+      "id": "node/8339286382"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8421170454",
+        "amenity": "clock",
+        "display": "analog",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9915667,
+          45.7676563
+        ]
+      },
+      "id": "node/8421170454"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8589498225",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "7",
+        "addr:postcode": "10000",
+        "addr:street": "Ulica Vjekoslava Klaića",
+        "amenity": "college",
+        "email": "referada@vsite.hr",
+        "name": "Visoka škola za informacijske tehnologije",
+        "operator:type": "private",
+        "phone": "+385 1 376 4200",
+        "short_name": "VSITE",
+        "website": "https://vsite.hr/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9626,
+          45.8089355
+        ]
+      },
+      "id": "node/8589498225"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8617274016",
+        "amenity": "clock",
+        "display": "analog",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9431534,
+          45.8066851
+        ]
+      },
+      "id": "node/8617274016"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8652039546",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "2",
+        "addr:postcode": "10000",
+        "addr:street": "Getaldićeva ulica",
+        "amenity": "college",
+        "email": "info@grf.hr",
+        "name": "Grafički fakultet",
+        "operator": "Sveučilište u Zagrebu",
+        "operator:type": "university",
+        "phone": "+385 1 237 1080",
+        "website": "http://www.grf.unizg.hr"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.0296738,
+          45.8058649
+        ]
+      },
+      "id": "node/8652039546"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8987739924",
+        "amenity": "clock",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.0342314,
+          45.7890243
+        ]
+      },
+      "id": "node/8987739924"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9051637927",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "5",
+        "addr:postcode": "10000",
+        "addr:street": "Varšavska ulica",
+        "fee": "yes",
+        "name": "Muzej Čokolade",
+        "name:en": "Chocolate Museum",
+        "opening_hours": "Tu-Sa 11:00-20:00; Su 10:00-19:00",
+        "phone": "+385 1 2092 966",
+        "toilets": "yes",
+        "toilets:access": "customers",
+        "tourism": "museum",
+        "website": "https://muzejcokolade.hr"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9730849,
+          45.8117772
+        ]
+      },
+      "id": "node/9051637927"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9274605399",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9432723,
+          45.8118366
+        ]
+      },
+      "id": "node/9274605399"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9288095968",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "8",
+        "addr:postcode": "10000",
+        "addr:street": "Ulica Petra Preradovića",
+        "email": "info@museumofhangovers.com",
+        "name": "Muzej Mamurluka",
+        "name:en": "Museum of Hangovers",
+        "opening_hours": "Mo-Fr 13:00-21:00; Sa 10:00-21:00; Su 10:00-18:00",
+        "opening_hours:covid19": "open",
+        "phone": "+385 98 819 747",
+        "tourism": "museum",
+        "website": "https://www.muzejmamurluka.com/",
+        "website:en": "https://www.museumofhangovers.com/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9741734,
+          45.8108688
+        ]
+      },
+      "id": "node/9288095968"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9456518999",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "8",
+        "addr:postcode": "10000",
+        "addr:street": "Ulica Ivana Broza",
+        "amenity": "college",
+        "name": "Tehničko veleučilište u Zagrebu - Informatičko-računarski odjel"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9617762,
+          45.8066663
+        ]
+      },
+      "id": "node/9456518999"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9548339546",
+        "addr:housenumber": "82/1",
+        "addr:street": "Ulica Junija Palmotića",
+        "amenity": "college",
+        "name": "Sveučilište Vern"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9814664,
+          45.805938
+        ]
+      },
+      "id": "node/9548339546"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9585903724",
+        "name": "Cannabis museum",
+        "tourism": "museum"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9808348,
+          45.8081106
+        ]
+      },
+      "id": "node/9585903724"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9659404583",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "2",
+        "addr:postcode": "10000",
+        "addr:street": "Ulica kneza Domagoja",
+        "amenity": "college",
+        "name": "Farmaceutsko-biokemijski fakultet - odvojeni objekt",
+        "operator": "Sveučilište u Zagrebu",
+        "operator:type": "university",
+        "website": "http://www.pharma.unizg.hr/hr/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.986075,
+          45.8085239
+        ]
+      },
+      "id": "node/9659404583"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9768122413",
+        "addr:city": "Zagreb",
+        "addr:housenumber": "34",
+        "addr:postcode": "10000",
+        "addr:street": "Ulica Pavla Radića",
+        "amenity": "college",
+        "name": "Teološki fakultet Matija Vlačić Ilirik",
+        "operator:type": "private",
+        "website": "https://www.tfmvi.hr/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9757047,
+          45.8160975
+        ]
+      },
+      "id": "node/9768122413"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9771995063",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9803243,
+          45.7926751
+        ]
+      },
+      "id": "node/9771995063"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9793008780",
+        "amenity": "clock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.0381819,
+          45.8243104
+        ]
+      },
+      "id": "node/9793008780"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9838727399",
+        "alt_name": "Cinestar Z Centar",
+        "amenity": "cinema",
+        "brand": "CineStar",
+        "brand:wikidata": "Q321889",
+        "name": "CineStar Zagreb Zapad"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.8902173,
+          45.7984074
+        ]
+      },
+      "id": "node/9838727399"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9944509390",
+        "amenity": "clock",
+        "date": "no",
+        "display": "analog",
+        "faces": "4",
+        "support": "poles",
+        "visibility": "street"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9565439,
+          45.79081
+        ]
+      },
+      "id": "node/9944509390"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10095007232",
+        "addr:city": "Sesvete",
+        "addr:housenumber": "5",
+        "addr:postcode": "10360",
+        "addr:street": "Trg Dragutina Domjanića",
+        "contact:facebook": "https://www.facebook.com/profile.php?id=100011824712652",
+        "contact:instagram": "https://www.instagram.com/muzejprigorja/",
+        "contact:twitter": "https://twitter.com/muzejprigorja",
+        "contact:youtube": "https://www.youtube.com/channel/UCfXHiuvV6Euk0j2lGxnmNvA",
+        "name": "Muzej Prigorja",
+        "opening_hours": "Mo-Fr 10:00-19:00",
+        "phone": "+385 1 2001601",
+        "tourism": "museum",
+        "website": "https://www.muzejprigorja.hr/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.1103444,
+          45.8267454
+        ]
+      },
+      "id": "node/10095007232"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10164030854",
+        "amenity": "clock",
+        "date": "no",
+        "display": "analog",
+        "support": "pole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9960482,
+          45.7762575
+        ]
+      },
+      "id": "node/10164030854"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10228334563",
+        "addr:housenumber": "20",
+        "addr:street": "Opatička ulica",
+        "email": "mgz@mgz.hr",
+        "name": "Muzej grada Zagreba",
+        "name:en": "Zagreb City Museum",
+        "opening_hours": "Tu-Sa 10:00-18:00; Su 10:00-14:00; PH off",
+        "phone": "+385 4851 361;+385 4851 362",
+        "start_date": "1907",
+        "tourism": "museum",
+        "website": "https://mgz.hr",
+        "wikidata": "Q2618426"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9750163,
+          45.8185783
+        ]
+      },
+      "id": "node/10228334563"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10228582634",
+        "amenity": "clock",
+        "display": "sundial",
+        "support": "wall_mounted"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9750002,
+          45.818518
+        ]
+      },
+      "id": "node/10228582634"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10232795860",
+        "addr:housenumber": "37",
+        "addr:postcode": "10000",
+        "addr:street": "Ulica Ivana Gorana Kovačića",
+        "email": "hma@hazu.hr",
+        "name": "Hrvatski muzej arhitekture",
+        "name:en": "Croatian Architecture Museum",
+        "opening_hours": "Mo-We, Fr 10:00-16:00; Th 10:00-19:00",
+        "phone": "+38514834551tourism=museum",
+        "tourism": "museum",
+        "website": "http://info.hazu.hr/hr/o-akademiji/jedinice/hrvatski_muzej_arhitekture/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9685988,
+          45.8210014
+        ]
+      },
+      "id": "node/10232795860"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10238198315",
+        "amenity": "clock",
+        "display": "analog"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.9943619,
+          45.7724825
+        ]
+      },
+      "id": "node/10238198315"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10245341827",
+        "amenity": "college",
+        "email": "zagreb@aspira.hr",
+        "mobile": "+385 99 336 5500",
+        "name": "Aspira",
+        "phone": "+385 1 6446 36",
+        "ref:vatin": "HR14885934105",
+        "website": "https://www.aspira.hr"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.0038091,
+          45.8075435
+        ]
+      },
+      "id": "node/10245341827"
+    }
+  ]
+}

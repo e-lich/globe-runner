@@ -35,7 +35,11 @@ if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")
 
 # import all views (+ db models?)
-import backend.models
-import backend.views.register
-import backend.views.email_confirmation
-import backend.views.login
+import backend.database.models
+import backend.database.db_init
+import backend.views.login_register_views.register
+import backend.views.login_register_views.email_confirmation
+import backend.views.login_register_views.login
+import backend.views.player_views.update_location
+import backend.views.player_views.close_by
+import backend.views.admin_views.admin_cards_view

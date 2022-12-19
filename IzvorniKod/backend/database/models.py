@@ -1,7 +1,7 @@
 import enum
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
-from backend import db, app
+from backend import db
 
 
 # User db model
@@ -82,10 +82,10 @@ class Admin(db.Model):
 class Card(db.Model):
     __tablename__ = "Cards"
 
-    cardID = db.Column(db.Integer, primary_key=True, unique=True)
-    cardLocation = db.Column(db.String(100))
+    cardID = db.Column(db.BigInteger, primary_key=True, unique=True)
+    cardLocation = db.Column(db.String(100)) # latitude i longitude JSON: {'latitude':'15.124', 'longitude':'45.1323'}
     locationPhoto = db.Column(db.Text)
-    title = db.Column(db.String(50))
+    title = db.Column(db.String(100))
     description = db.Column(db.String(250))
     cardStatus = db.Column(db.Enum("submitted", "unclaimed", "claimed", "verified", name="card_status_type"))
     authorUserID = db.Column(db.Integer, db.ForeignKey("Players.userID"))
@@ -126,9 +126,3 @@ class Fight(db.Model):
     points2 = db.Column(db.Float)
     fightTimestamp = db.Column(db.DateTime)
     challengeID = db.Column(db.Integer, db.ForeignKey("Challenges.challengeID"))
-
-# adding all models to db
-db.init_app(app)
-with app.app_context():
-    db.create_all()
-        

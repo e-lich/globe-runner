@@ -1,6 +1,7 @@
 # pycache
-IzvorniKod/backend/__pycache__
-IzvorniKod/backend/views/__pycache__
+IzvorniKod/*/__pycache__
+IzvorniKod/backend/views/*/__pycache__
+IzvorniKod/backend/*/__pycache__
 
 # env
 .vscode

@@ -12,6 +12,9 @@ flask-cors = "*"
 psycopg2 = "*"
 flask-mail = "*"
 debugpy = "*"
+geojson = "*"
+geopy = "*"
+requests = "*"
 
 [dev-packages]
 
