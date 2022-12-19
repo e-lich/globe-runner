@@ -2,12 +2,7 @@ from backend import app, db
 from flask import request, jsonify, redirect
 from backend.database.models import Player, Cartographer, Admin, User
 
-# dummy rjesenje za rjesiti nedostatak GET metode
-@app.route('/updateUserLocation', methods=['GET'])
-def update_location_hello():
-    return
-
-@app.route('/updateUserLocation', methods=['POST'])
+@app.route('/updateUserLocation', methods=['POST', 'GET'])
 def update_user_location():
     request_data = request.get_json()
 

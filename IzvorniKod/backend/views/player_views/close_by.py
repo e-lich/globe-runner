@@ -4,18 +4,8 @@ from backend.database.models import Player, Card
 from geopy import distance
 import json
 
-# dummy rjesenje za rjesiti nedostatak GET metode
-@app.route('/getCloseByPlayers', methods=['GET'])
-def get_close_by_players_hello():
-    return
-
-# dummy rjesenje za rjesiti nedostatak GET metode
-@app.route('/getCloseByLocations', methods=['GET'])
-def get_close_by_locations_hello():
-    return
-
 # vraca sve igrace koji su u blizini
-@app.route('/getCloseByPlayers', methods=['POST'])
+@app.route('/getCloseByPlayers', methods=['POST', 'GET'])
 def get_close_by_players():
     request_data = request.get_json()
 
@@ -48,7 +38,7 @@ def get_close_by_players():
     return closeByPlayers
 
 # vraca sve kartice u blizini
-@app.route('/getCloseByLocations', methods=['POST'])
+@app.route('/getCloseByLocations', methods=['POST', 'GET'])
 def get_close_by_locations():
     request_data = request.get_json()
 
