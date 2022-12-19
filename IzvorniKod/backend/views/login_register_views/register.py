@@ -6,11 +6,6 @@ from backend.send_email import send_email
 from backend.views.login_register_views.email_confirmation import generate_confirmation_token, confirm_email
 import base64
 
-# dummy rjesenje za rjesiti nedostatak GET metode
-@app.route('/register', methods=['GET'])
-def helloRegister():
-    return
-
 # geting rid of 403 error    
 @app.route('/register/basic', methods=['GET'])
 def helloRegisterBasic():
@@ -22,7 +17,7 @@ def helloRegisterCartographer():
     return 
 
 # register basic user
-@app.route('/register', methods=['POST'])
+@app.route('/register', methods=['POST', 'GET'])
 def register_user():
     # input variables validity
     username_valid = True
