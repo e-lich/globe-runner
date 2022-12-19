@@ -11,16 +11,18 @@ def update_location_hello():
 def update_user_location():
     request_data = request.get_json()
 
-    userID = request.form['userID']
-    lat = request.form['lat']
-    lng = request.form['lng']
+    userID = request_data['userID']
+    lat = request_data['lat']
+    lng = request_data['lng']
 
     user = db.session.query(Player).filter_by(userID=userID).first()
     if user is None:
         return ["User with this userID doesn't exist"]
 
-    user.playerLocation = "{" + f"'latitude':{lat}, 'longitude':{lng}" + "}"
+    user.playerLocation = "{" + f"\"latitude\": {lat}, \"longitude\": {lng}" + "}"
     db.session.commit()
+
+    return ["Location updated successfully"]
 
 
 
