@@ -1,17 +1,23 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L, { Icon } from "leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Dropdown } from "react-bootstrap";
 
-export default function LeafletMap() {
+export default function OnSiteMap() {
   // map variable so we can clear it at the beginning of useEffect
-  var myMap: L.Map | undefined;
-  var closeByLocations:
+  var myOnSiteMap: L.Map | undefined;
+  var onSiteCheckLocations:
     | Array<{ lat: number; lng: number; name: string; image: string }>
     | undefined;
+  var selectedLocations:
+    | Array<{ lat: number; lng: number; name: string; image: string }>
+    | undefined;
+  var [dropDownValue, setDropDownValue] = useState("");
+  var dropvalue = "";
+  var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
 
   // mock location data that we need to switch with an API call
-  var mockLocationData = [
+  var mockOnSiteCheckLocations = [
     {
       lat: 45.8145,
       lng: 15.9798,
@@ -35,33 +41,59 @@ export default function LeafletMap() {
     },
   ];
 
+  var mockSelectedLocations = [
+    {
+      lat: 45.8238,
+      lng: 15.9761,
+      name: "Secondary Square",
+      image:
+        "https://png.pngtree.com/png-vector/20190307/ourlarge/pngtree-house-icon-design-template-vector-isolated-png-image_781941.jpg",
+    },
+    {
+      lat: 45.8238,
+      lng: 15.9861,
+      name: "Ternary Square",
+      image:
+        "https://png.pngtree.com/png-vector/20190307/ourlarge/pngtree-house-icon-design-template-vector-isolated-png-image_781941.jpg",
+    },
+  ];
+
   // MAP INITIALIZATION
   useEffect(() => {
-    if (myMap !== undefined && myMap !== null) {
-      myMap.remove(); // should remove the map from UI and clean the inner children of DOM element
-      console.log(myMap); // nothing should actually happen to the value of mymap
+    if (myOnSiteMap !== undefined && myOnSiteMap !== null) {
+      myOnSiteMap.remove(); // should remove the map from UI and clean the inner children of DOM element
     }
 
-    myMap = L.map("mapid");
+    myOnSiteMap = L.map("onSiteMapId");
+    setMapContainer(myOnSiteMap);
     var tile_url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     var layer = L.tileLayer(tile_url, {
       maxZoom: 19,
       attribution:
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     });
-    myMap.addLayer(layer);
-    myMap.setView([45.245, 17.642], 14.5);
+    myOnSiteMap.addLayer(layer);
+    myOnSiteMap.setView([45.8238, 15.9761], 13);
+  }, [myOnSiteMap]);
 
-    // MARKER OPTIONS FOR USER
-    var myIcon = L.icon({
-      iconUrl:
-        "https://www.shareicon.net/data/512x512/2016/03/13/733024_people_512x512.png",
-      iconSize: [30, 35], // size of the icon
-      shadowSize: [50, 64], // size of the shadow
-      iconAnchor: [15, 25], // point of the icon which will correspond to marker's location
-      shadowAnchor: [4, 62], // the same for the shadow
-      popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+  function updateMarkers() {
+    myOnSiteMap = mapContainer;
+    // clear all markers on the map and set new ones!
+
+    // clear all of the previous layers
+    myOnSiteMap!.eachLayer(function (layer) {
+      myOnSiteMap!.removeLayer(layer);
     });
+
+    // add necessary layers without any markers
+    var tile_url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+    var layer = L.tileLayer(tile_url, {
+      maxZoom: 19,
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    });
+    myOnSiteMap!.addLayer(layer);
+    myOnSiteMap!.setView([45.8238, 15.9761], 13);
 
     // MARKER OPTIONS FOR LOCATIONS
     var locationIcon = L.icon({
@@ -74,45 +106,8 @@ export default function LeafletMap() {
       popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
     });
 
-    // SETTING LOCATION TO CURRENT USER LOCATION WITH APPROPRIATE MARKER
-    myMap
-      .locate({
-        setView: true,
-        watch: true,
-      }) /* This will return map so you can do chaining */
-      .on("locationfound", function (e) {
-        updateUserLocation(e.latlng.lat, e.latlng.lng); // tell the server where the user is currently
-        getCloseByLocations(e.latlng.lat, e.latlng.lng); // find all locations that are near the current location
-
-        var currentMarker = L.marker([e.latlng.lat, e.latlng.lng], {
-          icon: myIcon,
-        }).bindPopup("Your are here :)");
-        var previousMarker: L.Marker<any> | undefined;
-
-        var circle = L.circle([e.latlng.lat, e.latlng.lng], e.accuracy / 2, {
-          weight: 1,
-          color: "blue",
-          fillColor: "#cacaca",
-          fillOpacity: 0.2,
-        });
-        var previousCircle: L.Circle<any> | undefined;
-
-        if (previousMarker !== undefined) myMap!.removeLayer(previousMarker);
-        if (previousCircle !== undefined) myMap!.removeLayer(previousCircle);
-
-        myMap!.addLayer(currentMarker);
-        previousMarker = currentMarker;
-        myMap!.addLayer(circle);
-      })
-      .on("locationerror", function (e) {
-        console.log(e);
-        alert("Location access denied.");
-      });
-
-    // ADDING MOCK LOCATION DATA
-    if (closeByLocations)
-      // check if closeByLocations is defined, add marker for each location that exists!
-      closeByLocations.forEach(
+    if (dropvalue === "On-site Check") {
+      mockOnSiteCheckLocations.forEach(
         (locationData: {
           lat: number;
           lng: number;
@@ -133,30 +128,82 @@ export default function LeafletMap() {
             "   </div>" +
             "</div>";
 
-          L.marker([locationData.lat, locationData.lng], { icon: locationIcon }) // add the created marker to the desired coordinates with desired popup
+          L.marker([locationData.lat, locationData.lng], {
+            icon: locationIcon,
+          }) // add the created marker to the desired coordinates with desired popup
             .bindPopup(customPopup, popupOptions)
-            .addTo(myMap!);
+            .addTo(myOnSiteMap!);
         }
       );
-  });
+    }
 
-  function updateUserLocation(lat: number, lng: number) {
-    // TODO change this with post request!
-    localStorage.setItem(
-      "userLocation",
-      JSON.stringify({ userId: 12, lat: lat, lng: lng }) // TODO change userID to the real one!
-    );
+    if (dropvalue === "Selected Locations") {
+      // check if closeByLocations is defined, add marker for each location that exists!
+      mockSelectedLocations.forEach(
+        (locationData: {
+          lat: number;
+          lng: number;
+          name: string;
+          image: string;
+        }) => {
+          const popupOptions = {
+            maxWidth: 100, // set max-width
+            className: "customPopup", // name custom popup
+          };
+
+          var customPopup =
+            '<div className="cardpopup">' +
+            `   <img className="cardpopup--image" src=${locationData.image} height="100px" width="100px" alt=""></img>` +
+            "   <hr>" +
+            `   <div class="cardpopup--name">` +
+            `     <span>${locationData.name}</span>` +
+            "   </div>" +
+            "</div>";
+
+          L.marker([locationData.lat, locationData.lng], {
+            icon: locationIcon,
+          }) // add the created marker to the desired coordinates with desired popup
+            .bindPopup(customPopup, popupOptions)
+            .addTo(myOnSiteMap!);
+        }
+      );
+    }
   }
 
-  function getCloseByLocations(lat: number, lng: number) {
-    // TODO change this with post request!
-    localStorage.setItem(
-      "userLocation",
-      JSON.stringify({ userId: 12, lat: lat, lng: lng }) // TODO change userID to the real one!
-    );
+  return (
+    <>
+      <Dropdown>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          {dropDownValue ? dropDownValue : "Select filter"}
+        </Dropdown.Toggle>
 
-    closeByLocations = mockLocationData; // TODO change this to the return value of the post request!
-  }
+        <Dropdown.Menu>
+          <Dropdown.Item
+            onClick={async () => {
+              setDropDownValue("On-site Check");
+              dropvalue = "On-site Check";
+              updateMarkers();
+            }}
+          >
+            On-site Check
+          </Dropdown.Item>
 
-  return <div id="mapid"></div>;
+          <Dropdown.Item
+            onClick={async () => {
+              await setDropDownValue("Selected Locations");
+              dropvalue = "Selected Locations";
+              updateMarkers();
+            }}
+          >
+            Selected Locations
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+      <h1 style={{ textAlign: "center" }}>
+        Map for viewing Locations that need to be checked on-site and locations
+        you will check
+      </h1>
+      <div id="onSiteMapId"></div>
+    </>
+  );
 }

@@ -1,6 +1,7 @@
 import Navbar from "../../components/Navbar";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import OnSiteMap from "../../components/OnSiteMap";
 
 export default function OnSiteApproval() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export default function OnSiteApproval() {
   return (
     <>
       <Navbar />
+      <OnSiteMap />
       <div className="align-items-center Auth-container">
         <form className="Auth-form">
           <div className="Auth-form-content">

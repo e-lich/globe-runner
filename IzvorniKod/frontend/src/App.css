@@ -171,6 +171,26 @@ ul.nav--links {
   height: 95%;
 }
 
+#addLocationMapId {
+  margin: 50px;
+  height: 60vh;
+}
+
+#cartographerHomeMapId {
+  margin: 50px;
+  height: 60vh;
+}
+
+#onSiteMapId {
+  margin: 50px;
+  height: 60vh;
+}
+
+#cartographerProfileMapId {
+  margin: 50px;
+  height: 60vh;
+}
+
 .map-placeholder {
   font-weight: bolder;
   font-size: 80px;
@@ -194,10 +214,4 @@ ul.nav--links {
 .player--image {
   width: 20px;
   height: 20px;
-}
-
-.cardpopup--name {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
