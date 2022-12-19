@@ -40,8 +40,6 @@ import backend.database.db_init
 import backend.views.login_register_views.register
 import backend.views.login_register_views.email_confirmation
 import backend.views.login_register_views.login
-import backend.views.location_views.update_location
-import backend.views.location_views.get_locations
+import backend.views.player_views.update_location
 import backend.views.player_views.close_by
-import backend.views.player_views.user_info
 import backend.views.admin_views.admin_cards_view

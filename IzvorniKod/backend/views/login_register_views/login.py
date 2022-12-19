@@ -2,7 +2,12 @@ from backend import app, db
 from flask import request, jsonify, redirect
 from backend.database.models import Player, Cartographer, Admin
 
-@app.route('/signIn', methods=['POST', 'GET'])
+# dummy rjesenje za rjesiti nedostatak GET metode
+@app.route('/signIn', methods=['GET'])
+def hello():
+    return
+
+@app.route('/signIn', methods=['POST'])
 def login():
     request_data = request.get_json()
 
