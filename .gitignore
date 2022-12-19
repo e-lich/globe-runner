@@ -1,10 +1,11 @@
-IzvorniKod/backend/__pycache__
-IzvorniKod/backend/views/__pycache__
-IzvorniKod/backend/database/__pycache__
+# pycache
+IzvorniKod/*/__pycache__
+IzvorniKod/backend/views/*/__pycache__
+IzvorniKod/backend/*/__pycache__
 
+# env
 .vscode
 IzvorniKod/.env
-IzvorniKod/frontend/.env
 IzvorniKod/backend/Pipfile.lock
 
 # Frontend dio:
