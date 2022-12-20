@@ -6,7 +6,7 @@ import json
 from sqlalchemy import inspect
 
 # vraca sve igrace koji su u blizini
-@app.route('/players/close-by', methods=['POST', 'GET'])
+@app.route('/players/close-by', methods=['GET'])
 def get_close_by_players():
     userID = request.get_json()["userID"]
 
@@ -44,7 +44,7 @@ def object_as_dict(obj):
     return {c.key: getattr(obj, c.key)
             for c in inspect(obj).mapper.column_attrs}
 
-@app.route('/players/info/<userID>', methods=['POST', 'GET'])
+@app.route('/players/info/<userID>', methods=['GET'])
 def post_user_info(userID):
     user = db.session.query(Player).filter_by(userID=userID).first()
 
