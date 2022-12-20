@@ -6,7 +6,7 @@ import json
 # dummy rjesenje za rjesiti nedostatak GET metode
 @app.route('/getAllLocations', methods=['GET'])
 def get_all_locations_hello():
-    return
+    return 
 
 # vraca sve kartice
 @app.route('/getAllLocations', methods=['POST'])
