@@ -1,6 +1,6 @@
 from backend import app, db
 from flask import request, jsonify
-from backend.database.models import Card, Player, Cartographer, User
+from backend.database.models import Card, Player, Cartographer
 import json
 from geopy import distance
 
@@ -25,14 +25,16 @@ def get_submitted_locations():
     userID = request.get_json()["userID"]
 
     locations = []
-    user = db.session.query(User).filter_by(userID=userID).first()
+    user = db.session.query(Player).filter_by(userID=userID).first()
 
     if user is None:
-        return ["User not found"]
-    elif user.__class__.__name__ == "Cartographer":
-        locations = db.session.query(Card).filter_by(cardStatus="submitted").all()
+        user = db.session.query(Cartographer).filter_by(userID=userID).first()
+
+        if user is None:
+            return ["User not found"]
         
-    elif type(user) == Player:
+        locations = db.session.query(Card).filter_by(cardStatus="submitted").all()
+    else:
         if user.advanced == False:
             return ["Player is not advanced and cannot submit locations"]
 
@@ -49,14 +51,16 @@ def get_approved_locations():
     userID = request.get_json()["userID"]
 
     locations = []
-    user = db.session.query(User).filter_by(userID=userID).first()
+    user = db.session.query(Player).filter_by(userID=userID).first()
 
     if user is None:
-        return ["User not found"]
-    elif type(user) == Cartographer:
+        user = db.session.query(Cartographer).filter_by(userID=userID).first()
+
+        if user is None:
+            return ["User not found"]
+
         locations = db.session.query(Card).filter_by(approvedByUserID=userID, cardStatus="verified").all()
-    
-    elif type(user) == Player:
+    else:
         if user.advanced == False:
             return ["Player is not advanced and cannot submit locations"]
 
