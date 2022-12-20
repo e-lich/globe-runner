@@ -1,5 +1,5 @@
 from backend import app, db
-from flask import request, jsonify
+from flask import request, jsonify, session
 from backend.database.models import Card, Player, Cartographer
 import json
 from geopy import distance
@@ -20,25 +20,28 @@ def formattedReturn(locations):
     return locations_arr
 
 
-@app.route('/locations/submitted', methods=['POST', 'GET'])
+@app.route('/locations/submitted', methods=['GET'])
 def get_submitted_locations():
-    userID = request.get_json()["userID"]
+    if "userID" not in session:
+        return ["User not logged in"]
+
+    userID = session["userID"]
+    user_type = session["userType"]
 
     locations = []
-    user = db.session.query(Player).filter_by(userID=userID).first()
 
-    if user is None:
-        user = db.session.query(Cartographer).filter_by(userID=userID).first()
+    if user_type == "Player":
+        user = db.session.query(Player).filter_by(userID=userID).first()
 
-        if user is None:
-            return ["User not found"]
-        
-        locations = db.session.query(Card).filter_by(cardStatus="submitted").all()
-    else:
         if user.advanced == False:
             return ["Player is not advanced and cannot submit locations"]
 
         locations = db.session.query(Card).filter_by(authorUserID=userID, cardStatus="submitted").all()
+    
+    elif user_type == "Cartographer":
+        user = db.session.query(Cartographer).filter_by(userID=userID).first()
+
+        locations = db.session.query(Card).filter_by(cardStatus="submitted").all()
     
     if locations.length == 0:
         return ["No submitted locations found"]
@@ -46,53 +49,57 @@ def get_submitted_locations():
         return formattedReturn(locations)
 
 
-@app.route('/locations/approved', methods=['POST', 'GET'])
+@app.route('/locations/approved', methods=['GET'])
 def get_approved_locations():
-    userID = request.get_json()["userID"]
+    if "userID" not in session:
+        return ["User not logged in"]
+
+    userID = session["userID"]
+    user_type = session["userType"]
 
     locations = []
-    user = db.session.query(Player).filter_by(userID=userID).first()
 
-    if user is None:
-        user = db.session.query(Cartographer).filter_by(userID=userID).first()
+    if user_type == "Player":
+        user = db.session.query(Player).filter_by(userID=userID).first()
 
-        if user is None:
-            return ["User not found"]
-
-        locations = db.session.query(Card).filter_by(approvedByUserID=userID, cardStatus="verified").all()
-    else:
         if user.advanced == False:
             return ["Player is not advanced and cannot submit locations"]
 
         locations = db.session.query(Card).filter_by(authorUserID=userID, cardStatus="verified").all()
+    
+    elif user_type == "Cartographer":
+        user = db.session.query(Cartographer).filter_by(userID=userID).first()
 
+        locations = db.session.query(Card).filter_by(approvedByUserID=userID, cardStatus="verified").all()
+    
     if locations.length == 0:
         return ["No approved locations found"]
     else:
         return formattedReturn(locations)
 
 
-@app.route('/locations/on-site/unclaimed', methods=['POST', 'GET'])
+@app.route('/locations/on-site/unclaimed', methods=['GET'])
 def get_on_site_check_locations():
-    cartographerID = request.get_json()["cartographerID"]
-
-    cartographer = db.session.query(Cartographer).filter_by(userID=cartographerID).first()
-
-    if cartographer is None:
-        return ["Cartographer not found"]
+    if "userID" not in session:
+        return ["User not logged in"]
+    
+    if session["userType"] != "Cartographer":
+        return ["User is not a cartographer"]
 
     locations = db.session.query(Card).filter_by(cardStatus="unclaimed").all()
     
     return formattedReturn(locations)
 
-@app.route('/locations/on-site/claimed', methods=['POST', 'GET'])
+
+@app.route('/locations/on-site/claimed', methods=['GET'])
 def get_on_site_check_claimed_locations():
-    cartographerID = request.get_json()["cartographerID"]
+    if "userID" not in session:
+        return ["User not logged in"]
+    
+    if session["userType"] != "Cartographer":
+        return ["User is not a cartographer"]
 
-    cartographer = db.session.query(Cartographer).filter_by(userID=cartographerID).first()
-
-    if cartographer is None:
-        return ["Cartographer not found"]
+    cartographerID = session["userID"]
 
     locations = db.session.query(Card).filter_by(approverByUserID=cartographerID, cardStatus="claimed").all()
 
@@ -104,22 +111,32 @@ def get_on_site_check_claimed_locations():
 # TODO: neki verification da li je admin
 @app.route('/locations/admin', methods=['GET'])
 def get_all_locations():
+    if "userID" not in session:
+        return ["User not logged in"]
+
+    if session["userType"] != "Admin":
+        return ["User is not an admin"]
+
     locations = db.session.query(Card).all()
 
     return formattedReturn(locations)
 
 # vraca sve kartice u blizini
-@app.route('/locations/close-by', methods=['POST', 'GET'])
+@app.route('/locations/close-by', methods=['GET'])
 def get_close_by_locations():
-    request_data = request.get_json()
 
-    userID = request_data['userID']
-    lat = request_data['lat']
-    lng = request_data['lng']
+    if "userID" not in session:
+        return ["User not logged in"]
+
+    userID = session["userID"]
+
+    if session["userType"] != "Player":
+        return ["User is not a player"]
 
     user = db.session.query(Player).filter_by(userID=userID).first()
-    if user is None:
-        return ["User with this userID doesn't exist"]
+
+    lat = json.loads(user.playerLocation)['latitude']
+    lng = json.loads(user.playerLocation)['longitude']
 
     closeByLocations = []
 
