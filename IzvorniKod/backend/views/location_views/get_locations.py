@@ -1,5 +1,5 @@
 from backend import app, db
-from flask import request, jsonify, session
+from flask import session
 from backend.database.models import Card, Player, Cartographer
 import json
 from geopy import distance
