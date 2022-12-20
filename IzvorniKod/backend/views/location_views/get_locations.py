@@ -43,7 +43,7 @@ def get_submitted_locations():
 
         locations = db.session.query(Card).filter_by(cardStatus="submitted").all()
     
-    if locations.length == 0:
+    if len(locations) == 0:
         return ["No submitted locations found"]
     else:
         return formattedReturn(locations)
@@ -72,7 +72,7 @@ def get_approved_locations():
 
         locations = db.session.query(Card).filter_by(approvedByUserID=userID, cardStatus="verified").all()
     
-    if locations.length == 0:
+    if len(locations) == 0:
         return ["No approved locations found"]
     else:
         return formattedReturn(locations)
@@ -88,7 +88,10 @@ def get_on_site_check_locations():
 
     locations = db.session.query(Card).filter_by(cardStatus="unclaimed").all()
     
-    return formattedReturn(locations)
+    if len(locations) == 0:
+        return ["No unclaimed locations found"]
+    else:
+        return formattedReturn(locations)
 
 
 @app.route('/locations/on-site/claimed', methods=['GET'])
@@ -103,8 +106,8 @@ def get_on_site_check_claimed_locations():
 
     locations = db.session.query(Card).filter_by(approverByUserID=cartographerID, cardStatus="claimed").all()
 
-    if locations.length == 0:
-        return ["No claimed locations found"]
+    if len(locations) == 0:
+        return ["No claimed locations found for this cartographer"]
     else:
         return formattedReturn(locations)
 
@@ -119,7 +122,10 @@ def get_all_locations():
 
     locations = db.session.query(Card).all()
 
-    return formattedReturn(locations)
+    if len(locations) == 0:
+        return ["No locations found"]
+    else:
+        return formattedReturn(locations)
 
 # vraca sve kartice u blizini
 @app.route('/locations/close-by', methods=['GET'])
@@ -158,4 +164,7 @@ def get_close_by_locations():
                 'title': card.title
             })
 
-    return closeByLocations
+    if len(closeByLocations) == 0:
+        return ["No locations found close by"]
+    else:
+        return closeByLocations
