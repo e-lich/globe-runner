@@ -13,7 +13,10 @@ def formattedReturn(users):
             "userType": user.__class__.__name__
         })
 
-    return users_arr
+    if len(users_arr) == 0:
+        return ["No users found"]
+    else:
+        return users_arr
 
 @app.route('/users/all', methods=['GET'])
 def get_all_users():
