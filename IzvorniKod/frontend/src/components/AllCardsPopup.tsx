@@ -40,14 +40,14 @@ const AllCardsPopup = ({ open, onClose }: Props) => {
       {/* unutar ovo Contaier se moze stavljat sadrzaj Popup-a */}
       <hr></hr>
       <h6>You are currently editing</h6>
-      <h4>{locationData.name}</h4>
+      <h4>{locationData.title}</h4>
       <h4>This cards' coordinates are:</h4>
       <h4>
-        lng: {locationData.lng}, lat: {locationData.lat}
+        lat: {locationData.longitude}, lng: {locationData.latitude}
       </h4>
       <hr />
       <h6>Card image:</h6>
-      <img style={{ width: "50px" }} src={locationData.image} alt=""></img>
+      <img style={{ width: "50px" }} src={locationData.photo} alt=""></img>
       <hr />
       <Button onClick={onClose} variant="contained">
         Close
