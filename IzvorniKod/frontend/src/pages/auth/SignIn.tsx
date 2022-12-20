@@ -24,7 +24,7 @@ export default function SignIn() {
   function handleLogin() {
     return new Promise((resolve, reject) => {
       axios
-        .post(baseURL + "/signIn", {
+        .post(baseURL + "/login", {
           username_or_email: email,
           password: password,
         })

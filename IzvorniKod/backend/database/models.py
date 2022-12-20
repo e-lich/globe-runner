@@ -89,7 +89,7 @@ class Card(db.Model):
     description = db.Column(db.String(250))
     cardStatus = db.Column(db.Enum("submitted", "unclaimed", "claimed", "verified", name="card_status_type"))
     authorUserID = db.Column(db.Integer, db.ForeignKey("Players.userID"))
-    approvedByUserID = db.Column(db.Integer, db.ForeignKey("Cartographers.userID"))
+    approvedByUserID = db.Column(db.Integer, db.ForeignKey("Cartographers.userID")) # TODO: ovaj approvedBy zapravo treba biti Cartographer jer ovisno jel kartica claimed ili approved je to approved by ili claimed by
 
 # Inventory db model
 class Inventory(db.Model):

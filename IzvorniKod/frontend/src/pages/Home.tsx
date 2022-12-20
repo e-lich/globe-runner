@@ -18,7 +18,7 @@ export default function Home() {
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
 
-    if (userFromLocalStorage === null) navigate("/signIn");
+    if (userFromLocalStorage === null) navigate("/login");
   });
 
   if (user!.userType === "admin") return <AdminHome />;
