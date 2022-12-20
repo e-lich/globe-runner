@@ -191,6 +191,11 @@ ul.nav--links {
   height: 60vh;
 }
 
+#allCardsMapId {
+  margin: 50px;
+  height: 60vh;
+}
+
 .map-placeholder {
   font-weight: bolder;
   font-size: 80px;
