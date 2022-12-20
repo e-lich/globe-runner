@@ -12,6 +12,7 @@ export default function Home() {
         photo: String;
         username: String;
         userType: String;
+        userID: number;
       }
     | undefined = JSON.parse(localStorage.getItem("user")!);
 
