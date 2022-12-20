@@ -2,7 +2,7 @@ from backend import app, db
 from flask import session, request, jsonify
 from backend.database.models import Player
 
-@app.route('/locations/update', methods=['GET'])
+@app.route('/locations/update', methods=['POST', 'GET'])
 def update_user_location():
     if "userID" not in session:
         return ["User not logged in"]
