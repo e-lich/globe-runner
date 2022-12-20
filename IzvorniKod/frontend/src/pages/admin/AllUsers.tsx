@@ -2,6 +2,7 @@ import Navbar from "../../components/Navbar";
 import React, { useEffect } from "react";
 import "./AllUsers.css";
 import { useNavigate } from "react-router-dom";
+import PlayerCard from "../../components/PlayerCard";
 
 // TODO - Ovaj kod je samo za testiranje, ovu cijelu komponentu treba reworkat vjerojatno ispočetka!!!
 
@@ -15,6 +16,8 @@ export default function AllUsers() {
 
     if (!(JSON.parse(userFromLocalStorage!).userType === "admin"))
       navigate("/home");
+
+    getAllUsers();
   });
 
   var allUsers:
@@ -73,9 +76,13 @@ export default function AllUsers() {
               <div className="closest-players-title">
                 <h2>All Users:</h2>
               </div>
-              <hr />
-              <hr />
-              <ul className="closest-players">{listItems!}</ul>
+              <ul className="closest-players">
+                {allUsers!.map((user, key) => (
+                  <li key={key}>
+                    <PlayerCard battle={false} username={user.username} />
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </form>
