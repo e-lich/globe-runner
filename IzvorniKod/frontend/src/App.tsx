@@ -29,7 +29,7 @@ function App() {
       <Routes>
         {/* general routes */}
         <Route path="/" element={<Home />} />
-        <Route path="/signIn" element={<SignIn />} />
+        <Route path="/login" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/register/basic" element={<BasicRegister />} />
         <Route

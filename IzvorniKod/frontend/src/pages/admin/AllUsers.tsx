@@ -11,7 +11,7 @@ export default function AllUsers() {
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
 
-    if (userFromLocalStorage === null) navigate("/signIn");
+    if (userFromLocalStorage === null) navigate("/login");
 
     if (!(JSON.parse(userFromLocalStorage!).userType === "admin"))
       navigate("/home");

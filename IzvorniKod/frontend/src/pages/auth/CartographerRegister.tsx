@@ -170,7 +170,7 @@ function CartographerRegister() {
             <span
               className="link-primary"
               onClick={() => {
-                navigate("/signIn");
+                navigate("/login");
               }}
             >
               Sign In

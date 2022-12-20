@@ -39,7 +39,7 @@ function Register(props: any) {
                 Already registered?{" "}
                 <span
                   className="link-primary"
-                  onClick={() => navigate("/signIn")}
+                  onClick={() => navigate("/login")}
                 >
                   Sign in
                 </span>
