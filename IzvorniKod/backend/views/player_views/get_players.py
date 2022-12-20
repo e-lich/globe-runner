@@ -1,6 +1,6 @@
 from backend import app, db
 from flask import request, jsonify
-from backend.database.models import Player, Card
+from backend.database.models import Player
 from geopy import distance
 import json
 from sqlalchemy import inspect

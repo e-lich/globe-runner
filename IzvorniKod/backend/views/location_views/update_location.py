@@ -17,7 +17,7 @@ def update_user_location(userID):
     user.playerLocation = "{" + f"\"latitude\": {lat}, \"longitude\": {lng}" + "}"
     db.session.commit()
 
-    return ["Location updated successfully"]
+    return jsonify(success=True)
 
 
 
