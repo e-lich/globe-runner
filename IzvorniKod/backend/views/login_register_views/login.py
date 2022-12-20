@@ -13,6 +13,12 @@ def login():
         email = request_data['username_or_email']
 
         user = db.session.query(Player).filter_by(email=email).first()
+        
+        if user is not None:
+            user_type = 'player'
+            if user.advanced == True:
+                user_type = 'advancedPlayer'
+                
         if user is None:
             user = db.session.query(Cartographer).filter_by(email=email).first()
         if user is None:
