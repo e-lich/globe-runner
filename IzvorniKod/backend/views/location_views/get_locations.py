@@ -104,7 +104,7 @@ def get_on_site_check_claimed_locations():
 
     cartographerID = session["userID"]
 
-    locations = db.session.query(Card).filter_by(approverByUserID=cartographerID, cardStatus="claimed").all()
+    locations = db.session.query(Card).filter_by(approvedByUserID=cartographerID, cardStatus="claimed").all()
 
     if len(locations) == 0:
         return ["No claimed locations found for this cartographer"]
