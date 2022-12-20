@@ -40,7 +40,7 @@ def get_submitted_locations():
 
         locations = db.session.query(Card).filter_by(authorUserID=userID, cardStatus="submitted").all()
     
-    if locations.length == 0:
+    if len(locations) == 0:
         return ["No submitted locations found"]
     else:
         return formattedReturn(locations)
@@ -66,7 +66,7 @@ def get_approved_locations():
 
         locations = db.session.query(Card).filter_by(authorUserID=userID, cardStatus="verified").all()
 
-    if locations.length == 0:
+    if len(locations) == 0:
         return ["No approved locations found"]
     else:
         return formattedReturn(locations)
@@ -76,14 +76,17 @@ def get_approved_locations():
 def get_on_site_check_locations():
     cartographerID = request.get_json()["cartographerID"]
 
-    cartographer = db.session.query(Cartographer).filter_by(userID=cartographerID).first()
+    cartographer = db.session.query(Cartographer).filter_by(userID=cartographerID)
 
     if cartographer is None:
         return ["Cartographer not found"]
 
     locations = db.session.query(Card).filter_by(cardStatus="unclaimed").all()
-    
-    return formattedReturn(locations)
+
+    if len(locations) == 0:
+        return ["No claimed locations found"]
+    else:
+        return formattedReturn(locations)
 
 @app.route('/locations/on-site/claimed', methods=['POST', 'GET'])
 def get_on_site_check_claimed_locations():
@@ -94,9 +97,9 @@ def get_on_site_check_claimed_locations():
     if cartographer is None:
         return ["Cartographer not found"]
 
-    locations = db.session.query(Card).filter_by(approverByUserID=cartographerID, cardStatus="claimed").all()
+    locations = db.session.query(Card).filter_by(approvedByUserID=cartographerID, cardStatus="claimed").all()
 
-    if locations.length == 0:
+    if len(locations) == 0:
         return ["No claimed locations found"]
     else:
         return formattedReturn(locations)
