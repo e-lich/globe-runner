@@ -18,7 +18,7 @@ export default function UserProfile() {
 
   function handleLogout() {
     localStorage.removeItem("user");
-    navigate("/signIn");
+    navigate("/login");
   }
 
   const handleChanges = (e: any) => {
@@ -32,7 +32,7 @@ export default function UserProfile() {
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
 
-    if (userFromLocalStorage === null) navigate("/signIn");
+    if (userFromLocalStorage === null) navigate("/login");
 
     if (
       !JSON.parse(userFromLocalStorage!)

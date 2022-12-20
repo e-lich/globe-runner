@@ -2,7 +2,7 @@ from backend import app, db
 from flask import request, jsonify, redirect
 from backend.database.models import Player, Cartographer, Admin
 
-@app.route('/signIn', methods=['POST', 'GET'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
     request_data = request.get_json()
 

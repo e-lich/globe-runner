@@ -2,8 +2,8 @@ from backend import app, db
 from flask import request, jsonify, redirect
 from backend.database.models import Player, Cartographer, Admin, User
 
-@app.route('/updateUserLocation', methods=['POST', 'GET'])
-def update_user_location():
+@app.route('/locations/update', methods=['POST'])
+def update_user_location(userID):
     request_data = request.get_json()
 
     userID = request_data['userID']

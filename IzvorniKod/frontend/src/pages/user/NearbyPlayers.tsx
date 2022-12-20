@@ -20,7 +20,7 @@ export default function NearbyPlayers() {
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
 
-    if (userFromLocalStorage === null) navigate("/signIn");
+    if (userFromLocalStorage === null) navigate("/login");
 
     if (
       !JSON.parse(userFromLocalStorage!)

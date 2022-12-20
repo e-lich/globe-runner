@@ -8,7 +8,7 @@ function EmailConfirm() {
         <div className="d-flex justify-content-center m-4 Auth-form-container align-items-center">
             <h1>Confirm your email</h1>
             <button className="btn btn-primary" onClick={() => {
-                navigator("/signIn");
+                navigator("/login");
             }}>Sign in</button>
         </div>
     );
