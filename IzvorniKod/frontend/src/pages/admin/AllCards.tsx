@@ -1,8 +1,9 @@
 import Navbar from "../../components/Navbar";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import AllCardsMap from "../../components/AllCardsMap";
 
-export default function AdminHome() {
+export default function AllCards() {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,6 +18,7 @@ export default function AdminHome() {
   return (
     <>
       <Navbar />
+      <AllCardsMap />
       <div className="align-items-center Auth-container">
         <form className="Auth-form">
           <div className="Auth-form-content">

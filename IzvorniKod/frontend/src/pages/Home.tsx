@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AdminHome from "./admin/AdminHome";
+import AdminHome from "./admin/AllCards";
 import UserHome from "./user/UserHome";
 import CartographerHome from "./cartographer/CartographerHome";
 
