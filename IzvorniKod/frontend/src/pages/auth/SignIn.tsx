@@ -54,8 +54,10 @@ export default function SignIn() {
       })
     );
 
-    // userType (“player”, “advancedPlayer”, “cartographer”, “admin”)
-    // TODO switch JSON.stringify(...) to JSON.stringify(data)
+    // when we have userType (“player”, “advancedPlayer”, “cartographer”, “admin”)
+    // TODO switch to this instead:
+
+    // localStorage.setItem("user", JSON.stringify(data));
   }
 
   useEffect(() => {
