@@ -63,11 +63,7 @@ export default function NearbyPlayers() {
               sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
             >
               {closestPlayers.map((closestPlayer, key) => (
-                <PlayerCard
-                  key={key}
-                  closestPlayer={closestPlayer}
-                  battle={true}
-                />
+                <PlayerCard key={key} closestPlayer={closestPlayer} />
               ))}
             </List>
           </div>

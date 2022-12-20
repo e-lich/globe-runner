@@ -16,9 +16,9 @@ export default function PlayerCard(props: any) {
             console.log("DISPLAY USER PROFILE");
           }}
         >
-          {props.battle ? props.closestPlayer.username : props.username}
+          {props.closestPlayer.username}
         </Button>
-        {props.battle ? <ChallengeIcon swords={props.swords} /> : <></>}
+        <ChallengeIcon swords={props.swords} />
       </div>
     </ListItem>
   );
