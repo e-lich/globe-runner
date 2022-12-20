@@ -1,19 +1,22 @@
 from backend import app, db
-from flask import request, jsonify, redirect
-from backend.database.models import Player, Cartographer, Admin, User
+from flask import session, request, jsonify
+from backend.database.models import Player
 
 @app.route('/locations/update', methods=['POST', 'GET'])
-def update_user_location(userID):
-    request_data = request.get_json()
+def update_user_location():
+    if "userID" not in session:
+        return ["User not logged in"]
 
-    userID = request_data['userID']
+    userID = session["userID"]
+    
+    request_data = request.get_json()
     lat = request_data['lat']
     lng = request_data['lng']
 
-    user = db.session.query(Player).filter_by(userID=userID).first()
-    if user is None:
-        return ["User with this userID doesn't exist"]
+    if session["userType"] != "Player":
+        return ["User is not a player"]
 
+    user = db.session.query(Player).filter_by(userID=userID).first()
     user.playerLocation = "{" + f"\"latitude\": {lat}, \"longitude\": {lng}" + "}"
     db.session.commit()
 

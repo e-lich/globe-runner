@@ -34,8 +34,6 @@ def register_user():
     id = files.get('id')
     photo = files.get('photo')
 
-    user_type = None
-
     # iban will be an emtpy string if not provided 
     if iban:
 
@@ -46,12 +44,10 @@ def register_user():
         photo_string = base64.b64encode(photo.read()).decode('utf-8')
         id_string = base64.b64encode(id.read()).decode('utf-8')
         new_user = Cartographer(username=username, name=name, email=email, password=password, photo=photo_string, iban=iban, id=id_string)
-        user_type = 'cartographer'
 
     else:
         photo_string = base64.b64encode(photo.read()).decode('utf-8')
         new_user = Player(username=username, email=email, password=password, photo=photo_string, name=name)
-        user_type = 'player'
 
     # checking username and email
     if db.session.query(Player.username).filter_by(username=username).first() is not None or db.session.query(Cartographer.username).filter_by(username=username).first() is not None:
@@ -86,5 +82,5 @@ def register_user():
         'email': new_user.email,
         'photo': new_user.profilePhoto,
         'userID': new_user.userID,
-        'userType': user_type
+        'userType': new_user.__class__.__name__
     }) 

@@ -35,7 +35,10 @@ def get_close_by_players():
                 'photo': player.profilePhoto,
             })
 
-    return closeByPlayers
+    if len(closeByPlayers) == 0:
+        return ["No players found close by"]
+    else:
+        return closeByPlayers
 
 def object_as_dict(obj):
     return {c.key: getattr(obj, c.key)
