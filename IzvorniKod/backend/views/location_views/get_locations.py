@@ -32,7 +32,7 @@ def get_submitted_locations():
     elif user.__class__.__name__ == "Cartographer":
         locations = db.session.query(Card).filter_by(cardStatus="submitted").all()
         
-    elif user.__class__.__name__ == "Player":
+    elif type(user) == Player:
         if user.advanced == False:
             return ["Player is not advanced and cannot submit locations"]
 
@@ -53,10 +53,10 @@ def get_approved_locations():
 
     if user is None:
         return ["User not found"]
-    elif user.__class__.__name__ == "Cartographer":
+    elif type(user) == Cartographer:
         locations = db.session.query(Card).filter_by(approvedByUserID=userID, cardStatus="verified").all()
     
-    elif user.__class__.__name__ == "Player":
+    elif type(user) == Player:
         if user.advanced == False:
             return ["Player is not advanced and cannot submit locations"]
 
