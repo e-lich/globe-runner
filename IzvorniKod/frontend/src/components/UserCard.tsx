@@ -9,14 +9,12 @@ import BlockIcon from "@mui/icons-material/Block";
 import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 import EditProfilePopup from "./EditProfilePopup";
+import BanUserProfile from "./BanUserPopup";
 
 export default function UserCard(props: any) {
   const placeholder = require("../images/profile_picture.jpg");
-  const [isOpen, setIsOpen] = useState(false);
-
-  function handleEdit(): void {
-    setIsOpen(true);
-  }
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isBanOpen, setIsBanOpen] = useState(false);
 
   return (
     <>
@@ -25,18 +23,25 @@ export default function UserCard(props: any) {
           <Avatar alt="profile picture" src={placeholder} />
         </ListItemAvatar>
         <ListItemText primary={props.username} />
-        <IconButton onClick={() => console.log("BLOCK THIS USER")}>
-          <BlockIcon />
+        <IconButton>
+          <BlockIcon onClick={() => setIsBanOpen(true)} />
         </IconButton>
-        <IconButton onClick={() => handleEdit()}>
+        <IconButton onClick={() => setIsEditOpen(true)}>
           <EditIcon />
         </IconButton>
       </ListItem>
 
       <EditProfilePopup
-        open={isOpen}
+        open={isEditOpen}
         onClose={() => {
-          setIsOpen(false);
+          setIsEditOpen(false);
+        }}
+        oldUser={props.oldUser}
+      />
+      <BanUserProfile
+        open={isBanOpen}
+        onClose={() => {
+          setIsBanOpen(false);
         }}
         oldUser={props.oldUser}
       />
