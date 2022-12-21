@@ -114,20 +114,9 @@ export default function UserHomeMap() {
 
     const fetchLocations = async (lat: number, lng: number) => {
       try {
-        var userData = {
-          userID: 5,
-          // userID: JSON.parse(localStorage.getItem("user")!).userID, TODO switch the top one with this!
-          lat: lat,
-          lng: lng,
-        };
-
-        const res = await axios.post(
-          baseURL + "/getCloseByLocations",
-          userData
-        );
+        const res = await axios.get(baseURL + "/locations/close-by");
 
         locations = res.data;
-        console.log("non state locations are: " + locations);
         updateMarkers();
       } catch (e) {
         alert(e);
@@ -177,24 +166,11 @@ export default function UserHomeMap() {
 
   async function updateUserLocation(lat: number, lng: number) {
     var userData = {
-      userID: 5,
-      // userID: JSON.parse(localStorage.getItem("user")!).userID, TODO switch the top one with this!
       lat: lat,
       lng: lng,
     };
-    var data = await axios.post(baseURL + "/updateUserLocation", userData);
+    var data = await axios.post(baseURL + "/locations/update", userData);
     console.log(data);
   }
-
-  function getCloseByLocations(lat: number, lng: number) {
-    // TODO change this with post request!
-    localStorage.setItem(
-      "userLocation",
-      JSON.stringify({ userId: 12, lat: lat, lng: lng }) // TODO change userID to the real one!
-    );
-
-    closeByLocations = mockLocationData; // TODO change this to the return value of the post request!
-  }
-
   return <div id="mapid"></div>;
 }
