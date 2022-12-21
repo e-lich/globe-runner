@@ -12,7 +12,7 @@ import About from "./pages/About";
 import EmailConfirm from "./pages/auth/EmailConfirm";
 import UserHomeMap from "./components/UserHomeMap";
 import AllUsers from "./pages/admin/AllUsers";
-import AdminHome from "./pages/admin/AdminHome";
+import AdminHome from "./pages/admin/AllCards";
 import CartographerRequests from "./pages/admin/CartographerRequests";
 import UserHome from "./pages/user/UserHome";
 import GlobalStats from "./pages/user/GlobalStats";
@@ -22,6 +22,7 @@ import CartographerHome from "./pages/cartographer/CartographerHome";
 import CartographerMyProfile from "./pages/cartographer/CartographerMyProfile";
 import OnSiteApproval from "./pages/cartographer/OnSiteApproval";
 import AddLocation from "./pages/advancedUser/AddLocation";
+import AllCards from "./pages/admin/AllCards";
 
 function App() {
   return (
@@ -59,7 +60,7 @@ function App() {
         <Route path="/onSiteApproval" element={<OnSiteApproval />} />
 
         {/* admin only routes */}
-        <Route path="/adminHome" element={<AdminHome />} />
+        <Route path="/adminHome" element={<AllCards />} />
         <Route path="/allUsers" element={<AllUsers />} />
         <Route
           path="/cartographerRequests"

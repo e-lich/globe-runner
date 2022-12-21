@@ -179,7 +179,7 @@ export default function OnSiteMap() {
 
         <Dropdown.Menu>
           <Dropdown.Item
-            onClick={async () => {
+            onClick={() => {
               setDropDownValue("On-site Check");
               dropvalue = "On-site Check";
               updateMarkers();
