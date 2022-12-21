@@ -34,7 +34,6 @@ export default function UserProfile() {
 
     axios
       .delete(baseURL + "/users/delete", config)
-      .then(() => useState(''))
       .then(res => console.log(res))
       .catch(error => {
         console.log(error);
