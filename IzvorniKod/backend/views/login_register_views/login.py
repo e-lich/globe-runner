@@ -18,7 +18,7 @@ def login():
             user = db.session.query(Admin).filter_by(email=email).first()
     else:
         username = request_data['username_or_email']
-        
+        print("_______" + username)
         user = db.session.query(Player).filter_by(username=username).first()
 
         if user is None:
@@ -39,14 +39,16 @@ def login():
     else:
         if type(user) == Admin:
             photo = None
+            session['userID'] = user.adminID
         else:
             photo = user.profilePhoto
-        session['userID'] = user.userID
+            session['userID'] = user.userID
+        
         session['userType'] = user.__class__.__name__
         return jsonify({
             'username': user.username,
             'email': user.email,
             'photo': photo,
-            'userID': user.userID,
+            'userID': session['userID'],
             'userType': user.__class__.__name__
         })
