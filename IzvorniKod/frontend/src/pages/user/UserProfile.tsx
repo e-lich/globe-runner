@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
@@ -19,6 +20,25 @@ export default function UserProfile() {
   function handleLogout() {
     localStorage.removeItem("user");
     navigate("/signIn");
+  }
+
+  const baseURL = "http://127.0.0.1:5000";
+
+  // TODO napisati funkciju za slanje delete requesta backendu
+  function handleDelete() {
+    const config = {
+      headers: {
+        "Acces-Control-Allow-Origin": "*",
+      },
+    };
+
+    axios
+      .delete(baseURL + "/users/delete", config)
+      .then(() => useState(''))
+      .then(res => console.log(res))
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   const handleChanges = (e: any) => {
@@ -93,6 +113,15 @@ export default function UserProfile() {
                   onClick={handleLogout}
                 >
                   Log out
+                </button>
+              </div>
+              <div className="d-grid gap-2 mt-3">
+                <button
+                  type="submit"
+                  className="btn btn-danger"
+                  onClick={() => {window.confirm('Are you sure you want to delete your profile?') && handleDelete()}}
+                >
+                  Delete profile
                 </button>
               </div>
             </div>
