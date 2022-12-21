@@ -97,7 +97,7 @@ export default function AllUsers() {
                 key={key}
                 battle={false}
                 username={user.username}
-                user={user}
+                oldUser={user}
               />
             ))}
           </div>

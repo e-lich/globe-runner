@@ -1,4 +1,4 @@
-import { Box, Container, Fab, Grid } from "@mui/material";
+import { Box, Container, Fab, Grid, Typography } from "@mui/material";
 import { CSSProperties, useEffect, useState } from "react";
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,7 @@ import axios from "axios";
 type Props = {
   open: Boolean;
   onClose: any;
+  oldUser: any;
 };
 const OVERLAY: CSSProperties = {
   position: "fixed",
@@ -19,19 +20,19 @@ const OVERLAY: CSSProperties = {
   zIndex: "1000",
 };
 
-const EditProfilePopup = ({ open, onClose }: Props) => {
+const EditProfilePopup = ({ open, onClose, oldUser }: Props) => {
   const [user, setUser] = useState(localStorage.getItem("user"));
   const [file, setFile] = useState<Blob>();
-  let [username, setUsername] = useState(JSON.parse(user!).username);
-  let [password, setPassword] = useState("");
-  let [submitDisabled, setSubmitDisabled] = useState(true);
-  let [error, setError] = useState<Array<String>>([]);
+  const [username, setUsername] = useState(oldUser.username);
+  const [password, setPassword] = useState("");
+  const [submitDisabled, setSubmitDisabled] = useState(true);
+  const [error, setError] = useState<Array<String>>([]);
 
   const navigate = useNavigate();
 
-  function handleUsernameChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    setUsername(e.target.value);
-  }
+  // function handleUsernameChange(e: React.ChangeEvent<HTMLInputElement>): void {
+  //   setUsername(e.target.value);
+  // }
 
   function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setPassword(e.target.value);
@@ -81,14 +82,13 @@ const EditProfilePopup = ({ open, onClose }: Props) => {
     };
 
     axios
-      .post(baseURL + "/register", formData, config)
+      .post(baseURL + "/URL", formData, config)
       .then((res) => {
         console.log(res);
         if (res.data.username === undefined) {
-          setError(res.data); //todo pogledaj kak ovo radi
+          setError(res.data);
         } else {
-          saveUserData(res.data);
-          navigate("/confirm");
+          onClose();
         }
       })
       .catch((err) => {
@@ -96,10 +96,6 @@ const EditProfilePopup = ({ open, onClose }: Props) => {
       });
 
     return;
-  }
-
-  function saveUserData(data: any) {
-    localStorage.setItem("user", JSON.stringify(data));
   }
 
   useEffect(() => {
@@ -123,7 +119,6 @@ const EditProfilePopup = ({ open, onClose }: Props) => {
         ]);
       }
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [password, username, file]);
 
@@ -141,42 +136,55 @@ const EditProfilePopup = ({ open, onClose }: Props) => {
           alignItems: "center",
         }}
       >
-        <form>
-          {error.length > 0 &&
-            error.map((err, key) => (
-              <div className="alert-danger alert p-1" role="alert" key={key}>
-                {err}
-              </div>
-            ))}
-          <Grid container justifyContent="center" spacing={1} rowSpacing={2}>
-            <Grid item xs={6}>
-              <label>Username</label>
-              <input
-                className="form-control mt-1"
-                placeholder="e.g CoolKid123"
-                onChange={(e) => handleUsernameChange(e)}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <label>Password</label>
-              <input
-                type="password"
-                className="form-control mt-1"
-                placeholder="Password"
-                onChange={(e) => handlePasswordChange(e)}
-              />
-            </Grid>
-            <Grid item xs={6}>
+        {error.length > 0 &&
+          error.map((err, key) => (
+            <div className="alert-danger alert p-1" role="alert" key={key}>
+              {err}
+            </div>
+          ))}
+        <Grid container justifyContent="center" spacing={1} rowSpacing={2}>
+          <Grid item xs={6}>
+            <label>Username</label>
+            <input
+              value={username}
+              className="form-control mt-1"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <label>Password</label>
+            <input
+              type="password"
+              className="form-control mt-1"
+              placeholder="Password"
+              onChange={(e) => handlePasswordChange(e)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Typography component="label">Current profile picture</Typography>
               {user && (
                 <img
-                  src={`data:image/jpeg;base64,${JSON.parse(user).photo}`}
-                  alt="profile"
+                  src={`data:image/jpeg;base64,${oldUser.photo}`}
+                  alt="this should display users profile"
                   className="img-fluid mt-2 border border-dark rounded"
                 />
               )}
-            </Grid>
-            <Grid item xs={6}>
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  allignItems: "center",
+                }}
+              >
+                <Typography component="label" sx={{ alignSelf: "center" }}>
+                  New profile picture
+                </Typography>
                 <input
                   hidden
                   id="contained-button-file"
@@ -185,54 +193,53 @@ const EditProfilePopup = ({ open, onClose }: Props) => {
                   onChange={(e) => profilePictureChange(e)}
                 />
                 <label htmlFor="contained-button-file">
-                  <Fab component="span" sx={{ mb: 3 }}>
+                  <Fab component="span" sx={{ mb: 3, alignSelf: "center" }}>
                     <ImageSearchIcon />
                   </Fab>
                 </label>
-
-                {file !== undefined && (
-                  <Box
-                    component="img"
-                    alt="profile pic"
-                    src={URL.createObjectURL(file)}
-                    // the image has a round border
-                    sx={{
-                      width: 0.5,
-                      aspectRatio: 0.5,
-                      border: 3,
-                      borderRadius: "2%",
-                      alignSelf: "center",
-                    }}
-                  />
-                )}
               </Box>
-            </Grid>
-          </Grid>
 
+              {file !== undefined && (
+                <Box
+                  component="img"
+                  alt="profile pic"
+                  src={URL.createObjectURL(file)}
+                  sx={{
+                    width: 0.5,
+                    aspectRatio: 0.5,
+                    border: 3,
+                    borderRadius: "2%",
+                    alignSelf: "center",
+                  }}
+                />
+              )}
+            </Box>
+          </Grid>
+        </Grid>
+
+        <div>
           <div>
-            <div>
-              <button
-                type="submit"
-                className="btn btn-primary"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleRegister();
-                }}
-                disabled={submitDisabled}
-              >
-                Submit
-              </button>
-              <button
-                className="btn btn-primary"
-                onClick={(e) => {
-                  onClose();
-                }}
-              >
-                Cancel
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={(e) => {
+                e.preventDefault();
+                handleRegister();
+              }}
+              disabled={submitDisabled}
+            >
+              Submit
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={(e) => {
+                onClose();
+              }}
+            >
+              Cancel
+            </button>
           </div>
-        </form>
+        </div>
       </Container>
     </div>
   );

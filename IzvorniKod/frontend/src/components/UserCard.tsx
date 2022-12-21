@@ -38,6 +38,7 @@ export default function UserCard(props: any) {
         onClose={() => {
           setIsOpen(false);
         }}
+        oldUser={props.oldUser}
       />
     </>
   );
