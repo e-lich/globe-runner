@@ -1,11 +1,10 @@
 import { Icon } from "@mui/material";
-import { Navbar, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 export default function ChallengeIcon(props: any) {
   const swords = require("../images/swords.png");
   return (
     <>
-      <Navbar />
       <Button
         variant="text"
         color="primary"

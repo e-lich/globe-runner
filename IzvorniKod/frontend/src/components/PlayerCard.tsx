@@ -11,6 +11,7 @@ export default function PlayerCard(props: any) {
       </ListItemAvatar>
       <div className="player-buttons">
         <Button
+          variant="text"  
           color="primary"
           onClick={() => {
             console.log("DISPLAY USER PROFILE");
