@@ -18,7 +18,7 @@ def login():
             user = db.session.query(Admin).filter_by(email=email).first()
     else:
         username = request_data['username_or_email']
-        print("_______" + username)
+      
         user = db.session.query(Player).filter_by(username=username).first()
 
         if user is None:
