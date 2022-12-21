@@ -1,9 +1,6 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
-
-import PopupBasic from "./PopupBasic";
 import CartographerHomePopup from "./CartographerHomePopup";
 
 export default function CartographerHomeMap() {

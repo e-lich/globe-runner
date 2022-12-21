@@ -24,7 +24,7 @@ export default function SignIn() {
   function handleLogin() {
     return new Promise((resolve, reject) => {
       axios
-        .post(baseURL + "/signIn", {
+        .post(baseURL + "/login", {
           username_or_email: email,
           password: password,
         })
@@ -54,8 +54,10 @@ export default function SignIn() {
       })
     );
 
-    // userType (“player”, “advancedPlayer”, “cartographer”, “admin”)
-    // TODO switch JSON.stringify(...) to JSON.stringify(data)
+    // when we have userType (“player”, “advancedPlayer”, “cartographer”, “admin”)
+    // TODO switch to this instead:
+
+    // localStorage.setItem("user", JSON.stringify(data));
   }
 
   useEffect(() => {

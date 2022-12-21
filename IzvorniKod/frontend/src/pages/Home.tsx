@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AdminHome from "./admin/AdminHome";
+import AdminHome from "./admin/AllCards";
 import UserHome from "./user/UserHome";
 import CartographerHome from "./cartographer/CartographerHome";
 
@@ -12,13 +12,14 @@ export default function Home() {
         photo: String;
         username: String;
         userType: String;
+        userID: number;
       }
     | undefined = JSON.parse(localStorage.getItem("user")!);
 
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
 
-    if (userFromLocalStorage === null) navigate("/signIn");
+    if (userFromLocalStorage === null) navigate("/login");
   });
 
   if (user!.userType === "admin") return <AdminHome />;

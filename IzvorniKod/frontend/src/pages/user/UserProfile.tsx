@@ -19,7 +19,7 @@ export default function UserProfile() {
 
   function handleLogout() {
     localStorage.removeItem("user");
-    navigate("/signIn");
+    navigate("/login");
   }
 
   const baseURL = "http://127.0.0.1:5000";
@@ -51,7 +51,7 @@ export default function UserProfile() {
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
 
-    if (userFromLocalStorage === null) navigate("/signIn");
+    if (userFromLocalStorage === null) navigate("/login");
 
     if (
       !JSON.parse(userFromLocalStorage!)

@@ -1,10 +1,5 @@
 import {
-  Avatar,
-  Button,
-  Icon,
   List,
-  ListItem,
-  ListItemAvatar,
 } from "@mui/material";
 import React from "react";
 import { useEffect } from "react";
@@ -20,7 +15,7 @@ export default function NearbyPlayers() {
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
 
-    if (userFromLocalStorage === null) navigate("/signIn");
+    if (userFromLocalStorage === null) navigate("/login");
 
     if (
       !JSON.parse(userFromLocalStorage!)
@@ -63,11 +58,7 @@ export default function NearbyPlayers() {
               sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
             >
               {closestPlayers.map((closestPlayer, key) => (
-                <PlayerCard
-                  key={key}
-                  closestPlayer={closestPlayer}
-                  battle={true}
-                />
+                <PlayerCard key={key} closestPlayer={closestPlayer} />
               ))}
             </List>
           </div>
