@@ -1,20 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UserHomeMap from "../../components/UserHomeMap";
+import LocationCard from "../../components/LocationCard";
+import { List } from "@mui/material";
 
 import Navbar from "../../components/Navbar";
-import Button from "@mui/material/Button";
 import { Grid } from "@material-ui/core";
-import {
-  Box,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@mui/material";
-const placeholder = require("../../images/card_photo.png");
+
 
 export default function UserHome() {
   const navigate = useNavigate();
@@ -59,50 +51,12 @@ export default function UserHome() {
     },
   ];
 
-  const listItems = closestCards.map((closestCard, key) => (
-    <li key={key}>
-      <Box sx={{ justifyContent: "center", display: "flex" }}>
-        <Card sx={{ width: 300, maxHeight: 200, m: 1 }}>
-          <CardActionArea>
-            <CardMedia
-              sx={{ display: "flex", objectFit: "cover" }} //objfit
-              height="100"
-              component="img"
-              image={placeholder}
-              alt="beautiful landscape"
-            />
-            <CardContent sx={{ p: 0.5, justifyContent: "center" }}>
-              <Typography
-                gutterBottom
-                variant="h6"
-                component="div"
-                sx={{ justifyContent: "center", m: 0 }}
-              >
-                {closestCard.title}
-              </Typography>
-              <hr></hr>
-            </CardContent>
-          </CardActionArea>
-          <CardActions sx={{ justifyContent: "center", p: 0.5 }}>
-            <Button
-              size="medium"
-              color="primary"
-              variant="contained"
-              sx={{ p: 0.5 }}
-            >
-              Collect
-            </Button>
-          </CardActions>
-        </Card>
-      </Box>
-    </li>
-  ));
 
   return (
     <>
       <Navbar />
-      <Grid container alignItems="center">
-        <Grid item xs={12} sm={9} className="main">
+      <Grid container>
+        <Grid item xs={12} sm={9} style={{height: '70vh'}}>
           <UserHomeMap />
         </Grid>
         <Grid item xs={12} sm={3}>
@@ -111,7 +65,18 @@ export default function UserHome() {
           </div>
           <hr />
           <hr />
-          <ul className="closest-cards">{listItems}</ul>
+          <List sx={{ textAlign: 'center'}}>
+            {closestCards.map((closestCard, key) => (
+              <LocationCard
+                key={key}
+                closestCard = {closestCard}
+                hasButton={true}
+                buttonText={"Collect"}
+                buttonOnClick={() => {console.log("Collect this card.")}}
+                cardOnClick={() => {console.log("You clicked on the card.")}}
+                />
+            ))}
+          </List>
         </Grid>
       </Grid>
     </>
