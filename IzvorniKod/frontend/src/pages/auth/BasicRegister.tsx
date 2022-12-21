@@ -10,7 +10,6 @@ function BasicRegister() {
   let [password, setPassword] = useState("");
   let [submitDisabled, setSubmitDisabled] = useState(true);
   let [error, setError] = useState<Array<String>>([]);
-  let fileString = undefined;
 
   const navigate = useNavigate();
 

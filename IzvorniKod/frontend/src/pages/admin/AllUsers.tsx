@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PlayerCard from "../../components/PlayerCard";
 import UserCard from "../../components/UserCard";
+import EditProfilePopup from "../../components/EditProfilePopup";
 
 // TODO - Ovaj kod je samo za testiranje, ovu cijelu komponentu treba reworkat vjerojatno ispočetka!!!
 
@@ -92,7 +93,12 @@ export default function AllUsers() {
           </div>
           <div className="closest-players">
             {allUsers!.map((user, key) => (
-              <UserCard key={key} battle={false} username={user.username} />
+              <UserCard
+                key={key}
+                battle={false}
+                username={user.username}
+                user={user}
+              />
             ))}
           </div>
         </form>
