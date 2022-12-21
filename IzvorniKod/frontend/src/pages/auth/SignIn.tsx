@@ -26,8 +26,8 @@ export default function SignIn() {
       axios
         .post(baseURL + "/login", {
           username_or_email: email,
-          password: password,
-        })
+          password: password
+        }, {withCredentials: true})
         .then((res) => {
           console.log(res);
           if (res.data.email === undefined) {
@@ -44,20 +44,20 @@ export default function SignIn() {
   }
 
   function saveUserData(data: any) {
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        email: "pero@zmaj",
-        photo: null,
-        username: "peroZmaj",
-        userType: "cartographer",
-      })
-    );
+    // localStorage.setItem(
+    //   "user",
+    //   JSON.stringify({
+    //     email: "pero@zmaj",
+    //     photo: null,
+    //     username: "peroZmaj",
+    //     userType: "cartographer",
+    //   })
+    // );
 
     // when we have userType (“player”, “advancedPlayer”, “cartographer”, “admin”)
     // TODO switch to this instead:
 
-    // localStorage.setItem("user", JSON.stringify(data));
+    localStorage.setItem("user", JSON.stringify(data));
   }
 
   useEffect(() => {

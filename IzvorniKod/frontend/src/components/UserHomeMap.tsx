@@ -114,7 +114,7 @@ export default function UserHomeMap() {
 
     const fetchLocations = async (lat: number, lng: number) => {
       try {
-        const res = await axios.get(baseURL + "/locations/close-by");
+        const res = await axios.get(baseURL + "/locations/close-by", {withCredentials: true});
 
         locations = res.data;
         updateMarkers();
@@ -169,7 +169,7 @@ export default function UserHomeMap() {
       lat: lat,
       lng: lng,
     };
-    var data = await axios.post(baseURL + "/locations/update", userData);
+    var data = await axios.post(baseURL + "/locations/update", userData, {withCredentials: true});
     console.log(data);
   }
   return <div id="mapid"></div>;
