@@ -5,8 +5,7 @@ import LocationCard from "../../components/LocationCard";
 import { List } from "@mui/material";
 
 import Navbar from "../../components/Navbar";
-import { Grid } from "@material-ui/core";
-
+import { Grid, Paper } from "@material-ui/core";
 
 export default function UserHome() {
   const navigate = useNavigate();
@@ -51,32 +50,35 @@ export default function UserHome() {
     },
   ];
 
-
   return (
     <>
       <Navbar />
       <Grid container>
-        <Grid item xs={12} sm={9} style={{height: '70vh'}}>
+        <Grid item xs={12} sm={9} style={{ height: "70vh" }}>
           <UserHomeMap />
         </Grid>
         <Grid item xs={12} sm={3}>
           <div className="closest-cards-title">
             <h2>Closest Cards:</h2>
           </div>
-          <hr />
-          <hr />
-          <List sx={{ textAlign: 'center'}}>
-            {closestCards.map((closestCard, key) => (
-              <LocationCard
-                key={key}
-                closestCard = {closestCard}
-                hasButton={true}
-                buttonText={"Collect"}
-                buttonOnClick={() => {console.log("Collect this card.")}}
-                cardOnClick={() => {console.log("You clicked on the card.")}}
+          <Paper style={{ maxHeight: "45%", overflow: "auto" }}>
+            <List sx={{ textAlign: "center", border: 2 }}>
+              {closestCards.map((closestCard, key) => (
+                <LocationCard
+                  key={key}
+                  closestCard={closestCard}
+                  hasButton={true}
+                  buttonText={"Collect"}
+                  buttonOnClick={() => {
+                    console.log("Collect this card.");
+                  }}
+                  cardOnClick={() => {
+                    console.log("You clicked on the card.");
+                  }}
                 />
-            ))}
-          </List>
+              ))}
+            </List>
+          </Paper>
         </Grid>
       </Grid>
     </>
