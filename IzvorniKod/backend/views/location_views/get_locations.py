@@ -78,7 +78,7 @@ def get_approved_locations():
         return formattedReturn(locations)
 
 
-@app.route('/locations/on-site/unclaimed', methods=['GET'])
+@app.route('/locations/unclaimed', methods=['GET'])
 def get_on_site_check_locations():
     if "userID" not in session:
         return ["User not logged in"]
@@ -94,7 +94,7 @@ def get_on_site_check_locations():
         return formattedReturn(locations)
 
 
-@app.route('/locations/on-site/claimed', methods=['GET'])
+@app.route('/locations/claimed', methods=['GET'])
 def get_on_site_check_claimed_locations():
     if "userID" not in session:
         return ["User not logged in"]
