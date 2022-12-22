@@ -99,9 +99,7 @@ function CartographerRegister() {
     formData.append("password", password);
 
     const config = {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
+      withCredentials: true,
     };
 
     axios

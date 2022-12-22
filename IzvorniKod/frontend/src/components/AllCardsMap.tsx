@@ -42,7 +42,9 @@ export default function AllCardsMap() {
 
     const fetchLocations = async () => {
       try {
-        const res = await axios.post(baseURL + "/locations/admin", {withCredentials: true});
+        const res = await axios.post(baseURL + "/locations/admin", {
+          withCredentials: true,
+        });
         locations = res.data;
         console.log("non state locations are: " + locations);
         updateMarkers();

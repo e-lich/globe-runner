@@ -69,9 +69,7 @@ function BasicRegister() {
     formData.append("iban", ""); // TODO - ovo je quick fix, bilo bi ljepse to hendlati na backendu
 
     const config = {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
+      withCredentials: true,
     };
 
     axios
