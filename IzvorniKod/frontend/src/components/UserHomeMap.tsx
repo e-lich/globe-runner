@@ -97,7 +97,6 @@ export default function UserHomeMap() {
         let userLat = e.latlng.lat;
         let userLng = e.latlng.lng;
         updateUserLocation(userLat, userLng); // tell the server where the user is currently
-        fetchLocations(userLat, userLng); // find all locations that are near the current location
 
         var currentMarker = L.marker([userLat, userLng], {
           icon: myIcon,
@@ -112,22 +111,38 @@ export default function UserHomeMap() {
         alert("Location access denied.");
       });
 
-    const fetchLocations = async (lat: number, lng: number) => {
-      try {
-        const res = await axios.get(baseURL + "/locations/close-by", {withCredentials: true});
+    async function updateUserLocation(lat: number, lng: number) {
+      var userData = {
+        lat: lat,
+        lng: lng,
+      };
 
-        locations = res.data;
-        updateMarkers();
+      await axios.post(baseURL + "/locations/update", userData, {
+        withCredentials: true,
+      });
+
+      await fetchLocations();
+    }
+
+    const fetchLocations = async () => {
+      try {
+        const res = await axios.get(baseURL + "/locations/close-by", {
+          withCredentials: true,
+        });
+
+        if (res.data[0] === "No locations found close by")
+          console.log("There are no nearby locations!");
+        else {
+          locations = res.data;
+          updateMarkers();
+        }
       } catch (e) {
         alert(e);
       }
     };
 
     const updateMarkers = () => {
-      console.log("updating markers!");
-      console.log("markers are: " + locations);
       // clear all markers on the map and set new ones!
-
       // clear all of the previous layers
       myMap!.eachLayer(function (layer) {
         myMap!.removeLayer(layer);
@@ -169,7 +184,9 @@ export default function UserHomeMap() {
       lat: lat,
       lng: lng,
     };
-    var data = await axios.post(baseURL + "/locations/update", userData, {withCredentials: true});
+    var data = await axios.post(baseURL + "/locations/update", userData, {
+      withCredentials: true,
+    });
     console.log(data);
   }
   return <div id="mapid"></div>;

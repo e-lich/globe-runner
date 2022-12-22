@@ -20,6 +20,7 @@
     "bootstrap": "^5.2.2",
     "date-fns": "^2.29.3",
     "leaflet": "^1.9.3",
+    "material-ui-icons": "^1.0.0-beta.36",
     "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",
     "react-bootstrap-sidebar-menu": "^2.0.3",
