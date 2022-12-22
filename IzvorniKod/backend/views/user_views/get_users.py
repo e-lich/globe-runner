@@ -1,6 +1,6 @@
 from backend import app, db
 from flask import request, jsonify, session
-from backend.database.models import User
+from backend.database.models import Player, Cartographer
 
 def formattedReturn(users):
     users_arr = []
@@ -23,9 +23,16 @@ def get_all_users():
     if "userID" not in session:
         return ["User not logged in"]
 
-    if session["userType"] != "Admin":
+    user_type = session["userType"]
+
+    if user_type != "Admin":
         return ["User is not an admin"]
-        
-    users = db.session.query(User).all()
-    
-    return formattedReturn(users)
+
+    players = db.session.query(Player).all()
+    cartographers = db.session.query(Cartographer).all()
+    users = players + cartographers
+
+    if len(users) == 0:
+        return ["No users found"]
+    else:
+        return formattedReturn(users)
