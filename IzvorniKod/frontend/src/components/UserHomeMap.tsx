@@ -23,31 +23,6 @@ export default function UserHomeMap() {
 
   const baseURL = "http://127.0.0.1:5000";
 
-  // mock location data that we need to switch with an API call
-  var mockLocationData = [
-    {
-      lat: 45.8145,
-      lng: 15.9798,
-      name: "Cathedral",
-      image:
-        "https://png.pngtree.com/png-vector/20190307/ourlarge/pngtree-house-icon-design-template-vector-isolated-png-image_781941.jpg",
-    },
-    {
-      lat: 45.8004,
-      lng: 15.9714,
-      name: "FER",
-      image:
-        "https://png.pngtree.com/png-vector/20190307/ourlarge/pngtree-house-icon-design-template-vector-isolated-png-image_781941.jpg",
-    },
-    {
-      lat: 45.8138,
-      lng: 15.9761,
-      name: "Main Square",
-      image:
-        "https://png.pngtree.com/png-vector/20190307/ourlarge/pngtree-house-icon-design-template-vector-isolated-png-image_781941.jpg",
-    },
-  ];
-
   // MAP INITIALIZATION
   useEffect(() => {
     if (myMap !== undefined && myMap !== null) {
