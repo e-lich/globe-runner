@@ -22,12 +22,20 @@ export default function SignIn() {
   }
 
   function handleLogin() {
+    const config = {
+      withCredentials: true,
+    };
+
     return new Promise((resolve, reject) => {
       axios
-        .post(baseURL + "/login", {
-          username_or_email: email,
-          password: password
-        }, {withCredentials: true})
+        .post(
+          baseURL + "/login",
+          {
+            username_or_email: email,
+            password: password,
+          },
+          config
+        )
         .then((res) => {
           console.log(res);
           if (res.data.email === undefined) {
