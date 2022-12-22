@@ -65,8 +65,8 @@ export default function CartographerHomeMap() {
       console.log("updating markers!");
       // clear all markers on the map and set new ones!
       // clear all of the previous layers
-      myMap!.eachLayer(function (layer: any) {
-        myMap!.removeLayer(layer);
+      myCartographerHomeMap!.eachLayer(function (layer: any) {
+        myCartographerHomeMap!.removeLayer(layer);
       });
 
       // add necessary layers without any markers
@@ -92,22 +92,6 @@ export default function CartographerHomeMap() {
 
       if (locations)
         locations.forEach((locationData) => {
-          L.marker([locationData.longitude, locationData.latitude], {
-            icon: locationIcon,
-          }) // add the created marker to the desired coordinates
-            .addTo(myMap!);
-        });
-    };
-
-    // ADDING MOCK LOCATION DATA
-    if (mockSubmittedLocations)
-      mockSubmittedLocations.forEach(
-        (locationData: {
-          lat: number;
-          lng: number;
-          name: string;
-          image: string;
-        }) => {
           const popupOptions = {
             maxWidth: 100, // set max-width
             className: "customPopup", // name custom popup
@@ -119,14 +103,14 @@ export default function CartographerHomeMap() {
 
           let popupImg = document.createElement("img");
           popupImg.style.cssText = "width:100px;height:100px;";
-          popupImg.src = locationData.image;
+          popupImg.src = locationData.photo;
 
           let popupHr = document.createElement("HR");
 
           let popupName = document.createElement("div");
           popupName.style.cssText =
             "display:flex;align-items:center;justify-content:center;";
-          popupName.textContent = locationData.name;
+          popupName.textContent = locationData.title;
 
           let popupEditBtn = document.createElement("button");
           popupEditBtn.onclick = function () {
@@ -141,11 +125,13 @@ export default function CartographerHomeMap() {
           popupDiv.append(popupHr);
           popupDiv.append(popupEditBtn);
 
-          L.marker([locationData.lat, locationData.lng], { icon: locationIcon }) // add the created marker to the desired coordinates with desired popup
+          L.marker([locationData.latitude, locationData.longitude], {
+            icon: locationIcon,
+          }) // add the created marker to the desired coordinates with desired popup
             .bindPopup(popupDiv, popupOptions)
             .addTo(myCartographerHomeMap!);
-        }
-      );
+        });
+    };
   }, [myCartographerHomeMap]);
 
   return (
