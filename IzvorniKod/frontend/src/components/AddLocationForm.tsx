@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 
 export default function AddLocationForm() {
+  /* MAKE POST REQUEST!
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [lat, setLat] = useState("");
@@ -13,21 +14,6 @@ export default function AddLocationForm() {
   const [file, setFile] = useState<Blob>();
   let [error, setError] = useState<Array<String>>([]);
   let [submitDisabled, setSubmitDisabled] = useState(true);
-
-
-
-  function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    setTitle(e.target.value);
-  }
-  function handleDescriptionChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    setDescription(e.target.value);
-  }
-  function handleLatChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    setLat(e.target.value);
-  }
-  function handleLongChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    setLong(e.target.value);
-  }
 
   function locationPhotoChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setError((prev) =>
@@ -72,7 +58,7 @@ export default function AddLocationForm() {
     //axios
     console.log(formData)
     return;
-  }
+  }*/
 
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -82,7 +68,6 @@ export default function AddLocationForm() {
           id="title"
           sx={{ m: 1, width: '25ch' }}
           type="text"
-          onChange={(e)=>{setTitle(e.target.value)}}
         />
         <TextField
           id="description"
