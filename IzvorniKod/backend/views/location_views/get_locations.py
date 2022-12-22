@@ -111,8 +111,7 @@ def get_on_site_check_claimed_locations():
     else:
         return formattedReturn(locations)
 
-# TODO: neki verification da li je admin
-@app.route('/locations/admin', methods=['GET'])
+@app.route('/locations/all', methods=['GET'])
 def get_all_locations():
     if "userID" not in session:
         return ["User not logged in"]
