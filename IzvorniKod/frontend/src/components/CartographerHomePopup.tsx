@@ -1,6 +1,5 @@
+import { Container, TextField, InputAdornment, Button } from "@mui/material";
 import { CSSProperties } from "react";
-import { Container, Button } from "react-bootstrap";
-
 type Props = {
   open: Boolean;
   onClose: any;
@@ -8,28 +7,17 @@ type Props = {
 
 const OVERLAY: CSSProperties = {
   position: "fixed",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-
-  left: "50%",
-  top: "50%",
-  transform: "translate(-50%, -50%)",
-
-  backgroundColor: "#555",
-  color: "#fff",
-  textAlign: "center",
-  borderRadius: "6px",
-
+  top: "0",
+  left: "0",
+  right: "0",
+  bottom: "0",
+  paddingTop: "50px",
+  backgroundColor: "rgba(0,0,0,0.7)",
   zIndex: "1000",
-  width: "400px",
-  height: "450px",
+
 };
 
 const CartographerHomePopup = ({ open, onClose }: Props) => {
-  // popup se hendla iz parent komponente - treba imat useState koji mijenja open varijalbi na true/false (ovisno jel popup otvoren ili ne)
-  // i onClose funkciju koja mijenja open varijablu na false (zatvara popup) - to ce samo biti setOpen(false) u parent komponenti
   if (!open) return null;
 
   var locationData = JSON.parse(localStorage.getItem("locationData")!);
@@ -37,21 +25,77 @@ const CartographerHomePopup = ({ open, onClose }: Props) => {
   return (
     <div style={OVERLAY}>
       <h1>~ Card Editing ~</h1>
-      {/* unutar ovo Contaier se moze stavljat sadrzaj Popup-a */}
-      <hr></hr>
-      <h6>You are currently editing</h6>
-      <h4>{locationData.name}</h4>
-      <h4>This cards' coordinates are:</h4>
-      <h4>
-        lng: {locationData.lng}, lat: {locationData.lat}
-      </h4>
-      <hr />
-      <h6>Card image:</h6>
-      <img style={{ width: "50px" }} src={locationData.image} alt=""></img>
-      <hr />
-      <Button onClick={onClose} variant="contained">
-        Close
-      </Button>
+      <Container
+        sx={{
+          backgroundColor: "white",
+          padding: "20px 20px",
+          borderRadius: "10px",
+          margin: "0 auto",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+      <div>{/*need to center this*/}
+        <TextField
+          label="Card title"
+          id="title"
+          sx={{ m: 1, width: '25ch' }}
+          type="text"
+          defaultValue={locationData.name}
+        />
+        <TextField
+          id="description"
+          label="Description"
+          placeholder="Please describe the location in couple of sentences"
+          multiline
+          sx={{ m: 1, width: '25ch' }}
+          defaultValue={locationData.description}
+        />
+        <hr/>
+        <TextField
+          label="Location lattitude"
+          id="lat"
+          sx={{ m: 1, width: '25ch' }}
+          InputProps={{
+            endAdornment: <InputAdornment position="end">°</InputAdornment>,
+            inputProps: {min: -90, max: 90}
+          }}
+          type="number"
+          defaultValue={locationData.lat}
+        />
+        <TextField
+          label="Location longitude"
+          id="long"
+          sx={{ m: 1, width: '25ch' }}
+          InputProps={{
+            endAdornment: <InputAdornment position="end">°</InputAdornment>,
+            inputProps: {min: -180, max: 180}
+          }}
+          type="number"
+          defaultValue={locationData.lng}
+        />
+        <hr/>
+        <img style={{ width: "50px" }} src={locationData.image} alt=""></img>
+          {/*MISSING IMAGE UPLOAD!!! */}
+        <hr/>
+        <Button 
+          variant="contained"
+          sx={{margin: 1}}
+          color="primary"
+          onClick={()=>{
+            console.log("Clicked save")
+          }}>
+          Save
+        </Button>
+        <Button 
+          onClick={onClose} 
+          variant="contained"
+          sx={{margin: 1}}
+          >
+        Save & Close
+        </Button>
+      </div>
+      </Container>
     </div>
   );
 };
