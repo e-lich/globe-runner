@@ -22,9 +22,10 @@ export default function Home() {
     if (userFromLocalStorage === null) navigate("/login");
   });
 
-  if (user!.userType === "admin") return <AdminHome />;
+  if (user!.userType.toLowerCase() === "admin") return <AdminHome />;
 
-  if (user!.userType === "cartographer") return <CartographerHome />;
+  if (user!.userType.toLowerCase() === "cartographer")
+    return <CartographerHome />;
 
   return <UserHome />;
 }
