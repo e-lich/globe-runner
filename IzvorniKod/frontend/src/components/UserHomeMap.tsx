@@ -146,23 +146,12 @@ export default function UserHomeMap() {
 
       if (locations)
         locations.forEach((locationData) => {
-          L.marker([locationData.longitude, locationData.latitude], {
+          L.marker([locationData.latitude, locationData.longitude], {
             icon: locationIcon,
           }) // add the created marker to the desired coordinates
             .addTo(myMap!);
         });
     };
   }, [myMap]);
-
-  async function updateUserLocation(lat: number, lng: number) {
-    var userData = {
-      lat: lat,
-      lng: lng,
-    };
-    var data = await axios.post(baseURL + "/locations/update", userData, {
-      withCredentials: true,
-    });
-    console.log(data);
-  }
   return <div id="mapid"></div>;
 }

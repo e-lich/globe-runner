@@ -132,6 +132,8 @@ export default function CartographerHomeMap() {
             .addTo(myCartographerHomeMap!);
         });
     };
+
+    // fetchLocations().catch(console.error);
   }, [myCartographerHomeMap]);
 
   return (
