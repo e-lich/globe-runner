@@ -23,31 +23,6 @@ export default function UserHomeMap() {
 
   const baseURL = "http://127.0.0.1:5000";
 
-  // mock location data that we need to switch with an API call
-  var mockLocationData = [
-    {
-      lat: 45.8145,
-      lng: 15.9798,
-      name: "Cathedral",
-      image:
-        "https://png.pngtree.com/png-vector/20190307/ourlarge/pngtree-house-icon-design-template-vector-isolated-png-image_781941.jpg",
-    },
-    {
-      lat: 45.8004,
-      lng: 15.9714,
-      name: "FER",
-      image:
-        "https://png.pngtree.com/png-vector/20190307/ourlarge/pngtree-house-icon-design-template-vector-isolated-png-image_781941.jpg",
-    },
-    {
-      lat: 45.8138,
-      lng: 15.9761,
-      name: "Main Square",
-      image:
-        "https://png.pngtree.com/png-vector/20190307/ourlarge/pngtree-house-icon-design-template-vector-isolated-png-image_781941.jpg",
-    },
-  ];
-
   // MAP INITIALIZATION
   useEffect(() => {
     if (myMap !== undefined && myMap !== null) {
@@ -97,7 +72,6 @@ export default function UserHomeMap() {
         let userLat = e.latlng.lat;
         let userLng = e.latlng.lng;
         updateUserLocation(userLat, userLng); // tell the server where the user is currently
-        fetchLocations(userLat, userLng); // find all locations that are near the current location
 
         var currentMarker = L.marker([userLat, userLng], {
           icon: myIcon,
@@ -112,22 +86,38 @@ export default function UserHomeMap() {
         alert("Location access denied.");
       });
 
-    const fetchLocations = async (lat: number, lng: number) => {
-      try {
-        const res = await axios.get(baseURL + "/locations/close-by", {withCredentials: true});
+    async function updateUserLocation(lat: number, lng: number) {
+      var userData = {
+        lat: lat,
+        lng: lng,
+      };
 
-        locations = res.data;
-        updateMarkers();
+      await axios.post(baseURL + "/locations/update", userData, {
+        withCredentials: true,
+      });
+
+      await fetchLocations();
+    }
+
+    const fetchLocations = async () => {
+      try {
+        const res = await axios.get(baseURL + "/locations/close-by", {
+          withCredentials: true,
+        });
+
+        if (res.data[0] === "No locations found close by")
+          console.log("There are no nearby locations!");
+        else {
+          locations = res.data;
+          updateMarkers();
+        }
       } catch (e) {
         alert(e);
       }
     };
 
     const updateMarkers = () => {
-      console.log("updating markers!");
-      console.log("markers are: " + locations);
       // clear all markers on the map and set new ones!
-
       // clear all of the previous layers
       myMap!.eachLayer(function (layer) {
         myMap!.removeLayer(layer);
@@ -156,21 +146,12 @@ export default function UserHomeMap() {
 
       if (locations)
         locations.forEach((locationData) => {
-          L.marker([locationData.longitude, locationData.latitude], {
+          L.marker([locationData.latitude, locationData.longitude], {
             icon: locationIcon,
           }) // add the created marker to the desired coordinates
             .addTo(myMap!);
         });
     };
   }, [myMap]);
-
-  async function updateUserLocation(lat: number, lng: number) {
-    var userData = {
-      lat: lat,
-      lng: lng,
-    };
-    var data = await axios.post(baseURL + "/locations/update", userData, {withCredentials: true});
-    console.log(data);
-  }
   return <div id="mapid"></div>;
 }

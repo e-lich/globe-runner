@@ -38,43 +38,43 @@ export default function Navbar() {
               </Dropdown.Item>
             ) : null}
 
-            {user!.userType === "advancedPlayer" ? (
+            {user!.userType.toLowerCase() === "advancedplayer" ? (
               <Dropdown.Item onClick={() => navigate("/addLocation")}>
                 Add Location
               </Dropdown.Item>
             ) : null}
 
-            {user!.userType === "cartographer" ? (
+            {user!.userType.toLowerCase() === "cartographer" ? (
               <Dropdown.Item onClick={() => navigate("/cartographerHome")}>
                 Home
               </Dropdown.Item>
             ) : null}
 
-            {user!.userType === "cartographer" ? (
+            {user!.userType.toLowerCase() === "cartographer" ? (
               <Dropdown.Item onClick={() => navigate("/cartographerProfile")}>
                 My Profile
               </Dropdown.Item>
             ) : null}
 
-            {user!.userType === "cartographer" ? (
+            {user!.userType.toLowerCase() === "cartographer" ? (
               <Dropdown.Item onClick={() => navigate("/onSiteApproval")}>
                 On-site Approval
               </Dropdown.Item>
             ) : null}
 
-            {user!.userType === "admin" ? (
+            {user!.userType.toLowerCase() === "admin" ? (
               <Dropdown.Item onClick={() => navigate("/adminHome")}>
                 Home
               </Dropdown.Item>
             ) : null}
 
-            {user!.userType === "admin" ? (
+            {user!.userType.toLowerCase() === "admin" ? (
               <Dropdown.Item onClick={() => navigate("/allUsers")}>
                 All Users
               </Dropdown.Item>
             ) : null}
 
-            {user!.userType === "admin" ? (
+            {user!.userType.toLowerCase() === "admin" ? (
               <Dropdown.Item onClick={() => navigate("/cartographerRequests")}>
                 Cartographer Requests
               </Dropdown.Item>
