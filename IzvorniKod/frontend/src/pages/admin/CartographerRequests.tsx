@@ -10,7 +10,7 @@ export default function CartographerRequests() {
 
     if (userFromLocalStorage === null) navigate("/login");
 
-    if (!(JSON.parse(userFromLocalStorage!).userType === "admin"))
+    if (!(JSON.parse(userFromLocalStorage!).userType.toLowerCase() === "admin"))
       navigate("/home");
   });
 

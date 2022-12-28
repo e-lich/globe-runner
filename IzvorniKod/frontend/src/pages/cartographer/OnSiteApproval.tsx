@@ -11,7 +11,12 @@ export default function OnSiteApproval() {
 
     if (userFromLocalStorage === null) navigate("/login");
 
-    if (!(JSON.parse(userFromLocalStorage!).userType === "cartographer"))
+    if (
+      !(
+        JSON.parse(userFromLocalStorage!).userType.toLowerCase() ===
+        "cartographer"
+      )
+    )
       navigate("/home");
   });
 
