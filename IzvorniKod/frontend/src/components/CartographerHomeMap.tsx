@@ -132,8 +132,20 @@ export default function CartographerHomeMap() {
             .addTo(myCartographerHomeMap!);
         });
     };
-
-    // fetchLocations().catch(console.error);
+    //hardcoded locations
+    locations = [
+      {
+        cardId: 1,
+        cardStatus: "submitted",
+        description: "Description 1",
+        latitude: 45.803986,
+        longitude: 15.976402,
+        photo: "https://picsum.photos/200",
+        title: "Location 1",
+      }];
+      updateMarkers();
+      //following should be uncommented
+     //fetchLocations().catch(console.error);
   }, [myCartographerHomeMap]);
 
   return (

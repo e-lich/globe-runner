@@ -24,7 +24,6 @@ const CartographerHomePopup = ({ open, onClose }: Props) => {
 
   return (
     <div style={OVERLAY}>
-      <h1>~ Card Editing ~</h1>
       <Container
         sx={{
           backgroundColor: "white",
@@ -41,7 +40,7 @@ const CartographerHomePopup = ({ open, onClose }: Props) => {
           id="title"
           sx={{ m: 1, width: '25ch' }}
           type="text"
-          defaultValue={locationData.name}
+          defaultValue={locationData.title}
         />
         <TextField
           id="description"
@@ -53,7 +52,7 @@ const CartographerHomePopup = ({ open, onClose }: Props) => {
         />
         <hr/>
         <TextField
-          label="Location lattitude"
+          label="Location latitude"
           id="lat"
           sx={{ m: 1, width: '25ch' }}
           InputProps={{
@@ -61,7 +60,7 @@ const CartographerHomePopup = ({ open, onClose }: Props) => {
             inputProps: {min: -90, max: 90}
           }}
           type="number"
-          defaultValue={locationData.lat}
+          defaultValue={locationData.latitude}
         />
         <TextField
           label="Location longitude"
@@ -72,10 +71,10 @@ const CartographerHomePopup = ({ open, onClose }: Props) => {
             inputProps: {min: -180, max: 180}
           }}
           type="number"
-          defaultValue={locationData.lng}
+          defaultValue={locationData.longitude}
         />
         <hr/>
-        <img style={{ width: "50px" }} src={locationData.image} alt=""></img>
+        <img style={{ width: "50px" }} src={locationData.photo} alt=""></img>
           {/*MISSING IMAGE UPLOAD!!! */}
         <hr/>
         <Button 
