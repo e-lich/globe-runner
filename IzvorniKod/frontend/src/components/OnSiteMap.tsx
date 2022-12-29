@@ -1,8 +1,10 @@
 import axios from "axios";
-import L from "leaflet";
+import { create } from "domain";
+import * as L from "leaflet";
+import "leaflet-routing-machine";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
-import { Dropdown } from "react-bootstrap";
+import { Button, Dropdown } from "react-bootstrap";
 
 export default function OnSiteMap() {
   // map variable so we can clear it at the beginning of useEffect
@@ -129,9 +131,20 @@ export default function OnSiteMap() {
             .addTo(myOnSiteMap!);
         });
     };
+
     fetchLocations();
   }
 
+  function createRoute() {
+    myOnSiteMap = mapContainer;
+    L.Routing.control({
+      waypoints: [
+        L.latLng(45.8238, 15.9761),
+        L.latLng(45.8238, 15.9421),
+        L.latLng(45.8238, 15.9521),
+      ],
+    }).addTo(myOnSiteMap!);
+  }
   return (
     <>
       <Dropdown>
@@ -166,6 +179,9 @@ export default function OnSiteMap() {
         you will check
       </h1>
       <div id="onSiteMapId"></div>
+      <Button variant="text" color="primary" onClick={() => createRoute()}>
+        Create Route
+      </Button>
     </>
   );
 }
