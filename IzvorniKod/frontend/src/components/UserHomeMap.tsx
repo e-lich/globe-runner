@@ -91,7 +91,7 @@ export default function UserHomeMap() {
         lng: lng,
       };
 
-      await axios.post(baseURL + "/locations/update", userData, {
+      await axios.post(baseURL + "/users/update/location", userData, {
         withCredentials: true,
       });
 

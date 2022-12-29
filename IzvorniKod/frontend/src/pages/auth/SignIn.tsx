@@ -96,7 +96,7 @@ export default function SignIn() {
           validationSchema={validationSchema}
           onSubmit={handleLogin}
         >
-          {(props) => (
+          {(props: any) => (
             <Form>
               <Field
                 as={TextField}
