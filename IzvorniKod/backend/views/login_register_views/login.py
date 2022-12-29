@@ -45,6 +45,8 @@ def login():
             session['userID'] = user.userID
         
         session['userType'] = user.__class__.__name__
+        user.signedIn = True
+        db.session.commit()
         return jsonify({
             'username': user.username,
             'email': user.email,

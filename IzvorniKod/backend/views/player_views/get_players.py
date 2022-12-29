@@ -1,5 +1,5 @@
 from backend import app, db
-from flask import request, jsonify
+from flask import request, jsonify, session
 from backend.database.models import Player
 from geopy import distance
 import json
@@ -8,11 +8,15 @@ from sqlalchemy import inspect
 # vraca sve igrace koji su u blizini
 @app.route('/players/close-by', methods=['GET'])
 def get_close_by_players():
-    userID = request.get_json()["userID"]
+
+    if "userID" not in session:
+        return ["User not logged in"]
+
+    userID = session["userID"]
 
     user = db.session.query(Player).filter_by(userID=userID).first()
     if user is None:
-        return ["User with this userID doesn't exist"]
+        return ["Player with this userID doesn't exist"] 
 
     user_location = json.loads(user.playerLocation)
     lat = user_location['latitude']
@@ -20,7 +24,7 @@ def get_close_by_players():
 
     closeByPlayers = []
 
-    for player in db.session.query(Player).filter(userID != userID).all():
+    for player in db.session.query(Player).filter(Player.userID!=userID).filter(Player.signedIn==True).all():
         player_location = json.loads(player.playerLocation)
         player_lat = player_location['latitude']
         player_lng = player_location['longitude']
