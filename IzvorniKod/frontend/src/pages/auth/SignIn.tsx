@@ -53,19 +53,6 @@ export default function SignIn() {
   };
 
   function saveUserData(data: any) {
-    // localStorage.setItem(
-    //   "user",
-    //   JSON.stringify({
-    //     email: "pero@zmaj",
-    //     photo: null,
-    //     username: "peroZmaj",
-    //     userType: "cartographer",
-    //   })
-    // );
-
-    // when we have userType (“player”, “advancedPlayer”, “cartographer”, “admin”)
-    // TODO switch to this instead:
-
     localStorage.setItem("user", JSON.stringify(data));
   }
 
@@ -80,15 +67,13 @@ export default function SignIn() {
   });
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
+    <Box justifyContent="center" display="flex">
       <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        sx={{ width: 0.4, minHeight: "100vh" }}
       >
         <Typography
           sx={{ textAlign: "center", mb: 2, fontSize: 24, fontWeight: 800 }}
@@ -100,14 +85,11 @@ export default function SignIn() {
             <strong>Error: </strong> {err}
           </Alert>
         ))}
-
-        <Grid container justifyContent="flex-end">
-          <Grid item>
-            <Link href="/register" variant="body2">
-              Don't have a profile? Register here!
-            </Link>
-          </Grid>
-        </Grid>
+        <Box sx={{ mb: 1 }}>
+          <Link href="/register" variant="body2">
+            Don't have a profile? Register here!
+          </Link>
+        </Box>
 
         <Formik
           initialValues={initialValues}
@@ -157,6 +139,6 @@ export default function SignIn() {
           )}
         </Formik>
       </Box>
-    </Container>
+    </Box>
   );
 }
