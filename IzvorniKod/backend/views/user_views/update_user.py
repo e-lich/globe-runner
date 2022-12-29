@@ -1,5 +1,5 @@
 from backend import app, db
-from flask import session, request, jsonify
+from flask import session, request, jsonify, redirect
 from backend.database.models import Player, Cartographer
 import base64
 
@@ -7,7 +7,7 @@ import base64
 @app.route('/users/update/<userID>', methods=['POST', 'GET'])
 def update_user(userID):
     if "userID" not in session:
-        return ["User not logged in"]
+        redirect('/login')
 
     user_type = session["userType"]
 
@@ -37,7 +37,7 @@ def update_user(userID):
 @app.route('/users/ban/<userID>', methods=['POST', 'GET'])
 def ban_user(userID):
     if "userID" not in session:
-        return ["User not logged in"]
+        redirect('/login')
 
     user_type = session["userType"]
 
@@ -66,7 +66,7 @@ def ban_user(userID):
 def update_user_location():
     if request.method != 'POST':
         if "userID" not in session:
-            return ["User not logged in"]
+            redirect('/login')
 
         userID = session["userID"]
         
