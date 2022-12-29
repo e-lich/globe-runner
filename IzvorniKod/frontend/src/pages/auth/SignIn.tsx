@@ -1,6 +1,5 @@
 import {
   Alert,
-  Avatar,
   Box,
   Button,
   Container,
@@ -12,7 +11,6 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -23,7 +21,7 @@ export default function SignIn() {
   const navigate = useNavigate();
   const baseURL = "http://127.0.0.1:5000";
 
-  const handleLogin = async (values: any, props: any) => {
+  const handleLogin = async (values: any) => {
     const config = {
       withCredentials: true,
     };
@@ -77,7 +75,7 @@ export default function SignIn() {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email("Enter valid email").required("Required"),
+    email: Yup.string().required("Required"),
     password: Yup.string().min(8).required("Required"),
   });
 
@@ -120,7 +118,7 @@ export default function SignIn() {
             <Form>
               <Field
                 as={TextField}
-                label="email"
+                label="email or username"
                 name="email"
                 placeholder="Enter email"
                 fullWidth
