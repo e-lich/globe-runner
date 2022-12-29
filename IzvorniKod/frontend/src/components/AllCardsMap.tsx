@@ -42,12 +42,11 @@ export default function AllCardsMap() {
 
     const fetchLocations = async () => {
       try {
-        const res = await axios.post(baseURL + "/locations/admin", {
+        const res = await axios.get(baseURL + "/locations/admin", {
           withCredentials: true,
         });
         locations = res.data;
-        console.log("non state locations are: " + locations);
-        updateMarkers();
+        if (locations[0].title) updateMarkers(); // TODO - check if locations exist, we are checking if the first item inside the array is a card currently!
       } catch (e) {
         alert(e);
       }
@@ -55,9 +54,7 @@ export default function AllCardsMap() {
 
     const updateMarkers = () => {
       console.log("updating markers!");
-      console.log("markers are: " + locations);
       // clear all markers on the map and set new ones!
-
       // clear all of the previous layers
       myAllCardsMap!.eachLayer(function (layer) {
         myAllCardsMap!.removeLayer(layer);
@@ -86,7 +83,6 @@ export default function AllCardsMap() {
 
       if (locations)
         locations.forEach((locationData) => {
-          console.log(locationData);
           const popupOptions = {
             maxWidth: 100, // set max-width
             className: "customPopup", // name custom popup

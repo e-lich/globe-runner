@@ -5,8 +5,6 @@ import PlayerCard from "../../components/PlayerCard";
 import UserCard from "../../components/UserCard";
 import EditProfilePopup from "../../components/EditProfilePopup";
 
-// TODO - Ovaj kod je samo za testiranje, ovu cijelu komponentu treba reworkat vjerojatno ispočetka!!!
-
 export default function AllUsers() {
   const navigate = useNavigate();
 
@@ -15,7 +13,7 @@ export default function AllUsers() {
 
     if (userFromLocalStorage === null) navigate("/login");
 
-    if (!(JSON.parse(userFromLocalStorage!).userType === "admin"))
+    if (!(JSON.parse(userFromLocalStorage!).userType.toLowerCase() === "admin"))
       navigate("/home");
   });
 

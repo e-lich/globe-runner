@@ -17,6 +17,8 @@ class User(db.Model):
     profilePhoto = db.Column(db.Text)
     password = db.Column(db.String(30))
     confirmed = db.Column(db.Boolean)
+    signedIn = db.Column(db.Boolean)
+    banned = db.Column(db.Boolean)
     
 
 # Cartographer db model
@@ -37,6 +39,8 @@ class Cartographer(User):
         self.confirmed = False
         self.verified = False
         self.document = id
+        self.banned = False
+        self.signedIn = False
 
 # Player db model
 class Player(User):
@@ -44,9 +48,7 @@ class Player(User):
 
     advanced = db.Column(db.Boolean)
     eloScore = db.Column(db.Integer)
-    banned = db.Column(db.Boolean)
     playerLocation = db.Column(db.String(100))
-    signedIn = db.Column(db.Boolean)
 
     def __init__(self, username, name, email, password, photo):
 
