@@ -3,6 +3,23 @@ from flask import session, request, jsonify, redirect
 from backend.database.models import Player, Cartographer
 import base64
 
+def update(userID):
+    user = db.session.query(Player).filter_by(userID=userID).first()
+    if user is None:
+        user = db.session.query(Cartographer).filter_by(userID=userID).first()
+    if user is None:
+        return ["User not found"]
+
+    if request.form.get('username') is not None:
+        user.username = request.form['username']
+    if request.form.get('password') is not None:
+        user.email = request.form['password']
+    if request.form.get('photo') is not None:
+        user.profilePhoto =  base64.b64encode(request.files.get('photo').read()).decode('utf-8')
+
+    db.session.commit()
+
+    return jsonify(success=True)
 
 @app.route('/users/update/<userID>', methods=['POST', 'GET'])
 def update_user(userID):
@@ -10,27 +27,28 @@ def update_user(userID):
         redirect('/login')
 
     user_type = session["userType"]
+    currentUserID = session["userID"]
 
-    if user_type != "Admin":
-        return ["User is not an admin"]
+    if user_type != "Admin" or currentUserID != userID:
+        return ["User cannot modify this user"]
 
     if request.method == 'POST':
-        user = db.session.query(Player).filter_by(userID=userID).first()
-        if user is None:
-            user = db.session.query(Cartographer).filter_by(userID=userID).first()
-        if user is None:
-            return ["User not found"]
-    
-        if request.form.get('username') is not None:
-            user.username = request.form['username']
-        if request.form.get('password') is not None:
-            user.email = request.form['password']
-        if request.form.get('photo') is not None:
-            user.profilePhoto =  base64.b64encode(request.files.get('photo').read()).decode('utf-8')
 
-        db.session.commit()
+        return update(userID)
 
-        return jsonify(success=True)
+    else:
+        return ["Invalid request method"]
+
+@app.route('/users/update', methods=['POST', 'GET'])
+def update_current_user():
+    if "userID" not in session:
+        redirect('/login')
+    currentUserID = session["userID"]
+
+    if request.method == 'POST':
+
+        return update(currentUserID)
+
     else:
         return ["Invalid request method"]
 
