@@ -32,3 +32,53 @@ def update_location(cardID):
         return jsonify(success=True)
     else:
         return ["Invalid request method"]
+
+@app.route('/locations/verify/<cardID>', methods=['POST', 'GET'])
+def approve_location(cardID):
+    
+        if "userID" not in session:
+            redirect('/login')
+        
+        user_type = session["userType"]
+    
+        if user_type != "Cartographer":
+            return ["User is not a cartographer"]
+    
+        if request.method == 'POST':
+            location = db.session.query(Card).filter_by(cardID=cardID).first()
+    
+            if location is None:
+                return ["Card not found"]
+            
+            location.cardStatus = "verified"
+    
+            db.session.commit()
+    
+            return jsonify(success=True)
+        else:
+            return ["Invalid request method"]
+
+@app.route('/locations/unclaim/<cardID>', methods=['POST', 'GET'])
+def unclaim_location(cardID):
+    
+        if "userID" not in session:
+            redirect('/login')
+        
+        user_type = session["userType"]
+    
+        if user_type != "Cartographer":
+            return ["User is not a cartographer"]
+    
+        if request.method == 'POST':
+            location = db.session.query(Card).filter_by(cardID=cardID).first()
+    
+            if location is None:
+                return ["Card not found"]
+            
+            location.cardStatus = "unclaimed"
+    
+            db.session.commit()
+    
+            return jsonify(success=True)
+        else:
+            return ["Invalid request method"]
