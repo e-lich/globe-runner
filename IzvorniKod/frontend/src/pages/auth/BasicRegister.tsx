@@ -135,7 +135,7 @@ function BasicRegister() {
                 <Grid item xs={6}>
                   <Field
                     as={TextField}
-                    label="email"
+                    label="Email"
                     name="email"
                     placeholder="Enter email"
                     type="email"
@@ -148,7 +148,7 @@ function BasicRegister() {
                 <Grid item xs={6}>
                   <Field
                     as={TextField}
-                    label="username"
+                    label="Username"
                     name="username"
                     type="username"
                     placeholder="Enter username"
@@ -161,7 +161,7 @@ function BasicRegister() {
                 <Grid item xs={6}>
                   <Field
                     as={TextField}
-                    label="password"
+                    label="Password"
                     name="password"
                     placeholder="Enter password"
                     type="password"
