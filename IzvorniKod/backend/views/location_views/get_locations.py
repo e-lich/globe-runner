@@ -70,7 +70,7 @@ def get_approved_locations():
     elif user_type == "Cartographer":
         user = db.session.query(Cartographer).filter_by(userID=userID).first()
 
-        locations = db.session.query(Card).filter_by(approvedByUserID=userID, cardStatus="verified").all()
+        locations = db.session.query(Card).filter_by(cartographerID=userID, cardStatus="verified").all()
     
     if len(locations) == 0:
         return ["No approved locations found"]
@@ -104,7 +104,7 @@ def get_on_site_check_claimed_locations():
 
     cartographerID = session["userID"]
 
-    locations = db.session.query(Card).filter_by(approvedByUserID=cartographerID, cardStatus="claimed").all()
+    locations = db.session.query(Card).filter_by(cartographerID=cartographerID, cardStatus="claimed").all()
 
     if len(locations) == 0:
         return ["No claimed locations found for this cartographer"]
