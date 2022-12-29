@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Container,
-  CssBaseline,
   Grid,
   Link,
   TextField,
@@ -47,7 +46,6 @@ function BasicRegister() {
         if (res.data.email === undefined) {
           setError(res.data);
         } else {
-          saveUserData(res.data);
           navigate("/confirm");
         }
       })
@@ -57,10 +55,6 @@ function BasicRegister() {
 
     return;
   };
-
-  function saveUserData(data: any) {
-    localStorage.setItem("user", JSON.stringify(data));
-  }
 
   const initialValues = {
     fullName: "",
@@ -88,15 +82,13 @@ function BasicRegister() {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
+    <Box justifyContent="center" display="flex">
       <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        sx={{ width: 0.4, minHeight: "100vh" }}
       >
         <Typography
           sx={{ textAlign: "center", mb: 2, fontSize: 24, fontWeight: 800 }}
@@ -109,13 +101,16 @@ function BasicRegister() {
           </Alert>
         ))}
 
-        <Grid container justifyContent="flex-start">
-          <Grid item>
-            <Link href="/login" variant="body2">
-              Already have a profile? Log in here!
-            </Link>
-          </Grid>
-        </Grid>
+        <Box
+          sx={{
+            display: "flex",
+            mb: 1,
+          }}
+        >
+          <Link href="/login" variant="body2">
+            Already have a profile? Log in here!
+          </Link>
+        </Box>
 
         <Formik
           initialValues={initialValues}
@@ -191,6 +186,9 @@ function BasicRegister() {
                     }}
                   />
                   <label htmlFor="photo">
+                    <Typography noWrap sx={{ mb: 1 }}>
+                      Profile picture
+                    </Typography>
                     <Fab component="span" sx={{ mb: 3 }}>
                       <ImageSearchIcon />
                     </Fab>
@@ -204,7 +202,7 @@ function BasicRegister() {
                         alt="profile pic"
                         src={URL.createObjectURL(props.values.photo)}
                         sx={{
-                          width: 0.6,
+                          width: 0.3,
                           border: 3,
                           borderRadius: "2%",
                         }}
@@ -221,7 +219,6 @@ function BasicRegister() {
                   color="primary"
                   variant="contained"
                   disabled={!props.isValid}
-                  sx={{ mt: 3, mb: 2 }}
                   fullWidth
                 >
                   Login
@@ -231,7 +228,7 @@ function BasicRegister() {
           )}
         </Formik>
       </Box>
-    </Container>
+    </Box>
   );
 }
 
