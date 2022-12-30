@@ -2,7 +2,6 @@ import enum
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from backend import db
-import datetime
 
 
 # User db model
@@ -105,11 +104,6 @@ class Inventory(db.Model):
     cardID = db.Column(db.BigInteger, db.ForeignKey("Cards.cardID"), primary_key=True)
     strength = db.Column(db.Integer)
 
-    def __init__(self, userID, cardID, strength):
-        self.userID = userID
-        self.cardID = cardID
-        self.strength = strength
-
 # Challenge db model
 class Challenge(db.Model):
     __tablename__ = "Challenges"
@@ -119,12 +113,6 @@ class Challenge(db.Model):
     victimUserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
     challengeTimestamp = db.Column(db.DateTime)
     challengeStatus = db.Column(db.Enum("pending", "accepted", "rejected", name="challenge_status_type"))
-
-    def __init__(self, challengerUserID, victimUserID):
-        self.challengerUserID = challengerUserID
-        self.victimUserID = victimUserID
-        self.challengeTimestamp = datetime.datetime.now()
-        self.challengeStatus = "pending"
 
 # Fight db model   
 class Fight(db.Model):
