@@ -1,6 +1,6 @@
 from backend import app, db
 from flask import session, request, jsonify, redirect
-from backend.database.models import Card
+from backend.database.models import Card, Inventory
 import base64
 
 def update(location):
@@ -102,6 +102,35 @@ def unclaim_location(cardID):
             
             location.cardStatus = "unclaimed"
     
+            db.session.commit()
+    
+            return jsonify(success=True)
+        else:
+            return ["Invalid request method"]
+
+@app.route('/locations/collect/<cardID>', methods=['POST', 'GET'])
+def collect_location(cardID):
+        
+        if "userID" not in session:
+            redirect('/login')
+        
+        user_type = session["userType"]
+        userID = session["userID"]
+    
+        if user_type != "Player":
+            return ["User is not a player"]
+
+        ## mozda provjeru blizine dodati ali ne bi se smijelo nikad dogoditi da se pozove ova metoda ako nije dovljno blizu
+    
+        if request.method == 'POST':
+            location = db.session.query(Card).filter_by(cardID=cardID).first()
+    
+            if location is None:
+                return ["Card not found"]
+            
+            inventory = Inventory(userID, cardID, 10)
+
+            db.session.add(inventory)    
             db.session.commit()
     
             return jsonify(success=True)
