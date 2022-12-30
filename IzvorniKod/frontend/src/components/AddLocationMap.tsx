@@ -9,15 +9,19 @@ export default function AddLocationMap({
   setLatitude,
   longitude,
   setLongitude,
-  useMyLocation,
-  setUseMyLocation,
+  userLatitude,
+  setUserLatitude,
+  userLongitude,
+  setUserLongitude,
 }: {
   latitude: Number | undefined;
   setLatitude: Function;
   longitude: Number | undefined;
   setLongitude: Function;
-  useMyLocation: boolean;
-  setUseMyLocation: Function;
+  userLatitude: Number | undefined;
+  setUserLatitude: Function;
+  userLongitude: Number | undefined;
+  setUserLongitude: Function;
 }) {
   // map variable so we can clear it at the beginning of useEffect
   var myAddLocationMap: L.Map | undefined;
@@ -70,37 +74,46 @@ export default function AddLocationMap({
     myAddLocationMap.addLayer(layer);
     myAddLocationMap.setView([45.8238, 15.9761], 13);
 
-    myAddLocationMap!.on("click", addMarker);
+    // MARKER OPTIONS FOR USER
+    var myIcon = L.icon({
+      iconUrl:
+        "https://www.shareicon.net/data/512x512/2016/03/13/733024_people_512x512.png",
+      iconSize: [30, 35], // size of the icon
+      shadowSize: [50, 64], // size of the shadow
+      iconAnchor: [15, 25], // point of the icon which will correspond to marker's location
+      shadowAnchor: [4, 62], // the same for the shadow
+      popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+    });
 
-    // We also check if users clicked the "Use my location button!"
-    if (useMyLocation) {
-      console.log("use my location enabled");
-      myAddLocationMap.on("locationfound", function (e) {
-        // remove the previous marker if it existed
-        if (locationMarker) {
-          myAddLocationMap!.removeLayer(locationMarker);
-        }
-        // Add marker to map at click location;
-        var newMarker = L.marker(e.latlng, {
-          icon: locationIcon,
-        })
-          .bindPopup("Your are here :)")
-          .addTo(myAddLocationMap!);
+    // SETTING LOCATION TO CURRENT USER LOCATION WITH APPROPRIATE MARKER
+    myAddLocationMap
+      .locate({
+        setView: true,
+        watch: true,
+      }) /* This will return map so you can do chaining */
+      .on("locationfound", function (e) {
+        let userLat = e.latlng.lat;
+        let userLng = e.latlng.lng;
+        setUserLatitude(e.latlng.lat);
+        setUserLongitude(e.latlng.lat);
 
-        locationMarker = newMarker;
-        locationLatitude = e.latlng.lat;
-        setLatitude(e.latlng.lat);
-        locationLongitude = e.latlng.lng;
-        setLongitude(e.latlng.lng);
-        console.log(
-          "latitude: " + locationLatitude + ", longitude: " + locationLongitude
-        );
+        var currentMarker = L.marker([userLat, userLng], {
+          icon: myIcon,
+        }).bindPopup("Your are here :)");
+        var previousMarker: L.Marker<any> | undefined;
+
+        myAddLocationMap!.addLayer(currentMarker);
+        previousMarker = currentMarker;
+      })
+      .on("locationerror", function (e) {
+        console.log(e);
+        alert("Location access denied.");
       });
-    }
+
+    myAddLocationMap!.on("click", addMarker);
 
     function addMarker(e: any) {
       console.log("drawing!");
-      setUseMyLocation(false); // clear the marker from the user location!
 
       // remove the previous marker if it existed
       if (locationMarker) {
