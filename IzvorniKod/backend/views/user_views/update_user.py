@@ -14,7 +14,7 @@ def update(userID):
         user.username = request.form['username']
     if request.form.get('password') is not None:
         user.email = request.form['password']
-    if request.form.get('photo') is not None:
+    if request.files.get('photo') is not None:
         user.profilePhoto =  base64.b64encode(request.files.get('photo').read()).decode('utf-8')
 
     db.session.commit()
