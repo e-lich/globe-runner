@@ -70,10 +70,6 @@ def get_challenge_responses():
         formatted_challenges = []
 
         for challenge in challenges:
-            if challenge.challengeStatus == "went_too_far":
-                db.session.delete(challenge)
-                db.session.commit()
-                continue
 
             victim = db.session.query(Player).filter(userID=challenge.victimUserID).first()
 
