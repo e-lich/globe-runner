@@ -33,12 +33,8 @@ function BasicRegister() {
     formData.append("password", values.password);
     formData.append("iban", ""); // TODO - ovo je quick fix, bilo bi ljepse to hendlati na backendu
 
-    const config = {
-      withCredentials: true,
-    };
-
     axios
-      .post("/register", formData, config)
+      .post("/register", formData)
       .then((res) => {
         console.log(res);
         if (res.data.email === undefined) {

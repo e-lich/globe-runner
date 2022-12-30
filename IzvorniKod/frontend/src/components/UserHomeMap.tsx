@@ -78,18 +78,14 @@ export default function UserHomeMap() {
         lng: lng,
       };
 
-      await axios.post("/users/update-location", userData, {
-        withCredentials: true,
-      });
+      await axios.post("/users/update-location", userData);
 
       await fetchLocations();
     }
 
     const fetchLocations = async () => {
       try {
-        const res = await axios.get("/locations/close-by", {
-          withCredentials: true,
-        });
+        const res = await axios.get("/locations/close-by");
 
         if (res.data[0] === "No locations found close by")
           console.log("There are no nearby locations!");

@@ -39,9 +39,7 @@ export default function CartographerProfileMap() {
     const fetchLocations = async () => {
       try {
         console.log("fetching approved locations!");
-        const res = await axios.get("/locations/approved", {
-          withCredentials: true,
-        });
+        const res = await axios.get("/locations/approved");
 
         locations = res.data;
         if (locations[0].title)

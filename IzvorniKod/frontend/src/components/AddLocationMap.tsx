@@ -151,14 +151,10 @@ export default function AddLocationMap({
         if (dropvalue) {
           if (dropvalue === "Submitted Locations") {
             console.log("fetching submitted locations");
-            res = await axios.get("/locations/submitted", {
-              withCredentials: true,
-            });
+            res = await axios.get("/locations/submitted");
           } else if (dropvalue === "Approved Locations") {
             console.log("fetching approved locations");
-            res = await axios.get("/locations/approved", {
-              withCredentials: true,
-            });
+            res = await axios.get("/locations/approved");
           }
 
           if (res) {

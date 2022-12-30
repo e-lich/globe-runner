@@ -77,14 +77,10 @@ export default function OnSiteMap() {
         if (dropvalue) {
           if (dropvalue === "On-site Check") {
             console.log("fetching on-site check locations");
-            res = await axios.get("/locations/unclaimed", {
-              withCredentials: true,
-            });
+            res = await axios.get("/locations/unclaimed");
           } else if (dropvalue === "Claimed Locations") {
             console.log("fetching claimed locations");
-            res = await axios.get("/locations/claimed", {
-              withCredentials: true,
-            });
+            res = await axios.get("/locations/claimed");
           }
 
           if (res) {

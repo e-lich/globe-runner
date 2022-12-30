@@ -38,9 +38,7 @@ export default function CartographerHomeMap() {
     const fetchLocations = async () => {
       try {
         console.log("fetching submitted locations!");
-        const res = await axios.get("/locations/submitted", {
-          withCredentials: true,
-        });
+        const res = await axios.get("/locations/submitted");
 
         locations = res.data;
         if (locations[0].title)

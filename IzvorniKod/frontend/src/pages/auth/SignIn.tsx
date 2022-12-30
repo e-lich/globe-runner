@@ -21,20 +21,12 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   const handleLogin = async (values: any) => {
-    const config = {
-      withCredentials: true,
-    };
-
     return new Promise((resolve, reject) => {
       axios
-        .post(
-          "/login",
-          {
-            username_or_email: values.email,
-            password: values.password,
-          },
-          config
-        )
+        .post("/login", {
+          username_or_email: values.email,
+          password: values.password,
+        })
         .then((res) => {
           console.log(res);
           if (res.data.email === undefined) {

@@ -33,12 +33,8 @@ function CartographerRegister() {
     formData.append("photo", values.photo);
     formData.append("id", values.idPhoto);
 
-    const config = {
-      withCredentials: true,
-    };
-
     axios
-      .post("/register", formData, config)
+      .post("/register", formData)
       .then((response) => {
         console.log(response);
         if (response.data.email === undefined) {
