@@ -1,5 +1,5 @@
 from backend import app, db
-from flask import session
+from flask import session, redirect
 from backend.database.models import Card, Player, Cartographer
 import json
 from geopy import distance
@@ -23,7 +23,7 @@ def formattedReturn(locations):
 @app.route('/locations/submitted', methods=['GET'])
 def get_submitted_locations():
     if "userID" not in session:
-        return ["User not logged in"]
+        redirect('/login')
 
     userID = session["userID"]
     user_type = session["userType"]
@@ -52,7 +52,7 @@ def get_submitted_locations():
 @app.route('/locations/approved', methods=['GET'])
 def get_approved_locations():
     if "userID" not in session:
-        return ["User not logged in"]
+        redirect('/login')
 
     userID = session["userID"]
     user_type = session["userType"]
@@ -70,7 +70,7 @@ def get_approved_locations():
     elif user_type == "Cartographer":
         user = db.session.query(Cartographer).filter_by(userID=userID).first()
 
-        locations = db.session.query(Card).filter_by(approvedByUserID=userID, cardStatus="verified").all()
+        locations = db.session.query(Card).filter_by(cartographerID=userID, cardStatus="verified").all()
     
     if len(locations) == 0:
         return ["No approved locations found"]
@@ -81,7 +81,7 @@ def get_approved_locations():
 @app.route('/locations/unclaimed', methods=['GET'])
 def get_on_site_check_locations():
     if "userID" not in session:
-        return ["User not logged in"]
+        redirect('/login')
     
     if session["userType"] != "Cartographer":
         return ["User is not a cartographer"]
@@ -97,14 +97,14 @@ def get_on_site_check_locations():
 @app.route('/locations/claimed', methods=['GET'])
 def get_on_site_check_claimed_locations():
     if "userID" not in session:
-        return ["User not logged in"]
+        redirect('/login')
     
     if session["userType"] != "Cartographer":
         return ["User is not a cartographer"]
 
     cartographerID = session["userID"]
 
-    locations = db.session.query(Card).filter_by(approvedByUserID=cartographerID, cardStatus="claimed").all()
+    locations = db.session.query(Card).filter_by(cartographerID=cartographerID, cardStatus="claimed").all()
 
     if len(locations) == 0:
         return ["No claimed locations found for this cartographer"]
@@ -114,7 +114,7 @@ def get_on_site_check_claimed_locations():
 @app.route('/locations/all', methods=['GET'])
 def get_all_locations():
     if "userID" not in session:
-        return ["User not logged in"]
+        redirect('/login')
 
     if session["userType"] != "Admin":
         return ["User is not an admin"]
@@ -131,7 +131,7 @@ def get_all_locations():
 def get_close_by_locations():
 
     if "userID" not in session:
-        return ["User not logged in"]
+        redirect('/login')
 
     userID = session["userID"]
 

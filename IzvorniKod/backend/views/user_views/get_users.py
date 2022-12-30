@@ -1,5 +1,5 @@
 from backend import app, db
-from flask import request, jsonify, session
+from flask import request, jsonify, session, redirect
 from backend.database.models import Player, Cartographer
 
 def formattedReturn(users):
@@ -21,7 +21,7 @@ def formattedReturn(users):
 @app.route('/users/all', methods=['GET'])
 def get_all_users():
     if "userID" not in session:
-        return ["User not logged in"]
+        redirect('/login')
 
     user_type = session["userType"]
 

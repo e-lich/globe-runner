@@ -1,5 +1,5 @@
 from backend import app, db
-from flask import request, jsonify, session
+from flask import request, jsonify, session, redirect
 from backend.database.models import Player
 from geopy import distance
 import json
@@ -10,7 +10,7 @@ from sqlalchemy import inspect
 def get_close_by_players():
 
     if "userID" not in session:
-        return ["User not logged in"]
+        redirect('/login')
 
     userID = session["userID"]
 

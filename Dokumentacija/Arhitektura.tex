@@ -65,7 +65,7 @@
 				\end{longtblr}
 				
 				
-				\textbf{Cartographer}   Ovaj entitet sadržava sve važne informacije o korisniku aplikacije koji je kartograf. Sadrži atribute: userID, IBAN, document i verified. Ovaj entitet je specijalizacija entiteta User te je u vezi s entitetom Card preko atributa approvedByUserID.
+				\textbf{Cartographer}   Ovaj entitet sadržava sve važne informacije o korisniku aplikacije koji je kartograf. Sadrži atribute: userID, IBAN, document i verified. Ovaj entitet je specijalizacija entiteta User te je u vezi s entitetom Card preko atributa cartographerID.
 				
 				
 				\begin{longtblr}[
@@ -125,7 +125,7 @@
 				\end{longtblr}
 				
 				
-			\textbf{Card}   Ovaj entitet sadržava sve važne informacije o kartici. Sadrži atribute: cardID, cardLocation, locationPhoto, title, description, cardStatus, authorUserID, approvedByUserID. Ovaj entitet je u vezi \textit{One-to-Many} s entitetom Inventory preko atributa cardID te je u \textit{One-to-Many} vezi s entitetom Fight preko atributa cardIDxy gdje je x element {1, 2} i y je element {1, 2, 3}. Card je također u \textit{One-to-One} vezi s entitetom Player preko atributa authorUserID te je u \textit{One-to-One} vezi s entitetom Cartographer preko atributa authorUserID.
+			\textbf{Card}   Ovaj entitet sadržava sve važne informacije o kartici. Sadrži atribute: cardID, cardLocation, locationPhoto, title, description, cardStatus, authorUserID, cartographerID. Ovaj entitet je u vezi \textit{One-to-Many} s entitetom Inventory preko atributa cardID te je u \textit{One-to-Many} vezi s entitetom Fight preko atributa cardIDxy gdje je x element {1, 2} i y je element {1, 2, 3}. Card je također u \textit{One-to-One} vezi s entitetom Player preko atributa authorUserID te je u \textit{One-to-One} vezi s entitetom Cartographer preko atributa authorUserID.
 				
 				
 				\begin{longtblr}[
@@ -144,7 +144,7 @@
 					description & VARCHAR & opis kartice\\ \hline
 					cardStatus & ENUM & status kartice može biti: submitted, unclaimed, claimed, verified\\ \hline
 					\SetCell{LightBlue}authorUserID & INT & koji igrač je predložio dodavanje nove kartice u igru (user.userID)\\ \hline 
-					\SetCell{LightBlue}approvedByUserID & INT & koji kartograf je odobrio zahtjev za izradu nove kartice (user.userID)\\ \hline
+					\SetCell{LightBlue}cartographerID & INT & koji kartograf je odobrio zahtjev za izradu nove kartice (user.userID)\\ \hline
 				\end{longtblr}
 			\pagebreak
 				
