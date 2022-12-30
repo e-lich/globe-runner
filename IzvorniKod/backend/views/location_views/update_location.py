@@ -24,7 +24,7 @@ def update(location):
 def update_location(cardID):
 
     if "userID" not in session:
-        redirect('/login')
+        return(['User not logged in'])
     
     user_type = session["userType"]
 
@@ -41,7 +41,7 @@ def update_location(cardID):
 @app.route('/locations/update/submitted/<cardID>', methods=['POST', 'GET'])
 def update_submitted_location(cardID):
         if "userID" not in session:
-            redirect('/login')
+            return(['User not logged in'])
         
         user_type = session["userType"]
     
@@ -62,7 +62,7 @@ def update_submitted_location(cardID):
 def approve_location(cardID):
     
         if "userID" not in session:
-            redirect('/login')
+            return(['User not logged in'])
         
         user_type = session["userType"]
     
@@ -87,7 +87,7 @@ def approve_location(cardID):
 def unclaim_location(cardID):
     
         if "userID" not in session:
-            redirect('/login')
+            return(['User not logged in'])
         
         user_type = session["userType"]
     
@@ -112,7 +112,7 @@ def unclaim_location(cardID):
 def collect_location(cardID):
         
         if "userID" not in session:
-            redirect('/login')
+            return(['User not logged in'])
         
         user_type = session["userType"]
         userID = session["userID"]

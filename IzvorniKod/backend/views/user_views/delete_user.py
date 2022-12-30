@@ -18,7 +18,7 @@ def delete(userID):
 @app.route('/users/delete/<userID>', methods=['DELETE', 'GET'])
 def delete_user(userID):
     if "userID" not in session:
-        redirect('/login')
+        return(['User not logged in'])
 
     user_type = session["userType"]
     currentUserID = session["userID"]
@@ -35,7 +35,7 @@ def delete_user(userID):
 @app.route('/users/delete', methods=['DELETE', 'GET'])
 def delete_current_user():
     if "userID" not in session:
-        redirect('/login')
+        return(['User not logged in'])
 
     currentUserID = session["userID"]
 

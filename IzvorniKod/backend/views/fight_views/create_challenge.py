@@ -6,7 +6,7 @@ from backend.database.models import Player, Challenge
 @app.route('/fights/challenge/<userID>', methods=['POST', 'GET'])
 def create_challenge(userID):
     if "userID" not in session:
-        redirect('/login')
+        return(['User not logged in'])
     
     user_type = session["userType"]
     currentUserID = session["userID"]
