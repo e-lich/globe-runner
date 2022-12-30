@@ -1,17 +1,30 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";import Box from '@mui/material/Box';
-import InputAdornment from '@mui/material/InputAdornment';
-import TextField from '@mui/material/TextField';
-import { Button } from '@mui/material';
+import { useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
 
-export default function AddLocationForm() {
-  /* MAKE POST REQUEST!
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [lat, setLat] = useState("");
-  const [long, setLong] = useState("");
-  const [file, setFile] = useState<Blob>();
+export default function AddLocationForm({
+  latitude,
+  setLatitude,
+  longitude,
+  setLongitude,
+  useMyLocation,
+  setUseMyLocation,
+}: {
+  latitude: Number | undefined;
+  setLatitude: Function;
+  longitude: Number | undefined;
+  setLongitude: Function;
+  useMyLocation: boolean;
+  setUseMyLocation: Function;
+}) {
+  //  MAKE POST REQUEST!
+  // const [title, setTitle] = useState("");
+  // const [description, setDescription] = useState("");
+  /* const [file, setFile] = useState<Blob>();
   let [error, setError] = useState<Array<String>>([]);
   let [submitDisabled, setSubmitDisabled] = useState(true);
 
@@ -61,12 +74,13 @@ export default function AddLocationForm() {
   }*/
 
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-      <div>{/*need to center this*/}
+    <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+      <div>
+        {/*need to center this*/}
         <TextField
           label="Card title"
           id="title"
-          sx={{ m: 1, width: '25ch' }}
+          sx={{ m: 1, width: "25ch" }}
           type="text"
         />
         <TextField
@@ -74,49 +88,55 @@ export default function AddLocationForm() {
           label="Description"
           placeholder="Please describe the location in couple of sentences"
           multiline
-          sx={{ m: 1, width: '25ch' }}
-
+          sx={{ m: 1, width: "25ch" }}
         />
-        <hr/>
+        <hr />
         <TextField
-          label="Location lattitude"
+          label="Location latitude"
+          disabled={true}
+          value={latitude}
           id="lat"
-          sx={{ m: 1, width: '25ch' }}
+          sx={{ m: 1, width: "25ch" }}
           InputProps={{
             endAdornment: <InputAdornment position="end">°</InputAdornment>,
-            inputProps: {min: -90, max: 90}
+            inputProps: { min: -90, max: 90 },
           }}
           type="number"
         />
         <TextField
           label="Location longitude"
+          disabled={true}
+          value={longitude}
           id="long"
-          sx={{ m: 1, width: '25ch' }}
+          sx={{ m: 1, width: "25ch" }}
           InputProps={{
             endAdornment: <InputAdornment position="end">°</InputAdornment>,
-            inputProps: {min: -180, max: 180}
+            inputProps: { min: -180, max: 180 },
           }}
           type="number"
+          helperText="You can click on the map or use your location!"
         />
-        <Button 
+        <Button
           variant="outlined"
           color="primary"
-          onClick={()=>{
-            console.log("This should take current location and fill in the fields!")
-          }}>
+          onClick={() => {
+            setUseMyLocation(true);
+            console.log("setting my location to true");
+          }}
+        >
           Use my location
         </Button>
-        <hr/>
-        <Button 
+        <hr />
+        <Button
           variant="outlined"
           color="primary"
-          onClick={()=>{
-            console.log("Clicked submit")
-          }}>
+          onClick={() => {
+            console.log("Clicked submit");
+          }}
+        >
           Submit
         </Button>
-        <hr/>
-
+        <hr />
       </div>
     </Box>
   );
