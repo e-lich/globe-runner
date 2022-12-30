@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from backend import db
 import datetime
+import uuid
 
 
 # User db model
@@ -30,9 +31,9 @@ class Cartographer(User):
     document = db.Column(db.Text)
     verified = db.Column(db.Boolean)
 
-    def __init__(self, userID, username, name, email, password, photo, iban, id):
+    def __init__(self, username, name, email, password, photo, iban, id):
 
-        self.userID = userID
+        self.userID = uuid.uuid4().hex
         self.username = username
         self.name = name
         self.email = email
@@ -53,9 +54,9 @@ class Player(User):
     eloScore = db.Column(db.Integer)
     playerLocation = db.Column(db.String(100))
 
-    def __init__(self, userID, username, name, email, password, photo):
+    def __init__(self, username, name, email, password, photo):
         
-        self.userID = userID
+        self.userID = uuid.uuid4().hex
         self.username = username
         self.name = name
         self.email = email
@@ -114,13 +115,14 @@ class Inventory(db.Model):
 class Challenge(db.Model):
     __tablename__ = "Challenges"
 
-    challengeID = db.Column(db.Integer, primary_key=True, unique=True)
+    challengeID = db.Column(db.String(32), primary_key=True, unique=True)
     challengerUserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
     victimUserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
     challengeTimestamp = db.Column(db.DateTime)
     challengeStatus = db.Column(db.Enum("pending", "accepted", "rejected", name="challenge_status_type"))
 
     def __init__(self, challengerUserID, victimUserID):
+        self.challengeID = uuid.uuid4().hex
         self.challengerUserID = challengerUserID
         self.victimUserID = victimUserID
         self.challengeTimestamp = datetime.datetime.now()
