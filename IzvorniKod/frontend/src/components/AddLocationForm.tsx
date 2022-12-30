@@ -1,11 +1,7 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
-import L from "leaflet";
 
 export default function AddLocationForm({
   latitude,
@@ -13,18 +9,15 @@ export default function AddLocationForm({
   longitude,
   setLongitude,
   userLatitude,
-  setUserLatitude,
   userLongitude,
-  setUserLongitude,
 }: {
   latitude: Number | undefined;
   setLatitude: Function;
   longitude: Number | undefined;
   setLongitude: Function;
   userLatitude: Number | undefined;
-  setUserLatitude: Function;
+
   userLongitude: Number | undefined;
-  setUserLongitude: Function;
 }) {
   //  MAKE POST REQUEST!
   // const [title, setTitle] = useState("");
@@ -80,7 +73,6 @@ export default function AddLocationForm({
 
   const setUserLocation = async () => {
     console.log("setting form location to the user location!");
-
     setLatitude(userLatitude);
     setLongitude(userLongitude);
   };

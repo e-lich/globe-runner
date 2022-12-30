@@ -29,13 +29,9 @@ export default function AddLocation() {
     <>
       <Navbar />
       <AddLocationMap
-        latitude={latitude}
         setLatitude={setLatitude}
-        longitude={longitude}
         setLongitude={setLongitude}
-        userLatitude={userLatitude}
         setUserLatitude={setUserLatitude}
-        userLongitude={userLongitude}
         setUserLongitude={setUserLongitude}
       />
       <div className="align-items-center Auth-container">
@@ -48,9 +44,7 @@ export default function AddLocation() {
               longitude={longitude}
               setLongitude={setLongitude}
               userLatitude={userLatitude}
-              setUserLatitude={setUserLatitude}
               userLongitude={userLongitude}
-              setUserLongitude={setUserLongitude}
             />
           </div>
         </form>

@@ -5,22 +5,14 @@ import { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 
 export default function AddLocationMap({
-  latitude,
   setLatitude,
-  longitude,
   setLongitude,
-  userLatitude,
   setUserLatitude,
-  userLongitude,
   setUserLongitude,
 }: {
-  latitude: Number | undefined;
   setLatitude: Function;
-  longitude: Number | undefined;
   setLongitude: Function;
-  userLatitude: Number | undefined;
   setUserLatitude: Function;
-  userLongitude: Number | undefined;
   setUserLongitude: Function;
 }) {
   // map variable so we can clear it at the beginning of useEffect
@@ -125,6 +117,7 @@ export default function AddLocationMap({
       }).addTo(myAddLocationMap!);
 
       locationMarker = newMarker;
+
       locationLatitude = e.latlng.lat;
       setLatitude(e.latlng.lat);
       locationLongitude = e.latlng.lng;
