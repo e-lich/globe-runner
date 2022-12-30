@@ -16,7 +16,7 @@ export default function CartographerHomeMap() {
     description: string;
     latitude: number;
     longitude: number;
-    photo: string;
+    locationPhoto: string;
     title: string;
   }[];
 
@@ -126,7 +126,8 @@ export default function CartographerHomeMap() {
 
         let popupImg = document.createElement("img");
         popupImg.style.cssText = "width:100px;height:100px;";
-        popupImg.src = locationData.photo;
+        popupImg.src = locationData.locationPhoto;
+        popupImg.alt = "location photo missing";
 
         let popupHr = document.createElement("HR");
 

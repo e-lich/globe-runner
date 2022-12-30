@@ -45,7 +45,7 @@ const CartographerHomePopup = ({ open, onClose, fetchLocations }: Props) => {
 
     formData.append("title", values.title);
     formData.append("description", values.description);
-    formData.append("photo", values.photo);
+    formData.append("locationPhoto", values.locationPhoto);
 
     const config = {
       withCredentials: true,
@@ -74,22 +74,22 @@ const CartographerHomePopup = ({ open, onClose, fetchLocations }: Props) => {
   const initialValues = {
     title: locationData.title,
     description: locationData.description===null ? "" : locationData.description,
-    photo: locationData.photo,
+    locationPhoto: undefined,
   };
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("Required"),
     description: Yup.string().min(20).required("Required"),
-    photo: Yup.mixed()
+    locationPhoto: Yup.mixed()
       .test("photoSize", "Photo too large", photoSizeCheck)
       .required("Required"),
   });
 
-  function photoSizeCheck(photo?: Blob): boolean {
-    if (photo === undefined) {
+  function photoSizeCheck(locationPhoto?: Blob): boolean {
+    if (locationPhoto === undefined) {
       return false;
     }
-    return photo.size <= 1000000;
+    return locationPhoto.size <= 1000000;
   }
 
   return (
@@ -177,18 +177,19 @@ const CartographerHomePopup = ({ open, onClose, fetchLocations }: Props) => {
                 >
                   <input
                     hidden
-                    id="photo"
-                    name="photo"
+                    id="locationPhoto"
+                    name="locationPhoto"
                     type="file"
                     accept="image/*"
                     onChange={(event) => {
                       props.setFieldValue(
-                        "photo",
+                        "locationPhoto",
                         event.currentTarget.files![0]
-                      );
+                      )
+                      console.log("added pic  " + props.values.locationPhoto);
                     }}
                   />
-                    <label htmlFor="photo">
+                    <label htmlFor="locationPhoto">
                       <Typography noWrap sx={{ mb: 1 }}>
                         Location picture
                       </Typography>
@@ -197,12 +198,26 @@ const CartographerHomePopup = ({ open, onClose, fetchLocations }: Props) => {
                       </Fab>
                     </label>
 
-                    {props.values.photo !== undefined &&
-                      props.values.photo !== "" && (
+                    {props.values.locationPhoto !== undefined &&
+                      props.values.locationPhoto !== "" && (
                         <Box
                           component="img"
-                          alt="location pic"
-                          src={URL.createObjectURL(props.values.photo)}
+                          alt="new location pic"
+                          src={URL.createObjectURL(props.values.locationPhoto)}
+                          sx={{
+                            width: 0.3,
+                            border: 3,
+                            borderRadius: "2%",
+                          }}
+                        />
+                      )}
+
+                    {props.values.locationPhoto === undefined &&
+                      locationData.locationPhoto !== 'None' && (
+                        <Box
+                          component="img"
+                          alt="old location pic"
+                          src={locationData.locationPhoto}
                           sx={{
                             width: 0.3,
                             border: 3,
