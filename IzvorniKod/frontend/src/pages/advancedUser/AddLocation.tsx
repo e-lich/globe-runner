@@ -8,7 +8,8 @@ export default function AddLocation() {
   const navigate = useNavigate();
   var [latitude, setLatitude] = useState<Number>(0);
   var [longitude, setLongitude] = useState<Number>(0);
-  var [useMyLocation, setUseMyLocation] = useState<boolean>(false);
+  var [userLatitude, setUserLatitude] = useState<Number>(0);
+  var [userLongitude, setUserLongitude] = useState<Number>(0);
 
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
@@ -32,8 +33,10 @@ export default function AddLocation() {
         setLatitude={setLatitude}
         longitude={longitude}
         setLongitude={setLongitude}
-        useMyLocation={useMyLocation}
-        setUseMyLocation={setUseMyLocation}
+        userLatitude={userLatitude}
+        setUserLatitude={setUserLatitude}
+        userLongitude={userLongitude}
+        setUserLongitude={setUserLongitude}
       />
       <div className="align-items-center Auth-container">
         <form className="Auth-form">
@@ -44,8 +47,10 @@ export default function AddLocation() {
               setLatitude={setLatitude}
               longitude={longitude}
               setLongitude={setLongitude}
-              useMyLocation={useMyLocation}
-              setUseMyLocation={setUseMyLocation}
+              userLatitude={userLatitude}
+              setUserLatitude={setUserLatitude}
+              userLongitude={userLongitude}
+              setUserLongitude={setUserLongitude}
             />
           </div>
         </form>

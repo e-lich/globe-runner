@@ -5,21 +5,26 @@ import Box from "@mui/material/Box";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
+import L from "leaflet";
 
 export default function AddLocationForm({
   latitude,
   setLatitude,
   longitude,
   setLongitude,
-  useMyLocation,
-  setUseMyLocation,
+  userLatitude,
+  setUserLatitude,
+  userLongitude,
+  setUserLongitude,
 }: {
   latitude: Number | undefined;
   setLatitude: Function;
   longitude: Number | undefined;
   setLongitude: Function;
-  useMyLocation: boolean;
-  setUseMyLocation: Function;
+  userLatitude: Number | undefined;
+  setUserLatitude: Function;
+  userLongitude: Number | undefined;
+  setUserLongitude: Function;
 }) {
   //  MAKE POST REQUEST!
   // const [title, setTitle] = useState("");
@@ -73,6 +78,13 @@ export default function AddLocationForm({
     return;
   }*/
 
+  const setUserLocation = async () => {
+    console.log("setting form location to the user location!");
+
+    setLatitude(userLatitude);
+    setLongitude(userLongitude);
+  };
+
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap" }}>
       <div>
@@ -116,14 +128,7 @@ export default function AddLocationForm({
           type="number"
           helperText="You can click on the map or use your location!"
         />
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={() => {
-            setUseMyLocation(true);
-            console.log("setting my location to true");
-          }}
-        >
+        <Button variant="outlined" color="primary" onClick={setUserLocation}>
           Use my location
         </Button>
         <hr />
@@ -138,6 +143,7 @@ export default function AddLocationForm({
         </Button>
         <hr />
       </div>
+      <div id="mapid"></div>
     </Box>
   );
 }
