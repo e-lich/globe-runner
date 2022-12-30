@@ -50,8 +50,8 @@ def get_challenges(userID):
         return ["Invalid request method"]
 
 
-@app.route('/fights/challenges/responses', methods=['GET'])
-def get_challenge_responses():
+@app.route('/fights/response', methods=['GET'])
+def get_challenge_response():
     if "userID" not in session:
         return(['User not logged in'])
     
@@ -65,29 +65,26 @@ def get_challenge_responses():
 
     if request.method == 'GET': 
 
-        challenges = db.session.query(Challenge).filter(challengerUserID=currentUserID).all()
+        challenge = db.session.query(Challenge).filter(challengerUserID=currentUserID).first()
 
-        formatted_challenges = []
 
-        for challenge in challenges:
+        victim = db.session.query(Player).filter(userID=challenge.victimUserID).first()
 
-            victim = db.session.query(Player).filter(userID=challenge.victimUserID).first()
+        if challenge.challengeStatus == "pending" and get_distance(currentUser, victim) > 200:
+            challenge.challengeStatus = "went_too_far"
+            db.session.commit()
 
-            if challenge.challengeStatus == "pending" and get_distance(currentUser, victim) > 200:
-                challenge.challengeStatus = "went_too_far"
-                db.session.commit()
-
-            formatted_challenges.append({
+        result = {
                 "challengeID": challenge.challengeID,
                 "victim": challenge.victim.username,
                 "challengeStatus": challenge.challengeStatus
-            })
+                }
 
-            if challenge.status != "pending":
-                db.session.delete(challenge)
-                db.session.commit()
+        if challenge.status != "pending":
+            db.session.delete(challenge)
+            db.session.commit()
 
-        return formatted_challenges
+        return result
 
     else:
         return ["Invalid request method"]

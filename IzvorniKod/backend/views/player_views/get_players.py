@@ -37,6 +37,7 @@ def get_close_by_players():
                 'username': player.username,
                 'userId': player.userID,
                 'photo': player.profilePhoto,
+                'challangeable': player.challangeable
             })
 
     if len(closeByPlayers) == 0:

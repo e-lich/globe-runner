@@ -53,6 +53,7 @@ class Player(User):
     advanced = db.Column(db.Boolean)
     eloScore = db.Column(db.Integer)
     playerLocation = db.Column(db.String(100))
+    challengeable = db.Column(db.Boolean)
 
     def __init__(self, username, name, email, password, photo):
         
@@ -68,6 +69,7 @@ class Player(User):
         self.banned = False
         self.confirmed = False
         self.signedIn = False
+        self.challengeable = False
 
 # Admin db model
 class Admin(db.Model):
@@ -135,6 +137,8 @@ class Fight(db.Model):
     fightID = db.Column(db.Integer, primary_key=True, unique=True)
     player1UserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
     player2UserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
+    player1Ready = db.Column(db.Boolean)
+    player2Ready = db.Column(db.Boolean)
     cardID11 = db.Column(db.BigInteger, db.ForeignKey("Cards.cardID"))
     cardID12 = db.Column(db.BigInteger, db.ForeignKey("Cards.cardID"))
     cardID13 = db.Column(db.BigInteger, db.ForeignKey("Cards.cardID"))
@@ -144,4 +148,18 @@ class Fight(db.Model):
     points1 = db.Column(db.Float)
     points2 = db.Column(db.Float)
     fightTimestamp = db.Column(db.DateTime)
-    challengeID = db.Column(db.Integer, db.ForeignKey("Challenges.challengeID"))
+
+    def __init__(self, player1UserID, player2UserID):
+        self.player1UserID = player1UserID
+        self.player2UserID = player2UserID
+        self.player1Ready = False
+        self.player2Ready = False
+        self.cardID11 = None
+        self.cardID12 = None
+        self.cardID13 = None
+        self.cardID21 = None
+        self.cardID22 = None
+        self.cardID23 = None
+        self.points1 = 0
+        self.points2 = 0
+        self.fightTimestamp = datetime.datetime.now()
