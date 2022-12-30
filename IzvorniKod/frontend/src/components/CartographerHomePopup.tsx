@@ -1,5 +1,14 @@
-import { Container, TextField, InputAdornment, Button, Paper } from "@mui/material";
+import { Container, TextField, InputAdornment, Button, Paper, Alert, Box, Fab, Grid, Link, Typography } from "@mui/material";
+import { error } from "console";
+import { Formik, Field, ErrorMessage, Form } from "formik";
 import { CSSProperties } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import * as Yup from "yup";
+import ImageSearchIcon from "@mui/icons-material/ImageSearch";
+
+
 type Props = {
   open: Boolean;
   onClose: any;
@@ -16,15 +25,74 @@ const OVERLAY: CSSProperties = {
   zIndex: "1000",
 
 };
+//  .../locations/update/<cardID>
+
 
 const CartographerHomePopup = ({ open, onClose }: Props) => {
-  if (!open) return null;
+  let [error, setError] = useState<Array<String>>([]);
+  const navigate = useNavigate();
 
+  if (!open) return null;
   var locationData = JSON.parse(localStorage.getItem("locationData")!);
+
+  const baseURL = "http://127.0.0.1:5000";
+
+  const handleSave = async (values: any) => {
+    setError([]);
+
+    let formData = new FormData();
+
+    formData.append("title", values.title);
+    formData.append("description", values.description);
+    formData.append("photo", values.photo);
+
+    const config = {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+
+    axios
+      .post(baseURL + "/locations/update/" + locationData.cardID, formData, config)
+      .then((res) => {
+        console.log(res);
+        if (res.data.email === undefined) {
+          setError(res.data);
+        } else {
+          navigate("/home");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    return;
+  };
+
+  const initialValues = {
+    title: locationData.title,
+    description: locationData.description===null ? "" : locationData.description,
+    photo: locationData.photo,
+  };
+
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required("Required"),
+    description: Yup.string().min(20).required("Required"),
+    photo: Yup.mixed()
+      .test("photoSize", "Photo too large", photoSizeCheck)
+      .required("Required"),
+  });
+
+  function photoSizeCheck(photo?: Blob): boolean {
+    if (photo === undefined) {
+      return false;
+    }
+    return photo.size <= 1000000;
+  }
 
   return (
     <div style={OVERLAY}>
-      <Paper
+      <Box
         sx={{
           backgroundColor: "white",
           padding: "20px 20px",
@@ -33,112 +101,145 @@ const CartographerHomePopup = ({ open, onClose }: Props) => {
           justifyContent: "center",
           alignItems: "center",
           width: "75%",
-        }}
+        }}  
       >
-      <div>{/*need to center this*/}
-        <div style={{
-          justifyContent: "center", 
-          alignItems: "center",
-          display: "flex",
-          flexWrap: "wrap",
-        } /*center content*/}>
-          <TextField
-            label="Card title"
-            id="title"
-            sx={{ m: 1, width: '25ch' }}
-            type="text"
-            defaultValue={locationData.title}
-          />
-          <TextField
-            id="description"
-            label="Description"
-            placeholder="Please describe the location in couple of sentences"
-            multiline
-            sx={{ m: 1, width: '25ch' }}
-            defaultValue={locationData.description}
-          />
-        </div>
+        <Typography
+          sx={{ textAlign: "center", mb: 2, fontSize: 24, fontWeight: 800 }}
+        >
+          Editing location <i>{locationData.title}</i>
+        </Typography>
+          {error.map((err, key) => (
+            <Alert key={key} severity="error" sx={{ mb: 1 }}>
+              <strong>Error: </strong> {err}
+            </Alert>
+          ))}
         
-        <hr/>
-        <div style={{
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-          flexWrap: "wrap",
-        }}>
-          <TextField
-            label="Location latitude"
-            id="lat"
-            sx={{ m: 1, width: '25ch' }}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">°</InputAdornment>,
-              inputProps: {min: -90, max: 90}
-            }}
-            type="number"
-            defaultValue={locationData.latitude}
-          />
-          <TextField
-            label="Location longitude"
-            id="long"
-            sx={{ m: 1, width: '25ch' }}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">°</InputAdornment>,
-              inputProps: {min: -180, max: 180}
-            }}
-            type="number"
-            defaultValue={locationData.longitude}
-          />
-        </div>
-      
-        <hr/>
-        <div style={{
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-          flexWrap: "wrap",
-        }}>
-          <img style={{ height: "100px" }} src={locationData.photo} alt=""></img>
-            {/*MISSING IMAGE UPLOAD!!! */}
-        </div>
-        <hr/> 
-        <div style={{
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-          flexWrap: "wrap",
-        }}>
-          <Button 
-            variant="contained"
-            sx={{margin: 1}}
-            color="primary"
-            onClick={()=>{
-              console.log("Saving changes")
-            }}>
-            Save
-          </Button>
-          <Button 
-            onClick={() => {
-              console.log("Saving changes")
-              onClose()}} 
-            color="success"
-            variant="contained"
-            sx={{margin: 1}}
-            >
-          Save & Close
-          </Button>
-          <Button 
-            onClick={() => {
-              console.log("Not saving changes")
-              onClose()}} 
-            variant="contained"
-            color="error"
-            sx={{margin: 1}}
-            >
-          Cancel
-          </Button>
-        </div>
-      </div>
-      </Paper>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSave}
+          >
+            {(props) => (
+              <Form>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Field
+                      as={TextField}
+                      label="Card title"
+                      name="title"
+                      placeholder="Edit location title"
+                      fullWidth
+                      required
+                      error={props.errors.title && props.touched.title}
+                      helperText={<ErrorMessage name="title" />}
+                      sx={{ m: 1, width: '25ch' }}
+                      />
+                    <Field
+                      as={TextField}
+                      label="Description"
+                      name="description"
+                      placeholder="Edit location description"
+                      fullWidth
+                      multiline
+                      required
+                      error={props.errors.description && props.touched.description}
+                      helperText={<ErrorMessage name="description" />}
+                      sx={{ m: 1, width: '25ch' }}
+
+                    />
+                </Box>
+                <hr />
+                <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                >
+                  <input
+                    hidden
+                    id="photo"
+                    name="photo"
+                    type="file"
+                    accept="image/*"
+                    onChange={(event) => {
+                      props.setFieldValue(
+                        "photo",
+                        event.currentTarget.files![0]
+                      );
+                    }}
+                  />
+                    <label htmlFor="photo">
+                      <Typography noWrap sx={{ mb: 1 }}>
+                        Location picture
+                      </Typography>
+                      <Fab component="span" sx={{ mb: 3 }}>
+                        <ImageSearchIcon />
+                      </Fab>
+                    </label>
+
+                    {props.values.photo !== undefined &&
+                      props.values.photo !== "" && (
+                        <Box
+                          component="img"
+                          alt="location pic"
+                          src={URL.createObjectURL(props.values.photo)}
+                          sx={{
+                            width: 0.3,
+                            border: 3,
+                            borderRadius: "2%",
+                          }}
+                        />
+                      )}
+                </Box>
+                <hr />
+                <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                >
+                 <Button
+                    type="submit"
+                    color="primary"
+                    variant="contained"
+                    disabled={!props.isValid}
+                    sx={{margin: 1}}
+                  >
+                    Save
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      console.log("Not saving changes")
+                      onClose()}} 
+                    variant="contained"
+                    color="error"
+                    sx={{margin: 1}}
+                  >
+                    Close
+                  </Button>
+                </Box>
+              </Form>)}
+          </Formik>
+        </Box>
+      </Box>
     </div>
   );
 };
