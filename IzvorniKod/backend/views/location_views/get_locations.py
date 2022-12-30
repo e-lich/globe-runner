@@ -23,7 +23,7 @@ def formattedReturn(locations):
 @app.route('/locations/submitted', methods=['GET'])
 def get_submitted_locations():
     if "userID" not in session:
-        redirect('/login')
+        return(['User not logged in'])
 
     userID = session["userID"]
     user_type = session["userType"]
@@ -52,7 +52,7 @@ def get_submitted_locations():
 @app.route('/locations/approved', methods=['GET'])
 def get_approved_locations():
     if "userID" not in session:
-        redirect('/login')
+        return(['User not logged in'])
 
     userID = session["userID"]
     user_type = session["userType"]
@@ -81,7 +81,7 @@ def get_approved_locations():
 @app.route('/locations/unclaimed', methods=['GET'])
 def get_on_site_check_locations():
     if "userID" not in session:
-        redirect('/login')
+        return(['User not logged in'])
     
     if session["userType"] != "Cartographer":
         return ["User is not a cartographer"]
@@ -97,7 +97,7 @@ def get_on_site_check_locations():
 @app.route('/locations/claimed', methods=['GET'])
 def get_on_site_check_claimed_locations():
     if "userID" not in session:
-        redirect('/login')
+        return(['User not logged in'])
     
     if session["userType"] != "Cartographer":
         return ["User is not a cartographer"]
@@ -114,7 +114,7 @@ def get_on_site_check_claimed_locations():
 @app.route('/locations/all', methods=['GET'])
 def get_all_locations():
     if "userID" not in session:
-        redirect('/login')
+        return(['User not logged in'])
 
     if session["userType"] != "Admin":
         return ["User is not an admin"]
@@ -157,7 +157,7 @@ def get_within_distance(player_loc, dist):
 def get_close_by_locations():
 
     if "userID" not in session:
-        redirect('/login')
+        return(['User not logged in'])
 
     userID = session["userID"]
 
@@ -183,7 +183,7 @@ def get_close_by_locations():
 @app.route('/locations/collectable', methods=['GET'])
 def get_collectable_locations():
     if "userID" not in session:
-        redirect('/login')
+        return(['User not logged in'])
 
     userID = session["userID"]
 

@@ -21,7 +21,7 @@ def formattedReturn(users):
 @app.route('/users/all', methods=['GET'])
 def get_all_users():
     if "userID" not in session:
-        redirect('/login')
+        return(['User not logged in'])
 
     user_type = session["userType"]
 
