@@ -50,10 +50,10 @@ def loadLokacije():
             break
 
 def loadDummyPlayers():
-    player1 = Player(username='video_lovro',name='Lovro',password='backendrules', email="lovro@lovro.lovro", photo=None)
-    player2 = Player(username='tech_lovro',name='Lovro 2',password='frontenddrools', email="lovro1@lovro.lovro", photo=None)
-    player3 = Player(username='foto_ela',name='Lovro 3',password='backendrules', email="lovro2@lovro.lovro", photo=None)
-    player4 = Player(username='???_pero',name='Lovro 4',password='frontenddrools', email="lovro3@lovro.lovro", photo=None)
+    player1 = Player(username='video_lovro',name='Lovro',password='backendsucks', email="lovro@lovro.lovro", photo=None)
+    player2 = Player(username='tech_lovro',name='Lovro 2',password='frontendrocks', email="lovro1@lovro.lovro", photo=None)
+    player3 = Player(username='foto_ela',name='Lovro 3',password='backendsucks', email="lovro2@lovro.lovro", photo=None)
+    player4 = Player(username='???_pero',name='Lovro 4',password='frontenddrocks', email="lovro3@lovro.lovro", photo=None)
 
     if db.session.query(Player.username).filter_by(username=player1.username).first():
         return
