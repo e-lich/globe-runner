@@ -19,8 +19,6 @@ export default function CartographerHomeMap() {
     title: string;
   }[];
 
-  const baseURL = "http://127.0.0.1:5000";
-
   // MAP INITIALIZATION
   useEffect(() => {
     if (myCartographerHomeMap !== undefined && myCartographerHomeMap !== null) {
@@ -40,7 +38,7 @@ export default function CartographerHomeMap() {
     const fetchLocations = async () => {
       try {
         console.log("fetching submitted locations!");
-        const res = await axios.get(baseURL + "/locations/submitted", {
+        const res = await axios.get("/locations/submitted", {
           withCredentials: true,
         });
 

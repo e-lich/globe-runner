@@ -20,8 +20,6 @@ export default function UserHomeMap() {
     title: string;
   }[];
 
-  const baseURL = "http://127.0.0.1:5000";
-
   // MAP INITIALIZATION
   useEffect(() => {
     if (myMap !== undefined && myMap !== null) {
@@ -80,7 +78,7 @@ export default function UserHomeMap() {
         lng: lng,
       };
 
-      await axios.post(baseURL + "/users/update-location", userData, {
+      await axios.post("/users/update-location", userData, {
         withCredentials: true,
       });
 
@@ -89,7 +87,7 @@ export default function UserHomeMap() {
 
     const fetchLocations = async () => {
       try {
-        const res = await axios.get(baseURL + "/locations/close-by", {
+        const res = await axios.get("/locations/close-by", {
           withCredentials: true,
         });
 

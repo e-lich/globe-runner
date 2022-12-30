@@ -21,8 +21,6 @@ function BasicRegister() {
 
   const navigate = useNavigate();
 
-  const baseURL = "http://127.0.0.1:5000";
-
   const handleRegister = async (values: any) => {
     setError([]);
 
@@ -40,7 +38,7 @@ function BasicRegister() {
     };
 
     axios
-      .post(baseURL + "/register", formData, config)
+      .post("/register", formData, config)
       .then((res) => {
         console.log(res);
         if (res.data.email === undefined) {

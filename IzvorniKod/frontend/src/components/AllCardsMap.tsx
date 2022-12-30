@@ -19,8 +19,6 @@ export default function AllCardsMap() {
     title: string;
   }[];
 
-  const baseURL = "http://127.0.0.1:5000";
-
   // MAP INITIALIZATION
   useEffect(() => {
     if (myAllCardsMap !== undefined && myAllCardsMap !== null) {
@@ -42,7 +40,7 @@ export default function AllCardsMap() {
 
     const fetchLocations = async () => {
       try {
-        const res = await axios.get(baseURL + "/locations/admin", {
+        const res = await axios.get("/locations/admin", {
           withCredentials: true,
         });
         locations = res.data;

@@ -19,7 +19,6 @@ export default function SignIn() {
   let [error, setError] = useState<Array<String>>([]);
 
   const navigate = useNavigate();
-  const baseURL = "http://127.0.0.1:5000";
 
   const handleLogin = async (values: any) => {
     const config = {
@@ -29,7 +28,7 @@ export default function SignIn() {
     return new Promise((resolve, reject) => {
       axios
         .post(
-          baseURL + "/login",
+          "/login",
           {
             username_or_email: values.email,
             password: values.password,
