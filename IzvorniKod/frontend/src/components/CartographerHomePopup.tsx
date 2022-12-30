@@ -12,6 +12,7 @@ import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 type Props = {
   open: Boolean;
   onClose: any;
+  fetchLocations: Function;
 };
 
 const OVERLAY: CSSProperties = {
@@ -25,10 +26,10 @@ const OVERLAY: CSSProperties = {
   zIndex: "1000",
 
 };
-//  .../locations/update/<cardID>
+//  .../locations/update/submitted/
 
 
-const CartographerHomePopup = ({ open, onClose }: Props) => {
+const CartographerHomePopup = ({ open, onClose, fetchLocations }: Props) => {
   let [error, setError] = useState<Array<String>>([]);
   const navigate = useNavigate();
 
@@ -47,19 +48,20 @@ const CartographerHomePopup = ({ open, onClose }: Props) => {
     formData.append("photo", values.photo);
 
     const config = {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
+      withCredentials: true,
     };
 
     axios
-      .post(baseURL + "/locations/update/" + locationData.cardID, formData, config)
+      .post(baseURL + "/locations/update/submitted/" + locationData.cardID, formData, config)
       .then((res) => {
         console.log(res);
-        if (res.data.email === undefined) {
+        if (res.data.success != true) {
           setError(res.data);
         } else {
+          fetchLocations().catch(console.error);
+          onClose();
           navigate("/home");
+
         }
       })
       .catch((err) => {
@@ -108,11 +110,13 @@ const CartographerHomePopup = ({ open, onClose }: Props) => {
         >
           Editing location <i>{locationData.title}</i>
         </Typography>
-          {error.map((err, key) => (
+        
+        {error.length > 0 ? 
+          error.map((err, key) => (
             <Alert key={key} severity="error" sx={{ mb: 1 }}>
               <strong>Error: </strong> {err}
             </Alert>
-          ))}
+          )) : ""}
         
         <Box
           sx={{
@@ -223,7 +227,7 @@ const CartographerHomePopup = ({ open, onClose }: Props) => {
                     disabled={!props.isValid}
                     sx={{margin: 1}}
                   >
-                    Save
+                    Save & Close
                   </Button>
                   <Button 
                     onClick={() => {
@@ -233,7 +237,7 @@ const CartographerHomePopup = ({ open, onClose }: Props) => {
                     color="error"
                     sx={{margin: 1}}
                   >
-                    Close
+                    Close without saving
                   </Button>
                 </Box>
               </Form>)}

@@ -37,7 +37,10 @@ export default function CartographerHomeMap() {
     myCartographerHomeMap.addLayer(layer);
     myCartographerHomeMap.setView([45.8238, 15.9761], 13);
 
-    const fetchLocations = async () => {
+    fetchLocations().catch(console.error);
+  }, [myCartographerHomeMap]);
+
+const fetchLocations = async () => {
       try {
         console.log("fetching submitted locations!");
         const res = await axios.get(baseURL + "/locations/submitted", {
@@ -54,6 +57,7 @@ export default function CartographerHomeMap() {
     };
 
     const updateMarkers = () => {
+      
       console.log("updating markers!");
       // clear all markers on the map and set new ones!
       // clear all of the previous layers
@@ -125,9 +129,6 @@ export default function CartographerHomeMap() {
         });
     };
 
-    fetchLocations().catch(console.error);
-  }, [myCartographerHomeMap]);
-
   return (
     <>
       <h1 style={{ textAlign: "center" }}>
@@ -137,6 +138,7 @@ export default function CartographerHomeMap() {
       <CartographerHomePopup
         open={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
+        fetchLocations={fetchLocations}
       />{" "}
     </>
   );
