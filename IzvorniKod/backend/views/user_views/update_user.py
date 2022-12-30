@@ -80,7 +80,7 @@ def ban_user(userID):
     else:
         return ["Invalid request method"]
 
-@app.route('/users/update/location', methods=['POST', 'GET'])
+@app.route('/users/update-location', methods=['POST', 'GET'])
 def update_user_location():
     if "userID" not in session:
         return ["User not logged in"]
