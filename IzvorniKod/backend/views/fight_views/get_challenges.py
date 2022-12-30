@@ -20,7 +20,7 @@ def get_distance(challenger, victim):
     return distance(victim_loc, challenger_loc).m
 
 
-@app.route('/fights/challenges', methods=['GET'])
+@app.route('/fight/challenges', methods=['GET'])
 def get_challenges(userID):
     if "userID" not in session:
         return(['User not logged in'])
@@ -50,7 +50,7 @@ def get_challenges(userID):
         return ["Invalid request method"]
 
 
-@app.route('/fights/response', methods=['GET'])
+@app.route('/fight/response', methods=['GET'])
 def get_challenge_response():
     if "userID" not in session:
         return(['User not logged in'])
