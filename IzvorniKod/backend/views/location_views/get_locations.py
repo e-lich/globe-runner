@@ -1,6 +1,6 @@
 from backend import app, db
 from flask import session, redirect
-from backend.database.models import Card, Player, Cartographer
+from backend.database.models import Card, Player, Cartographer, Inventory
 import json
 from geopy import distance
 
@@ -204,3 +204,17 @@ def get_collectable_locations():
         return ["No locations found close by"]
     else:
         return closeByLocations
+
+@app.route('/locations/owned', methods=['GET'])
+def get_owned_locations():
+    if "userID" not in session:
+        return(['User not logged in'])
+
+    userID = session["userID"]
+
+    if session["userType"] != "Player":
+        return ["User is not a player"]
+
+    inventory = db.session.query(Inventory).filter_by(userID=userID).all()
+
+    return formattedReturn(inventory)
