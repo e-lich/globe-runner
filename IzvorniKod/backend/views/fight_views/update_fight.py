@@ -2,8 +2,8 @@ from backend import db, app
 from backend.database.models import Card, Player, Fight
 from flask import request, jsonify, session
 
-@app.route('/fight/cards/<fightID>', methods=['POST', 'GET'])
-def choose_cards(fightID):
+@app.route('/fight/cards', methods=['POST', 'GET'])
+def choose_cards():
     if "userID" not in session:
         return(['User not logged in'])
     
@@ -20,12 +20,11 @@ def choose_cards(fightID):
         cardID2 = request_data['cardID2']
         cardID3 = request_data['cardID3']
 
-        fight = db.session.query(Fight).filter(fightID=fightID).first()
+        fight = db.session.query(Fight).filter_by(player1ID=currentUserID).first()
         if fight is None:
-            return ["Fight not found"]
-
-        if fight.player1ID != currentUserID and fight.player2ID != currentUserID:
-            return ["User is not part of this fight"]
+            fight = db.session.query(Fight).filter_by(player2ID=currentUserID).first()
+            if fight is None:
+                return ["No fight found"]
 
         if fight.player1ID == currentUserID:
             if fight.cardID11 is not None:
@@ -34,6 +33,7 @@ def choose_cards(fightID):
             fight.cardID11 = cardID1
             fight.cardID12 = cardID2
             fight.cardID13 = cardID3
+            fight.player1Ready = True
         else:
             if fight.cardID21 is not None:
                 return ["Player has already chosen cards"]
@@ -41,6 +41,8 @@ def choose_cards(fightID):
             fight.cardID21 = cardID1
             fight.cardID22 = cardID2
             fight.cardID23 = cardID3
+            fight.player2Ready = True
+
 
         db.session.commit()
 

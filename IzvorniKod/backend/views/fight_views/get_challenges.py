@@ -50,7 +50,7 @@ def get_challenges(userID):
         return ["Invalid request method"]
 
 
-@app.route('/fight/response', methods=['GET'])
+@app.route('/fight/challenges/response', methods=['GET'])
 def get_challenge_response():
     if "userID" not in session:
         return(['User not logged in'])
