@@ -129,7 +129,7 @@ def get_all_locations():
 
 # vraca sve kartice unutar odredjene udaljenosti od igrača
 # distance je u kilometrima
-def get_within_distance(player_loc, distance):
+def get_within_distance(player_loc, dist):
     closeByLocations = []
 
     for card in db.session.query(Card).filter_by(cardStatus="verified").all():
@@ -139,7 +139,7 @@ def get_within_distance(player_loc, distance):
 
         card_loc = (card_lat, card_lng)
 
-        if distance.distance(player_loc, card_loc).km <= distance:
+        if distance.distance(player_loc, card_loc).km <= dist:
             closeByLocations.append({
                 'cardId': card.cardID,
                 'photo': card.locationPhoto,

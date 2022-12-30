@@ -82,23 +82,20 @@ def ban_user(userID):
 
 @app.route('/users/update/location', methods=['POST', 'GET'])
 def update_user_location():
-    if request.method != 'POST':
-        if "userID" not in session:
-            redirect('/login')
+    if "userID" not in session:
+        redirect('/login')
 
-        userID = session["userID"]
-        
-        request_data = request.get_json()
-        lat = request_data['lat']
-        lng = request_data['lng']
+    userID = session["userID"]
+    
+    request_data = request.get_json()
+    lat = request_data['lat']
+    lng = request_data['lng']
 
-        if session["userType"] != "Player":
-            return ["User is not a player"]
+    if session["userType"] != "Player":
+        return ["User is not a player"]
 
-        user = db.session.query(Player).filter_by(userID=userID).first()
-        user.playerLocation = "{" + f"\"latitude\": {lat}, \"longitude\": {lng}" + "}"
-        db.session.commit()
+    user = db.session.query(Player).filter_by(userID=userID).first()
+    user.playerLocation = "{" + f"\"latitude\": {lat}, \"longitude\": {lng}" + "}"
+    db.session.commit()
 
-        return jsonify(success=True)
-    else:
-        return ["Invalid request method"]
+    return jsonify(success=True)
