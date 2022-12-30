@@ -119,7 +119,7 @@ class Challenge(db.Model):
     challengerUserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
     victimUserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
     challengeTimestamp = db.Column(db.DateTime)
-    challengeStatus = db.Column(db.Enum("pending", "accepted", "rejected", name="challenge_status_type"))
+    challengeStatus = db.Column(db.Enum("pending", "accepted", "declined", "went_too_far", name="challenge_status_type"))
 
     def __init__(self, challengerUserID, victimUserID):
         self.challengeID = uuid.uuid4().hex
