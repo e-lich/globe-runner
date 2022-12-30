@@ -35,9 +35,9 @@ def get_fight():
         return ["Only players can get fights"]
 
     if request.method == 'GET': 
-        fight = db.session.query(Fight).filter_by(player1ID=currentUserID).first()
+        fight = db.session.query(Fight).filter(player1ID=currentUserID).filter(points1=None).filter(point2=None).first()
         if fight is None:
-            fight = db.session.query(Fight).filter_by(player2ID=currentUserID).first()
+            fight = db.session.query(Fight).filter_by(player2ID=currentUserID).filter(points1=None).filter(point2=None).first()
             if fight is None:
                 return ["No fight found"]
         
