@@ -1,4 +1,3 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L, { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect } from "react";
@@ -92,7 +91,7 @@ export default function UserHomeMap() {
         lng: lng,
       };
 
-      await axios.post(baseURL + "/locations/update", userData, {
+      await axios.post(baseURL + "/users/update/location", userData, {
         withCredentials: true,
       });
 

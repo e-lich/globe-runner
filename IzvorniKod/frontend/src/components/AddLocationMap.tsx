@@ -23,8 +23,6 @@ export default function AddLocationMap() {
 
   const baseURL = "http://127.0.0.1:5000";
 
-  // mock location data that we need to switch with an API call
-
   // MAP INITIALIZATION
   useEffect(() => {
     if (myAddLocationMap !== undefined && myAddLocationMap !== null) {
@@ -90,9 +88,9 @@ export default function AddLocationMap() {
           }
 
           if (res) {
-            if (res.data[0] !== "No submitted locations found")
+            if (res.data[0] === "No submitted locations found")
               console.log(res.data[0]);
-            else if (res.data[0] !== "No approved locations found")
+            else if (res.data[0] === "No approved locations found")
               console.log(res.data[0]);
             else {
               locations = res.data;

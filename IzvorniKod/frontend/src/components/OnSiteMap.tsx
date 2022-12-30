@@ -1,3 +1,4 @@
+import axios from "axios";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
@@ -6,57 +7,21 @@ import { Dropdown } from "react-bootstrap";
 export default function OnSiteMap() {
   // map variable so we can clear it at the beginning of useEffect
   var myOnSiteMap: L.Map | undefined;
-  var onSiteCheckLocations:
-    | Array<{ lat: number; lng: number; name: string; image: string }>
-    | undefined;
-  var selectedLocations:
-    | Array<{ lat: number; lng: number; name: string; image: string }>
-    | undefined;
   var [dropDownValue, setDropDownValue] = useState("");
   var dropvalue = "";
   var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
 
-  // mock location data that we need to switch with an API call
-  var mockOnSiteCheckLocations = [
-    {
-      lat: 45.8145,
-      lng: 15.9798,
-      name: "Cathedral",
-      image:
-        "https://png.pngtree.com/png-vector/20190307/ourlarge/pngtree-house-icon-design-template-vector-isolated-png-image_781941.jpg",
-    },
-    {
-      lat: 45.8004,
-      lng: 15.9714,
-      name: "FER",
-      image:
-        "https://png.pngtree.com/png-vector/20190307/ourlarge/pngtree-house-icon-design-template-vector-isolated-png-image_781941.jpg",
-    },
-    {
-      lat: 45.8138,
-      lng: 15.9761,
-      name: "Main Square",
-      image:
-        "https://png.pngtree.com/png-vector/20190307/ourlarge/pngtree-house-icon-design-template-vector-isolated-png-image_781941.jpg",
-    },
-  ];
+  var locations: {
+    cardId: number;
+    cardStatus: string;
+    description: string;
+    latitude: number;
+    longitude: number;
+    photo: string;
+    title: string;
+  }[];
 
-  var mockSelectedLocations = [
-    {
-      lat: 45.8238,
-      lng: 15.9761,
-      name: "Secondary Square",
-      image:
-        "https://png.pngtree.com/png-vector/20190307/ourlarge/pngtree-house-icon-design-template-vector-isolated-png-image_781941.jpg",
-    },
-    {
-      lat: 45.8238,
-      lng: 15.9861,
-      name: "Ternary Square",
-      image:
-        "https://png.pngtree.com/png-vector/20190307/ourlarge/pngtree-house-icon-design-template-vector-isolated-png-image_781941.jpg",
-    },
-  ];
+  const baseURL = "http://127.0.0.1:5000";
 
   // MAP INITIALIZATION
   useEffect(() => {
@@ -76,7 +41,7 @@ export default function OnSiteMap() {
     myOnSiteMap.setView([45.8238, 15.9761], 13);
   }, [myOnSiteMap]);
 
-  function updateMarkers() {
+  function updateFilter() {
     myOnSiteMap = mapContainer;
     // clear all markers on the map and set new ones!
 
@@ -106,14 +71,43 @@ export default function OnSiteMap() {
       popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
     });
 
-    if (dropvalue === "On-site Check") {
-      mockOnSiteCheckLocations.forEach(
-        (locationData: {
-          lat: number;
-          lng: number;
-          name: string;
-          image: string;
-        }) => {
+    const fetchLocations = async () => {
+      try {
+        var res;
+        if (dropvalue) {
+          if (dropvalue === "On-site Check") {
+            console.log("fetching on-site check locations");
+            res = await axios.get(baseURL + "/locations/unclaimed", {
+              withCredentials: true,
+            });
+          } else if (dropvalue === "Claimed Locations") {
+            console.log("fetching claimed locations");
+            res = await axios.get(baseURL + "/locations/claimed", {
+              withCredentials: true,
+            });
+          }
+
+          if (res) {
+            if (res.data[0] === "No unclaimed locations found")
+              console.log(res.data[0]);
+            else if (
+              res.data[0] === "No claimed locations found for this cartographer"
+            )
+              console.log(res.data[0]);
+            else {
+              locations = res.data;
+              updateMarkers();
+            }
+          }
+        } else console.log("Pick a filter from the dropdown!");
+      } catch (e) {
+        alert(e);
+      }
+    };
+
+    const updateMarkers = () => {
+      if (locations)
+        locations.forEach((locationData) => {
           const popupOptions = {
             maxWidth: 100, // set max-width
             className: "customPopup", // name custom popup
@@ -121,53 +115,21 @@ export default function OnSiteMap() {
 
           var customPopup =
             '<div className="cardpopup">' +
-            `   <img className="cardpopup--image" src=${locationData.image} height="100px" width="100px" alt=""></img>` +
+            `   <img className="cardpopup--image" src=${locationData.photo} height="100px" width="100px" alt=""></img>` +
             "   <hr>" +
             `   <div class="cardpopup--name">` +
-            `     <span>${locationData.name}</span>` +
+            `     <span>${locationData.title}</span>` +
             "   </div>" +
             "</div>";
 
-          L.marker([locationData.lat, locationData.lng], {
+          L.marker([locationData.latitude, locationData.longitude], {
             icon: locationIcon,
           }) // add the created marker to the desired coordinates with desired popup
             .bindPopup(customPopup, popupOptions)
             .addTo(myOnSiteMap!);
-        }
-      );
-    }
-
-    if (dropvalue === "Selected Locations") {
-      // check if closeByLocations is defined, add marker for each location that exists!
-      mockSelectedLocations.forEach(
-        (locationData: {
-          lat: number;
-          lng: number;
-          name: string;
-          image: string;
-        }) => {
-          const popupOptions = {
-            maxWidth: 100, // set max-width
-            className: "customPopup", // name custom popup
-          };
-
-          var customPopup =
-            '<div className="cardpopup">' +
-            `   <img className="cardpopup--image" src=${locationData.image} height="100px" width="100px" alt=""></img>` +
-            "   <hr>" +
-            `   <div class="cardpopup--name">` +
-            `     <span>${locationData.name}</span>` +
-            "   </div>" +
-            "</div>";
-
-          L.marker([locationData.lat, locationData.lng], {
-            icon: locationIcon,
-          }) // add the created marker to the desired coordinates with desired popup
-            .bindPopup(customPopup, popupOptions)
-            .addTo(myOnSiteMap!);
-        }
-      );
-    }
+        });
+    };
+    fetchLocations();
   }
 
   return (
@@ -182,7 +144,7 @@ export default function OnSiteMap() {
             onClick={() => {
               setDropDownValue("On-site Check");
               dropvalue = "On-site Check";
-              updateMarkers();
+              updateFilter();
             }}
           >
             On-site Check
@@ -190,9 +152,9 @@ export default function OnSiteMap() {
 
           <Dropdown.Item
             onClick={async () => {
-              await setDropDownValue("Selected Locations");
-              dropvalue = "Selected Locations";
-              updateMarkers();
+              await setDropDownValue("Claimed Locations");
+              dropvalue = "Claimed Locations";
+              updateFilter();
             }}
           >
             Selected Locations
