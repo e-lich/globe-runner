@@ -104,6 +104,11 @@ class Inventory(db.Model):
     cardID = db.Column(db.BigInteger, db.ForeignKey("Cards.cardID"), primary_key=True)
     strength = db.Column(db.Integer)
 
+    def __init__(self, userID, cardID, strength):
+        self.userID = userID
+        self.cardID = cardID
+        self.strength = strength
+
 # Challenge db model
 class Challenge(db.Model):
     __tablename__ = "Challenges"
