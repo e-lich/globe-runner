@@ -19,8 +19,6 @@ export default function AllCardsMap() {
     title: string;
   }[];
 
-  const baseURL = "http://127.0.0.1:5000";
-
   // MAP INITIALIZATION
   useEffect(() => {
     if (myAllCardsMap !== undefined && myAllCardsMap !== null) {
@@ -42,9 +40,7 @@ export default function AllCardsMap() {
 
     const fetchLocations = async () => {
       try {
-        const res = await axios.get(baseURL + "/locations/admin", {
-          withCredentials: true,
-        });
+        const res = await axios.get("/locations/admin");
         locations = res.data;
         if (locations[0].title) updateMarkers(); // TODO - check if locations exist, we are checking if the first item inside the array is a card currently!
       } catch (e) {

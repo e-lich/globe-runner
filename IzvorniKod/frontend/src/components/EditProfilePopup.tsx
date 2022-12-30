@@ -51,8 +51,6 @@ const EditProfilePopup = ({ open, onClose, oldUser }: Props) => {
     }
   }
 
-  const baseURL = "http://127.0.0.1:5000";
-
   function handleRegister() {
     if (!file) {
       setError((previousValue) => [
@@ -70,7 +68,7 @@ const EditProfilePopup = ({ open, onClose, oldUser }: Props) => {
     formData.append("iban", ""); // TODO - ovo je quick fix, bilo bi ljepse to hendlati na backendu
 
     axios
-      .post(baseURL + "/URL", formData, { withCredentials: true })
+      .post("/URL", formData)
       .then((res) => {
         console.log(res);
         if (res.data.username === undefined) {

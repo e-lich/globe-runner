@@ -23,8 +23,6 @@ export default function OnSiteMap() {
     title: string;
   }[];
 
-  const baseURL = "http://127.0.0.1:5000";
-
   // MAP INITIALIZATION
   useEffect(() => {
     if (myOnSiteMap !== undefined && myOnSiteMap !== null) {
@@ -79,14 +77,10 @@ export default function OnSiteMap() {
         if (dropvalue) {
           if (dropvalue === "On-site Check") {
             console.log("fetching on-site check locations");
-            res = await axios.get(baseURL + "/locations/unclaimed", {
-              withCredentials: true,
-            });
+            res = await axios.get("/locations/unclaimed");
           } else if (dropvalue === "Claimed Locations") {
             console.log("fetching claimed locations");
-            res = await axios.get(baseURL + "/locations/claimed", {
-              withCredentials: true,
-            });
+            res = await axios.get("/locations/claimed");
           }
 
           if (res) {

@@ -20,8 +20,6 @@ export default function UserHomeMap() {
     title: string;
   }[];
 
-  const baseURL = "http://127.0.0.1:5000";
-
   // MAP INITIALIZATION
   useEffect(() => {
     if (myMap !== undefined && myMap !== null) {
@@ -80,18 +78,14 @@ export default function UserHomeMap() {
         lng: lng,
       };
 
-      await axios.post(baseURL + "/users/update-location", userData, {
-        withCredentials: true,
-      });
+      await axios.post("/users/update-location", userData);
 
       await fetchLocations();
     }
 
     const fetchLocations = async () => {
       try {
-        const res = await axios.get(baseURL + "/locations/close-by", {
-          withCredentials: true,
-        });
+        const res = await axios.get("/locations/close-by");
 
         if (res.data[0] === "No locations found close by")
           console.log("There are no nearby locations!");
