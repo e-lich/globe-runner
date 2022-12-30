@@ -1,16 +1,17 @@
 from backend import app, db
-from flask import request, jsonify, session
+from flask import request, jsonify, session, redirect
 from backend.database.models import Player, Cartographer
 
 @app.route('/users/delete/<userID>', methods=['DELETE', 'GET'])
 def delete_user(userID):
     if "userID" not in session:
-        return ["User not logged in"]
+        redirect('/login')
 
     user_type = session["userType"]
+    currentUserID = session["userID"]
 
-    if user_type != "Admin":
-        return ["User is not an admin"]
+    if user_type != "Admin" or currentUserID != userID:
+        return ["Current user does not have the authority to delete this user"]
 
     if request.method == 'DELETE':
         user = db.session.query(Player).filter_by(userID=userID).first()

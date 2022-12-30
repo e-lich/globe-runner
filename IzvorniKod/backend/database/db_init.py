@@ -37,7 +37,7 @@ def loadLokacije():
         description = None # https://www.wikidata.org/w/api.php?action=wbgetentities&props=descriptions&ids=Q2350879&languages=en isto kao i gore, nez jel ima smisla
 
         card_status = 'verified'
-        authorUserId = None # neznam
+        authorUserId = None # ne znam
         apporvedByUserID = None # isto 
 
         new_card = Card(cardID=card_id, cardLocation=card_location, locationPhoto=str(location_photo), title=title, description=description, cardStatus=card_status)
