@@ -21,9 +21,7 @@ def create_challenge(userID):
         db.session.add(challenge)
         db.session.commit()
 
-        return jsonify({
-            'challengeID': challenge.challengeID
-        })
+        return jsonify(success=True)
     
     else:
         return ["Invalid request method"]

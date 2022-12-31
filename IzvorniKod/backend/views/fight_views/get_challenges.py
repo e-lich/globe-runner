@@ -75,8 +75,7 @@ def get_challenge_response():
             db.session.commit()
 
         result = {
-                "challengeID": challenge.challengeID,
-                "victim": challenge.victim.username,
+                "victim": challenge.victimUserID,
                 "challengeStatus": challenge.challengeStatus
                 }
 

@@ -42,7 +42,7 @@ def get_fight():
                 return ["No fight found"]
         
         if not fight.player1Ready or not fight.player2Ready:
-            return ["Players have not yet chosen cards"]
+            return ["Other player has not chosen cards yet"]
 
         player1_card1 = fight.cardID11
         player1_card2 = fight.cardID12
