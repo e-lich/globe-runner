@@ -8,6 +8,9 @@ IzvorniKod/backend/*/__pycache__
 IzvorniKod/.env
 IzvorniKod/backend/Pipfile.lock
 
+# flask session
+flask_session
+
 # Frontend dio:
 
 # dependencies

@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_mail import Mail
+from flask_session import Session
 from dotenv import load_dotenv
 import os
 
@@ -16,6 +17,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
 
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_COOKIE_SECURE'] = False
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_TLS'] = False
@@ -28,9 +33,17 @@ app.config['MAIL_DEFAULT_SENDER'] = os.getenv('DEFAULT_FROM_EMAIL')
 
 db = SQLAlchemy(app)
 mail = Mail(app)
+Session(app)
 
 CORS(app)
 
+@app.after_request
+def creds(response):
+    response.headers.add('Access-Control-Allow-Credentials', 'true')
+    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+    response.headers.add('Access-Control-Allow-Headers', 'content-type')
+    return response
+    
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")
 
@@ -44,4 +57,6 @@ import backend.views.location_views.update_location
 import backend.views.location_views.get_locations
 import backend.views.player_views.get_players
 import backend.views.user_views.get_users
+import backend.views.user_views.update_user
+import backend.views.user_views.delete_user
 

@@ -12,7 +12,6 @@ import About from "./pages/About";
 import EmailConfirm from "./pages/auth/EmailConfirm";
 import UserHomeMap from "./components/UserHomeMap";
 import AllUsers from "./pages/admin/AllUsers";
-import AdminHome from "./pages/admin/AllCards";
 import CartographerRequests from "./pages/admin/CartographerRequests";
 import UserHome from "./pages/user/UserHome";
 import GlobalStats from "./pages/user/GlobalStats";

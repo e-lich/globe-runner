@@ -28,12 +28,6 @@ const EditProfilePopup = ({ open, onClose, oldUser }: Props) => {
   const [submitDisabled, setSubmitDisabled] = useState(true);
   const [error, setError] = useState<Array<String>>([]);
 
-  const navigate = useNavigate();
-
-  // function handleUsernameChange(e: React.ChangeEvent<HTMLInputElement>): void {
-  //   setUsername(e.target.value);
-  // }
-
   function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setPassword(e.target.value);
   }
@@ -57,8 +51,6 @@ const EditProfilePopup = ({ open, onClose, oldUser }: Props) => {
     }
   }
 
-  const baseURL = "http://127.0.0.1:5000";
-
   function handleRegister() {
     if (!file) {
       setError((previousValue) => [
@@ -75,14 +67,8 @@ const EditProfilePopup = ({ open, onClose, oldUser }: Props) => {
     formData.append("password", password);
     formData.append("iban", ""); // TODO - ovo je quick fix, bilo bi ljepse to hendlati na backendu
 
-    const config = {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-    };
-
     axios
-      .post(baseURL + "/URL", formData, config)
+      .post("/URL", formData)
       .then((res) => {
         console.log(res);
         if (res.data.username === undefined) {

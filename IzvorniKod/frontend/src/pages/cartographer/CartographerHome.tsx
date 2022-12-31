@@ -1,5 +1,5 @@
 import Navbar from "../../components/Navbar";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CartographerHomeMap from "../../components/CartographerHomeMap";
 
@@ -11,7 +11,12 @@ export default function AddLocation() {
 
     if (userFromLocalStorage === null) navigate("/login");
 
-    if (!(JSON.parse(userFromLocalStorage!).userType === "cartographer"))
+    if (
+      !(
+        JSON.parse(userFromLocalStorage!).userType.toLowerCase() ===
+        "cartographer"
+      )
+    )
       navigate("/home");
   });
 

@@ -1,5 +1,5 @@
 from backend import app, db
-from flask import session
+from flask import session, redirect
 from backend.database.models import Card, Player, Cartographer
 import json
 from geopy import distance
@@ -23,7 +23,7 @@ def formattedReturn(locations):
 @app.route('/locations/submitted', methods=['GET'])
 def get_submitted_locations():
     if "userID" not in session:
-        return ["User not logged in"]
+        return(['User not logged in'])
 
     userID = session["userID"]
     user_type = session["userType"]
@@ -52,7 +52,7 @@ def get_submitted_locations():
 @app.route('/locations/approved', methods=['GET'])
 def get_approved_locations():
     if "userID" not in session:
-        return ["User not logged in"]
+        return(['User not logged in'])
 
     userID = session["userID"]
     user_type = session["userType"]
@@ -70,7 +70,7 @@ def get_approved_locations():
     elif user_type == "Cartographer":
         user = db.session.query(Cartographer).filter_by(userID=userID).first()
 
-        locations = db.session.query(Card).filter_by(approvedByUserID=userID, cardStatus="verified").all()
+        locations = db.session.query(Card).filter_by(cartographerID=userID, cardStatus="verified").all()
     
     if len(locations) == 0:
         return ["No approved locations found"]
@@ -78,10 +78,10 @@ def get_approved_locations():
         return formattedReturn(locations)
 
 
-@app.route('/locations/on-site/unclaimed', methods=['GET'])
+@app.route('/locations/unclaimed', methods=['GET'])
 def get_on_site_check_locations():
     if "userID" not in session:
-        return ["User not logged in"]
+        return(['User not logged in'])
     
     if session["userType"] != "Cartographer":
         return ["User is not a cartographer"]
@@ -94,28 +94,27 @@ def get_on_site_check_locations():
         return formattedReturn(locations)
 
 
-@app.route('/locations/on-site/claimed', methods=['GET'])
+@app.route('/locations/claimed', methods=['GET'])
 def get_on_site_check_claimed_locations():
     if "userID" not in session:
-        return ["User not logged in"]
+        return(['User not logged in'])
     
     if session["userType"] != "Cartographer":
         return ["User is not a cartographer"]
 
     cartographerID = session["userID"]
 
-    locations = db.session.query(Card).filter_by(approvedByUserID=cartographerID, cardStatus="claimed").all()
+    locations = db.session.query(Card).filter_by(cartographerID=cartographerID, cardStatus="claimed").all()
 
     if len(locations) == 0:
         return ["No claimed locations found for this cartographer"]
     else:
         return formattedReturn(locations)
 
-# TODO: neki verification da li je admin
-@app.route('/locations/admin', methods=['GET'])
+@app.route('/locations/all', methods=['GET'])
 def get_all_locations():
     if "userID" not in session:
-        return ["User not logged in"]
+        return(['User not logged in'])
 
     if session["userType"] != "Admin":
         return ["User is not an admin"]
@@ -127,12 +126,38 @@ def get_all_locations():
     else:
         return formattedReturn(locations)
 
+
+# vraca sve kartice unutar odredjene udaljenosti od igrača
+# distance je u kilometrima
+def get_within_distance(player_loc, dist):
+    closeByLocations = []
+
+    for card in db.session.query(Card).filter_by(cardStatus="verified").all():
+        card_location = json.loads(card.cardLocation)
+        card_lat = card_location['latitude']
+        card_lng = card_location['longitude']
+
+        card_loc = (card_lat, card_lng)
+
+        if distance.distance(player_loc, card_loc).km <= dist:
+            closeByLocations.append({
+                'cardId': card.cardID,
+                'photo': card.locationPhoto,
+                'description': card.description,
+                'latitude': card_lat,
+                'longitude': card_lng,
+                'title': card.title
+            })
+    
+    return closeByLocations
+
+
 # vraca sve kartice u blizini
 @app.route('/locations/close-by', methods=['GET'])
 def get_close_by_locations():
 
     if "userID" not in session:
-        return ["User not logged in"]
+        return(['User not logged in'])
 
     userID = session["userID"]
 
@@ -144,25 +169,36 @@ def get_close_by_locations():
     lat = json.loads(user.playerLocation)['latitude']
     lng = json.loads(user.playerLocation)['longitude']
 
-    closeByLocations = []
+    player_loc = (lat, lng)
 
-    for card in db.session.query(Card).filter_by(cardStatus="verified").all():
-        card_location = json.loads(card.cardLocation)
-        card_lat = card_location['latitude']
-        card_lng = card_location['longitude']
+    closeByLocations = get_within_distance(player_loc, 2)
 
-        player_loc = (lat, lng)
-        card_loc = (card_lat, card_lng)
+    if len(closeByLocations) == 0:
+        return ["No locations found close by"]
+    else:
+        return closeByLocations
 
-        if distance.distance(player_loc, card_loc).km <= 2:
-            closeByLocations.append({
-                'cardId': card.cardID,
-                'photo': card.locationPhoto,
-                'description': card.description,
-                'latitude': card_lat,
-                'longitude': card_lng,
-                'title': card.title
-            })
+
+# vraca sve kartice koje igrac moze sakupiti
+@app.route('/locations/collectable', methods=['GET'])
+def get_collectable_locations():
+    if "userID" not in session:
+        return(['User not logged in'])
+
+    userID = session["userID"]
+
+    if session["userType"] != "Player":
+        return ["User is not a player"]
+
+    user = db.session.query(Player).filter_by(userID=userID).first()
+
+    lat = json.loads(user.playerLocation)['latitude']
+    lng = json.loads(user.playerLocation)['longitude']
+
+    player_loc = (lat, lng)
+
+    # collectable su one unutar 300m
+    closeByLocations = get_within_distance(player_loc, 0.3)
 
     if len(closeByLocations) == 0:
         return ["No locations found close by"]

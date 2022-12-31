@@ -15,6 +15,7 @@ debugpy = "*"
 geojson = "*"
 geopy = "*"
 requests = "*"
+flask-session = "*"
 
 [dev-packages]
 

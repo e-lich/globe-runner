@@ -1,11 +1,7 @@
 import Navbar from "../../components/Navbar";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import PlayerCard from "../../components/PlayerCard";
 import UserCard from "../../components/UserCard";
-import EditProfilePopup from "../../components/EditProfilePopup";
-
-// TODO - Ovaj kod je samo za testiranje, ovu cijelu komponentu treba reworkat vjerojatno ispočetka!!!
 
 export default function AllUsers() {
   const navigate = useNavigate();
@@ -15,7 +11,7 @@ export default function AllUsers() {
 
     if (userFromLocalStorage === null) navigate("/login");
 
-    if (!(JSON.parse(userFromLocalStorage!).userType === "admin"))
+    if (!(JSON.parse(userFromLocalStorage!).userType.toLowerCase() === "admin"))
       navigate("/home");
   });
 
@@ -26,8 +22,6 @@ export default function AllUsers() {
         userImage: string;
       }>
     | undefined;
-
-  const placeholder = require("../../images/profile_picture.jpg"); // TODO remove this and use actual picture!
 
   // mock location data that we need to switch with an API call
   allUsers = [
