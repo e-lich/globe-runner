@@ -10,6 +10,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 import EditProfilePopup from "./EditProfilePopup";
 import BanUserProfile from "./BanUserPopup";
+import EditProfileDialog from "./EditProfileDialog";
 
 export default function UserCard(props: any) {
   const placeholder = require("../images/profile_picture.jpg");
@@ -31,7 +32,7 @@ export default function UserCard(props: any) {
         </IconButton>
       </ListItem>
 
-      <EditProfilePopup
+      <EditProfileDialog
         open={isEditOpen}
         onClose={() => {
           setIsEditOpen(false);

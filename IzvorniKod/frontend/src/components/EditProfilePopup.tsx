@@ -1,8 +1,19 @@
-import { Box, Container, Fab, Grid, Typography } from "@mui/material";
-import { CSSProperties, useEffect, useState } from "react";
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import {
+  Alert,
+  Box,
+  Button,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+  Fab,
+} from "@mui/material";
+import { CSSProperties, useState } from "react";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 type Props = {
   open: Boolean;
@@ -11,70 +22,45 @@ type Props = {
 };
 const OVERLAY: CSSProperties = {
   position: "fixed",
-  top: "0",
-  left: "0",
-  right: "0",
-  bottom: "0",
-  paddingTop: "50px",
-  backgroundColor: "rgba(0,0,0,0.7)",
+  display: "grid",
+  justifyContent: "center",
+
+  left: "50%",
+  top: "50%",
+  transform: "translate(-50%, -50%)",
+
+  backgroundColor: "#e6e6e6",
+  color: "#fff",
+  textAlign: "center",
+  borderRadius: "6px",
+
   zIndex: "1000",
+  width: "500px",
+  height: "500px",
 };
 
 const EditProfilePopup = ({ open, onClose, oldUser }: Props) => {
-  const [user, setUser] = useState(localStorage.getItem("user"));
-  const [file, setFile] = useState<Blob>();
-  const [username, setUsername] = useState(oldUser.username);
-  const [password, setPassword] = useState("");
-  const [submitDisabled, setSubmitDisabled] = useState(true);
-  const [error, setError] = useState<Array<String>>([]);
+  let [error, setError] = useState<Array<String>>([]);
+  const navigate = useNavigate();
 
-  function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    setPassword(e.target.value);
-  }
+  if (!open) return null;
 
-  function profilePictureChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    setError((prev) =>
-      prev.filter((e) => e !== "Image must be less than 1MB!")
-    );
-    if (
-      e.target.files &&
-      e.target.files[0] &&
-      e.target.files[0].size < 1000000 &&
-      e.target.files[0].type === "image/jpeg"
-    ) {
-      setFile(e.target.files[0]);
-    } else {
-      setError((previousValue) => [
-        ...previousValue,
-        "Image must be less than 1MB!",
-      ]);
-    }
-  }
-
-  function handleRegister() {
-    if (!file) {
-      setError((previousValue) => [
-        ...previousValue,
-        "You must upload a profile picture!",
-      ]);
-      return;
-    }
+  const handleEdit = async (values: any) => {
+    setError([]);
 
     let formData = new FormData();
 
-    formData.append("username", username);
-    formData.append("photo", file);
-    formData.append("password", password);
-    formData.append("iban", ""); // TODO - ovo je quick fix, bilo bi ljepse to hendlati na backendu
+    formData.append("username", values.username);
+    formData.append("password", values.password);
+    formData.append("photo", values.photo);
 
     axios
-      .post("/URL", formData)
+      .post(`/users/update/${oldUser.userId}`, formData)
       .then((res) => {
-        console.log(res);
-        if (res.data.username === undefined) {
-          setError(res.data);
+        if (res.status === 200) {
+          navigate("/confirm");
         } else {
-          onClose();
+          setError(res.data);
         }
       })
       .catch((err) => {
@@ -82,151 +68,156 @@ const EditProfilePopup = ({ open, onClose, oldUser }: Props) => {
       });
 
     return;
-  }
+  };
 
-  useEffect(() => {
-    setError((prev) =>
-      prev.filter((e) => e !== "Password must be at least 8 characters long!")
-    );
-    if (
-      password !== "" &&
-      password.length >= 8 &&
-      username !== "" &&
-      file !== undefined &&
-      !error.includes("Image must be less than 1MB!")
-    ) {
-      setSubmitDisabled(false);
-    } else {
-      setSubmitDisabled(true);
-      if (password.length < 8) {
-        setError((prevValue) => [
-          ...prevValue,
-          "Password must be at least 8 characters long!",
-        ]);
-      }
+  const initialValues = {
+    password: "",
+    username: "",
+    photo: undefined,
+  };
+
+  const validationSchema = Yup.object().shape({
+    password: Yup.string().min(8).required("Required"),
+    username: Yup.string().required("Required"),
+    photo: Yup.mixed()
+      .test("photoSize", "Photo too large", photoSizeCheck)
+      .required("Required"),
+  });
+
+  function photoSizeCheck(photo?: Blob): boolean {
+    if (photo === undefined) {
+      return false;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [password, username, file]);
-
-  if (!open) return null;
+    return photo.size <= 1000000;
+  }
 
   return (
     <div style={OVERLAY}>
-      <Container
-        sx={{
-          backgroundColor: "white",
-          padding: "20px 20px",
-          borderRadius: "10px",
-          margin: "0 auto",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {error.length > 0 &&
-          error.map((err, key) => (
-            <div className="alert-danger alert p-1" role="alert" key={key}>
-              {err}
-            </div>
+      <Box justifyContent="center" display="flex">
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          sx={{ width: "80%", height: "80%" }}
+        >
+          <Typography
+            sx={{ textAlign: "center", mb: 2, fontSize: 24, fontWeight: 800 }}
+          >
+            Edit User{" "}
+          </Typography>
+          {error.map((err, key) => (
+            <Alert key={key} severity="error" sx={{ mb: 1 }}>
+              <strong>Error: </strong> {err}
+            </Alert>
           ))}
-        <Grid container justifyContent="center" spacing={1} rowSpacing={2}>
-          <Grid item xs={6}>
-            <label>Username</label>
-            <input
-              value={username}
-              className="form-control mt-1"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <label>Password</label>
-            <input
-              type="password"
-              className="form-control mt-1"
-              placeholder="Password"
-              onChange={(e) => handlePasswordChange(e)}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <Typography component="label">Current profile picture</Typography>
-              {user && (
-                <img
-                  src={`data:image/jpeg;base64,${oldUser.photo}`}
-                  alt="this should display users profile"
-                  className="img-fluid mt-2 border border-dark rounded"
-                />
-              )}
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  allignItems: "center",
-                }}
-              >
-                <Typography component="label" sx={{ alignSelf: "center" }}>
-                  New profile picture
-                </Typography>
-                <input
-                  hidden
-                  id="contained-button-file"
-                  type="file"
-                  accept="image/jpeg"
-                  onChange={(e) => profilePictureChange(e)}
-                />
-                <label htmlFor="contained-button-file">
-                  <Fab component="span" sx={{ mb: 3, alignSelf: "center" }}>
-                    <ImageSearchIcon />
-                  </Fab>
-                </label>
-              </Box>
 
-              {file !== undefined && (
-                <Box
-                  component="img"
-                  alt="profile pic"
-                  src={URL.createObjectURL(file)}
-                  sx={{
-                    width: 0.5,
-                    aspectRatio: 0.5,
-                    border: 3,
-                    borderRadius: "2%",
-                    alignSelf: "center",
-                  }}
-                />
-              )}
-            </Box>
-          </Grid>
-        </Grid>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleEdit}
+          >
+            {(props) => (
+              <Form>
+                <Grid container spacing={1}>
+                  <Grid item xs={6}>
+                    <Field
+                      as={TextField}
+                      label="Username"
+                      name="username"
+                      type="username"
+                      placeholder="Enter username"
+                      fullWidth
+                      required
+                      error={props.errors.username && props.touched.username}
+                      helperText={<ErrorMessage name="username" />}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Field
+                      as={TextField}
+                      label="Password"
+                      name="password"
+                      placeholder="Enter password"
+                      type="password"
+                      fullWidth
+                      required
+                      error={props.errors.password && props.touched.password}
+                      helperText={<ErrorMessage name="password" />}
+                    />
+                  </Grid>
+                  <Grid item xs={2}>
+                    <input
+                      hidden
+                      id="photo"
+                      name="photo"
+                      type="file"
+                      accept="image/*"
+                      onChange={(event) => {
+                        props.setFieldValue(
+                          "photo",
+                          event.currentTarget.files![0]
+                        );
+                      }}
+                    />
+                    <label htmlFor="photo">
+                      <Typography noWrap sx={{ mb: 1 }}>
+                        Profile picture
+                      </Typography>
+                      <Fab component="span" sx={{ mb: 3 }}>
+                        <ImageSearchIcon />
+                      </Fab>
+                    </label>
+                  </Grid>
+                  <Grid item xs={10} sx={{ display: "flex-center" }}>
+                    {props.values.photo !== undefined &&
+                      props.values.photo !== "" && (
+                        <Box
+                          component="img"
+                          alt="profile pic"
+                          src={URL.createObjectURL(props.values.photo)}
+                          sx={{
+                            width: 0.3,
+                            border: 3,
+                            borderRadius: "2%",
+                          }}
+                        />
+                      )}
+                    {props.values.photo === undefined && (
+                      <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <Typography component="label">
+                          Current profile picture
+                        </Typography>
 
-        <div>
-          <div>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onClick={(e) => {
-                e.preventDefault();
-                handleRegister();
-              }}
-              disabled={submitDisabled}
-            >
-              Submit
-            </button>
-            <button
-              className="btn btn-primary"
-              onClick={(e) => {
-                onClose();
-              }}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      </Container>
+                        <img
+                          src={`data:image/jpeg;base64,${oldUser.photo}`}
+                          alt="this should display users profile"
+                          className="img-fluid mt-2 border border-dark rounded"
+                        />
+                      </Box>
+                    )}
+                  </Grid>
+                  <Grid item xs={12}>
+                    <ErrorMessage name="photo" />
+                  </Grid>
+                  <Button
+                    type="submit"
+                    color="primary"
+                    variant="contained"
+                    disabled={!props.isValid}
+                    fullWidth
+                  >
+                    Login
+                  </Button>
+                </Grid>
+              </Form>
+            )}
+          </Formik>
+          <Button onClick={onClose} variant="contained">
+            Close
+          </Button>
+        </Box>
+      </Box>
     </div>
   );
 };
