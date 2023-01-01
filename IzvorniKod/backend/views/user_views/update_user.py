@@ -1,5 +1,5 @@
 from backend import app, db
-from flask import session, request, jsonify, redirect, url_for
+from flask import session, request, jsonify
 from backend.database.models import Player, Cartographer
 import base64
 
@@ -27,9 +27,8 @@ def update_user(userID):
         return(['User not logged in'])
 
     user_type = session["userType"]
-    currentUserID = session["userID"]
 
-    if user_type != "Admin" or currentUserID != userID:
+    if user_type != "Admin":
         return ["User cannot modify this user"]
 
     if request.method == 'POST':
