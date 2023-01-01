@@ -10,7 +10,8 @@ def formattedReturn(users):
             "username": user.username,
             "email": user.email,
             "confirmed": user.confirmed,
-            "userType": user.__class__.__name__
+            "userType": user.__class__.__name__,
+            "profilePhoto": user.profilePhoto
         })
 
     if len(users_arr) == 0:
