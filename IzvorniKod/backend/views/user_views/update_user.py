@@ -1,5 +1,5 @@
 from backend import app, db
-from flask import session, request, jsonify
+from flask import session, request, jsonify, abort
 from backend.database.models import Player, Cartographer
 import base64
 
@@ -8,7 +8,7 @@ def update(userID):
     if user is None:
         user = db.session.query(Cartographer).filter_by(userID=userID).first()
     if user is None:
-        return ["User not found"]
+        return abort(404, "User not found")
 
     if request.form.get('username') is not None:
         user.username = request.form['username']
@@ -24,19 +24,19 @@ def update(userID):
 @app.route('/users/update/<userID>', methods=['POST', 'GET'])
 def update_user(userID):
     if "userID" not in session:
-        return(['User not logged in'])
+        return abort(403, "User not logged in")
 
     user_type = session["userType"]
 
     if user_type != "Admin":
-        return ["User cannot modify this user"]
+        return abort(403, "User is not an admin")
 
     if request.method == 'POST':
 
         return update(userID)
 
     else:
-        return ["Invalid request method"]
+        return abort(400, "Invalid request method")
 
 @app.route('/users/update', methods=['POST', 'GET'])
 def update_current_user():
