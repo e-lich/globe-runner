@@ -183,19 +183,19 @@ const EditProfilePopup = ({ open, onClose, oldUser }: Props) => {
                           }}
                         />
                       )}
-                    {props.values.photo === undefined && (
-                      <Box sx={{ display: "flex", flexDirection: "column" }}>
-                        <Typography component="label">
-                          Current profile picture
-                        </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <Typography component="label">
+                        Current profile picture
+                      </Typography>
 
-                        <img
-                          src={`data:image/jpeg;base64,${oldUser.photo}`}
-                          alt="this should display users profile"
-                          className="img-fluid mt-2 border border-dark rounded"
-                        />
-                      </Box>
-                    )}
+                      <img
+                        src={`data:image/jpeg;base64,${oldUser.photo}`}
+                        alt="this should display users profile"
+                        className="img-fluid mt-2 border border-dark rounded"
+                      />
+                    </Box>
                   </Grid>
                   <Grid item xs={12}>
                     <ErrorMessage name="photo" />

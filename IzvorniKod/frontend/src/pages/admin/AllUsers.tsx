@@ -1,10 +1,19 @@
 import Navbar from "../../components/Navbar";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserCard from "../../components/UserCard";
+import axios from "axios";
 
 export default function AllUsers() {
   const navigate = useNavigate();
+  const [error, setError] = useState<Array<String>>([]);
+  const [allUsers, setAllUsers] = useState<
+    Array<{
+      username: string;
+      userId: number;
+      userImage: string;
+    }>
+  >([]);
 
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
@@ -13,69 +22,21 @@ export default function AllUsers() {
 
     if (!(JSON.parse(userFromLocalStorage!).userType.toLowerCase() === "admin"))
       navigate("/home");
-  });
+    // fetchUsers makes a fet request on the  URL /users/all using axios
+    // and sets the response to the state variable allUsers
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("/users/all");
+        setAllUsers(response.data);
+      } catch (error: any) {
+        setError(error.response.data);
+      }
+    };
 
-  var allUsers:
-    | Array<{
-        username: string;
-        userId: number;
-        userImage: string;
-      }>
-    | undefined;
+    fetchUsers();
 
-  // mock location data that we need to switch with an API call
-  allUsers = [
-    {
-      username: "peroZmaj",
-      userId: 55,
-      userImage: "pathToImage",
-    },
-    {
-      username: "pericaZmaj",
-      userId: 56,
-      userImage: "pathToImage2",
-    },
-    {
-      username: "peroZmaj",
-      userId: 55,
-      userImage: "pathToImage",
-    },
-    {
-      username: "pericaZmaj",
-      userId: 56,
-      userImage: "pathToImage2",
-    },
-    {
-      username: "peroZmaj",
-      userId: 55,
-      userImage: "pathToImage",
-    },
-    {
-      username: "pericaZmaj",
-      userId: 56,
-      userImage: "pathToImage2",
-    },
-    {
-      username: "peroZmaj",
-      userId: 55,
-      userImage: "pathToImage",
-    },
-    {
-      username: "pericaZmaj",
-      userId: 56,
-      userImage: "pathToImage2",
-    },
-    {
-      username: "peroZmaj",
-      userId: 55,
-      userImage: "pathToImage",
-    },
-    {
-      username: "pericaZmaj",
-      userId: 56,
-      userImage: "pathToImage2",
-    },
-  ];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

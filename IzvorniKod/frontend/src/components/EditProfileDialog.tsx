@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
@@ -40,7 +39,7 @@ export default function FormDialog({ oldUser, open, onClose }: Props) {
     axios
       .post(`/users/update/${oldUser.userId}`, formData)
       .then((res) => {
-        if (res.status === 200) {
+        if (res.data === undefined) {
           onClose();
         } else {
           setError(res.data);
@@ -60,16 +59,14 @@ export default function FormDialog({ oldUser, open, onClose }: Props) {
   };
 
   const validationSchema = Yup.object().shape({
-    password: Yup.string().min(8).required("Required"),
+    password: Yup.string().min(8),
     username: Yup.string().required("Required"),
-    photo: Yup.mixed()
-      .test("photoSize", "Photo too large", photoSizeCheck)
-      .required("Required"),
+    photo: Yup.mixed().test("photoSize", "Photo too large", photoSizeCheck),
   });
 
   function photoSizeCheck(photo?: Blob): boolean {
     if (photo === undefined) {
-      return false;
+      return true;
     }
     return photo.size <= 1000000;
   }
@@ -142,12 +139,27 @@ export default function FormDialog({ oldUser, open, onClose }: Props) {
                           placeholder="Enter password"
                           type="password"
                           fullWidth
-                          required
                           error={
                             props.errors.password && props.touched.password
                           }
                           helperText={<ErrorMessage name="password" />}
                         />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <ErrorMessage name="photo" />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                          <Typography component="label">
+                            Current profile picture
+                          </Typography>
+
+                          <img
+                            src={`data:image/jpeg;base64,${oldUser.photo}`}
+                            alt="this should display users profile"
+                            className="img-fluid mt-2 border border-dark rounded"
+                          />
+                        </Box>
                       </Grid>
                       <Grid item xs={2}>
                         <input
@@ -165,7 +177,7 @@ export default function FormDialog({ oldUser, open, onClose }: Props) {
                         />
                         <label htmlFor="photo">
                           <Typography noWrap sx={{ mb: 1 }}>
-                            Profile picture
+                            New profile picture
                           </Typography>
                           <Fab component="span" sx={{ mb: 3 }}>
                             <ImageSearchIcon />
@@ -187,9 +199,6 @@ export default function FormDialog({ oldUser, open, onClose }: Props) {
                             />
                           )}
                       </Grid>
-                      <Grid item xs={12}>
-                        <ErrorMessage name="photo" />
-                      </Grid>
                       <Button
                         type="submit"
                         color="primary"
@@ -197,7 +206,7 @@ export default function FormDialog({ oldUser, open, onClose }: Props) {
                         disabled={!props.isValid}
                         fullWidth
                       >
-                        Login
+                        Save
                       </Button>
                     </Grid>
                   </Form>

@@ -24,8 +24,8 @@ export default function UserCard(props: any) {
           <Avatar alt="profile picture" src={placeholder} />
         </ListItemAvatar>
         <ListItemText primary={props.username} />
-        <IconButton>
-          <BlockIcon onClick={() => setIsBanOpen(true)} />
+        <IconButton onClick={() => setIsBanOpen(true)}>
+          <BlockIcon />
         </IconButton>
         <IconButton onClick={() => setIsEditOpen(true)}>
           <EditIcon />

@@ -40,7 +40,7 @@ export default function AllCardsMap() {
 
     const fetchLocations = async () => {
       try {
-        const res = await axios.get("/locations/admin");
+        const res = await axios.get("/locations/all");
         locations = res.data;
         if (locations[0].title) updateMarkers(); // TODO - check if locations exist, we are checking if the first item inside the array is a card currently!
       } catch (e) {
@@ -115,7 +115,7 @@ export default function AllCardsMap() {
           popupDiv.append(popupHr);
           popupDiv.append(popupEditBtn);
 
-          L.marker([locationData.longitude, locationData.latitude], {
+          L.marker([locationData.latitude, locationData.longitude], {
             icon: locationIcon,
           }) // add the created marker to the desired coordinates with desired popup
             .bindPopup(popupDiv, popupOptions)

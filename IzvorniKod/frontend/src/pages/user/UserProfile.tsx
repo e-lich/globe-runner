@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
@@ -15,9 +16,20 @@ export default function UserProfile() {
   const [submitDisabled, setSubmitDisabled] = useState(true);
   const [authMode, setAuthMode] = useState("basic");
   const [user, setUser] = useState(localStorage.getItem("user"));
+  const [error, setError] = useState<Array<String>>([]);
 
   function handleLogout() {
+    const logout = async () => {
+      try {
+        const response = await axios.post("/logout");
+      } catch (error: any) {
+        console.log(error);
+      }
+    };
+
+    logout();
     localStorage.removeItem("user");
+
     navigate("/login");
   }
 
@@ -33,13 +45,6 @@ export default function UserProfile() {
     let userFromLocalStorage = localStorage.getItem("user");
 
     if (userFromLocalStorage === null) navigate("/login");
-
-    if (
-      !JSON.parse(userFromLocalStorage!)
-        .userType.toLowerCase()
-        .includes("player")
-    )
-      navigate("/home");
   });
 
   useEffect(() => {
