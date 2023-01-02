@@ -21,7 +21,6 @@ type Props = {
   oldUser: any;
   open: boolean;
   onClose: any;
-  URL: string;
 };
 
 export default function EditMyProfileDialog({ oldUser, open, onClose }: Props) {
@@ -76,7 +75,7 @@ export default function EditMyProfileDialog({ oldUser, open, onClose }: Props) {
             textAlign: "center",
           }}
         >
-          Edit user information
+          Edit my information
           <IconButton
             aria-label="close"
             onClick={onClose}

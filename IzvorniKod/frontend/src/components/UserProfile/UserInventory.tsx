@@ -84,7 +84,7 @@ export default function UserInventory() {
         <List sx={{ textAlign: "center", borderRadius: "0.5%" }}>
           <Grid container>
             {InventoryCards.map((InventoryCard, key) => (
-              <Grid item xs={4} spacing={3}>
+              <Grid item xs={4}>
                 <LocationCard
                   closestCard={InventoryCard}
                   hasButton={false}

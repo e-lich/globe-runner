@@ -11,11 +11,8 @@ export default function UserProfile() {
   const navigate = useNavigate();
   const [user, setUser] = useState(localStorage.getItem("user"));
 
-  // todo ovo ne treba biti ovdje nego u navbaru
-
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
-
     if (userFromLocalStorage === null) navigate("/login");
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
