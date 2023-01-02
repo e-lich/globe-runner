@@ -9,9 +9,12 @@ export default function AllUsers() {
   const [error, setError] = useState<Array<String>>([]);
   const [allUsers, setAllUsers] = useState<
     Array<{
+      confirmed: boolean;
+      email: string;
+      profilePhoto: string;
+      userID: number;
+      userType: string;
       username: string;
-      userId: number;
-      userImage: string;
     }>
   >([]);
 
@@ -22,8 +25,7 @@ export default function AllUsers() {
 
     if (!(JSON.parse(userFromLocalStorage!).userType.toLowerCase() === "admin"))
       navigate("/home");
-    // fetchUsers makes a fet request on the  URL /users/all using axios
-    // and sets the response to the state variable allUsers
+
     const fetchUsers = async () => {
       try {
         const response = await axios.get("/users/all");
@@ -47,13 +49,8 @@ export default function AllUsers() {
             <h2>All Users:</h2>
           </div>
           <div className="closest-players">
-            {allUsers!.map((user, key) => (
-              <UserCard
-                key={key}
-                battle={false}
-                username={user.username}
-                oldUser={user}
-              />
+            {allUsers.map((user, key) => (
+              <UserCard key={key} oldUser={user} />
             ))}
           </div>
         </form>

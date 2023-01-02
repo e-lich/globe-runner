@@ -21,9 +21,10 @@ type Props = {
   oldUser: any;
   open: boolean;
   onClose: any;
+  URL: string;
 };
 
-export default function EditProfileDialog({ oldUser, open, onClose }: Props) {
+export default function EditMyProfileDialog({ oldUser, open, onClose }: Props) {
   const handleEdit = async (values: any) => {
     let formData = new FormData();
 
@@ -32,7 +33,7 @@ export default function EditProfileDialog({ oldUser, open, onClose }: Props) {
     formData.append("photo", values.photo);
 
     axios
-      .post(`/users/update/${oldUser.userID}`, formData)
+      .post(`/users/update`, formData)
       .then((res) => {
         if (res.status === 200) {
           onClose();
@@ -133,31 +134,6 @@ export default function EditProfileDialog({ oldUser, open, onClose }: Props) {
                           }
                           helperText={<ErrorMessage name="password" />}
                         />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <ErrorMessage name="photo" />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Typography component="label">
-                          Current profile picture
-                        </Typography>
-                      </Grid>
-
-                      <Grid item xs={12}>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                          }}
-                        >
-                          <img
-                            src={`data:image/jpeg;base64,${oldUser.profilePhoto}`}
-                            alt="this should display users profile"
-                            className="img-fluid mt-2 border border-dark rounded"
-                            style={{ width: "10em" }}
-                          />
-                        </Box>
                       </Grid>
                       <Grid item xs={12}>
                         <Typography noWrap sx={{ mb: 1 }}>

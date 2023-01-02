@@ -1,7 +1,11 @@
+import { Box, Grid, Typography } from "@mui/material";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
+import UserInventory from "../../components/UserInventory";
+import UserProfileCard from "../../components/UserProfileCard";
+import UserStatsCard from "../../components/UserStatsCard";
 
 export default function UserProfile() {
   const [userData, setData] = useState({
@@ -16,12 +20,15 @@ export default function UserProfile() {
   const [submitDisabled, setSubmitDisabled] = useState(true);
   const [authMode, setAuthMode] = useState("basic");
   const [user, setUser] = useState(localStorage.getItem("user"));
-  const [error, setError] = useState<Array<String>>([]);
 
   function handleLogout() {
     const logout = async () => {
       try {
         const response = await axios.post("/logout");
+
+        if (response.status !== 200) {
+          console.log("Something went wrong while logging out");
+        }
       } catch (error: any) {
         console.log(error);
       }
@@ -45,7 +52,7 @@ export default function UserProfile() {
     let userFromLocalStorage = localStorage.getItem("user");
 
     if (userFromLocalStorage === null) navigate("/login");
-  });
+  }, []);
 
   useEffect(() => {
     if (
@@ -61,7 +68,7 @@ export default function UserProfile() {
     return (
       <>
         <Navbar />
-        <div className="Auth-container">
+        {/* <div className="Auth-container">
           <form className="Auth-form">
             <div className="Auth-form-content">
               <h3 className="Auth-form-title">Profile information</h3>
@@ -102,7 +109,31 @@ export default function UserProfile() {
               </div>
             </div>
           </form>
-        </div>
+        </div> */}
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Typography variant="h4" sx={{ m: 2 }}>
+              My profile
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <UserProfileCard
+                  user={JSON.parse(user!)}
+                  numberOfLocations={12}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <UserStatsCard />
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="h4" sx={{ m: 2 }}>
+              Inventory
+            </Typography>
+            <UserInventory />
+          </Grid>
+        </Grid>
       </>
     );
   }
