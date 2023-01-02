@@ -1,9 +1,29 @@
 import { Link, useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
+import axios from "axios";
 
 export default function Navbar() {
   const navigate = useNavigate();
   var user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  function handleLogout() {
+    const logout = async () => {
+      try {
+        const response = await axios.post("/logout");
+
+        if (response.status !== 200) {
+          console.log("Something went wrong while logging out");
+        }
+      } catch (error: any) {
+        console.log(error);
+      }
+    };
+
+    logout();
+    localStorage.removeItem("user");
+
+    navigate("/login");
+  }
 
   if (user)
     return (
@@ -80,6 +100,8 @@ export default function Navbar() {
                 Cartographer Requests
               </Dropdown.Item>
             ) : null}
+
+            <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
 
