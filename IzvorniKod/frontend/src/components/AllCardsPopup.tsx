@@ -42,7 +42,7 @@ const AllCardsPopup = ({ open, onClose, fetchLocations }: Props) => {
 
     formData.append("title", values.title);
     formData.append("description", values.description);
-    formData.append("locationPhoto", values.locationPhoto);
+    formData.append("locationPhoto", values.newLocationPhoto);
 
 
     axios
@@ -68,13 +68,14 @@ const AllCardsPopup = ({ open, onClose, fetchLocations }: Props) => {
   const initialValues = {
     title: locationData.title,
     description: locationData.description===null ? "" : locationData.description,
-    locationPhoto: undefined,
+    locationPhoto: locationData.locationPhoto === undefined ? "" : locationData.locationPhoto,
+    newLocationPhoto: undefined,
   };
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("Required"),
     description: Yup.string().min(20).required("Required"),
-    locationPhoto: Yup.mixed()
+    newLocationPhoto: Yup.mixed()
       .test("photoSize", "Photo too large", photoSizeCheck)
       .required("Required"),
   });
@@ -177,10 +178,13 @@ const AllCardsPopup = ({ open, onClose, fetchLocations }: Props) => {
                     accept="image/*"
                     onChange={(event) => {
                       props.setFieldValue(
-                        "locationPhoto",
+                        "newLocationPhoto",
                         event.currentTarget.files![0]
                       )
-                      console.log("added pic  " + props.values.locationPhoto);
+                      props.setFieldValue(
+                        "locationPhoto",
+                        "")
+                      console.log("added pic  " + props.values.newLocationPhoto);
                     }}
                   />
                     <label htmlFor="locationPhoto">
@@ -191,13 +195,13 @@ const AllCardsPopup = ({ open, onClose, fetchLocations }: Props) => {
                         <ImageSearchIcon />
                       </Fab>
                     </label>
-
-                    {props.values.locationPhoto !== undefined &&
-                      props.values.locationPhoto !== "" && (
+                    
+                    {props.values.locationPhoto !== "" &&
+                    props.values.locationPhoto !== "None" && (
                         <Box
                           component="img"
-                          alt="new location pic"
-                          src={URL.createObjectURL(props.values.locationPhoto)}
+                          alt="location pic"
+                          src={(props.values.locationPhoto.startsWith("http")) ? props.values.locationPhoto :  `data:image/jpeg;base64,${props.values.locationPhoto}`}
                           sx={{
                             width: 0.3,
                             border: 3,
@@ -206,12 +210,12 @@ const AllCardsPopup = ({ open, onClose, fetchLocations }: Props) => {
                         />
                       )}
 
-                    {props.values.locationPhoto === undefined &&
-                      locationData.locationPhoto !== 'None' && (
+                      {props.values.newLocationPhoto !== undefined && 
+                        props.values.newLocationPhoto !== "" &&  (
                         <Box
                           component="img"
-                          alt="old location pic"
-                          src={locationData.locationPhoto}
+                          alt="new location pic"
+                          src={URL.createObjectURL(props.values.newLocationPhoto)}
                           sx={{
                             width: 0.3,
                             border: 3,

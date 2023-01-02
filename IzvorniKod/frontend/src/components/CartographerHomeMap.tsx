@@ -158,7 +158,7 @@ export default function CartographerHomeMap() {
 
         let popupImg = document.createElement("img");
         popupImg.style.cssText = "width:100px;height:100px;";
-        popupImg.src = locationData.locationPhoto;
+        popupImg.src = (locationData.locationPhoto.startsWith("http")) ? locationData.locationPhoto :  `data:image/jpeg;base64,${locationData.locationPhoto}`;
         popupImg.alt = "location photo missing";
 
         let popupHr = document.createElement("HR");

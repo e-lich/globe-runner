@@ -107,7 +107,7 @@ export default function AllCardsMap() {
 
           let popupImg = document.createElement("img");
           popupImg.style.cssText = "width:100px;height:100px;";
-          popupImg.src = locationData.locationPhoto;
+          popupImg.src = (locationData.locationPhoto.startsWith("http")) ? locationData.locationPhoto :  `data:image/jpeg;base64,${locationData.locationPhoto}`;
 
           let popupHr = document.createElement("HR");
 
@@ -132,7 +132,7 @@ export default function AllCardsMap() {
           popupDiv.append(popupHr);
           popupDiv.append(popupEditBtn);
 
-          L.marker([locationData.longitude, locationData.latitude], {
+          L.marker([locationData.latitude, locationData.longitude], {
             icon: locationIcon,
           }) // add the created marker to the desired coordinates with desired popup
             .bindPopup(popupDiv, popupOptions)
