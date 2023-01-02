@@ -57,13 +57,47 @@ export default function CartographerHomeMap() {
         const res = await axios.get("/locations/submitted");
 
       locations = res.data;
-      if (locations[0].title)
+      if (locations[0].title) // TODO - update needed when no cards are submitted for refresh when last card is verified or marked
         updateMarkers(); // TODO - check if locations exist, we are checking if the first item inside the array is a card currently!
       else console.log("No submitted locations!");
     } catch (e) {
       alert(e);
     }
   };
+
+  const handleVerify = async () => {
+    var locationData = JSON.parse(localStorage.getItem("locationData")!);
+
+    axios
+      .post("/locations/verify/" + locationData.cardID, {})
+      .then((res) => {
+        console.log(res);
+        if (res.data.success === true) {
+          fetchLocations().catch(console.error);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+  }
+
+  const handleOnSite = async () => {
+    var locationData = JSON.parse(localStorage.getItem("locationData")!);
+
+    axios
+      .post("/locations/unclaim/" + locationData.cardID, {})
+      .then((res) => {
+        console.log(res);
+        if (res.data.success === true) {
+          fetchLocations().catch(console.error);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
 
   const updateMarkers = () => {
     if (!myCartographerHomeMap) myCartographerHomeMap = mapContainer;
@@ -119,6 +153,8 @@ export default function CartographerHomeMap() {
         /// TESTIRANJE HTMLA
 
         let popupDiv = document.createElement("div");
+        popupDiv.style.cssText =
+          "display:flex;flex-direction:column;align-items:center;justify-content:center;";
 
         let popupImg = document.createElement("img");
         popupImg.style.cssText = "width:100px;height:100px;";
@@ -137,13 +173,29 @@ export default function CartographerHomeMap() {
           setIsPopupOpen(true);
           localStorage.setItem("locationData", JSON.stringify(locationData));
         };
-        popupEditBtn.textContent = "Edit Location";
+        popupEditBtn.textContent = "View and edit";
+
+        let popupVerifyBtn = document.createElement("button");
+        popupVerifyBtn.onclick = function () {
+          localStorage.setItem("locationData", JSON.stringify(locationData));
+          handleVerify();
+        };
+        popupVerifyBtn.textContent = "Verify";
+
+        let popupOnSiteBtn = document.createElement("button");
+        popupOnSiteBtn.onclick = function () {
+          localStorage.setItem("locationData", JSON.stringify(locationData));
+          handleOnSite();
+        };
+        popupOnSiteBtn.textContent = "Needs on site verification";
 
         popupDiv.append(popupImg);
         popupDiv.append(popupHr);
         popupDiv.append(popupName);
         popupDiv.append(popupHr);
         popupDiv.append(popupEditBtn);
+        popupDiv.append(popupOnSiteBtn);
+        popupDiv.append(popupVerifyBtn);
 
         L.marker([locationData.latitude, locationData.longitude], {
           icon: locationIcon,

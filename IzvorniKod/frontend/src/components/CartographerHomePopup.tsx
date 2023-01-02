@@ -36,7 +36,6 @@ const CartographerHomePopup = ({ open, onClose, fetchLocations }: Props) => {
   if (!open) return null;
   var locationData = JSON.parse(localStorage.getItem("locationData")!);
 
-  const baseURL = "http://127.0.0.1:5000";
 
   const handleSave = async (values: any) => {
     setError([]);
@@ -47,12 +46,9 @@ const CartographerHomePopup = ({ open, onClose, fetchLocations }: Props) => {
     formData.append("description", values.description);
     formData.append("locationPhoto", values.locationPhoto);
 
-    const config = {
-      withCredentials: true,
-    };
 
     axios
-      .post(baseURL + "/locations/update/submitted/" + locationData.cardID, formData, config)
+      .post("/locations/update/submitted/" + locationData.cardID, formData)
       .then((res) => {
         console.log(res);
         if (res.data.success != true) {
