@@ -1,5 +1,13 @@
-import { CardContent, Typography, Card, Avatar } from "@mui/material";
+import {
+  CardContent,
+  Typography,
+  Card,
+  Avatar,
+  IconButton,
+  CardActions,
+} from "@mui/material";
 import { Box } from "@mui/system";
+import EditIcon from "@mui/icons-material/Edit";
 
 // type user = {
 //   userID: string;
@@ -17,7 +25,7 @@ export default function UserProfileCard({
   numberOfLocations: number;
 }) {
   return (
-    <Card variant="outlined">
+    <Card variant="elevation">
       <CardContent
         sx={{
           display: "flex",
@@ -52,6 +60,11 @@ export default function UserProfileCard({
           </Typography>
         </Box>
       </CardContent>
+      <CardActions sx={{ display: "flex", justifyContent: "end" }}>
+        <IconButton onClick={() => console.log("edit")}>
+          <EditIcon />
+        </IconButton>
+      </CardActions>
     </Card>
   );
 }

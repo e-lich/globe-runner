@@ -3,9 +3,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
-import UserInventory from "../../components/UserInventory";
-import UserProfileCard from "../../components/UserProfileCard";
-import UserStatsCard from "../../components/UserStatsCard";
+import UserInventory from "../../components/UserProfile/UserInventory";
+import UserProfileCard from "../../components/UserProfile/UserProfileCard";
+import UserStatsCard from "../../components/UserProfile/UserStatsCard";
 
 export default function UserProfile() {
   const [userData, setData] = useState({
@@ -68,48 +68,6 @@ export default function UserProfile() {
     return (
       <>
         <Navbar />
-        {/* <div className="Auth-container">
-          <form className="Auth-form">
-            <div className="Auth-form-content">
-              <h3 className="Auth-form-title">Profile information</h3>
-              {user && (
-                <img
-                  src={`data:image/jpeg;base64,${JSON.parse(user).photo}`}
-                  alt="profile"
-                  className="img-fluid mt-2 border border-dark rounded"
-                />
-              )}
-              <div className="form-group mt-3">
-                <label>Username</label>
-                <input
-                  type="text"
-                  name="username"
-                  className="form-control mt-1"
-                  value={user ? JSON.parse(user).username : "username"}
-                  disabled={true}
-                />
-              </div>
-              <div className="d-grid gap-2 mt-3">
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  onClick={changeAuthMode}
-                >
-                  Change Password
-                </button>
-              </div>
-              <div className="d-grid gap-2 mt-3">
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  onClick={handleLogout}
-                >
-                  Log out
-                </button>
-              </div>
-            </div>
-          </form>
-        </div> */}
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <Typography variant="h4" sx={{ m: 2 }}>

@@ -1,6 +1,6 @@
 import { Grid, List, Paper } from "@mui/material";
 import { Card } from "react-bootstrap";
-import LocationCard from "./LocationCard";
+import LocationCard from "../LocationCard";
 
 const InventoryCards = [
   {
@@ -80,8 +80,8 @@ const InventoryCards = [
 export default function UserInventory() {
   return (
     <>
-      <Paper style={{ maxHeight: "80%", overflow: "auto" }} sx={{ mr: 2 }}>
-        <List sx={{ textAlign: "center", border: 1, borderRadius: "0.5%" }}>
+      <Paper style={{ maxHeight: "73%", overflow: "auto" }} elevation={1}>
+        <List sx={{ textAlign: "center", borderRadius: "0.5%" }}>
           <Grid container>
             {InventoryCards.map((InventoryCard, key) => (
               <Grid item xs={4} spacing={3}>
