@@ -64,11 +64,13 @@ export default function UserProfileCard({
             </Typography>
           </Box>
         </CardContent>
-        <CardActions sx={{ display: "flex", justifyContent: "end" }}>
-          <IconButton onClick={() => setOpen(true)}>
-            <EditIcon />
-          </IconButton>
-        </CardActions>
+        {user.userType.toLowerCase() !== "admin" && (
+          <CardActions sx={{ display: "flex", justifyContent: "end" }}>
+            <IconButton onClick={() => setOpen(true)}>
+              <EditIcon />
+            </IconButton>
+          </CardActions>
+        )}
       </Card>
       <EditMyProfileDialog
         open={open}
