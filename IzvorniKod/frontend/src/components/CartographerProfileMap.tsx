@@ -17,8 +17,6 @@ export default function CartographerProfileMap() {
     title: string;
   }[];
 
-  const baseURL = "http://127.0.0.1:5000";
-
   // MAP INITIALIZATION
   useEffect(() => {
     if (
@@ -41,9 +39,7 @@ export default function CartographerProfileMap() {
     const fetchLocations = async () => {
       try {
         console.log("fetching approved locations!");
-        const res = await axios.get(baseURL + "/locations/approved", {
-          withCredentials: true,
-        });
+        const res = await axios.get("/locations/approved");
 
         locations = res.data;
         if (locations[0].title)

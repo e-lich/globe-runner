@@ -54,4 +54,4 @@ def login():
                 'userType': user.__class__.__name__
             })
     else:
-        return ['Invalid request method']
+        return ['Invalid request method'], {"Access-Control-Allow-Origin": "http://localhost:3000"}

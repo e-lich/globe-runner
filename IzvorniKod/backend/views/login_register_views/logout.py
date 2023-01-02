@@ -5,7 +5,7 @@ from backend.database.models import Player, Cartographer, Admin
 @app.route('/logout', methods=['POST', 'GET'])
 def logout():
     if "userID" not in session:
-        return redirect('/login')
+        return(['User not logged in'])
     
     user = None
     user_type = session['userType']
@@ -25,4 +25,4 @@ def logout():
     session.pop('userID', None)
     session.pop('userType', None)
     
-    return redirect('/login')
+    return jsonify(success=True)

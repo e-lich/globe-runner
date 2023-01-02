@@ -2,6 +2,7 @@ import geojson, sys, os, json, requests
 import hashlib
 from backend import db, app
 from backend.database.models import Card, Player
+import uuid
 
 def loadLokacije():
     with open(lokacije_json_path, 'r', encoding="utf8") as f:
@@ -17,8 +18,8 @@ def loadLokacije():
     for lokacija in lokacije:
         card_id = lokacija['properties']['@id'].split('/')[1]
         card_location = json.dumps({
-            "latitude": lokacija['geometry']["coordinates"][0],
-            "longitude": lokacija['geometry']["coordinates"][1]
+            "latitude": lokacija['geometry']["coordinates"][1],
+            "longitude": lokacija['geometry']["coordinates"][0]
         })
         
         location_photo = None # nezz, nema u GeoJSON-u, dolje sam nes probo iz wikipedije izvuc slike, cak i funkcionira
@@ -50,10 +51,10 @@ def loadLokacije():
             break
 
 def loadDummyPlayers():
-    player1 = Player(username='video_lovro',name='Lovro',password='backendsucks', email="lovro@lovro.lovro", photo=None)
-    player2 = Player(username='tech_lovro',name='Lovro 2',password='frontendrocks', email="lovro1@lovro.lovro", photo=None)
-    player3 = Player(username='foto_ela',name='Lovro 3',password='backendsucks', email="lovro2@lovro.lovro", photo=None)
-    player4 = Player(username='???_pero',name='Lovro 4',password='frontenddrocks', email="lovro3@lovro.lovro", photo=None)
+    player1 = Player(userID=uuid.uuid4().hex, username='video_lovro',name='Lovro',password='backendsucks', email="lovro@lovro.lovro", photo=None)
+    player2 = Player(userID=uuid.uuid4().hex, username='tech_lovro',name='Lovro 2',password='frontendrocks', email="lovro1@lovro.lovro", photo=None)
+    player3 = Player(userID=uuid.uuid4().hex, username='foto_ela',name='Lovro 3',password='backendsucks', email="lovro2@lovro.lovro", photo=None)
+    player4 = Player(userID=uuid.uuid4().hex, username='???_pero',name='Lovro 4',password='frontenddrocks', email="lovro3@lovro.lovro", photo=None)
 
     if db.session.query(Player.username).filter_by(username=player1.username).first():
         return

@@ -10,7 +10,8 @@ def formattedReturn(users):
             "username": user.username,
             "email": user.email,
             "confirmed": user.confirmed,
-            "userType": user.__class__.__name__
+            "userType": user.__class__.__name__,
+            "profilePhoto": user.profilePhoto
         })
 
     if len(users_arr) == 0:
@@ -21,7 +22,7 @@ def formattedReturn(users):
 @app.route('/users/all', methods=['GET'])
 def get_all_users():
     if "userID" not in session:
-        redirect('/login')
+        return(['User not logged in'])
 
     user_type = session["userType"]
 

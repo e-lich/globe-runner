@@ -21,8 +21,6 @@ function BasicRegister() {
 
   const navigate = useNavigate();
 
-  const baseURL = "http://127.0.0.1:5000";
-
   const handleRegister = async (values: any) => {
     setError([]);
 
@@ -35,12 +33,8 @@ function BasicRegister() {
     formData.append("password", values.password);
     formData.append("iban", ""); // TODO - ovo je quick fix, bilo bi ljepse to hendlati na backendu
 
-    const config = {
-      withCredentials: true,
-    };
-
     axios
-      .post(baseURL + "/register", formData, config)
+      .post("/register", formData)
       .then((res) => {
         console.log(res);
         if (res.data.email === undefined) {

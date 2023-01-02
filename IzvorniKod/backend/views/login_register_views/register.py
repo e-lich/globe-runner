@@ -5,6 +5,7 @@ from backend.database.models import Player, Cartographer
 from backend.send_email import send_email
 from backend.views.login_register_views.email_confirmation import generate_confirmation_token, confirm_email
 import base64
+import uuid
 
 # geting rid of 403 error    
 @app.route('/register/basic', methods=['GET'])
@@ -44,11 +45,11 @@ def register_user():
 
             photo_string = base64.b64encode(photo.read()).decode('utf-8')
             id_string = base64.b64encode(id.read()).decode('utf-8')
-            new_user = Cartographer(username=username, name=name, email=email, password=password, photo=photo_string, iban=iban, id=id_string)
+            new_user = Cartographer(userID=uuid.uuid4().hex, username=username, name=name, email=email, password=password, photo=photo_string, iban=iban, id=id_string)
 
         else:
             photo_string = base64.b64encode(photo.read()).decode('utf-8')
-            new_user = Player(username=username, email=email, password=password, photo=photo_string, name=name)
+            new_user = Player(userID=uuid.uuid4().hex, username=username, email=email, password=password, photo=photo_string, name=name)
 
         # checking username and email
         if db.session.query(Player.username).filter_by(username=username).first() is not None or db.session.query(Cartographer.username).filter_by(username=username).first() is not None:
