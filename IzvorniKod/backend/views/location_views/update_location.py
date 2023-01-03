@@ -116,6 +116,8 @@ def collect_location(cardID):
         
         user_type = session["userType"]
         userID = session["userID"]
+
+        user = db.session.query(User).filter_by(userID=userID).first()
     
         if user_type != "Player":
             return ["User is not a player"]
@@ -129,6 +131,10 @@ def collect_location(cardID):
                 return ["Card not found"]
             
             inventory = Inventory(userID, cardID, 10)
+
+            number_of_cards = db.session.query(Inventory).filter_by(userID=userID).count()
+            if number_of_cards >= 3:
+                user.challangeable = True
 
             db.session.add(inventory)    
             db.session.commit()

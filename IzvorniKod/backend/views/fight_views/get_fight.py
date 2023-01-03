@@ -104,8 +104,8 @@ def get_fight():
                 broken_cards.append(card.cardID)
 
         # check if player is still challangeable
-        current_player_inventory = db.session.query(Inventory).filter(userID=currentUserID).all()
-        if len(current_player_inventory) < 3:
+        number_of_owned_cards = db.session.query(Inventory).filter(userID=currentUserID).count()
+        if number_of_owned_cards < 3:
             current_player.challengeable = False
 
         db.session.commit()
