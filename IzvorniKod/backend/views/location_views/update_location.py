@@ -1,6 +1,6 @@
 from backend import app, db
 from flask import session, request, jsonify, redirect
-from backend.database.models import Card, Inventory
+from backend.database.models import Card, Inventory, User
 import base64
 
 def update(location):
