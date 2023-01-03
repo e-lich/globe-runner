@@ -90,6 +90,7 @@ def loadDummyPlayers():
     db.session.add(basic)
     db.session.add(advanced)
     db.session.add(cartographer)
+    db.session.add(admin)
     db.session.commit()
 
 # za win: lokacije_json_path = os.path.join(sys.path[0], "backend\\database\\lokacije.geojson")
