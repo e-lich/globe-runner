@@ -22,8 +22,8 @@ export default function UserProfile() {
     <>
       <Navbar />
       <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <Typography variant="h4" sx={{ m: 2 }}>
+        <Grid item xs={4.5}>
+          <Typography variant="h5" sx={{ m: 2 }}>
             My profile
           </Typography>
           <Grid container spacing={2}>
@@ -38,8 +38,8 @@ export default function UserProfile() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <Typography variant="h4" sx={{ m: 2 }}>
+        <Grid item xs={6.5}>
+          <Typography variant="h5" sx={{ m: 2 }}>
             Inventory
           </Typography>
           <UserInventory />
