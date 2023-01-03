@@ -61,3 +61,4 @@ import backend.views.player_views.get_players
 import backend.views.user_views.get_users
 import backend.views.user_views.update_user
 import backend.views.user_views.delete_user
+import backend.views.admin_views.get_cartographers
