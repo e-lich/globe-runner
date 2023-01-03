@@ -85,7 +85,7 @@ export default function AddLocationMap({
         let userLat = e.latlng.lat;
         let userLng = e.latlng.lng;
         setUserLatitude(e.latlng.lat);
-        setUserLongitude(e.latlng.lat);
+        setUserLongitude(e.latlng.lng);
 
         var currentMarker = L.marker([userLat, userLng], {
           icon: myIcon,

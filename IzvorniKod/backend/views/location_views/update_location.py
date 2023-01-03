@@ -12,7 +12,7 @@ def update(location):
         location.title = request.form['title']
     if request.form.get('description') is not None:
         location.description = request.form['description']
-    if request.form.get('locationPhoto') is not None:
+    if request.files.get('locationPhoto') is not None:
         location.locationPhoto =  base64.b64encode(request.files.get('locationPhoto').read()).decode('utf-8')
     
     db.session.commit()

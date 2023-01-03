@@ -8,14 +8,15 @@ export default function AllCardsMap() {
   // map variable so we can clear it at the beginning of useEffect
   var myAllCardsMap: L.Map | undefined;
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
 
   var locations: {
-    cardId: number;
+    cardID: number;
     cardStatus: string;
     description: string;
     latitude: number;
     longitude: number;
-    photo: string;
+    locationPhoto: string;
     title: string;
   }[];
 
@@ -26,6 +27,7 @@ export default function AllCardsMap() {
     }
 
     myAllCardsMap = L.map("allCardsMapId");
+    setMapContainer(myAllCardsMap);
 
     var tile_url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     var layer = L.tileLayer(tile_url, {
@@ -34,7 +36,20 @@ export default function AllCardsMap() {
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     });
     myAllCardsMap.addLayer(layer);
-    myAllCardsMap.setView([45.8238, 15.9761], 13);
+    var locationData = JSON.parse(
+      localStorage.getItem("adminLocationData") !== ""
+        ? localStorage.getItem("adminLocationData")!
+        : ""
+    );
+    if (locationData) {
+      myAllCardsMap.setView(
+        [locationData.latitude, locationData.longitude],
+        13
+      );
+    } else myAllCardsMap.setView([45.8238, 15.9761], 13);
+
+    fetchLocations().catch(console.error);
+  }, [myAllCardsMap]);
 
     // FETCHING LOCATION DATA
 
@@ -49,6 +64,8 @@ export default function AllCardsMap() {
     };
 
     const updateMarkers = () => {
+      if (!myAllCardsMap) myAllCardsMap = mapContainer;
+
       console.log("updating markers!");
       // clear all markers on the map and set new ones!
       // clear all of the previous layers
@@ -90,7 +107,7 @@ export default function AllCardsMap() {
 
           let popupImg = document.createElement("img");
           popupImg.style.cssText = "width:100px;height:100px;";
-          popupImg.src = locationData.photo;
+          popupImg.src = (locationData.locationPhoto.startsWith("http")) ? locationData.locationPhoto :  `data:image/jpeg;base64,${locationData.locationPhoto}`;
 
           let popupHr = document.createElement("HR");
 
@@ -123,9 +140,6 @@ export default function AllCardsMap() {
         });
     };
 
-    fetchLocations().catch(console.error);
-  }, [myAllCardsMap]);
-
   return (
     <>
       <h1 style={{ textAlign: "center" }}>Map for viewing all locations</h1>
@@ -133,6 +147,7 @@ export default function AllCardsMap() {
       <AllCardsPopup
         open={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
+        fetchLocations={fetchLocations}
       />{" "}
     </>
   );
