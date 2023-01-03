@@ -2,6 +2,9 @@ import geojson, sys, os, json, requests
 import hashlib
 from backend import db, app
 from backend.database.models import Card, Player
+import json
+from flask import jsonify
+from sqlalchemy import update
 
 def loadLokacije():
     with open(lokacije_json_path, 'r', encoding="utf8") as f:
@@ -17,8 +20,8 @@ def loadLokacije():
     for lokacija in lokacije:
         card_id = lokacija['properties']['@id'].split('/')[1]
         card_location = json.dumps({
-            "latitude": lokacija['geometry']["coordinates"][0],
-            "longitude": lokacija['geometry']["coordinates"][1]
+            "longitude": lokacija['geometry']["coordinates"][0],
+            "latitude": lokacija['geometry']["coordinates"][1]
         })
         
         location_photo = None # nezz, nema u GeoJSON-u, dolje sam nes probo iz wikipedije izvuc slike, cak i funkcionira
@@ -41,13 +44,30 @@ def loadLokacije():
         apporvedByUserID = None # isto 
 
         new_card = Card(cardID=card_id, cardLocation=card_location, locationPhoto=str(location_photo), title=title, description=description, cardStatus=card_status)
-        print(card_id + "___________________")
+        # print(card_id + "___________________")
 
         if db.session.query(Card.cardID).filter_by(cardID=card_id).first() is None:
             db.session.add(new_card)
             db.session.commit()
         else:
             break
+
+def switchLongAndLat():
+
+    cards = db.session.query(Card.cardLocation).all()
+    for location in cards:
+        json_location = json.loads(location[0])
+
+        lat = json_location["longitude"]
+        
+        json_location["longitude"] = json_location["latitude"]
+        json_location["latitude"] = lat
+
+        upd = update(Card).values(cardLocation=json.dumps(json_location)).where(Card.cardLocation == location[0])
+        db.session.execute(upd)
+
+    db.session.commit()
+
 
 def loadDummyPlayers():
     player1 = Player(username='video_lovro',name='Lovro',password='backendsucks', email="lovro@lovro.lovro", photo=None)
@@ -75,3 +95,5 @@ with app.app_context():
     loadLokacije()
 
     loadDummyPlayers()
+
+    # switchLongAndLat()
