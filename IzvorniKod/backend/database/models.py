@@ -2,6 +2,8 @@ import enum
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from backend import db
+import datetime
+import uuid
 
 
 # User db model
@@ -10,7 +12,7 @@ class User(db.Model):
 
     __abstract__ = True
 
-    userID = db.Column(db.Integer, primary_key=True, unique=True)
+    userID = db.Column(db.String(32), primary_key=True, unique=True)
     username = db.Column(db.String(32), unique=True)
     name = db.Column(db.String(50))
     email = db.Column(db.String(345), unique=True)
@@ -30,6 +32,8 @@ class Cartographer(User):
     verified = db.Column(db.Boolean)
 
     def __init__(self, username, name, email, password, photo, iban, id):
+
+        self.userID = uuid.uuid4().hex
         self.username = username
         self.name = name
         self.email = email
@@ -49,9 +53,11 @@ class Player(User):
     advanced = db.Column(db.Boolean)
     eloScore = db.Column(db.Integer)
     playerLocation = db.Column(db.String(100))
+    challengeable = db.Column(db.Boolean)
 
     def __init__(self, username, name, email, password, photo):
-
+        
+        self.userID = uuid.uuid4().hex
         self.username = username
         self.name = name
         self.email = email
@@ -63,6 +69,7 @@ class Player(User):
         self.banned = False
         self.confirmed = False
         self.signedIn = False
+        self.challengeable = False
 
 # Admin db model
 class Admin(db.Model):
@@ -90,41 +97,69 @@ class Card(db.Model):
     title = db.Column(db.String(100))
     description = db.Column(db.String(250))
     cardStatus = db.Column(db.Enum("submitted", "unclaimed", "claimed", "verified", name="card_status_type"))
-    authorUserID = db.Column(db.Integer, db.ForeignKey("Players.userID"))
-    cartographerID = db.Column(db.Integer, db.ForeignKey("Cartographers.userID")) 
+    authorUserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
+    cartographerID = db.Column(db.String(32), db.ForeignKey("Cartographers.userID")) 
 
 # Inventory db model
 class Inventory(db.Model):
     __tablename__ = "Inventories"
 
-    userID = db.Column(db.Integer, db.ForeignKey("Players.userID"), primary_key=True)
-    cardID = db.Column(db.Integer, db.ForeignKey("Cards.cardID"), primary_key=True)
+    userID = db.Column(db.String(32), db.ForeignKey("Players.userID"), primary_key=True)
+    cardID = db.Column(db.BigInteger, db.ForeignKey("Cards.cardID"), primary_key=True)
     strength = db.Column(db.Integer)
+
+    def __init__(self, userID, cardID, strength):
+        self.userID = userID
+        self.cardID = cardID
+        self.strength = strength
 
 # Challenge db model
 class Challenge(db.Model):
     __tablename__ = "Challenges"
 
-    challengeID = db.Column(db.Integer, primary_key=True, unique=True)
-    challengerUserID = db.Column(db.Integer, db.ForeignKey("Players.userID"))
-    victimUserID = db.Column(db.Integer, db.ForeignKey("Players.userID"))
+    challengeID = db.Column(db.String(32), primary_key=True, unique=True)
+    challengerUserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
+    victimUserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
     challengeTimestamp = db.Column(db.DateTime)
-    challengeStatus = db.Column(db.Enum("pending", "accepted", "rejected", name="challenge_status_type"))
+    challengeStatus = db.Column(db.Enum("pending", "accepted", "declined", "went_too_far", name="challenge_status_type"))
+
+    def __init__(self, challengerUserID, victimUserID):
+        self.challengeID = uuid.uuid4().hex
+        self.challengerUserID = challengerUserID
+        self.victimUserID = victimUserID
+        self.challengeTimestamp = datetime.datetime.now()
+        self.challengeStatus = "pending"
 
 # Fight db model   
 class Fight(db.Model):
     __tablename__ = "Fights"
     
     fightID = db.Column(db.Integer, primary_key=True, unique=True)
-    player1UserID = db.Column(db.Integer, db.ForeignKey("Players.userID"))
-    player2UserID = db.Column(db.Integer, db.ForeignKey("Players.userID"))
-    cardID11 = db.Column(db.Integer, db.ForeignKey("Cards.cardID"))
-    cardID12 = db.Column(db.Integer, db.ForeignKey("Cards.cardID"))
-    cardID13 = db.Column(db.Integer, db.ForeignKey("Cards.cardID"))
-    cardID21 = db.Column(db.Integer, db.ForeignKey("Cards.cardID"))
-    cardID22 = db.Column(db.Integer, db.ForeignKey("Cards.cardID"))
-    cardID23 = db.Column(db.Integer, db.ForeignKey("Cards.cardID"))
+    player1UserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
+    player2UserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
+    player1Ready = db.Column(db.Boolean)
+    player2Ready = db.Column(db.Boolean)
+    cardID11 = db.Column(db.BigInteger, db.ForeignKey("Cards.cardID"))
+    cardID12 = db.Column(db.BigInteger, db.ForeignKey("Cards.cardID"))
+    cardID13 = db.Column(db.BigInteger, db.ForeignKey("Cards.cardID"))
+    cardID21 = db.Column(db.BigInteger, db.ForeignKey("Cards.cardID"))
+    cardID22 = db.Column(db.BigInteger, db.ForeignKey("Cards.cardID"))
+    cardID23 = db.Column(db.BigInteger, db.ForeignKey("Cards.cardID"))
     points1 = db.Column(db.Float)
     points2 = db.Column(db.Float)
     fightTimestamp = db.Column(db.DateTime)
-    challengeID = db.Column(db.Integer, db.ForeignKey("Challenges.challengeID"))
+
+    def __init__(self, player1UserID, player2UserID):
+        self.player1UserID = player1UserID
+        self.player2UserID = player2UserID
+        self.player1Ready = False
+        self.player2Ready = False
+        self.cardID11 = None
+        self.cardID12 = None
+        self.cardID13 = None
+        self.cardID21 = None
+        self.cardID22 = None
+        self.cardID23 = None
+        self.points1 = 0
+        self.points2 = 0
+        self.fightTimestamp = datetime.datetime.now()

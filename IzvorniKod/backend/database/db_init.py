@@ -20,8 +20,8 @@ def loadLokacije():
     for lokacija in lokacije:
         card_id = lokacija['properties']['@id'].split('/')[1]
         card_location = json.dumps({
-            "longitude": lokacija['geometry']["coordinates"][0],
-            "latitude": lokacija['geometry']["coordinates"][1]
+            "latitude": lokacija['geometry']["coordinates"][1],
+            "longitude": lokacija['geometry']["coordinates"][0]
         })
         
         location_photo = None # nezz, nema u GeoJSON-u, dolje sam nes probo iz wikipedije izvuc slike, cak i funkcionira

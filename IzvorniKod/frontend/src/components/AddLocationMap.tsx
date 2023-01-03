@@ -36,8 +36,6 @@ export default function AddLocationMap({
     title: string;
   }[];
 
-  const baseURL = "http://127.0.0.1:5000";
-
   // MARKER OPTIONS FOR LOCATIONS
   var locationIcon = L.icon({
     iconUrl:
@@ -87,7 +85,7 @@ export default function AddLocationMap({
         let userLat = e.latlng.lat;
         let userLng = e.latlng.lng;
         setUserLatitude(e.latlng.lat);
-        setUserLongitude(e.latlng.lat);
+        setUserLongitude(e.latlng.lng);
 
         var currentMarker = L.marker([userLat, userLng], {
           icon: myIcon,
@@ -153,14 +151,10 @@ export default function AddLocationMap({
         if (dropvalue) {
           if (dropvalue === "Submitted Locations") {
             console.log("fetching submitted locations");
-            res = await axios.get(baseURL + "/locations/submitted", {
-              withCredentials: true,
-            });
+            res = await axios.get("/locations/submitted");
           } else if (dropvalue === "Approved Locations") {
             console.log("fetching approved locations");
-            res = await axios.get(baseURL + "/locations/approved", {
-              withCredentials: true,
-            });
+            res = await axios.get("/locations/approved");
           }
 
           if (res) {

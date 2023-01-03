@@ -10,7 +10,7 @@ from sqlalchemy import inspect
 def get_close_by_players():
 
     if "userID" not in session:
-        redirect('/login')
+        return(['User not logged in'])
 
     userID = session["userID"]
 
@@ -37,6 +37,7 @@ def get_close_by_players():
                 'username': player.username,
                 'userId': player.userID,
                 'photo': player.profilePhoto,
+                'challangeable': player.challangeable
             })
 
     if len(closeByPlayers) == 0:

@@ -8,18 +8,17 @@ export default function AllCardsMap() {
   // map variable so we can clear it at the beginning of useEffect
   var myAllCardsMap: L.Map | undefined;
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
 
   var locations: {
-    cardId: number;
+    cardID: number;
     cardStatus: string;
     description: string;
     latitude: number;
     longitude: number;
-    photo: string;
+    locationPhoto: string;
     title: string;
   }[];
-
-  const baseURL = "http://127.0.0.1:5000";
 
   // MAP INITIALIZATION
   useEffect(() => {
@@ -28,6 +27,7 @@ export default function AllCardsMap() {
     }
 
     myAllCardsMap = L.map("allCardsMapId");
+    setMapContainer(myAllCardsMap);
 
     var tile_url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     var layer = L.tileLayer(tile_url, {
@@ -36,15 +36,26 @@ export default function AllCardsMap() {
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     });
     myAllCardsMap.addLayer(layer);
-    myAllCardsMap.setView([45.8238, 15.9761], 13);
+    var locationData = JSON.parse(
+      localStorage.getItem("adminLocationData") !== ""
+        ? localStorage.getItem("adminLocationData")!
+        : ""
+    );
+    if (locationData) {
+      myAllCardsMap.setView(
+        [locationData.latitude, locationData.longitude],
+        13
+      );
+    } else myAllCardsMap.setView([45.8238, 15.9761], 13);
+
+    fetchLocations().catch(console.error);
+  }, [myAllCardsMap]);
 
     // FETCHING LOCATION DATA
 
     const fetchLocations = async () => {
       try {
-        const res = await axios.get(baseURL + "/locations/admin", {
-          withCredentials: true,
-        });
+        const res = await axios.get("/locations/all");
         locations = res.data;
         if (locations[0].title) updateMarkers(); // TODO - check if locations exist, we are checking if the first item inside the array is a card currently!
       } catch (e) {
@@ -53,6 +64,8 @@ export default function AllCardsMap() {
     };
 
     const updateMarkers = () => {
+      if (!myAllCardsMap) myAllCardsMap = mapContainer;
+
       console.log("updating markers!");
       // clear all markers on the map and set new ones!
       // clear all of the previous layers
@@ -94,7 +107,7 @@ export default function AllCardsMap() {
 
           let popupImg = document.createElement("img");
           popupImg.style.cssText = "width:100px;height:100px;";
-          popupImg.src = locationData.photo;
+          popupImg.src = (locationData.locationPhoto.startsWith("http")) ? locationData.locationPhoto :  `data:image/jpeg;base64,${locationData.locationPhoto}`;
 
           let popupHr = document.createElement("HR");
 
@@ -119,16 +132,13 @@ export default function AllCardsMap() {
           popupDiv.append(popupHr);
           popupDiv.append(popupEditBtn);
 
-          L.marker([locationData.longitude, locationData.latitude], {
+          L.marker([locationData.latitude, locationData.longitude], {
             icon: locationIcon,
           }) // add the created marker to the desired coordinates with desired popup
             .bindPopup(popupDiv, popupOptions)
             .addTo(myAllCardsMap!);
         });
     };
-
-    fetchLocations().catch(console.error);
-  }, [myAllCardsMap]);
 
   return (
     <>
@@ -137,6 +147,7 @@ export default function AllCardsMap() {
       <AllCardsPopup
         open={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
+        fetchLocations={fetchLocations}
       />{" "}
     </>
   );
