@@ -129,14 +129,21 @@ def collect_location(cardID):
     
             if location is None:
                 return ["Card not found"]
-            
-            inventory = Inventory(userID, cardID, 10)
 
-            number_of_cards = db.session.query(Inventory).filter_by(userID=userID).count()
-            if number_of_cards >= 3:
-                user.challangeable = True
+            # check if user has already collected this card
+            inventory = db.session.query(Inventory).filter_by(userID=userID, cardID=cardID).first()
+            if inventory is not None:
+                inventory.strength = 10
 
-            db.session.add(inventory)    
+            else:
+                new_inventory = Inventory(userID, cardID, 10)
+
+                number_of_cards = db.session.query(Inventory).filter_by(userID=userID).count()
+                if number_of_cards >= 3:
+                    user.challangeable = True
+
+                db.session.add(new_inventory)   
+                
             db.session.commit()
     
             return jsonify(success=True)
