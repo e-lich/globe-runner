@@ -108,6 +108,32 @@ def unclaim_location(cardID):
         else:
             return ["Invalid request method"]
 
+@app.route('/locations/claim/<cardID>', methods=['POST', 'GET'])
+def claim_location(cardID):
+    
+        if "userID" not in session:
+            return(['User not logged in'])
+        
+        user_type = session["userType"]
+    
+        if user_type != "Cartographer":
+            return ["User is not a cartographer"]
+    
+        if request.method == 'POST':
+            location = db.session.query(Card).filter_by(cardID=cardID).first()
+    
+            if location is None:
+                return ["Card not found"]
+            
+            location.cardStatus = "claimed"
+            location.cartographerID = session["userID"]
+    
+            db.session.commit()
+    
+            return jsonify(success=True)
+        else:
+            return ["Invalid request method"]
+
 @app.route('/locations/collect/<cardID>', methods=['POST', 'GET'])
 def collect_location(cardID):
         
