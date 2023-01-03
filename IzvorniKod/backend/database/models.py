@@ -31,7 +31,7 @@ class Cartographer(User):
     document = db.Column(db.Text)
     verified = db.Column(db.Boolean)
 
-    def __init__(self, username, name, email, password, photo, iban, id):
+    def __init__(self, username, name, email, password, photo, iban, id, confirmed=False):
 
         self.userID = uuid.uuid4().hex
         self.username = username
@@ -40,7 +40,7 @@ class Cartographer(User):
         self.profilePhoto = photo
         self.password = password
         self.IBAN = iban
-        self.confirmed = False
+        self.confirmed = confirmed
         self.verified = False
         self.document = id
         self.banned = False
@@ -55,7 +55,7 @@ class Player(User):
     playerLocation = db.Column(db.String(100))
     challengeable = db.Column(db.Boolean)
 
-    def __init__(self, username, name, email, password, photo):
+    def __init__(self, username, name, email, password, photo, advanced=False, confirmed=False):
         
         self.userID = uuid.uuid4().hex
         self.username = username
@@ -64,10 +64,10 @@ class Player(User):
         self.password = password
         self.profilePhoto = photo
         self.playerLocation = None
-        self.advanced = False
+        self.advanced = advanced
         self.eloScore = 0
         self.banned = False
-        self.confirmed = False
+        self.confirmed = confirmed
         self.signedIn = False
         self.challengeable = False
 

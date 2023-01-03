@@ -1,7 +1,7 @@
 import geojson, sys, os, json, requests
 import hashlib
 from backend import db, app
-from backend.database.models import Card, Player
+from backend.database.models import Card, Player, Cartographer, Admin
 import json
 from flask import jsonify
 from sqlalchemy import update
@@ -75,13 +75,21 @@ def loadDummyPlayers():
     player3 = Player(username='foto_ela',name='Lovro 3',password='backendsucks', email="lovro2@lovro.lovro", photo=None)
     player4 = Player(username='???_pero',name='Lovro 4',password='frontenddrocks', email="lovro3@lovro.lovro", photo=None)
 
-    if db.session.query(Player.username).filter_by(username=player1.username).first():
+    basic = Player(username='basic',name='basic',password='basicGlobeRunner', email="basic@gmail.com", photo=None, advanced=False, confirmed=True)
+    advanced = Player(username='advanced',name='advanced',password='advancedGlobeRunner', email="advanced@gmail.com", photo=None, advanced=True, confirmed=True)
+    cartographer = Cartographer(username='cartographer',name='cartographer',password='cartographerGlobeRunner', email="cartographer@gmail.com", photo=None, iban=None, id=None, confirmed=True)
+    admin= Admin(username='admin',name='admin',password='adminGlobeRunner', email="admin@gmail.com", photo=None)
+
+    if db.session.query(Player.username).filter_by(username=basic.username).first():
         return
 
-    db.session.add(player1)
-    db.session.add(player2)
-    db.session.add(player3)
-    db.session.add(player4)
+    #db.session.add(player1)
+    #db.session.add(player2)
+    #db.session.add(player3)
+    #db.session.add(player4)
+    db.session.add(basic)
+    db.session.add(advanced)
+    db.session.add(cartographer)
     db.session.commit()
 
 # za win: lokacije_json_path = os.path.join(sys.path[0], "backend\\database\\lokacije.geojson")
