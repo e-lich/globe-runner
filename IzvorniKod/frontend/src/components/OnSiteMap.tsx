@@ -7,7 +7,13 @@ import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import { Button, Dropdown } from "react-bootstrap";
 
-export default function OnSiteMap() {
+export default function OnSiteMap({
+  refresh,
+  setRefresh,
+}: {
+  refresh: boolean;
+  setRefresh: Function;
+}) {
   // map variable so we can clear it at the beginning of useEffect
   var myOnSiteMap: L.Map | undefined;
   var [dropDownValue, setDropDownValue] = useState("");
@@ -42,6 +48,16 @@ export default function OnSiteMap() {
     myOnSiteMap.setView([45.8238, 15.9761], 13);
   }, [myOnSiteMap]);
 
+  useEffect(() => {
+    if (mapContainer) {
+      dropvalue = dropDownValue;
+      updateFilter();
+      console.log(
+        "refresh use effect triggered inside map and useEffect called!"
+      );
+    }
+  }, [refresh]);
+
   function updateFilter() {
     myOnSiteMap = mapContainer;
     // clear all markers on the map and set new ones!
@@ -75,9 +91,10 @@ export default function OnSiteMap() {
     const fetchLocations = async () => {
       try {
         var res;
+        console.log("dropvalue is " + dropvalue);
         if (dropvalue) {
-          if (dropvalue === "On-site Check") {
-            console.log("fetching on-site check locations");
+          if (dropvalue === "Unclaimed Locations") {
+            console.log("fetching unclaimed locations");
             res = await axios.get("/locations/unclaimed");
           } else if (dropvalue === "Claimed Locations") {
             console.log("fetching claimed locations");
@@ -104,19 +121,19 @@ export default function OnSiteMap() {
 
     const handleClaim = () => {
       var locationData = JSON.parse(localStorage.getItem("locationData")!);
-      console.log("Trying to claim location with cardID: " + locationData.cardID);
-      //UNCOMMENT WHEN BACKEND IS READY
-      /* axios
+
+      axios
         .post("/locations/claim/" + locationData.cardID)
         .then((res) => {
           console.log(res);
-          if (res.data.success === true) {
-            fetchLocations().catch(console.error);
-          }
+          setRefresh((refresh: any) => !refresh);
+          // if (res.data.success === true) {
+          //   fetchLocations().catch(console.error);
+          // }
         })
         .catch((err) => {
           console.log(err);
-        }); */
+        });
     };
 
     const updateMarkers = () => {
@@ -130,31 +147,32 @@ export default function OnSiteMap() {
           let popupDiv = document.createElement("div");
           popupDiv.style.cssText =
             "display:flex;flex-direction:column;align-items:center;justify-content:center;";
-  
+
           let popupImg = document.createElement("img");
           popupImg.style.cssText = "width:100px;height:100px;";
           popupImg.src = locationData.locationPhoto;
           popupImg.alt = "location photo missing";
-  
+
           let popupHr = document.createElement("HR");
-  
+
           let popupName = document.createElement("div");
           popupName.style.cssText =
             "display:flex;align-items:center;justify-content:center;";
           popupName.textContent = locationData.title;
-  
-          let popupClaimBtn = document.createElement("button");
-          popupClaimBtn.onclick = function () {
+
+          let popupBtn = document.createElement("button");
+
+          popupBtn.onclick = function () {
             localStorage.setItem("locationData", JSON.stringify(locationData));
             handleClaim();
           };
-          popupClaimBtn.textContent = "Claim";
-   
+          popupBtn.textContent = "Claim";
+
           popupDiv.append(popupImg);
           popupDiv.append(popupHr);
           popupDiv.append(popupName);
           popupDiv.append(popupHr);
-          popupDiv.append(popupClaimBtn);
+          if (dropvalue === "Unclaimed Locations") popupDiv.append(popupBtn);
 
           L.marker([locationData.latitude, locationData.longitude], {
             icon: locationIcon,
@@ -166,8 +184,6 @@ export default function OnSiteMap() {
 
     fetchLocations();
   }
-
- 
 
   function createRoute() {
     myOnSiteMap = mapContainer;
@@ -207,22 +223,22 @@ export default function OnSiteMap() {
         <Dropdown.Menu>
           <Dropdown.Item
             onClick={() => {
-              setDropDownValue("On-site Check");
-              dropvalue = "On-site Check";
+              setDropDownValue("Unclaimed Locations");
+              dropvalue = "Unclaimed Locations";
               updateFilter();
             }}
           >
-            On-site Check
+            Unclaimed Locations
           </Dropdown.Item>
 
           <Dropdown.Item
             onClick={async () => {
-              await setDropDownValue("Claimed Locations");
+              setDropDownValue("Claimed Locations");
               dropvalue = "Claimed Locations";
               updateFilter();
             }}
           >
-            Selected Locations
+            Claimed Locations
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
