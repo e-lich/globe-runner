@@ -10,15 +10,7 @@ export default function CartographerHomeMap() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
 
-  var locations: {
-    cardId: number;
-    cardStatus: string;
-    description: string;
-    latitude: number;
-    longitude: number;
-    locationPhoto: string;
-    title: string;
-  }[];
+  var locations: any;
 
   // MAP INITIALIZATION
   useEffect(() => {
@@ -51,15 +43,14 @@ export default function CartographerHomeMap() {
     fetchLocations().catch(console.error);
   }, [myCartographerHomeMap]);
 
-    const fetchLocations = async () => {
-      try {
-        console.log("fetching submitted locations!");
-        const res = await axios.get("/locations/submitted");
+  const fetchLocations = async () => {
+    try {
+      console.log("fetching submitted locations!");
+      const res = await axios.get("/locations/submitted");
 
       locations = res.data;
-      if (locations[0].title) // TODO - update needed when no cards are submitted for refresh when last card is verified or marked
-        updateMarkers(); // TODO - check if locations exist, we are checking if the first item inside the array is a card currently!
-      else console.log("No submitted locations!");
+      // TODO - update needed when no cards are submitted for refresh when last card is verified or marked
+      updateMarkers(); // TODO - check if locations exist, we are checking if the first item inside the array is a card currently!
     } catch (e) {
       alert(e);
     }
@@ -79,8 +70,7 @@ export default function CartographerHomeMap() {
       .catch((err) => {
         console.log(err);
       });
-
-  }
+  };
 
   const handleOnSite = async () => {
     var locationData = JSON.parse(localStorage.getItem("locationData")!);
@@ -96,8 +86,7 @@ export default function CartographerHomeMap() {
       .catch((err) => {
         console.log(err);
       });
-  }
-
+  };
 
   const updateMarkers = () => {
     if (!myCartographerHomeMap) myCartographerHomeMap = mapContainer;
@@ -142,8 +131,8 @@ export default function CartographerHomeMap() {
     });
 
     console.log("adding locations");
-    if (locations)
-      locations.forEach((locationData) => {
+    if (locations[0] !== "No submitted locations found") {
+      locations.forEach((locationData: any) => {
         console.log(locationData);
         const popupOptions = {
           maxWidth: 100, // set max-width
@@ -158,7 +147,9 @@ export default function CartographerHomeMap() {
 
         let popupImg = document.createElement("img");
         popupImg.style.cssText = "width:100px;height:100px;";
-        popupImg.src = (locationData.locationPhoto.startsWith("http")) ? locationData.locationPhoto :  `data:image/jpeg;base64,${locationData.locationPhoto}`;
+        popupImg.src = locationData.locationPhoto.startsWith("http")
+          ? locationData.locationPhoto
+          : `data:image/jpeg;base64,${locationData.locationPhoto}`;
         popupImg.alt = "location photo missing";
 
         let popupHr = document.createElement("HR");
@@ -203,6 +194,7 @@ export default function CartographerHomeMap() {
           .bindPopup(popupDiv, popupOptions)
           .addTo(myCartographerHomeMap!);
       });
+    }
   };
 
   return (
