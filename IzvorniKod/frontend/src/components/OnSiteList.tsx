@@ -44,22 +44,30 @@ export default function OnSiteList({
             textAlign: "center",
           }}
         >
-          {claimedLocations?.map(
-            (claimedLocation: any, key: any) =>
-              claimedLocations[0] !==
-                "No claimed locations found for this cartographer" && (
-                <ClaimedLocationCard
-                  key={key}
-                  claimedLocation={claimedLocation}
-                  refresh={refresh}
-                  setRefresh={setRefresh}
-                />
-              )
+          {claimedLocations ? (
+            claimedLocations?.map(
+              (claimedLocation: any, key: number) =>
+                claimedLocations[0] !==
+                  "No claimed locations found for this cartographer" && (
+                  <ClaimedLocationCard
+                    key={key}
+                    claimedLocation={claimedLocation}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                  />
+                )
+            )
+          ) : (
+            <></>
           )}
 
-          {claimedLocations[0] ===
-            "No claimed locations found for this cartographer" && (
-            <div>You haven't claimed claimed any locations</div>
+          {claimedLocations ? (
+            claimedLocations[0] ===
+              "No claimed locations found for this cartographer" && (
+              <div>You haven't claimed claimed any locations</div>
+            )
+          ) : (
+            <div>Loading...</div>
           )}
         </List>
       </Box>
