@@ -22,19 +22,14 @@ export default function UserProfile() {
     navigate("/login");
   }
 
-  const baseURL = "http://127.0.0.1:5000";
 
   // TODO napisati funkciju za slanje delete requesta backendu
   function handleDelete() {
-    const config = {
-      headers: {
-        "Acces-Control-Allow-Origin": "*",
-      },
-    };
-
     axios
-      .delete(baseURL + "/users/delete", config)
-      .then(res => console.log(res))
+      .delete("/users/delete")
+      .then(res => {
+        console.log(res);
+        handleLogout();})
       .catch(error => {
         console.log(error);
       });
