@@ -1,3 +1,4 @@
+import { Dialog, Paper } from "@mui/material";
 import axios from "axios";
 import { create } from "domain";
 import * as L from "leaflet";
@@ -14,12 +15,12 @@ export default function OnSiteMap() {
   var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
 
   var locations: {
-    cardId: number;
+    cardID: number;
     cardStatus: string;
     description: string;
     latitude: number;
     longitude: number;
-    photo: string;
+    locationPhoto: string;
     title: string;
   }[];
 
@@ -101,6 +102,23 @@ export default function OnSiteMap() {
       }
     };
 
+    const handleClaim = () => {
+      var locationData = JSON.parse(localStorage.getItem("locationData")!);
+      console.log("Trying to claim location with cardID: " + locationData.cardID);
+      //UNCOMMENT WHEN BACKEND IS READY
+      /* axios
+        .post("/locations/claim/" + locationData.cardID)
+        .then((res) => {
+          console.log(res);
+          if (res.data.success === true) {
+            fetchLocations().catch(console.error);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        }); */
+    };
+
     const updateMarkers = () => {
       if (locations)
         locations.forEach((locationData) => {
@@ -109,25 +127,47 @@ export default function OnSiteMap() {
             className: "customPopup", // name custom popup
           };
 
-          var customPopup =
-            '<div className="cardpopup">' +
-            `   <img className="cardpopup--image" src=${locationData.photo} height="100px" width="100px" alt=""></img>` +
-            "   <hr>" +
-            `   <div class="cardpopup--name">` +
-            `     <span>${locationData.title}</span>` +
-            "   </div>" +
-            "</div>";
+          let popupDiv = document.createElement("div");
+          popupDiv.style.cssText =
+            "display:flex;flex-direction:column;align-items:center;justify-content:center;";
+  
+          let popupImg = document.createElement("img");
+          popupImg.style.cssText = "width:100px;height:100px;";
+          popupImg.src = locationData.locationPhoto;
+          popupImg.alt = "location photo missing";
+  
+          let popupHr = document.createElement("HR");
+  
+          let popupName = document.createElement("div");
+          popupName.style.cssText =
+            "display:flex;align-items:center;justify-content:center;";
+          popupName.textContent = locationData.title;
+  
+          let popupClaimBtn = document.createElement("button");
+          popupClaimBtn.onclick = function () {
+            localStorage.setItem("locationData", JSON.stringify(locationData));
+            handleClaim();
+          };
+          popupClaimBtn.textContent = "Claim";
+   
+          popupDiv.append(popupImg);
+          popupDiv.append(popupHr);
+          popupDiv.append(popupName);
+          popupDiv.append(popupHr);
+          popupDiv.append(popupClaimBtn);
 
           L.marker([locationData.latitude, locationData.longitude], {
             icon: locationIcon,
           }) // add the created marker to the desired coordinates with desired popup
-            .bindPopup(customPopup, popupOptions)
+            .bindPopup(popupDiv, popupOptions)
             .addTo(myOnSiteMap!);
         });
     };
 
     fetchLocations();
   }
+
+ 
 
   function createRoute() {
     myOnSiteMap = mapContainer;

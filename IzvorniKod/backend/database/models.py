@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from backend import db
 import datetime
+import uuid
 
 
 # User db model
@@ -30,16 +31,16 @@ class Cartographer(User):
     document = db.Column(db.Text)
     verified = db.Column(db.Boolean)
 
-    def __init__(self, userID, username, name, email, password, photo, iban, id):
+    def __init__(self, username, name, email, password, photo, iban, id, confirmed=False):
 
-        self.userID = userID
+        self.userID = uuid.uuid4().hex
         self.username = username
         self.name = name
         self.email = email
         self.profilePhoto = photo
         self.password = password
         self.IBAN = iban
-        self.confirmed = False
+        self.confirmed = confirmed
         self.verified = False
         self.document = id
         self.banned = False
@@ -52,21 +53,23 @@ class Player(User):
     advanced = db.Column(db.Boolean)
     eloScore = db.Column(db.Integer)
     playerLocation = db.Column(db.String(100))
+    challengeable = db.Column(db.Boolean)
 
-    def __init__(self, userID, username, name, email, password, photo):
+    def __init__(self, username, name, email, password, photo, advanced=False, confirmed=False):
         
-        self.userID = userID
+        self.userID = uuid.uuid4().hex
         self.username = username
         self.name = name
         self.email = email
         self.password = password
         self.profilePhoto = photo
         self.playerLocation = None
-        self.advanced = False
+        self.advanced = advanced
         self.eloScore = 0
         self.banned = False
-        self.confirmed = False
+        self.confirmed = confirmed
         self.signedIn = False
+        self.challengeable = False
 
 # Admin db model
 class Admin(db.Model):
@@ -114,13 +117,14 @@ class Inventory(db.Model):
 class Challenge(db.Model):
     __tablename__ = "Challenges"
 
-    challengeID = db.Column(db.Integer, primary_key=True, unique=True)
+    challengeID = db.Column(db.String(32), primary_key=True, unique=True)
     challengerUserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
     victimUserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
     challengeTimestamp = db.Column(db.DateTime)
-    challengeStatus = db.Column(db.Enum("pending", "accepted", "rejected", name="challenge_status_type"))
+    challengeStatus = db.Column(db.Enum("pending", "accepted", "declined", "went_too_far", name="challenge_status_type"))
 
     def __init__(self, challengerUserID, victimUserID):
+        self.challengeID = uuid.uuid4().hex
         self.challengerUserID = challengerUserID
         self.victimUserID = victimUserID
         self.challengeTimestamp = datetime.datetime.now()
@@ -133,6 +137,8 @@ class Fight(db.Model):
     fightID = db.Column(db.Integer, primary_key=True, unique=True)
     player1UserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
     player2UserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
+    player1Ready = db.Column(db.Boolean)
+    player2Ready = db.Column(db.Boolean)
     cardID11 = db.Column(db.BigInteger, db.ForeignKey("Cards.cardID"))
     cardID12 = db.Column(db.BigInteger, db.ForeignKey("Cards.cardID"))
     cardID13 = db.Column(db.BigInteger, db.ForeignKey("Cards.cardID"))
@@ -142,4 +148,18 @@ class Fight(db.Model):
     points1 = db.Column(db.Float)
     points2 = db.Column(db.Float)
     fightTimestamp = db.Column(db.DateTime)
-    challengeID = db.Column(db.Integer, db.ForeignKey("Challenges.challengeID"))
+
+    def __init__(self, player1UserID, player2UserID):
+        self.player1UserID = player1UserID
+        self.player2UserID = player2UserID
+        self.player1Ready = False
+        self.player2Ready = False
+        self.cardID11 = None
+        self.cardID12 = None
+        self.cardID13 = None
+        self.cardID21 = None
+        self.cardID22 = None
+        self.cardID23 = None
+        self.points1 = 0
+        self.points2 = 0
+        self.fightTimestamp = datetime.datetime.now()

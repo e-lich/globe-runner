@@ -1,10 +1,22 @@
 import Navbar from "../../components/Navbar";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserCard from "../../components/UserCard";
+import axios from "axios";
 
 export default function AllUsers() {
   const navigate = useNavigate();
+  const [error, setError] = useState<Array<String>>([]);
+  const [allUsers, setAllUsers] = useState<
+    Array<{
+      confirmed: boolean;
+      email: string;
+      profilePhoto: string;
+      userID: number;
+      userType: string;
+      username: string;
+    }>
+  >([]);
 
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
@@ -13,69 +25,20 @@ export default function AllUsers() {
 
     if (!(JSON.parse(userFromLocalStorage!).userType.toLowerCase() === "admin"))
       navigate("/home");
-  });
 
-  var allUsers:
-    | Array<{
-        username: string;
-        userId: number;
-        userImage: string;
-      }>
-    | undefined;
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("/users/all");
+        setAllUsers(response.data);
+      } catch (error: any) {
+        setError(error.response.data);
+      }
+    };
 
-  // mock location data that we need to switch with an API call
-  allUsers = [
-    {
-      username: "peroZmaj",
-      userId: 55,
-      userImage: "pathToImage",
-    },
-    {
-      username: "pericaZmaj",
-      userId: 56,
-      userImage: "pathToImage2",
-    },
-    {
-      username: "peroZmaj",
-      userId: 55,
-      userImage: "pathToImage",
-    },
-    {
-      username: "pericaZmaj",
-      userId: 56,
-      userImage: "pathToImage2",
-    },
-    {
-      username: "peroZmaj",
-      userId: 55,
-      userImage: "pathToImage",
-    },
-    {
-      username: "pericaZmaj",
-      userId: 56,
-      userImage: "pathToImage2",
-    },
-    {
-      username: "peroZmaj",
-      userId: 55,
-      userImage: "pathToImage",
-    },
-    {
-      username: "pericaZmaj",
-      userId: 56,
-      userImage: "pathToImage2",
-    },
-    {
-      username: "peroZmaj",
-      userId: 55,
-      userImage: "pathToImage",
-    },
-    {
-      username: "pericaZmaj",
-      userId: 56,
-      userImage: "pathToImage2",
-    },
-  ];
+    fetchUsers();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -86,13 +49,8 @@ export default function AllUsers() {
             <h2>All Users:</h2>
           </div>
           <div className="closest-players">
-            {allUsers!.map((user, key) => (
-              <UserCard
-                key={key}
-                battle={false}
-                username={user.username}
-                oldUser={user}
-              />
+            {allUsers.map((user, key) => (
+              <UserCard key={key} oldUser={user} />
             ))}
           </div>
         </form>
