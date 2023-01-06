@@ -1,6 +1,6 @@
 import L, { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function UserHomeMap() {
@@ -9,6 +9,8 @@ export default function UserHomeMap() {
   var closeByLocations:
     | Array<{ lat: number; lng: number; name: string; image: string }>
     | undefined;
+
+  var [playerMarker, setPlayerMarker] = useState<L.Marker<any> | undefined>();
 
   var locations: {
     cardId: number;
@@ -62,10 +64,14 @@ export default function UserHomeMap() {
         var currentMarker = L.marker([userLat, userLng], {
           icon: myIcon,
         }).bindPopup("Your are here :)");
-        var previousMarker: L.Marker<any> | undefined;
+
+        if (playerMarker) {
+          myMap!.removeLayer(playerMarker);
+          setPlayerMarker(undefined);
+        }
 
         myMap!.addLayer(currentMarker);
-        previousMarker = currentMarker;
+        setPlayerMarker(currentMarker);
       })
       .on("locationerror", function (e) {
         console.log(e);
