@@ -134,9 +134,24 @@ export default function UserHomeMap() {
 
       if (locations)
         locations.forEach((locationData) => {
+          const popupOptions = {
+            maxWidth: 100, // set max-width
+            className: "customPopup", // name custom popup
+          };
+
+          var customPopup =
+            '<div className="cardpopup">' +
+            `   <img className="cardpopup--image" src=${locationData.photo} height="100px" width="100px" alt=""></img>` +
+            "   <hr>" +
+            `   <div class="cardpopup--name">` +
+            `     <span>${locationData.title}</span>` +
+            "   </div>" +
+            "</div>";
+
           L.marker([locationData.latitude, locationData.longitude], {
             icon: locationIcon,
           }) // add the created marker to the desired coordinates
+            .bindPopup(customPopup, popupOptions)
             .addTo(myMap!);
         });
     };
