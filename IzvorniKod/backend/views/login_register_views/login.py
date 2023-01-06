@@ -46,16 +46,17 @@ def login():
                 session['userID'] = user.userID
             
             session['userType'] = user.__class__.__name__
+            user_type = session['userType']
 
             if session['userType'] == 'Player' and user.advanced:
-                session['userType'] = 'advancedPlayer'
+                user_type = 'advancedPlayer'
 
             return jsonify({
                 'username': user.username,
                 'email': user.email,
                 'photo': photo,
                 'userID': session['userID'],
-                'userType': session['userType']
+                'userType': user_type
             })
     else:
         return ['Invalid request method'], {"Access-Control-Allow-Origin": "http://localhost:3000"}
