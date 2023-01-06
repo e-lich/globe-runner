@@ -34,7 +34,7 @@ export default function AddLocationMap({
     description: string;
     latitude: number;
     longitude: number;
-    photo: string;
+    locationPhoto: string;
     title: string;
   }[];
 
@@ -189,7 +189,7 @@ export default function AddLocationMap({
 
           var customPopup =
             '<div className="cardpopup">' +
-            `   <img className="cardpopup--image" src=${locationData.photo} height="100px" width="100px" alt=""></img>` +
+            `   <img className="cardpopup--image" src=${`data:image/jpeg;base64,${locationData.locationPhoto}`} height="100px" width="100px" alt=""></img>` +
             "   <hr>" +
             `   <div class="cardpopup--name">` +
             `     <span>${locationData.title}</span>` +

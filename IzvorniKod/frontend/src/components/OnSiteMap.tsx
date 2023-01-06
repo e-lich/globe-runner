@@ -157,7 +157,7 @@ export default function OnSiteMap({
 
           let popupImg = document.createElement("img");
           popupImg.style.cssText = "width:100px;height:100px;";
-          popupImg.src = locationData.locationPhoto;
+          popupImg.src = (locationData.locationPhoto.startsWith("http")) ? locationData.locationPhoto :  `data:image/jpeg;base64,${locationData.locationPhoto}`
           popupImg.alt = "location photo missing";
 
           let popupHr = document.createElement("HR");
@@ -282,10 +282,6 @@ export default function OnSiteMap({
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      <h1 style={{ textAlign: "center" }}>
-        Map for viewing Locations that need to be checked on-site and locations
-        you will check
-      </h1>
       <div id="onSiteMapId"></div>
       <Button
         variant="contained"
