@@ -31,6 +31,7 @@ export default function UserHome() {
       console.log(response.data);
       console.log("fetching closeby");
       setCloseByLocations(response.data);
+      console.log(response.data);
     });
   }, [refresh]);
 
@@ -47,7 +48,8 @@ export default function UserHome() {
           </div>
           <Paper style={{ maxHeight: "45%", overflow: "auto" }}>
             <List sx={{ textAlign: "center", border: 2 }}>
-              {closeByLocations ? (
+              {closeByLocations &&
+              closeByLocations[0] !== "No locations found close by" ? (
                 closeByLocations?.map((closestCard: any, key: number) => (
                   <LocationCard
                     key={key}
@@ -76,7 +78,7 @@ export default function UserHome() {
               )}
 
               {closeByLocations ? (
-                closeByLocations[0] === "There are no nearby locations!" && (
+                closeByLocations[0] === "No locations found close by" && (
                   <div>There are no nearby locations!</div>
                 )
               ) : (

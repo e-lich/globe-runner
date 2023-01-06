@@ -24,8 +24,8 @@ export default function OnSiteMap({
 
   var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
 
-  var [dropDownValue, setDropDownValue] = useState("");
-  var dropvalue = "";
+  var [dropDownValue, setDropDownValue] = useState("Unclaimed Locations");
+  var dropvalue = "Unclaimed Locations";
 
   var locations: {
     cardID: number;
@@ -53,6 +53,8 @@ export default function OnSiteMap({
     });
     myOnSiteMap.addLayer(layer);
     myOnSiteMap.setView([45.8238, 15.9761], 13);
+
+    updateFilter();
   }, [myOnSiteMap]);
 
   useEffect(() => {
@@ -66,7 +68,7 @@ export default function OnSiteMap({
   }, [refresh]);
 
   function updateFilter() {
-    myOnSiteMap = mapContainer;
+    if (!myOnSiteMap) myOnSiteMap = mapContainer;
     // clear all markers on the map and set new ones!
 
     // clear all of the previous layers
@@ -157,7 +159,9 @@ export default function OnSiteMap({
 
           let popupImg = document.createElement("img");
           popupImg.style.cssText = "width:100px;height:100px;";
-          popupImg.src = (locationData.locationPhoto.startsWith("http")) ? locationData.locationPhoto :  `data:image/jpeg;base64,${locationData.locationPhoto}`
+          popupImg.src = locationData.locationPhoto.startsWith("http")
+            ? locationData.locationPhoto
+            : `data:image/jpeg;base64,${locationData.locationPhoto}`;
           popupImg.alt = "location photo missing";
 
           let popupHr = document.createElement("HR");

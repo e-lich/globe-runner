@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { error } from "console";
 import { useEffect, useState } from "react";
 
-
 export default function AddLocationForm({
   lat,
   setLat,
@@ -18,6 +17,8 @@ export default function AddLocationForm({
   setLong,
   userLatitude,
   userLongitude,
+  refresh,
+  setRefresh,
 }: {
   lat: Number | undefined;
   setLat: Function;
@@ -25,6 +26,8 @@ export default function AddLocationForm({
   setLong: Function;
   userLatitude: Number | undefined;
   userLongitude: Number | undefined;
+  refresh: boolean;
+  setRefresh: Function;
 }) {
   let [error, setError] = useState<Array<String>>([]);
   const navigate = useNavigate();
@@ -88,6 +91,7 @@ export default function AddLocationForm({
         } else {
           window.alert("Location added!");
           navigate("/addLocation");
+          setRefresh((refresh: any) => !refresh);
         }
       })
       .catch((err) => {
@@ -95,41 +99,42 @@ export default function AddLocationForm({
       });
 
     return;
-  }
+  };
 
   return (
     <>
-    {error.length > 0 ? 
-          error.map((err, key) => (
+      {error.length > 0
+        ? error.map((err, key) => (
             <Alert key={key} severity="error" sx={{ mb: 1 }}>
               <strong>Error: </strong> {err}
             </Alert>
-    )) : ""}
-        
-    <Box
-      sx={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+          ))
+        : ""}
+
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
-        {(props) => (
-          <Form>
-            <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Field
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {(props) => (
+            <Form>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Field
                   as={TextField}
                   label="Card title"
                   name="title"
@@ -138,8 +143,8 @@ export default function AddLocationForm({
                   required
                   error={props.errors.title && props.touched.title}
                   helperText={<ErrorMessage name="title" />}
-                  sx={{ m: 1, width: '25ch' }}
-                  />
+                  sx={{ m: 1, width: "25ch" }}
+                />
                 <Field
                   as={TextField}
                   label="Description"
@@ -150,55 +155,58 @@ export default function AddLocationForm({
                   required
                   error={props.errors.description && props.touched.description}
                   helperText={<ErrorMessage name="description" />}
-                  sx={{ m: 1, width: '25ch' }}
-
+                  sx={{ m: 1, width: "25ch" }}
                 />
-            </Box>
-            <hr />
-            <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Field
-                as={TextField}
-                label="Latitude"
-                name="lat"
-                placeholder="Edit location lat"
-                fullWidth
-                value = {lat}
-                disabled
-                required
-                error={props.errors.lat && props.touched.lat}
-                helperText={<ErrorMessage name="lat" />}
-                sx={{ m: 1, width: '25ch' }}
-                InputProps={{
-                  endAdornment: (<InputAdornment position="end">°</InputAdornment>),
-                  inputProps: { min: -90, max: 90, step: "any"},
+              </Box>
+              <hr />
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-                type="decimal"
+              >
+                <Field
+                  as={TextField}
+                  label="Latitude"
+                  name="lat"
+                  placeholder="Edit location lat"
+                  fullWidth
+                  value={lat}
+                  disabled
+                  required
+                  error={props.errors.lat && props.touched.lat}
+                  helperText={<ErrorMessage name="lat" />}
+                  sx={{ m: 1, width: "25ch" }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">°</InputAdornment>
+                    ),
+                    inputProps: { min: -90, max: 90, step: "any" },
+                  }}
+                  type="decimal"
                 />
-              <Field
-                as={TextField}
-                label="Longitude"
-                name="long"
-                placeholder="Edit location longitude"
-                fullWidth
-                value = {long}
-                disabled
-                required
-                error={props.errors.long && props.touched.long}
-                helperText={<ErrorMessage name="long" />}
-                sx={{ m: 1, width: '25ch' }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">°</InputAdornment>),
-                    inputProps: { min: -180, max: 180, step: "any"},
-                }}
-                type="decimal"
+                <Field
+                  as={TextField}
+                  label="Longitude"
+                  name="long"
+                  placeholder="Edit location longitude"
+                  fullWidth
+                  value={long}
+                  disabled
+                  required
+                  error={props.errors.long && props.touched.long}
+                  helperText={<ErrorMessage name="long" />}
+                  sx={{ m: 1, width: "25ch" }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">°</InputAdornment>
+                    ),
+                    inputProps: { min: -180, max: 180, step: "any" },
+                  }}
+                  type="decimal"
                 />
                 <Typography
                   variant="body2"
@@ -208,37 +216,42 @@ export default function AddLocationForm({
                 >
                   Click on the map or use the button below!
                 </Typography>
-                <Button variant="outlined" color="primary" onClick={setUserLocation}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={setUserLocation}
+                >
                   Use my location
                 </Button>
-            </Box>
+              </Box>
 
-            <hr />
-            <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            >
-              <input
-                hidden
-                id="locationPhoto"
-                name="locationPhoto"
-                type="file"
-                accept="image/*"
-                onChange={(event) => {
-                  props.setFieldValue(
-                    "locationPhoto",
-                    event.currentTarget.files![0]
-                  );
-                  console.log("added pic  " + props.values.locationPhoto);
+              <hr />
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-              />
+              >
+                <input
+                  hidden
+                  id="locationPhoto"
+                  name="locationPhoto"
+                  type="file"
+                  accept="image/*"
+                  onChange={(event) => {
+                    props.setFieldValue(
+                      "locationPhoto",
+                      event.currentTarget.files![0]
+                    );
+                    console.log("added pic  " + props.values.locationPhoto);
+                  }}
+                />
                 <label htmlFor="locationPhoto">
-                  <Typography 
-                    noWrap sx={{ mb: 1 }}
+                  <Typography
+                    noWrap
+                    sx={{ mb: 1 }}
                     variant="body2"
                     color="text.secondary"
                   >
@@ -249,44 +262,42 @@ export default function AddLocationForm({
                   </Fab>
                 </label>
 
-                {props.values.locationPhoto !== undefined &&(
-                    <Box
-                      component="img"
-                      alt="location pic"
-                      src={URL.createObjectURL(props.values.locationPhoto)}
-                      sx={{
-                        width: 0.3,
-                        border: 3,
-                        borderRadius: "2%",
-                      }}
-                    />
-                  )}
-
-            </Box>
-            <hr />
-            <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            >
-              <Button
-                type="submit"
-                color="primary"
-                variant="contained"
-                disabled={!props.isValid}
-                sx={{margin: 1}}
+                {props.values.locationPhoto !== undefined && (
+                  <Box
+                    component="img"
+                    alt="location pic"
+                    src={URL.createObjectURL(props.values.locationPhoto)}
+                    sx={{
+                      width: 0.3,
+                      border: 3,
+                      borderRadius: "2%",
+                    }}
+                  />
+                )}
+              </Box>
+              <hr />
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
-                Submit
-              </Button>
-            </Box>
-          </Form>)}
-      </Formik>
-    </Box>
+                <Button
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  disabled={!props.isValid}
+                  sx={{ margin: 1 }}
+                >
+                  Submit
+                </Button>
+              </Box>
+            </Form>
+          )}
+        </Formik>
+      </Box>
     </>
-
-   
   );
 }

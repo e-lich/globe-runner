@@ -9,23 +9,28 @@ export default function AddLocationMap({
   setLong,
   setUserLatitude,
   setUserLongitude,
+  refresh,
+  setRefresh,
 }: {
   setLat: Function;
   setLong: Function;
   setUserLatitude: Function;
   setUserLongitude: Function;
+  refresh: boolean;
+  setRefresh: Function;
 }) {
   // map variable so we can clear it at the beginning of useEffect
   var myAddLocationMap: L.Map | undefined;
+
   var [playerMarker, setPlayerMarker] = useState<L.Marker<any> | undefined>();
 
-  var [dropDownValue, setDropDownValue] = useState("");
+  var [dropDownValue, setDropDownValue] = useState("Submitted Locations");
 
   var locationMarker: L.Marker<any> | undefined;
   var locationLatitude;
   var locationLongitude;
 
-  var dropvalue = "";
+  var dropvalue = "Submitted Locations";
   var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
 
   var locations: {
@@ -130,10 +135,23 @@ export default function AddLocationMap({
         "latitude: " + locationLatitude + ", longitude: " + locationLongitude
       );
     }
+
+    updateFilter();
   }, [myAddLocationMap]);
 
+  useEffect(() => {
+    if (mapContainer) {
+      dropvalue = dropDownValue;
+      if (dropvalue == "Submitted Locations") updateFilter();
+      console.log(
+        "refresh use effect triggered inside map and useEffect called!"
+      );
+    }
+  }, [refresh]);
+
   function updateFilter() {
-    myAddLocationMap = mapContainer;
+    if (!myAddLocationMap) myAddLocationMap = mapContainer;
+
     // clear all markers on the map and set new ones!
 
     // clear all of the previous layers
