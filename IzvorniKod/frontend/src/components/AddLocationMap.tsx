@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 
 export default function AddLocationMap({
-  setLatitude,
-  setLongitude,
+  setLat,
+  setLong,
   setUserLatitude,
   setUserLongitude,
 }: {
-  setLatitude: Function;
-  setLongitude: Function;
+  setLat: Function;
+  setLong: Function;
   setUserLatitude: Function;
   setUserLongitude: Function;
 }) {
@@ -123,9 +123,9 @@ export default function AddLocationMap({
       locationMarker = newMarker;
 
       locationLatitude = e.latlng.lat;
-      setLatitude(e.latlng.lat);
+      setLat(e.latlng.lat);
       locationLongitude = e.latlng.lng;
-      setLongitude(e.latlng.lng);
+      setLong(e.latlng.lng);
       console.log(
         "latitude: " + locationLatitude + ", longitude: " + locationLongitude
       );
@@ -236,9 +236,6 @@ export default function AddLocationMap({
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      <h1 style={{ textAlign: "center" }}>
-        Map for viewing your suggested and approved locations
-      </h1>
       <div id="addLocationMapId"></div>
     </>
   );

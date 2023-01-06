@@ -7,8 +7,8 @@ import { Grid } from "@mui/material";
 
 export default function AddLocation() {
   const navigate = useNavigate();
-  var [latitude, setLatitude] = useState<Number>(0);
-  var [longitude, setLongitude] = useState<Number>(0);
+  var [lat, setLat] = useState<Number>(0);
+  var [long, setLong] = useState<Number>(0);
   var [userLatitude, setUserLatitude] = useState<Number>(0);
   var [userLongitude, setUserLongitude] = useState<Number>(0);
 
@@ -32,8 +32,8 @@ export default function AddLocation() {
       <Grid container>
         <Grid item xs={12} sm={7} style={{ height: "70vh" }}>
         <AddLocationMap
-        setLatitude={setLatitude}
-        setLongitude={setLongitude}
+        setLat={setLat}
+        setLong={setLong}
         setUserLatitude={setUserLatitude}
         setUserLongitude={setUserLongitude}
       />
@@ -43,10 +43,10 @@ export default function AddLocation() {
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Add Locations</h3>
             <AddLocationForm
-              latitude={latitude}
-              setLatitude={setLatitude}
-              longitude={longitude}
-              setLongitude={setLongitude}
+              lat={lat}
+              setLat={setLat}
+              long={long}
+              setLong={setLong}
               userLatitude={userLatitude}
               userLongitude={userLongitude}
             />
