@@ -1,11 +1,11 @@
-import { Dialog, Paper } from "@mui/material";
+import { Button, Dialog, Paper } from "@mui/material";
 import axios from "axios";
 import { create } from "domain";
 import * as L from "leaflet";
 import "leaflet-routing-machine";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
-import { Button, Dropdown } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 
 export default function OnSiteMap({
   refresh,
@@ -16,6 +16,11 @@ export default function OnSiteMap({
 }) {
   // map variable so we can clear it at the beginning of useEffect
   var myOnSiteMap: L.Map | undefined;
+  var [routingControl, setRoutingControl] = useState<
+    L.Routing.Control | undefined
+  >();
+  var [routeCreated, setRouteCreated] = useState(false);
+
   var [dropDownValue, setDropDownValue] = useState("");
   var dropvalue = "";
   var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
@@ -185,16 +190,32 @@ export default function OnSiteMap({
     fetchLocations();
   }
 
-  function createRoute() {
+  const createRoute = async () => {
     myOnSiteMap = mapContainer;
-    L.Routing.control({
-      plan: L.Routing.plan(
-        [
-          L.latLng(45.8238, 15.9761),
-          L.latLng(45.8238, 15.9421),
-          L.latLng(45.8238, 15.9521),
-        ],
-        {
+
+    var waypoints: L.LatLng[];
+
+    var res;
+
+    console.log("fetching claimed locations");
+    res = await axios.get("/locations/claimed");
+
+    if (res) {
+      if (res.data[0] === "No unclaimed locations found")
+        console.log(res.data[0]);
+      else if (
+        res.data[0] === "No claimed locations found for this cartographer"
+      )
+        console.log(res.data[0]);
+
+      locations = res.data;
+
+      waypoints = locations.map((location) =>
+        L.latLng(location.latitude, location.longitude)
+      );
+
+      var tempRoutingControl = L.Routing.control({
+        plan: L.Routing.plan(waypoints, {
           createMarker: function (i, wp) {
             return L.marker(wp.latLng, {
               draggable: true,
@@ -209,10 +230,27 @@ export default function OnSiteMap({
               }),
             });
           },
-        }
-      ),
-    }).addTo(myOnSiteMap!);
-  }
+        }),
+      });
+
+      tempRoutingControl.addTo(myOnSiteMap!);
+
+      setRoutingControl(tempRoutingControl);
+      setRouteCreated(true);
+    }
+  };
+
+  const removeRoute = () => {
+    myOnSiteMap = mapContainer;
+
+    if (routingControl != null) {
+      myOnSiteMap!.removeControl(routingControl);
+      routingControl = undefined;
+    }
+
+    setRouteCreated(false);
+  };
+
   return (
     <>
       <Dropdown>
@@ -247,8 +285,21 @@ export default function OnSiteMap({
         you will check
       </h1>
       <div id="onSiteMapId"></div>
-      <Button variant="text" color="primary" onClick={() => createRoute()}>
+      <Button
+        variant="contained"
+        disabled={dropDownValue !== "Claimed Locations" || routeCreated}
+        color="primary"
+        onClick={() => createRoute()}
+      >
         Create Route
+      </Button>
+      <Button
+        variant="contained"
+        disabled={!routeCreated}
+        color="primary"
+        onClick={() => removeRoute()}
+      >
+        Remove Route
       </Button>
     </>
   );
