@@ -39,7 +39,6 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/confirm" element={<EmailConfirm />} />
-        <Route path="/map" element={<UserHomeMap />} />
 
         {/* user and advanced user only routes */}
         <Route path="/userHome" element={<UserHome />} />

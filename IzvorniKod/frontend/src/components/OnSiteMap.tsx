@@ -16,14 +16,16 @@ export default function OnSiteMap({
 }) {
   // map variable so we can clear it at the beginning of useEffect
   var myOnSiteMap: L.Map | undefined;
+
   var [routingControl, setRoutingControl] = useState<
     L.Routing.Control | undefined
   >();
   var [routeCreated, setRouteCreated] = useState(false);
 
+  var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
+
   var [dropDownValue, setDropDownValue] = useState("");
   var dropvalue = "";
-  var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
 
   var locations: {
     cardID: number;
