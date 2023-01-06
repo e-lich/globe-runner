@@ -11,6 +11,7 @@ export default function AddLocation() {
   var [long, setLong] = useState<Number>(0);
   var [userLatitude, setUserLatitude] = useState<Number>(0);
   var [userLongitude, setUserLongitude] = useState<Number>(0);
+  var [refresh, setRefresh] = useState<boolean>(false);
 
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
@@ -31,27 +32,31 @@ export default function AddLocation() {
       <Navbar />
       <Grid container>
         <Grid item xs={12} sm={7} style={{ height: "70vh" }}>
-        <AddLocationMap
-        setLat={setLat}
-        setLong={setLong}
-        setUserLatitude={setUserLatitude}
-        setUserLongitude={setUserLongitude}
-      />
+          <AddLocationMap
+            setLat={setLat}
+            setLong={setLong}
+            setUserLatitude={setUserLatitude}
+            setUserLongitude={setUserLongitude}
+            refresh={refresh}
+            setRefresh={setRefresh}
+          />
         </Grid>
         <Grid item xs={12} sm={5}>
-        <div className="align-items-center Auth-container">
-          <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Add Locations</h3>
-            <AddLocationForm
-              lat={lat}
-              setLat={setLat}
-              long={long}
-              setLong={setLong}
-              userLatitude={userLatitude}
-              userLongitude={userLongitude}
-            />
+          <div className="align-items-center Auth-container">
+            <div className="Auth-form-content">
+              <h3 className="Auth-form-title">Add Locations</h3>
+              <AddLocationForm
+                lat={lat}
+                setLat={setLat}
+                long={long}
+                setLong={setLong}
+                userLatitude={userLatitude}
+                userLongitude={userLongitude}
+                refresh={refresh}
+                setRefresh={setRefresh}
+              />
+            </div>
           </div>
-      </div>
         </Grid>
       </Grid>
     </>

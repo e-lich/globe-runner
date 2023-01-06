@@ -29,7 +29,12 @@ export default function LocationCard(props: any): JSX.Element {
                 gutterBottom
                 variant="h6"
                 component="div"
-                sx={{ justifyContent: "center", m: 0 }}
+                noWrap
+                sx={{
+                  justifyContent: "center",
+                  m: 0,
+                  height: 32,
+                }}
               >
                 {props.closestCard.title}
               </Typography>
