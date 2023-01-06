@@ -16,6 +16,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import CloseIcon from "@mui/icons-material/Close";
+import { Link, useNavigate } from "react-router-dom";
 
 type Props = {
   oldUser: any;
@@ -24,6 +25,43 @@ type Props = {
 };
 
 export default function EditMyProfileDialog({ oldUser, open, onClose }: Props) {
+  const navigate = useNavigate();
+    function handleLogout() {
+        const logout = async () => {
+          try {
+            const response = await axios.post("/logout");
+    
+            if (response.status !== 200) {
+              console.log("Something went wrong while logging out");
+            }
+          } catch (error: any) {
+            console.log(error);
+          }
+        };
+    
+        logout();
+        localStorage.removeItem("user");
+    
+        navigate("/login");
+    }; 
+    
+    function handleDelete() {
+        axios
+        .delete(`/users/delete`, {withCredentials: true})
+        .then(res => {
+          if (res.status === 200) {
+            handleLogout();
+          } else {
+            console.log(res.data);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      
+      return;
+    };
+
   const handleEdit = async (values: any) => {
     let formData = new FormData();
 
@@ -189,6 +227,18 @@ export default function EditMyProfileDialog({ oldUser, open, onClose }: Props) {
                       >
                         Save
                       </Button>
+                      <Button
+                        type="submit"
+                        color="error"
+                        variant="contained"
+                        disabled={!props.isValid}
+                        fullWidth
+                        sx={{ mt: 2 }}
+                        onClick={() => {window.confirm('Are you sure you want to delete your profile?') && handleDelete()}}
+                      >
+                        Delete my profile
+                      </Button>
+                    
                     </Grid>
                   </Form>
                 )}

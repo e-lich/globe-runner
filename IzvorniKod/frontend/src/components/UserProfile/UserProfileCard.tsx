@@ -54,7 +54,7 @@ export default function UserProfileCard({
             </Typography>
             {/* TODO - user needs to have a fullName, alongside everything else */}
             <Typography variant="body2" color="text.secondary">
-              {/* {user.fullName} */} Lovro Kovacic
+              {user.fullName}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {user.email}
@@ -77,6 +77,7 @@ export default function UserProfileCard({
         onClose={() => setOpen(false)}
         oldUser={user}
       />
+      
     </>
   );
 }
