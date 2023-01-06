@@ -8,23 +8,22 @@ import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import { useNavigate } from "react-router-dom";
 import { error } from "console";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 export default function AddLocationForm({
-  latitude,
-  setLatitude,
-  longitude,
-  setLongitude,
+  lat,
+  setLat,
+  long,
+  setLong,
   userLatitude,
   userLongitude,
 }: {
-  latitude: Number | undefined;
-  setLatitude: Function;
-  longitude: Number | undefined;
-  setLongitude: Function;
+  lat: Number | undefined;
+  setLat: Function;
+  long: Number | undefined;
+  setLong: Function;
   userLatitude: Number | undefined;
-
   userLongitude: Number | undefined;
 }) {
   let [error, setError] = useState<Array<String>>([]);
@@ -32,34 +31,32 @@ export default function AddLocationForm({
 
   const setUserLocation = async () => {
     console.log("setting form location to the user location!");
-    setLatitude(userLatitude);
-    setLongitude(userLongitude);
+    setLat(userLatitude);
+    setLong(userLongitude);
   };
 
   const initialValues = {
     title: "",
     description: "",
-    latitude: latitude,
-    longitude: longitude,
+    lat: lat,
+    long: long,
     locationPhoto: undefined,
   };
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("Required"),
     description: Yup.string().min(20).required("Required"),
-    latitude: Yup.number().required("Required"),
-    longitude: Yup.number().required("Required"),
-    LocationPhoto: Yup.mixed()
+    lat: Yup.number().required("Required"),
+    long: Yup.number().required("Required"),
+    locationPhoto: Yup.mixed()
       .test("photoSize", "Photo too large", photoSizeCheck)
       .required("Required"),
   });
 
   function photoSizeCheck(locationPhoto?: Blob): boolean {
     if (locationPhoto === undefined) {
-      console.log("photo undefined");
       return false;
     }
-    console.log("photo size: " + locationPhoto.size);
     return locationPhoto.size <= 1000000;
   }
 
@@ -72,17 +69,24 @@ export default function AddLocationForm({
 
     formData.append("title", values.title);
     formData.append("description", values.description);
-    formData.append("latitude", values.latitude);
-    formData.append("longitude", values.longitude);
-    formData.append("locationPhoto", values.locationPhoto);
+    formData.append("lat", lat!.toString());
+    formData.append("long", long!.toString());
+    formData.append("photo", values.locationPhoto);
+
+    values.title = "";
+    values.description = "";
+    setLat(0);
+    setLong(0);
+    values.locationPhoto = undefined;
 
     axios
-      .post("/locations/add/submitted", formData)
+      .post("/locations/add/", formData)
       .then((res) => {
         console.log(res);
         if (res.data.success != true) {
           setError(res.data);
         } else {
+          window.alert("Location added!");
           navigate("/addLocation");
         }
       })
@@ -162,38 +166,39 @@ export default function AddLocationForm({
               <Field
                 as={TextField}
                 label="Latitude"
-                name="latitude"
-                placeholder="Edit location latitude"
+                name="lat"
+                placeholder="Edit location lat"
                 fullWidth
-                value = {latitude}
+                value = {lat}
+                disabled
                 required
-                error={props.errors.latitude && props.touched.latitude}
-                helperText={<ErrorMessage name="latitude" />}
+                error={props.errors.lat && props.touched.lat}
+                helperText={<ErrorMessage name="lat" />}
                 sx={{ m: 1, width: '25ch' }}
                 InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">°</InputAdornment>),
-                    inputProps: { min: -90, max: 90},
+                  endAdornment: (<InputAdornment position="end">°</InputAdornment>),
+                  inputProps: { min: -90, max: 90, step: "any"},
                 }}
-                type="number"
+                type="decimal"
                 />
               <Field
                 as={TextField}
                 label="Longitude"
-                name="longitude"
+                name="long"
                 placeholder="Edit location longitude"
                 fullWidth
-                value = {longitude}
+                value = {long}
+                disabled
                 required
-                error={props.errors.longitude && props.touched.longitude}
-                helperText={<ErrorMessage name="longitude" />}
+                error={props.errors.long && props.touched.long}
+                helperText={<ErrorMessage name="long" />}
                 sx={{ m: 1, width: '25ch' }}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">°</InputAdornment>),
-                    inputProps: { min: -180, max: 180},
+                    inputProps: { min: -180, max: 180, step: "any"},
                 }}
-                type="number"
+                type="decimal"
                 />
                 <Typography
                   variant="body2"
