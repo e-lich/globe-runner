@@ -1,4 +1,4 @@
-import L, { Icon } from "leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -6,9 +6,6 @@ import axios from "axios";
 export default function UserHomeMap() {
   // map variable so we can clear it at the beginning of useEffect
   var myMap: L.Map | undefined;
-  var closeByLocations:
-    | Array<{ lat: number; lng: number; name: string; image: string }>
-    | undefined;
 
   var [playerMarker, setPlayerMarker] = useState<L.Marker<any> | undefined>();
 
