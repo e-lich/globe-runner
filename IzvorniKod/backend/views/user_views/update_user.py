@@ -13,7 +13,7 @@ def update(userID):
     if request.form.get('username') is not None:
         user.username = request.form['username']
     if request.form.get('password') is not None:
-        user.email = request.form['password']
+        user.password = request.form['password']
     if request.files.get('photo') is not None:
         user.profilePhoto =  base64.b64encode(request.files.get('photo').read()).decode('utf-8')
 
