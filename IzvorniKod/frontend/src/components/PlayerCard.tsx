@@ -2,8 +2,8 @@ import { ListItem, ListItemAvatar, Avatar } from "@mui/material";
 import { Button } from "react-bootstrap";
 import { useState } from "react";
 import ChallengeIcon from "./ChallengeIcon";
-import ViewpProfilePopup from "./ViewProfilePopup";
 import ViewProfilePopup from "./ViewProfilePopup";
+import ViewPlayerProfileDialog from "./ViewPlayerProfileDialog";
 
 export default function PlayerCard(props: any) {
   const placeholder = require("../images/profile_picture.jpg");
@@ -17,7 +17,7 @@ export default function PlayerCard(props: any) {
         </ListItemAvatar>
         <div className="player-buttons">
           <Button
-            variant="text"  
+            variant="text"
             color="primary"
             onClick={() => {
               setIsViewOpen(true);
@@ -29,14 +29,13 @@ export default function PlayerCard(props: any) {
         </div>
       </ListItem>
 
-      <ViewProfilePopup
+      <ViewPlayerProfileDialog
         open={isViewOpen}
         onClose={() => {
           setIsViewOpen(false);
         }}
         player={props.closestPlayer}
-        />
+      />
     </>
-    
   );
 }
