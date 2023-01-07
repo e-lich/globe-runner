@@ -28,25 +28,25 @@ export default function UserHome() {
       title: "Card_01",
       lat: 15.2132,
       lng: 45.154425,
-      image: "../images/card_photo.jpg",
+      photo: "../images/card_photo.jpg",
     },
     {
       title: "Card_02",
       lat: 15.214,
       lng: 45.1545,
-      image: "../images/card_photo.jpg",
+      photo: "../images/card_photo.jpg",
     },
     {
       title: "Card_03",
       lat: 15.215,
       lng: 45.15455,
-      image: "../images/card_photo.jpg",
+      photo: "../images/card_photo.jpg",
     },
     {
       title: "Card_04",
       lat: 15.2155,
       lng: 45.1546,
-      image: "../images/card_photo.jpg",
+      photo: "../images/card_photo.jpg",
     },
   ];
 

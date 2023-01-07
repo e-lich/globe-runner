@@ -21,7 +21,13 @@ export default function LocationCard(props: any): JSX.Element {
               sx={{ display: "flex", objectFit: "cover" }}
               height="100"
               component="img"
-              image={placeholder}
+              image={
+                props.closestCard.photo === "None"
+                  ? placeholder
+                  : props.closestCard.photo.startsWith("http")
+                  ? props.closestCard.photo
+                  : `data:image/jpeg;base64,${props.closestCard.photo}`
+              }
               alt="beautiful landscape"
             />
             <CardContent sx={{ p: 0.5, justifyContent: "center" }}>

@@ -1,11 +1,7 @@
-import {
-  List,
-} from "@mui/material";
-import React from "react";
+import { List } from "@mui/material";
 import { useEffect } from "react";
-import { Navbar } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import ChallengeIcon from "../../components/ChallengeIcon";
+
 import NavbarCustom from "../../components/Navbar";
 import PlayerCard from "../../components/PlayerCard";
 
@@ -27,20 +23,32 @@ export default function NearbyPlayers() {
 
   const closestPlayers = [
     {
-      image: "../images/profile_picture.jpg",
+      photo: "../images/profile_picture.jpg",
       username: "Player_01",
+      fullName: "Player_01",
+      email: "lovro.kovacic@gmail.com",
+      userType: "Player",
     },
     {
-      image: "../images/profile_picture.jpg",
+      photo: "../images/profile_picture.jpg",
       username: "Player_02",
+      fullName: "Player_02",
+      email: "lovro.kovacic@gmail.com",
+      userType: "Player",
     },
     {
-      image: "../images/profile_picture.jpg",
+      photo: "../images/profile_picture.jpg",
       username: "Player_03",
+      fullName: "Player_03",
+      email: "lovro.kovacic@gmail.com",
+      userType: "Player",
     },
     {
-      image: "../images/profile_picture.jpg",
+      photo: "../images/profile_picture.jpg",
       username: "Player_04",
+      fullName: "Player_04",
+      email: "lovro.kovacic@gmail.com",
+      userType: "Player",
     },
   ];
   return (
