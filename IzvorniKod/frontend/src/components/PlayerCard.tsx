@@ -2,7 +2,6 @@ import { ListItem, ListItemAvatar, Avatar } from "@mui/material";
 import { Button } from "react-bootstrap";
 import { useState } from "react";
 import ChallengeIcon from "./ChallengeIcon";
-import ViewProfilePopup from "./ViewProfilePopup";
 import ViewPlayerProfileDialog from "./ViewPlayerProfileDialog";
 
 export default function PlayerCard(props: any) {

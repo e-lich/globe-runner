@@ -31,6 +31,7 @@ export default function UserProfile() {
               <UserProfileCard
                 user={JSON.parse(user!)}
                 numberOfLocations={12}
+                canEdit={true}
               />
             </Grid>
             <Grid item xs={12}>
