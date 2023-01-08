@@ -1,6 +1,6 @@
 from backend import app, db
 from flask import session, request, jsonify, redirect
-from backend.database.models import Card, Inventory, User
+from backend.database.models import Card, Inventory, User, Player
 import base64
 
 def update(location):
@@ -166,7 +166,7 @@ def collect_location(cardID):
 
                 number_of_cards = db.session.query(Inventory).filter_by(userID=userID).count()
                 if number_of_cards >= 3:
-                    user.challangeable = True
+                    user.challengeable = True
 
                 db.session.add(new_inventory)   
                 
