@@ -22,13 +22,14 @@ export default function AddLocationMap({
   // map variable so we can clear it at the beginning of useEffect
   var myAddLocationMap: L.Map | undefined;
 
-  var [playerMarker, setPlayerMarker] = useState<L.Marker<any> | undefined>();
-
   var [dropDownValue, setDropDownValue] = useState("Submitted Locations");
 
   var locationMarker: L.Marker<any> | undefined;
   var locationLatitude;
   var locationLongitude;
+
+  var userLatNonState: number;
+  var userLngNonState: number;
 
   var dropvalue = "Submitted Locations";
   var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
@@ -89,22 +90,16 @@ export default function AddLocationMap({
         watch: true,
       }) /* This will return map so you can do chaining */
       .on("locationfound", function (e) {
-        let userLat = e.latlng.lat;
-        let userLng = e.latlng.lng;
+        userLatNonState = e.latlng.lat;
+        userLngNonState = e.latlng.lng;
         setUserLatitude(e.latlng.lat);
         setUserLongitude(e.latlng.lng);
 
-        var currentMarker = L.marker([userLat, userLng], {
+        var currentMarker = L.marker([userLatNonState, userLngNonState], {
           icon: myIcon,
         }).bindPopup("Your are here :)");
 
-        if (playerMarker) {
-          myAddLocationMap!.removeLayer(playerMarker);
-          setPlayerMarker(undefined);
-        }
-
         myAddLocationMap!.addLayer(currentMarker);
-        setPlayerMarker(currentMarker);
       })
       .on("locationerror", function (e) {
         console.log(e);
@@ -159,6 +154,17 @@ export default function AddLocationMap({
       myAddLocationMap!.removeLayer(layer);
     });
 
+    // MARKER OPTIONS FOR USER
+    var myIcon = L.icon({
+      iconUrl:
+        "https://www.shareicon.net/data/512x512/2016/03/13/733024_people_512x512.png",
+      iconSize: [30, 35], // size of the icon
+      shadowSize: [50, 64], // size of the shadow
+      iconAnchor: [15, 25], // point of the icon which will correspond to marker's location
+      shadowAnchor: [4, 62], // the same for the shadow
+      popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+    });
+
     // add necessary layers without any markers
     var tile_url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     var layer = L.tileLayer(tile_url, {
@@ -167,7 +173,16 @@ export default function AddLocationMap({
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     });
     myAddLocationMap!.addLayer(layer);
-    myAddLocationMap!.setView([45.8238, 15.9761], 13);
+
+    if (userLatNonState && userLngNonState) {
+      L.marker([userLatNonState, userLngNonState], {
+        icon: myIcon,
+      })
+        .bindPopup("Your are here :)")
+        .addTo(myAddLocationMap!);
+
+      myAddLocationMap!.setView([userLatNonState, userLngNonState], 14.5);
+    }
 
     const fetchLocations = async () => {
       try {
