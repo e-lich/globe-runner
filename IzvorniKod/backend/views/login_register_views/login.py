@@ -51,6 +51,9 @@ def login():
             if session['userType'] == 'Player' and user.advanced:
                 user_type = 'advancedPlayer'
 
+            user.signedIn = True
+            db.session.commit()
+
             return jsonify({
                 'username': user.username,
                 'email': user.email,

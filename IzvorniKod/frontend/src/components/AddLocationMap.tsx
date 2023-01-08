@@ -17,6 +17,8 @@ export default function AddLocationMap({
 }) {
   // map variable so we can clear it at the beginning of useEffect
   var myAddLocationMap: L.Map | undefined;
+  var [playerMarker, setPlayerMarker] = useState<L.Marker<any> | undefined>();
+
   var [dropDownValue, setDropDownValue] = useState("");
 
   var locationMarker: L.Marker<any> | undefined;
@@ -90,10 +92,14 @@ export default function AddLocationMap({
         var currentMarker = L.marker([userLat, userLng], {
           icon: myIcon,
         }).bindPopup("Your are here :)");
-        var previousMarker: L.Marker<any> | undefined;
+
+        if (playerMarker) {
+          myAddLocationMap!.removeLayer(playerMarker);
+          setPlayerMarker(undefined);
+        }
 
         myAddLocationMap!.addLayer(currentMarker);
-        previousMarker = currentMarker;
+        setPlayerMarker(currentMarker);
       })
       .on("locationerror", function (e) {
         console.log(e);

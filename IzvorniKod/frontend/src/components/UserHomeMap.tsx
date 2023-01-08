@@ -1,14 +1,13 @@
-import L, { Icon } from "leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function UserHomeMap() {
   // map variable so we can clear it at the beginning of useEffect
   var myMap: L.Map | undefined;
-  var closeByLocations:
-    | Array<{ lat: number; lng: number; name: string; image: string }>
-    | undefined;
+
+  var [playerMarker, setPlayerMarker] = useState<L.Marker<any> | undefined>();
 
   var locations: {
     cardId: number;
@@ -62,10 +61,14 @@ export default function UserHomeMap() {
         var currentMarker = L.marker([userLat, userLng], {
           icon: myIcon,
         }).bindPopup("Your are here :)");
-        var previousMarker: L.Marker<any> | undefined;
+
+        if (playerMarker) {
+          myMap!.removeLayer(playerMarker);
+          setPlayerMarker(undefined);
+        }
 
         myMap!.addLayer(currentMarker);
-        previousMarker = currentMarker;
+        setPlayerMarker(currentMarker);
       })
       .on("locationerror", function (e) {
         console.log(e);
@@ -128,9 +131,24 @@ export default function UserHomeMap() {
 
       if (locations)
         locations.forEach((locationData) => {
+          const popupOptions = {
+            maxWidth: 100, // set max-width
+            className: "customPopup", // name custom popup
+          };
+
+          var customPopup =
+            '<div className="cardpopup">' +
+            `   <img className="cardpopup--image" src=${locationData.photo} height="100px" width="100px" alt=""></img>` +
+            "   <hr>" +
+            `   <div class="cardpopup--name">` +
+            `     <span>${locationData.title}</span>` +
+            "   </div>" +
+            "</div>";
+
           L.marker([locationData.latitude, locationData.longitude], {
             icon: locationIcon,
           }) // add the created marker to the desired coordinates
+            .bindPopup(customPopup, popupOptions)
             .addTo(myMap!);
         });
     };
