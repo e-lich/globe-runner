@@ -1,6 +1,6 @@
 from backend import app, db
 from flask import request, jsonify, session, redirect
-from backend.database.models import Player
+from backend.database.models import Player, Inventory
 from geopy import distance
 import json
 from sqlalchemy import inspect
@@ -57,4 +57,7 @@ def post_user_info(userID):
         return ["User not found"]
 
     #vrati statistiku, popis kartica, rang na globalnoj ljestvici // NIJE IMPLEMENTIRANA STATISTIKA
-    return object_as_dict(user)
+    retVal = object_as_dict(user)
+    retVal["numOfCards"] = db.session.query(Inventory).filter_by(userID=userID).count()
+
+    return retVal
