@@ -12,7 +12,10 @@ export default function PlayerCard(props: any) {
     <>
       <ListItem alignItems="center" sx={{ justifyContent: "center" }}>
         <ListItemAvatar sx={{ m: 0 }}>
-          <Avatar alt="profile picture" src={placeholder} />
+          <Avatar
+            alt="profile picture"
+            src={`data:image/jpeg;base64,${props.closestCard.photo}`}
+          />
         </ListItemAvatar>
         <div className="player-buttons">
           <Button

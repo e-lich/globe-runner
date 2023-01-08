@@ -1,5 +1,6 @@
-import { List } from "@mui/material";
-import { useEffect } from "react";
+import { List, Typography } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import NavbarCustom from "../../components/Navbar";
@@ -7,6 +8,7 @@ import PlayerCard from "../../components/PlayerCard";
 
 export default function NearbyPlayers() {
   const navigate = useNavigate();
+  const [closestPlayers, setClosestPlayers] = useState<any>([]);
 
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
@@ -19,38 +21,18 @@ export default function NearbyPlayers() {
         .includes("player")
     )
       navigate("/home");
-  });
 
-  const closestPlayers = [
-    {
-      photo: "../images/profile_picture.jpg",
-      username: "Player_01",
-      fullName: "Player_01",
-      email: "lovro.kovacic@gmail.com",
-      userType: "Player",
-    },
-    {
-      photo: "../images/profile_picture.jpg",
-      username: "Player_02",
-      fullName: "Player_02",
-      email: "lovro.kovacic@gmail.com",
-      userType: "Player",
-    },
-    {
-      photo: "../images/profile_picture.jpg",
-      username: "Player_03",
-      fullName: "Player_03",
-      email: "lovro.kovacic@gmail.com",
-      userType: "Player",
-    },
-    {
-      photo: "../images/profile_picture.jpg",
-      username: "Player_04",
-      fullName: "Player_04",
-      email: "lovro.kovacic@gmail.com",
-      userType: "Player",
-    },
-  ];
+    const getClosebyPlayers = async () => {
+      const response = await axios.get("/players/close-by");
+      setClosestPlayers(response.data);
+      console.log(response);
+    };
+
+    getClosebyPlayers();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <NavbarCustom />
@@ -65,9 +47,16 @@ export default function NearbyPlayers() {
             <List
               sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
             >
-              {closestPlayers.map((closestPlayer, key) => (
-                <PlayerCard key={key} closestPlayer={closestPlayer} />
-              ))}
+              {/* TODO ovdje se ne displaya dobro no players nearby zbog tog sto nam vracaju data array sa sadrzajem poruke */}
+              {closestPlayers.lenght > 0 &&
+                closestPlayers.map((closestPlayer: any, key: any) => (
+                  <PlayerCard key={key} closestPlayer={closestPlayer} />
+                ))}
+              {closestPlayers.length === 0 && (
+                <Typography variant="h6" sx={{ m: 2 }}>
+                  No players nearby
+                </Typography>
+              )}
             </List>
           </div>
         </div>
