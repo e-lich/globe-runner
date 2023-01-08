@@ -14,10 +14,10 @@ export default function UserHomeMap({
   // map variable so we can clear it at the beginning of useEffect
   var myMap: L.Map | undefined;
 
-  var [playerMarker, setPlayerMarker] = useState<L.Marker<any> | undefined>();
-
   var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
 
+  var userLatNonState: number;
+  var userLngNonState: number;
   var locations: any;
 
   // MAP INITIALIZATION
@@ -56,21 +56,16 @@ export default function UserHomeMap({
         watch: true,
       }) /* This will return map so you can do chaining */
       .on("locationfound", function (e) {
-        let userLat = e.latlng.lat;
-        let userLng = e.latlng.lng;
-        updateUserLocation(userLat, userLng); // tell the server where the user is currently
+        userLatNonState = e.latlng.lat;
+        userLngNonState = e.latlng.lng;
 
-        var currentMarker = L.marker([userLat, userLng], {
+        updateUserLocation(userLatNonState, userLngNonState); // tell the server where the user is currently
+
+        var currentMarker = L.marker([userLatNonState, userLngNonState], {
           icon: myIcon,
         }).bindPopup("Your are here :)");
 
-        if (playerMarker) {
-          myMap!.removeLayer(playerMarker);
-          setPlayerMarker(undefined);
-        }
-
         myMap!.addLayer(currentMarker);
-        setPlayerMarker(currentMarker);
       })
       .on("locationerror", function (e) {
         console.log(e);
@@ -101,7 +96,6 @@ export default function UserHomeMap({
   }, [refresh]);
 
   const fetchLocations = async () => {
-    // setRefresh((refresh: any) => !refresh);
     try {
       const res = await axios.get("/locations/close-by");
 
@@ -124,15 +118,16 @@ export default function UserHomeMap({
       myMap!.removeLayer(layer);
     });
 
-    // add necessary layers without any markers
-    var tile_url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
-    var layer = L.tileLayer(tile_url, {
-      maxZoom: 19,
-      attribution:
-        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    // MARKER OPTIONS FOR USER
+    var myIcon = L.icon({
+      iconUrl:
+        "https://www.shareicon.net/data/512x512/2016/03/13/733024_people_512x512.png",
+      iconSize: [30, 35], // size of the icon
+      shadowSize: [50, 64], // size of the shadow
+      iconAnchor: [15, 25], // point of the icon which will correspond to marker's location
+      shadowAnchor: [4, 62], // the same for the shadow
+      popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
     });
-    myMap!.addLayer(layer);
-    myMap!.setView([45.8238, 15.9761], 13);
 
     // MARKER OPTIONS FOR LOCATIONS
     var locationIcon = L.icon({
@@ -144,6 +139,25 @@ export default function UserHomeMap({
       shadowAnchor: [4, 62], // the same for the shadow
       popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
     });
+
+    // add necessary layers without any markers
+    var tile_url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+    var layer = L.tileLayer(tile_url, {
+      maxZoom: 19,
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    });
+    myMap!.addLayer(layer);
+
+    if (userLatNonState && userLngNonState) {
+      L.marker([userLatNonState, userLngNonState], {
+        icon: myIcon,
+      })
+        .bindPopup("Your are here :)")
+        .addTo(myMap!);
+
+      myMap!.setView([userLatNonState, userLngNonState], 14.5);
+    }
 
     if (locations[0] !== "No locations found close by")
       locations.forEach((locationData: any) => {
