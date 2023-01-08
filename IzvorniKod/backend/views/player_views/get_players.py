@@ -25,6 +25,8 @@ def get_close_by_players():
     closeByPlayers = []
 
     for player in db.session.query(Player).filter(Player.userID!=userID).filter(Player.signedIn==True).all():
+        if player.playerLocation is None:
+            continue
         player_location = json.loads(player.playerLocation)
         player_lat = player_location['latitude']
         player_lng = player_location['longitude']
