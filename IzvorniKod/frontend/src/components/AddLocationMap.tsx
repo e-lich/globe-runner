@@ -5,27 +5,32 @@ import { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 
 export default function AddLocationMap({
-  setLatitude,
-  setLongitude,
+  setLat,
+  setLong,
   setUserLatitude,
   setUserLongitude,
+  refresh,
+  setRefresh,
 }: {
-  setLatitude: Function;
-  setLongitude: Function;
+  setLat: Function;
+  setLong: Function;
   setUserLatitude: Function;
   setUserLongitude: Function;
+  refresh: boolean;
+  setRefresh: Function;
 }) {
   // map variable so we can clear it at the beginning of useEffect
   var myAddLocationMap: L.Map | undefined;
+
   var [playerMarker, setPlayerMarker] = useState<L.Marker<any> | undefined>();
 
-  var [dropDownValue, setDropDownValue] = useState("");
+  var [dropDownValue, setDropDownValue] = useState("Submitted Locations");
 
   var locationMarker: L.Marker<any> | undefined;
   var locationLatitude;
   var locationLongitude;
 
-  var dropvalue = "";
+  var dropvalue = "Submitted Locations";
   var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
 
   var locations: {
@@ -34,7 +39,7 @@ export default function AddLocationMap({
     description: string;
     latitude: number;
     longitude: number;
-    photo: string;
+    locationPhoto: string;
     title: string;
   }[];
 
@@ -123,17 +128,30 @@ export default function AddLocationMap({
       locationMarker = newMarker;
 
       locationLatitude = e.latlng.lat;
-      setLatitude(e.latlng.lat);
+      setLat(e.latlng.lat);
       locationLongitude = e.latlng.lng;
-      setLongitude(e.latlng.lng);
+      setLong(e.latlng.lng);
       console.log(
         "latitude: " + locationLatitude + ", longitude: " + locationLongitude
       );
     }
+
+    updateFilter();
   }, [myAddLocationMap]);
 
+  useEffect(() => {
+    if (mapContainer) {
+      dropvalue = dropDownValue;
+      if (dropvalue == "Submitted Locations") updateFilter();
+      console.log(
+        "refresh use effect triggered inside map and useEffect called!"
+      );
+    }
+  }, [refresh]);
+
   function updateFilter() {
-    myAddLocationMap = mapContainer;
+    if (!myAddLocationMap) myAddLocationMap = mapContainer;
+
     // clear all markers on the map and set new ones!
 
     // clear all of the previous layers
@@ -189,7 +207,7 @@ export default function AddLocationMap({
 
           var customPopup =
             '<div className="cardpopup">' +
-            `   <img className="cardpopup--image" src=${locationData.photo} height="100px" width="100px" alt=""></img>` +
+            `   <img className="cardpopup--image" src=${`data:image/jpeg;base64,${locationData.locationPhoto}`} height="100px" width="100px" alt=""></img>` +
             "   <hr>" +
             `   <div class="cardpopup--name">` +
             `     <span>${locationData.title}</span>` +
@@ -236,9 +254,6 @@ export default function AddLocationMap({
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      <h1 style={{ textAlign: "center" }}>
-        Map for viewing your suggested and approved locations
-      </h1>
       <div id="addLocationMapId"></div>
     </>
   );
