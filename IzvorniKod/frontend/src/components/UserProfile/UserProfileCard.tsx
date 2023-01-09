@@ -55,7 +55,7 @@ export default function UserProfileCard({
               {user.username}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {user.fullName}
+              {user.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {user.email}
@@ -65,7 +65,7 @@ export default function UserProfileCard({
             </Typography>
           </Box>
         </CardContent>
-        {user.userType.toLowerCase() !== "admin" && canEdit && (
+        {canEdit && (
           <CardActions sx={{ display: "flex", justifyContent: "end" }}>
             <IconButton onClick={() => setOpen(true)}>
               <EditIcon />
@@ -78,7 +78,6 @@ export default function UserProfileCard({
         onClose={() => setOpen(false)}
         oldUser={user}
       />
-      
     </>
   );
 }
