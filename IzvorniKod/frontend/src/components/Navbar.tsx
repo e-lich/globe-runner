@@ -7,19 +7,35 @@ import ChallengePopup from "./ChallengePopup";
 export default function Navbar() {
   const navigate = useNavigate();
   var user = JSON.parse(localStorage.getItem("user") || "{}");
-  const [isChallengePopUpOpen, setIsChallengePopUpOpen] = useState(false);
 
-  // useEffect(() => {
-  //   let interval = setInterval(async () => {
-  //     console.log("Checking for battles!");
+  const [challenges, setChallenges] = useState<any>();
 
-  //     if (Math.random() > 0.8) setIsChallengePopUpOpen(true);
-  //   }, 2000);
+  useEffect(() => {
+    let userFromLocalStorage = localStorage.getItem("user");
 
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // });
+    if (userFromLocalStorage === null) navigate("/login");
+  });
+
+  useEffect(() => {
+    let interval = setInterval(async () => {
+      console.log("Checking for battles!");
+      await fetchFights;
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  });
+
+  const fetchFights = async () => {
+    try {
+      const res = await axios.get("/fight/challenges");
+
+      setChallenges(res.data);
+    } catch (e) {
+      alert(e);
+    }
+  };
 
   function handleLogout() {
     const logout = async () => {
@@ -132,13 +148,12 @@ export default function Navbar() {
         </Link>
         <ul className="nav--links">
           <li>
-            <Link to="/about">About</Link>
+            <button onClick={() => console.log("accepted")}>Challenges</button>
           </li>
+          {/* <li>
+            <Link to="/about">About</Link>
+          </li> */}
         </ul>
-        <ChallengePopup
-          open={isChallengePopUpOpen}
-          onClose={setIsChallengePopUpOpen}
-        />
       </div>
     );
   return <></>;

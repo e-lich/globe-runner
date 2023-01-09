@@ -16,12 +16,6 @@ export default function Home() {
       }
     | undefined = JSON.parse(localStorage.getItem("user")!);
 
-  useEffect(() => {
-    let userFromLocalStorage = localStorage.getItem("user");
-
-    if (userFromLocalStorage === null) navigate("/login");
-  });
-
   if (user!.userType.toLowerCase() === "admin") return <AdminHome />;
 
   if (user!.userType.toLowerCase() === "cartographer")
