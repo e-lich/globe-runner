@@ -42,7 +42,7 @@ def respond_to_challenge(challengeID):
         request_data = request.get_json()
         response = request_data['response']
 
-        challenge = db.session.query(Challenge).filter(challengeID=challengeID).filter(victimUserID=currentUserID).first()
+        challenge = db.session.query(Challenge).filter_by(challengeID=challengeID).filter_by(victimUserID=currentUserID).first()
         if challenge is None:
             return ["Challenge not found"]
 

@@ -42,10 +42,7 @@ def get_close_by_players():
                 'challangeable': player.challengeable
             })
 
-    if len(closeByPlayers) == 0:
-        return ["No players found close by"]
-    else:
-        return closeByPlayers
+    return closeByPlayers
 
 def object_as_dict(obj):
     return {c.key: getattr(obj, c.key)
@@ -61,5 +58,6 @@ def post_user_info(userID):
     #vrati statistiku, popis kartica, rang na globalnoj ljestvici // NIJE IMPLEMENTIRANA STATISTIKA
     retVal = object_as_dict(user)
     retVal["numOfCards"] = db.session.query(Inventory).filter_by(userID=userID).count()
+    retVal.pop("password")
 
     return retVal

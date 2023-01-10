@@ -37,6 +37,12 @@ def login():
         elif type(user) != Admin and not user.confirmed:
             errors.append("Email not confirmed")
             return errors
+        elif type(user) == Cartographer and user.verifiedStatus == "unverified":
+            errors.append("Cartographer not verified yet.")
+            return errors
+        elif type(user) == Cartographer and user.verifiedStatus == "rejected":
+            errors.append("Cartographer has been rejected.")
+            return errors
         else:
             if type(user) == Admin:
                 photo = None

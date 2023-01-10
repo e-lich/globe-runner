@@ -20,9 +20,9 @@ def choose_cards():
         cardID2 = request_data['cardID2']
         cardID3 = request_data['cardID3']
 
-        fight = db.session.query(Fight).filter_by(player1ID=currentUserID).filter(points1=None).filter(point2=None).first()
+        fight = db.session.query(Fight).filter_by(player1ID=currentUserID).filter_by(points1=None).filter_by(point2=None).first()
         if fight is None:
-            fight = db.session.query(Fight).filter_by(player2ID=currentUserID).filter(points1=None).filter(point2=None).first()
+            fight = db.session.query(Fight).filter_by(player2ID=currentUserID).filter_by(points1=None).filter_by(point2=None).first()
             if fight is None:
                 return ["No fight found"]
 

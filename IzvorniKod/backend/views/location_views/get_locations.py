@@ -217,4 +217,16 @@ def get_owned_locations():
 
     inventory = db.session.query(Inventory).filter_by(userID=userID).all()
 
-    return formattedReturn(inventory)
+    owned_cards = []
+    for card in inventory:
+        location = db.session.query(Card).filter_by(cardID=card.cardID).first()
+        owned_cards.append({
+            "cardID":location.cardID,
+            "cardStatus":location.cardStatus,
+            "latitude":json.loads(location.cardLocation).get("latitude"),
+            "longitude":json.loads(location.cardLocation).get("longitude"),
+            "locationPhoto":location.locationPhoto,
+            "description":location.description,
+            "title":location.title
+        })
+    return owned_cards
