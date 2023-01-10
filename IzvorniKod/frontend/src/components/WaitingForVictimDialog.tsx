@@ -1,9 +1,6 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
+import { CircularProgress, Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import { useEffect } from "react";
@@ -23,8 +20,11 @@ export default function WaitingForVictimDialog({ onClose, open }: any) {
           if (
             challengeResponse === "went too far" ||
             challengeResponse === "declined"
-          )
-            window.location.reload();
+          ) {
+            onClose();
+            axios.delete("/fight/challenges/delete");
+            alert(challengeResponse);
+          }
 
           if (challengeResponse === "accepted") navigate("/fights");
         }
@@ -34,6 +34,7 @@ export default function WaitingForVictimDialog({ onClose, open }: any) {
         clearInterval(interval);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const fetchChallengeResponse = async () => {
@@ -56,11 +57,19 @@ export default function WaitingForVictimDialog({ onClose, open }: any) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Waiting for victim to respond!"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">Challange Request</DialogTitle>
 
-        <DialogContent></DialogContent>
+        <DialogContent sx={{ display: "flex", textAlign: "center" }}>
+          <Typography
+            variant="body1"
+            gutterBottom
+            component="div"
+            sx={{ mr: 2 }}
+          >
+            Waiting for victim to respond...
+          </Typography>
+          <CircularProgress />
+        </DialogContent>
       </Dialog>
     </div>
   );

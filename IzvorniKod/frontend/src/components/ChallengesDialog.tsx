@@ -1,10 +1,11 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
+
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
+
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
+
 import DialogTitle from "@mui/material/DialogTitle";
+import ChallengerCard from "./ChallengerCard";
 
 export default function ChallengesDialog({ onClose, open, challenges }: any) {
   return (
@@ -15,9 +16,13 @@ export default function ChallengesDialog({ onClose, open, challenges }: any) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Ban user"}</DialogTitle>
+        <DialogTitle>These people want to challenge you!</DialogTitle>
 
-        <DialogContent></DialogContent>
+        <DialogContent>
+          {challenges.map((challenge: any) => (
+            <ChallengerCard challenge={challenge} onClose={onClose} />
+          ))}
+        </DialogContent>
       </Dialog>
     </div>
   );

@@ -45,7 +45,7 @@ export default function PlayerCard(props: any) {
           {userInfo && (
             <ChallengeIcon
               userInfo={userInfo}
-              setOpen={() => props.setOpen()}
+              setOpen={() => setOpenWaiting(true)}
             />
           )}
         </div>
