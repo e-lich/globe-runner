@@ -29,7 +29,7 @@ class Cartographer(User):
 
     IBAN = db.Column(db.String(21))
     document = db.Column(db.Text)
-    verified = db.Column(db.Boolean)
+    verifiedStatus = db.Column(db.Enum("unverified", "verified", "rejected", name="verifiedStatus"))
 
     def __init__(self, username, name, email, password, photo, iban, id, confirmed=False):
 
@@ -41,7 +41,7 @@ class Cartographer(User):
         self.password = password
         self.IBAN = iban
         self.confirmed = confirmed
-        self.verified = False
+        self.verifiedStatus = "unverified"
         self.document = id
         self.banned = False
         self.signedIn = False
