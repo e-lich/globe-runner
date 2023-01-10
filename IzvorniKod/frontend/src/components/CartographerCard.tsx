@@ -18,9 +18,18 @@ export default function CartographerCard(props: any) {
       console.log(error);
     }
   }
-
-  function denyCartographer(): void {
-    throw new Error("Function not implemented.");
+  async function denyCartographer(): Promise<void> {
+    try {
+      const response = await axios.post(
+        `/cartographers/reject/${props.cartographer.userID}`
+      );
+      if (response.status === 200) {
+        console.log("Cartographer rejected");
+        props.refresh();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
