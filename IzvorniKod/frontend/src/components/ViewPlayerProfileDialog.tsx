@@ -18,8 +18,6 @@ export default function ViewPlayerProfileDialog({
 }: any) {
   // TODO - use the info from backedn to display stats and evetything else
 
-  console.log("THIS IS THE USER INFO: ", userInfo);
-
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle

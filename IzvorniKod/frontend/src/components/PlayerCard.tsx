@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import ChallengeIcon from "./ChallengeIcon";
 import ViewPlayerProfileDialog from "./ViewPlayerProfileDialog";
 import axios from "axios";
+import WaitingForVictimDialog from "./WaitingForVictimDialog";
 
 export default function PlayerCard(props: any) {
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
+  const [openWaiting, setOpenWaiting] = useState<any>(false);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -56,6 +58,14 @@ export default function PlayerCard(props: any) {
             setIsViewOpen(false);
           }}
           userInfo={userInfo}
+        />
+      )}
+      {openWaiting && (
+        <WaitingForVictimDialog
+          open={openWaiting}
+          onClose={() => {
+            setOpenWaiting(false);
+          }}
         />
       )}
     </>
