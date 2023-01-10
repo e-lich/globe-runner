@@ -10,26 +10,13 @@ import {
 import UserProfileCard from "./UserProfile/UserProfileCard";
 import UserStatsCard from "./UserProfile/UserStatsCard";
 import CloseIcon from "@mui/icons-material/Close";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
 export default function ViewPlayerProfileDialog({
   open,
   onClose,
-  player,
+  userInfo,
 }: any) {
   // TODO - use the info from backedn to display stats and evetything else
-  const [userInfo, setUserInfo] = useState<any>(null);
-
-  useEffect(() => {
-    const getUserInfo = async () => {
-      const response = await axios.get(`/players/info/${player.userId}`);
-      setUserInfo(response.data);
-    };
-    getUserInfo();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <Dialog open={open} onClose={onClose}>

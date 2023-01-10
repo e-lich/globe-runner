@@ -155,14 +155,14 @@ hr {
 
 ul.nav--links > li {
   display: inline;
-  padding: 20px;
+  padding: 10px;
 
   justify-content: center;
   align-items: center;
 }
 ul.nav--links {
+  display: flex;
   padding-top: 15px;
-  padding-left: 5px;
 }
 
 #map {

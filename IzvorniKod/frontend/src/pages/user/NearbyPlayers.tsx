@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import NavbarCustom from "../../components/Navbar";
 import PlayerCard from "../../components/PlayerCard";
+import WaitingForVictimDialog from "../../components/WaitingForVictimDialog";
 
 export default function NearbyPlayers() {
   const navigate = useNavigate();
