@@ -23,7 +23,7 @@ export default function ViewPlayerProfileDialog({
 
   useEffect(() => {
     const getUserInfo = async () => {
-      const response = await axios.get(`/players/info/${player.userID}`);
+      const response = await axios.get(`/players/info/${player.userId}`);
       setUserInfo(response.data);
     };
     getUserInfo();
@@ -64,8 +64,8 @@ export default function ViewPlayerProfileDialog({
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <UserProfileCard
-                    user={player}
-                    numberOfLocations={12}
+                    user={userInfo}
+                    numberOfLocations={userInfo.numOfCards}
                     canEdit={false}
                   />
                 </Grid>

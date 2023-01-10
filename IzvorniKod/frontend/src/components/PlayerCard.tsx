@@ -5,7 +5,6 @@ import ChallengeIcon from "./ChallengeIcon";
 import ViewPlayerProfileDialog from "./ViewPlayerProfileDialog";
 
 export default function PlayerCard(props: any) {
-  const placeholder = require("../images/profile_picture.jpg");
   const [isViewOpen, setIsViewOpen] = useState(false);
 
   return (
@@ -14,7 +13,7 @@ export default function PlayerCard(props: any) {
         <ListItemAvatar sx={{ m: 0 }}>
           <Avatar
             alt="profile picture"
-            src={`data:image/jpeg;base64,${props.closestCard.photo}`}
+            src={`data:image/jpeg;base64,${props.closestPlayer.photo}`}
           />
         </ListItemAvatar>
         <div className="player-buttons">

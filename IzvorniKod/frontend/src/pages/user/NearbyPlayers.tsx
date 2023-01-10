@@ -25,7 +25,7 @@ export default function NearbyPlayers() {
     const getClosebyPlayers = async () => {
       const response = await axios.get("/players/close-by");
       setClosestPlayers(response.data);
-      console.log(response);
+      console.log(response.data);
     };
 
     getClosebyPlayers();
@@ -47,8 +47,7 @@ export default function NearbyPlayers() {
             <List
               sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
             >
-              {/* TODO ovdje se ne displaya dobro no players nearby zbog tog sto nam vracaju data array sa sadrzajem poruke */}
-              {closestPlayers.lenght > 0 &&
+              {closestPlayers.lenght !== 0 &&
                 closestPlayers.map((closestPlayer: any, key: any) => (
                   <PlayerCard key={key} closestPlayer={closestPlayer} />
                 ))}

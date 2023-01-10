@@ -57,6 +57,7 @@ export default function ClaimedLocationCard(props: any): JSX.Element {
                 gutterBottom
                 variant="h6"
                 component="div"
+                noWrap
                 sx={{ justifyContent: "center", m: 0 }}
                 overflow="hidden"
               >

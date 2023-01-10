@@ -23,7 +23,7 @@ export default function OnSiteList({
   return (
     <>
       <Typography variant="h4" component="h1">
-        On Site Approval
+        Claimed locations
       </Typography>
       <Box
         sx={{

@@ -16,14 +16,16 @@ export default function OnSiteMap({
 }) {
   // map variable so we can clear it at the beginning of useEffect
   var myOnSiteMap: L.Map | undefined;
+
   var [routingControl, setRoutingControl] = useState<
     L.Routing.Control | undefined
   >();
   var [routeCreated, setRouteCreated] = useState(false);
 
-  var [dropDownValue, setDropDownValue] = useState("");
-  var dropvalue = "";
   var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
+
+  var [dropDownValue, setDropDownValue] = useState("Unclaimed Locations");
+  var dropvalue = "Unclaimed Locations";
 
   var locations: {
     cardID: number;
@@ -51,6 +53,8 @@ export default function OnSiteMap({
     });
     myOnSiteMap.addLayer(layer);
     myOnSiteMap.setView([45.8238, 15.9761], 13);
+
+    updateFilter();
   }, [myOnSiteMap]);
 
   useEffect(() => {
@@ -64,7 +68,7 @@ export default function OnSiteMap({
   }, [refresh]);
 
   function updateFilter() {
-    myOnSiteMap = mapContainer;
+    if (!myOnSiteMap) myOnSiteMap = mapContainer;
     // clear all markers on the map and set new ones!
 
     // clear all of the previous layers
@@ -155,7 +159,9 @@ export default function OnSiteMap({
 
           let popupImg = document.createElement("img");
           popupImg.style.cssText = "width:100px;height:100px;";
-          popupImg.src = locationData.locationPhoto;
+          popupImg.src = locationData.locationPhoto.startsWith("http")
+            ? locationData.locationPhoto
+            : `data:image/jpeg;base64,${locationData.locationPhoto}`;
           popupImg.alt = "location photo missing";
 
           let popupHr = document.createElement("HR");
@@ -280,10 +286,6 @@ export default function OnSiteMap({
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      <h1 style={{ textAlign: "center" }}>
-        Map for viewing Locations that need to be checked on-site and locations
-        you will check
-      </h1>
       <div id="onSiteMapId"></div>
       <Button
         variant="contained"
