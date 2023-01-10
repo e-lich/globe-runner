@@ -42,10 +42,7 @@ def get_close_by_players():
                 'challangeable': player.challengeable
             })
 
-    if len(closeByPlayers) == 0:
-        return ["No players found close by"]
-    else:
-        return closeByPlayers
+    return closeByPlayers
 
 def object_as_dict(obj):
     return {c.key: getattr(obj, c.key)
