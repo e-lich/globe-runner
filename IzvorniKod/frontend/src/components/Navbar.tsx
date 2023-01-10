@@ -165,9 +165,9 @@ export default function Navbar() {
                 </button>
               ) : null}
             </li>
-            {/* <li>
-            <Link to="/about">About</Link>
-          </li> */}
+            <li>
+              <Link to="/about">About</Link>
+            </li>
           </ul>
         </div>
         <ChallengesDialog

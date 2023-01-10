@@ -64,3 +64,7 @@ import backend.views.user_views.update_user
 import backend.views.user_views.delete_user
 import backend.views.admin_views.get_cartographers
 import backend.views.admin_views.update_cartographers
+import backend.views.fight_views.get_fight
+import backend.views.fight_views.update_fight
+import backend.views.fight_views.get_challenges
+import backend.views.fight_views.update_challenge

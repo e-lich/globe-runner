@@ -1,11 +1,25 @@
 import { ListItem, ListItemAvatar, Avatar } from "@mui/material";
 import { Button } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChallengeIcon from "./ChallengeIcon";
 import ViewPlayerProfileDialog from "./ViewPlayerProfileDialog";
+import axios from "axios";
 
 export default function PlayerCard(props: any) {
   const [isViewOpen, setIsViewOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState<any>(null);
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const response = await axios.get(
+        `/players/info/${props.closestPlayer.userId}`
+      );
+      setUserInfo(response.data);
+    };
+    getUserInfo();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -26,17 +40,24 @@ export default function PlayerCard(props: any) {
           >
             {props.closestPlayer.username}
           </Button>
-          <ChallengeIcon swords={props.swords} />
+          {userInfo && (
+            <ChallengeIcon
+              userInfo={userInfo}
+              setOpen={() => props.setOpen()}
+            />
+          )}
         </div>
       </ListItem>
 
-      <ViewPlayerProfileDialog
-        open={isViewOpen}
-        onClose={() => {
-          setIsViewOpen(false);
-        }}
-        player={props.closestPlayer}
-      />
+      {userInfo && (
+        <ViewPlayerProfileDialog
+          open={isViewOpen}
+          onClose={() => {
+            setIsViewOpen(false);
+          }}
+          userInfo={userInfo}
+        />
+      )}
     </>
   );
 }

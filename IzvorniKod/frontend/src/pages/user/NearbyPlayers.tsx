@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 import NavbarCustom from "../../components/Navbar";
 import PlayerCard from "../../components/PlayerCard";
+import WaitingForVictimDialog from "../../components/WaitingForVictimDialog";
 
 export default function NearbyPlayers() {
   const navigate = useNavigate();
   const [closestPlayers, setClosestPlayers] = useState<any>([]);
+  const [openWaiting, setOpenWaiting] = useState<any>(false);
 
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
@@ -49,7 +51,11 @@ export default function NearbyPlayers() {
             >
               {closestPlayers.lenght !== 0 &&
                 closestPlayers.map((closestPlayer: any, key: any) => (
-                  <PlayerCard key={key} closestPlayer={closestPlayer} />
+                  <PlayerCard
+                    key={key}
+                    closestPlayer={closestPlayer}
+                    setOpen={() => setOpenWaiting(true)}
+                  />
                 ))}
               {closestPlayers.length === 0 && (
                 <Typography variant="h6" sx={{ m: 2 }}>
@@ -60,6 +66,10 @@ export default function NearbyPlayers() {
           </div>
         </div>
       </div>
+      <WaitingForVictimDialog
+        open={openWaiting}
+        onClose={() => setOpenWaiting(false)}
+      />
     </>
   );
 }
