@@ -1,14 +1,4 @@
-import {
-  Alert,
-  Box,
-  Button,
-  Container,
-  CssBaseline,
-  Grid,
-  Link,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Alert, Box, Button, Link, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +11,7 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   const handleLogin = async (values: any) => {
+    setError([]);
     return new Promise((resolve, reject) => {
       axios
         .post("/login", {
@@ -38,7 +29,7 @@ export default function SignIn() {
           }
         })
         .catch((err) => {
-          console.log(err);
+          setError(["Something went wrong."]);
         });
     });
   };
