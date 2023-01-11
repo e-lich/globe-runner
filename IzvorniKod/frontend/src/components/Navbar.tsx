@@ -2,8 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ChallengesDialog from "./ChallengesDialog";
-import ChallengeButtonIcon from "./ChallengeButtonIcon";
+import ChallengesDialog from "./fights/ChallengesDialog";
+import ChallengeButtonIcon from "./fights/ChallengeButtonIcon";
 import { Icon } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 
@@ -11,7 +11,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   var user = JSON.parse(localStorage.getItem("user") || "{}");
 
-  const [challenges, setChallenges] = useState<any>();
+  const [challenges, setChallenges] = useState<any>([]);
   const [openChallenges, setOpenChallenges] = useState<any>();
 
   const challengesDummy: Array<{ challengeID: number; challenger: String }> = [
@@ -29,7 +29,7 @@ export default function Navbar() {
   useEffect(() => {
     let interval = setInterval(async () => {
       console.log("Checking for battles!");
-      await fetchFights;
+      await fetchFights();
     }, 5000);
 
     return () => {
@@ -40,7 +40,6 @@ export default function Navbar() {
   const fetchFights = async () => {
     try {
       const res = await axios.get("/fight/challenges");
-
       setChallenges(res.data);
     } catch (e) {
       alert(e);
@@ -184,7 +183,7 @@ export default function Navbar() {
         <ChallengesDialog
           open={openChallenges}
           onClose={() => setOpenChallenges(false)}
-          challenges={challengesDummy} // TODO - SWITCH THIS TO CHALLENGES
+          challenges={challenges} // TODO - SWITCH THIS TO CHALLENGES
         />
       </>
     );
