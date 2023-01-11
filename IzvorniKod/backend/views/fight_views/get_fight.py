@@ -1,6 +1,6 @@
 from backend import db, app
 from backend.database.models import Fight, Card, Inventory, Player
-from flask import request, jsonify, session
+from flask import request, jsonify, session, abort
 import json
 from geopy.distance import distance
 
@@ -65,7 +65,7 @@ def get_fight():
             fight = db.session.query(Fight).filter_by(player2ID=currentUserID).filter_by(points1=None).filter_by(points2=None).first()
             current_player1 = False
             if fight is None:
-                return ["No fight found"]
+                return abort(["No fight found"], 404)
         
         if not fight.player1Ready or not fight.player2Ready:
             return ["Other player has not chosen cards yet"]
