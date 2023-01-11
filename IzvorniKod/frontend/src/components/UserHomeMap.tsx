@@ -22,7 +22,7 @@ export default function UserHomeMap({
   var [userLatState, setUserLatState] = useState<number>();
   var [userLngState, setUserLngState] = useState<number>();
 
-  var locations: any;
+  var closeByLocations: any;
 
   // MAP INITIALIZATION
   useEffect(() => {
@@ -104,11 +104,9 @@ export default function UserHomeMap({
     try {
       const res = await axios.get("/locations/close-by");
 
-      locations = res.data;
-      updateMarkers();
+      closeByLocations = res.data;
 
-      if (res.data[0] === "No locations found close by")
-        console.log("There are no nearby locations!");
+      updateMarkers();
     } catch (e) {
       alert(e);
     }
@@ -173,8 +171,8 @@ export default function UserHomeMap({
       myMap!.setView([userLatNonState, userLngNonState], 14.5);
     }
 
-    if (locations[0] !== "No locations found close by")
-      locations.forEach((locationData: any) => {
+    if (closeByLocations[0] !== "No locations found close by")
+      closeByLocations.forEach((locationData: any) => {
         var customPopup =
           '<div className="cardpopup">' +
           `   <img className="cardpopup--image" src=${locationData.photo} height="100px" width="100px" alt=""></img>` +

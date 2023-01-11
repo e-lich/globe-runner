@@ -1,6 +1,6 @@
 from backend import app, db
 from flask import session, request, jsonify, redirect
-from backend.database.models import Card, Inventory, User, Player
+from backend.database.models import Card, Inventory, User, Player, Cartographer
 import base64
 
 def update(location):
@@ -143,10 +143,14 @@ def collect_location(cardID):
         user_type = session["userType"]
         userID = session["userID"]
 
-        user = db.session.query(User).filter_by(userID=userID).first()
-    
-        if user_type != "Player":
+        if user_type != "Player" and user_type != "Cartographer":
             return ["User is not a player"]
+
+        model = Player
+        if user_type == "Cartographer":
+            model = Cartographer
+        user = db.session.query(model).filter_by(userID=userID).first()
+
 
         ## mozda provjeru blizine dodati ali ne bi se smijelo nikad dogoditi da se pozove ova metoda ako nije dovljno blizu
     

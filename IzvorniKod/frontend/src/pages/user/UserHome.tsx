@@ -11,7 +11,7 @@ import axios from "axios";
 export default function UserHome() {
   const navigate = useNavigate();
   var [refresh, setRefresh] = useState<boolean>(false);
-  var [closeByLocations, setCloseByLocations] = useState<any>();
+  var [closestLocations, setClosestLocations] = useState<any>();
 
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
@@ -27,10 +27,10 @@ export default function UserHome() {
   });
 
   useEffect(() => {
-    axios.get("/locations/close-by").then((response) => {
+    axios.get("/locations/closest").then((response) => {
       console.log(response.data);
-      console.log("fetching closeby");
-      setCloseByLocations(response.data);
+      console.log("fetching closest");
+      setClosestLocations(response.data);
       console.log(response.data);
     });
   }, [refresh]);
@@ -48,9 +48,9 @@ export default function UserHome() {
           </div>
           <Paper style={{ maxHeight: "45%", overflow: "auto" }}>
             <List sx={{ textAlign: "center", border: 2 }}>
-              {closeByLocations &&
-              closeByLocations[0] !== "No locations found close by" ? (
-                closeByLocations?.map((closestCard: any, key: number) => (
+              {closestLocations &&
+              closestLocations[0] !== "No locations found close by" ? (
+                closestLocations?.map((closestCard: any, key: number) => (
                   <LocationCard
                     key={key}
                     closestCard={closestCard}
@@ -77,8 +77,8 @@ export default function UserHome() {
                 <></>
               )}
 
-              {closeByLocations ? (
-                closeByLocations[0] === "No locations found close by" && (
+              {closestLocations ? (
+                closestLocations[0] === "No locations found close by" && (
                   <div>There are no nearby locations!</div>
                 )
               ) : (

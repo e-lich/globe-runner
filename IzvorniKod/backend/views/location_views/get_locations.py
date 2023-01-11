@@ -178,6 +178,31 @@ def get_close_by_locations():
     else:
         return closeByLocations
 
+# vraca sve kartice u blizini
+@app.route('/locations/closest', methods=['GET'])
+def get_closest_locations():
+
+    if "userID" not in session:
+        return(['User not logged in'])
+
+    userID = session["userID"]
+
+    if session["userType"] != "Player":
+        return ["User is not a player"]
+
+    user = db.session.query(Player).filter_by(userID=userID).first()
+
+    lat = json.loads(user.playerLocation)['latitude']
+    lng = json.loads(user.playerLocation)['longitude']
+
+    player_loc = (lat, lng)
+
+    closeByLocations = get_within_distance(player_loc, 0.5)
+
+    if len(closeByLocations) == 0:
+        return ["No locations found close by"]
+    else:
+        return closeByLocations
 
 # vraca sve kartice koje igrac moze sakupiti
 @app.route('/locations/collectable', methods=['GET'])
