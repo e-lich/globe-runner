@@ -18,6 +18,10 @@ export default function UserHomeMap({
 
   var userLatNonState: number;
   var userLngNonState: number;
+
+  var [userLatState, setUserLatState] = useState<number>();
+  var [userLngState, setUserLngState] = useState<number>();
+
   var locations: any;
 
   // MAP INITIALIZATION
@@ -58,6 +62,8 @@ export default function UserHomeMap({
       .on("locationfound", function (e) {
         userLatNonState = e.latlng.lat;
         userLngNonState = e.latlng.lng;
+        setUserLatState(userLatNonState);
+        setUserLngState(userLngNonState);
 
         updateUserLocation(userLatNonState, userLngNonState); // tell the server where the user is currently
 
@@ -68,8 +74,7 @@ export default function UserHomeMap({
         myMap!.addLayer(currentMarker);
       })
       .on("locationerror", function (e) {
-        console.log(e);
-        alert("Location access denied.");
+        window.location.reload();
       });
 
     async function updateUserLocation(lat: number, lng: number) {
@@ -149,7 +154,16 @@ export default function UserHomeMap({
     });
     myMap!.addLayer(layer);
 
-    if (userLatNonState && userLngNonState) {
+    if (
+      (!userLatNonState && !userLngNonState) ||
+      (!userLatState && !userLngState)
+    ) {
+      if (!userLatNonState && !userLngNonState) {
+        userLatNonState = userLatState!;
+        userLngNonState = userLngState!;
+      }
+      console.log(userLatNonState);
+      console.log(userLngNonState);
       L.marker([userLatNonState, userLngNonState], {
         icon: myIcon,
       })
