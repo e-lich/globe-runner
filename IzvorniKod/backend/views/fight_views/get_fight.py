@@ -59,10 +59,10 @@ def get_fight():
         return ["Only players can get fights"]
 
     if request.method == 'GET': 
-        fight = db.session.query(Fight).filter(player1ID=currentUserID).filter(points1=None).filter(points2=None).first()
+        fight = db.session.query(Fight).filter_by(player1ID=currentUserID).filter_by(points1=None).filter_by(points2=None).first()
         current_player1 = True
         if fight is None:
-            fight = db.session.query(Fight).filter_by(player2ID=currentUserID).filter(points1=None).filter(points2=None).first()
+            fight = db.session.query(Fight).filter_by(player2ID=currentUserID).filter_by(points1=None).filter_by(points2=None).first()
             current_player1 = False
             if fight is None:
                 return ["No fight found"]
@@ -99,12 +99,12 @@ def get_fight():
         for card in cards:
             card.cardStrength -= 1
             if card.cardStrength == 0:
-                inventory = db.session.query(Inventory).filter(cardID=card.cardID).filter(userID=currentUserID).first()
+                inventory = db.session.query(Inventory).filter_by(cardID=card.cardID).filter_by(userID=currentUserID).first()
                 db.session.delete(inventory)
                 broken_cards.append(card.cardID)
 
         # check if player is still challangeable
-        number_of_owned_cards = db.session.query(Inventory).filter(userID=currentUserID).count()
+        number_of_owned_cards = db.session.query(Inventory).filter_by(userID=currentUserID).count()
         if number_of_owned_cards < 3:
             current_player.challengeable = False
 

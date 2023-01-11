@@ -39,13 +39,13 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/confirm" element={<EmailConfirm />} />
-        <Route path="/map" element={<UserHomeMap />} />
 
         {/* user and advanced user only routes */}
         <Route path="/userHome" element={<UserHome />} />
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path="/globalStats" element={<GlobalStats />} />
         <Route path="/nearbyPlayers" element={<NearbyPlayers />} />
+        <Route path="/fights" element={<div>Fights bam </div>} />
 
         {/* advanced user only routes */}
         <Route path="/addLocation" element={<AddLocation />} />

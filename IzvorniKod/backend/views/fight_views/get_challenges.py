@@ -21,27 +21,27 @@ def get_distance(challenger, victim):
 
 
 @app.route('/fight/challenges', methods=['GET'])
-def get_challenges(userID):
+def get_challenges():
     if "userID" not in session:
         return(['User not logged in'])
     
     user_type = session["userType"]
     currentUserID = session["userID"]
 
-    if user_type != "Player ":
+    if user_type != "Player":
         return ["Only players can be challenged"]
 
     if request.method == 'GET': 
 
-        challenges = db.session.query(Challenge).filter(victimUserID=currentUserID).filter(challengeStatus="pending").all()
+        challenges = db.session.query(Challenge).filter_by(victimUserID=currentUserID).filter_by(challengeStatus="pending").all()
 
         formatted_challenges = []
 
         for challenge in challenges:
-
+            challenger = db.session.query(Player).filter_by(userID=challenge.challengerUserID).first()
             formatted_challenges.append({
                 "challengeID": challenge.challengeID,
-                "challenger": challenge.challenger.username
+                "challenger": challenger.username
             })
 
         return formatted_challenges
@@ -58,17 +58,16 @@ def get_challenge_response():
     user_type = session["userType"]
     currentUserID = session["userID"]
 
-    currentUser = db.session.query(Player).filter(userID=currentUserID).first()
+    currentUser = db.session.query(Player).filter_by(userID=currentUserID).first()
 
     if user_type != "Player":
         return ["Only players can challenge other players"]
 
     if request.method == 'GET': 
 
-        challenge = db.session.query(Challenge).filter(challengerUserID=currentUserID).first()
+        challenge = db.session.query(Challenge).filter_by(challengerUserID=currentUserID).first()
 
-
-        victim = db.session.query(Player).filter(userID=challenge.victimUserID).first()
+        victim = db.session.query(Player).filter_by(userID=challenge.victimUserID).first()
 
         if challenge.challengeStatus == "pending" and get_distance(currentUser, victim) > 200:
             challenge.challengeStatus = "went_too_far"
@@ -79,7 +78,7 @@ def get_challenge_response():
                 "challengeStatus": challenge.challengeStatus
                 }
 
-        if challenge.status != "pending":
+        if challenge.challengeStatus != "pending":
             db.session.delete(challenge)
             db.session.commit()
 

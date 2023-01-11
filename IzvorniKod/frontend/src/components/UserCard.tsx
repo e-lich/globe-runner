@@ -8,7 +8,6 @@ import {
 import BlockIcon from "@mui/icons-material/Block";
 import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
-import BanUserProfile from "./BanUserPopup";
 import EditProfileDialog from "./EditProfileDialog";
 import BanUserDialog from "./BanUserDialog";
 

@@ -5,25 +5,33 @@ import { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 
 export default function AddLocationMap({
-  setLatitude,
-  setLongitude,
+  setLat,
+  setLong,
   setUserLatitude,
   setUserLongitude,
+  refresh,
+  setRefresh,
 }: {
-  setLatitude: Function;
-  setLongitude: Function;
+  setLat: Function;
+  setLong: Function;
   setUserLatitude: Function;
   setUserLongitude: Function;
+  refresh: boolean;
+  setRefresh: Function;
 }) {
   // map variable so we can clear it at the beginning of useEffect
   var myAddLocationMap: L.Map | undefined;
-  var [dropDownValue, setDropDownValue] = useState("");
+
+  var [dropDownValue, setDropDownValue] = useState("Submitted Locations");
 
   var locationMarker: L.Marker<any> | undefined;
   var locationLatitude;
   var locationLongitude;
 
-  var dropvalue = "";
+  var userLatNonState: number;
+  var userLngNonState: number;
+
+  var dropvalue = "Submitted Locations";
   var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
 
   var locations: {
@@ -32,7 +40,7 @@ export default function AddLocationMap({
     description: string;
     latitude: number;
     longitude: number;
-    photo: string;
+    locationPhoto: string;
     title: string;
   }[];
 
@@ -82,22 +90,19 @@ export default function AddLocationMap({
         watch: true,
       }) /* This will return map so you can do chaining */
       .on("locationfound", function (e) {
-        let userLat = e.latlng.lat;
-        let userLng = e.latlng.lng;
+        userLatNonState = e.latlng.lat;
+        userLngNonState = e.latlng.lng;
         setUserLatitude(e.latlng.lat);
         setUserLongitude(e.latlng.lng);
 
-        var currentMarker = L.marker([userLat, userLng], {
+        var currentMarker = L.marker([userLatNonState, userLngNonState], {
           icon: myIcon,
         }).bindPopup("Your are here :)");
-        var previousMarker: L.Marker<any> | undefined;
 
         myAddLocationMap!.addLayer(currentMarker);
-        previousMarker = currentMarker;
       })
       .on("locationerror", function (e) {
-        console.log(e);
-        alert("Location access denied.");
+        window.location.reload();
       });
 
     myAddLocationMap!.on("click", addMarker);
@@ -117,22 +122,46 @@ export default function AddLocationMap({
       locationMarker = newMarker;
 
       locationLatitude = e.latlng.lat;
-      setLatitude(e.latlng.lat);
+      setLat(e.latlng.lat);
       locationLongitude = e.latlng.lng;
-      setLongitude(e.latlng.lng);
+      setLong(e.latlng.lng);
       console.log(
         "latitude: " + locationLatitude + ", longitude: " + locationLongitude
       );
     }
+
+    updateFilter();
   }, [myAddLocationMap]);
 
+  useEffect(() => {
+    if (mapContainer) {
+      dropvalue = dropDownValue;
+      if (dropvalue == "Submitted Locations") updateFilter();
+      console.log(
+        "refresh use effect triggered inside map and useEffect called!"
+      );
+    }
+  }, [refresh]);
+
   function updateFilter() {
-    myAddLocationMap = mapContainer;
+    if (!myAddLocationMap) myAddLocationMap = mapContainer;
+
     // clear all markers on the map and set new ones!
 
     // clear all of the previous layers
     myAddLocationMap!.eachLayer(function (layer) {
       myAddLocationMap!.removeLayer(layer);
+    });
+
+    // MARKER OPTIONS FOR USER
+    var myIcon = L.icon({
+      iconUrl:
+        "https://www.shareicon.net/data/512x512/2016/03/13/733024_people_512x512.png",
+      iconSize: [30, 35], // size of the icon
+      shadowSize: [50, 64], // size of the shadow
+      iconAnchor: [15, 25], // point of the icon which will correspond to marker's location
+      shadowAnchor: [4, 62], // the same for the shadow
+      popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
     });
 
     // add necessary layers without any markers
@@ -143,7 +172,16 @@ export default function AddLocationMap({
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     });
     myAddLocationMap!.addLayer(layer);
-    myAddLocationMap!.setView([45.8238, 15.9761], 13);
+
+    if (userLatNonState && userLngNonState) {
+      L.marker([userLatNonState, userLngNonState], {
+        icon: myIcon,
+      })
+        .bindPopup("Your are here :)")
+        .addTo(myAddLocationMap!);
+
+      myAddLocationMap!.setView([userLatNonState, userLngNonState], 14.5);
+    }
 
     const fetchLocations = async () => {
       try {
@@ -183,7 +221,7 @@ export default function AddLocationMap({
 
           var customPopup =
             '<div className="cardpopup">' +
-            `   <img className="cardpopup--image" src=${locationData.photo} height="100px" width="100px" alt=""></img>` +
+            `   <img className="cardpopup--image" src=${`data:image/jpeg;base64,${locationData.locationPhoto}`} height="100px" width="100px" alt=""></img>` +
             "   <hr>" +
             `   <div class="cardpopup--name">` +
             `     <span>${locationData.title}</span>` +
@@ -230,9 +268,6 @@ export default function AddLocationMap({
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      <h1 style={{ textAlign: "center" }}>
-        Map for viewing your suggested and approved locations
-      </h1>
       <div id="addLocationMapId"></div>
     </>
   );

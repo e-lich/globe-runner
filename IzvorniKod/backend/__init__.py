@@ -42,6 +42,7 @@ def creds(response):
     response.headers.add('Access-Control-Allow-Credentials', 'true')
     response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
     response.headers.add('Access-Control-Allow-Headers', 'content-type')
+    response.headers.add('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS, PUT, HEAD')
     return response
     
 if __name__ == '__main__':
@@ -64,3 +65,7 @@ import backend.views.user_views.delete_user
 import backend.views.admin_views.get_cartographers
 import backend.views.admin_views.update_cartographers
 import backend.views.statistics_views.statistics
+import backend.views.fight_views.get_challenges
+import backend.views.fight_views.get_fight
+import backend.views.fight_views.update_challenge
+import backend.views.fight_views.update_fight

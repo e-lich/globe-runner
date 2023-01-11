@@ -25,20 +25,14 @@ const OVERLAY: CSSProperties = {
   height: "600px",
 };
 
-const PopupBasic = ({ open, onClose }: Props) => {
+const ChallengePopup = ({ open, onClose }: Props) => {
   // popup se hendla iz parent komponente - treba imat useState koji mijenja open varijalbi na true/false (ovisno jel popup otvoren ili ne)
   // i onClose funkciju koja mijenja open varijablu na false (zatvara popup) - to ce samo biti setOpen(false) u parent komponenti
   if (!open) return null;
 
   return (
     <div style={OVERLAY}>
-      <h1>~ Profile Information ~</h1>
-      {/* unutar ovo Contaier se moze stavljat sadrzaj Popup-a */}
-      <div style={{ width: "380px", fontSize: "30px" }}>
-        This is a beautiful profile inside a popup that is working, we can
-        display anything we want in here and pass any type of a property we
-        want! Love you all! &#60;3
-      </div>
+      <h1>~ You have been challenged bish ~</h1>
       <Button onClick={onClose} variant="contained">
         Close
       </Button>
@@ -46,4 +40,4 @@ const PopupBasic = ({ open, onClose }: Props) => {
   );
 };
 
-export default PopupBasic;
+export default ChallengePopup;

@@ -2,16 +2,8 @@ import { Icon } from "@mui/material";
 import axios from "axios";
 import { Button } from "react-bootstrap";
 
-export default function ChallengeIcon(props: any) {
+export default function ChallengeButtonIcon(props: any) {
   const swords = require("../images/swords.png");
-
-  const createChallenge = async () => {
-    try {
-      await axios.post("/fight/challenges/create/" + props.userInfo.userID);
-    } catch (e) {
-      alert(e);
-    }
-  };
 
   return (
     <>
@@ -19,7 +11,6 @@ export default function ChallengeIcon(props: any) {
         variant="text"
         color="primary"
         onClick={() => {
-          createChallenge();
           props.setOpen();
         }}
       >

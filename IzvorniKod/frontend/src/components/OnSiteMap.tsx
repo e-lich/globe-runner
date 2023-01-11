@@ -1,18 +1,31 @@
-import { Dialog, Paper } from "@mui/material";
+import { Button, Dialog, Paper } from "@mui/material";
 import axios from "axios";
 import { create } from "domain";
 import * as L from "leaflet";
 import "leaflet-routing-machine";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
-import { Button, Dropdown } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 
-export default function OnSiteMap() {
+export default function OnSiteMap({
+  refresh,
+  setRefresh,
+}: {
+  refresh: boolean;
+  setRefresh: Function;
+}) {
   // map variable so we can clear it at the beginning of useEffect
   var myOnSiteMap: L.Map | undefined;
-  var [dropDownValue, setDropDownValue] = useState("");
-  var dropvalue = "";
+
+  var [routingControl, setRoutingControl] = useState<
+    L.Routing.Control | undefined
+  >();
+  var [routeCreated, setRouteCreated] = useState(false);
+
   var [mapContainer, setMapContainer] = useState<L.Map | undefined>();
+
+  var [dropDownValue, setDropDownValue] = useState("Unclaimed Locations");
+  var dropvalue = "Unclaimed Locations";
 
   var locations: {
     cardID: number;
@@ -40,10 +53,22 @@ export default function OnSiteMap() {
     });
     myOnSiteMap.addLayer(layer);
     myOnSiteMap.setView([45.8238, 15.9761], 13);
+
+    updateFilter();
   }, [myOnSiteMap]);
 
+  useEffect(() => {
+    if (mapContainer) {
+      dropvalue = dropDownValue;
+      updateFilter();
+      console.log(
+        "refresh use effect triggered inside map and useEffect called!"
+      );
+    }
+  }, [refresh]);
+
   function updateFilter() {
-    myOnSiteMap = mapContainer;
+    if (!myOnSiteMap) myOnSiteMap = mapContainer;
     // clear all markers on the map and set new ones!
 
     // clear all of the previous layers
@@ -75,9 +100,10 @@ export default function OnSiteMap() {
     const fetchLocations = async () => {
       try {
         var res;
+        console.log("dropvalue is " + dropvalue);
         if (dropvalue) {
-          if (dropvalue === "On-site Check") {
-            console.log("fetching on-site check locations");
+          if (dropvalue === "Unclaimed Locations") {
+            console.log("fetching unclaimed locations");
             res = await axios.get("/locations/unclaimed");
           } else if (dropvalue === "Claimed Locations") {
             console.log("fetching claimed locations");
@@ -104,19 +130,19 @@ export default function OnSiteMap() {
 
     const handleClaim = () => {
       var locationData = JSON.parse(localStorage.getItem("locationData")!);
-      console.log("Trying to claim location with cardID: " + locationData.cardID);
-      //UNCOMMENT WHEN BACKEND IS READY
-      /* axios
+
+      axios
         .post("/locations/claim/" + locationData.cardID)
         .then((res) => {
           console.log(res);
-          if (res.data.success === true) {
-            fetchLocations().catch(console.error);
-          }
+          setRefresh((refresh: any) => !refresh);
+          // if (res.data.success === true) {
+          //   fetchLocations().catch(console.error);
+          // }
         })
         .catch((err) => {
           console.log(err);
-        }); */
+        });
     };
 
     const updateMarkers = () => {
@@ -130,31 +156,34 @@ export default function OnSiteMap() {
           let popupDiv = document.createElement("div");
           popupDiv.style.cssText =
             "display:flex;flex-direction:column;align-items:center;justify-content:center;";
-  
+
           let popupImg = document.createElement("img");
           popupImg.style.cssText = "width:100px;height:100px;";
-          popupImg.src = locationData.locationPhoto;
+          popupImg.src = locationData.locationPhoto.startsWith("http")
+            ? locationData.locationPhoto
+            : `data:image/jpeg;base64,${locationData.locationPhoto}`;
           popupImg.alt = "location photo missing";
-  
+
           let popupHr = document.createElement("HR");
-  
+
           let popupName = document.createElement("div");
           popupName.style.cssText =
             "display:flex;align-items:center;justify-content:center;";
           popupName.textContent = locationData.title;
-  
-          let popupClaimBtn = document.createElement("button");
-          popupClaimBtn.onclick = function () {
+
+          let popupBtn = document.createElement("button");
+
+          popupBtn.onclick = function () {
             localStorage.setItem("locationData", JSON.stringify(locationData));
             handleClaim();
           };
-          popupClaimBtn.textContent = "Claim";
-   
+          popupBtn.textContent = "Claim";
+
           popupDiv.append(popupImg);
           popupDiv.append(popupHr);
           popupDiv.append(popupName);
           popupDiv.append(popupHr);
-          popupDiv.append(popupClaimBtn);
+          if (dropvalue === "Unclaimed Locations") popupDiv.append(popupBtn);
 
           L.marker([locationData.latitude, locationData.longitude], {
             icon: locationIcon,
@@ -167,18 +196,32 @@ export default function OnSiteMap() {
     fetchLocations();
   }
 
- 
-
-  function createRoute() {
+  const createRoute = async () => {
     myOnSiteMap = mapContainer;
-    L.Routing.control({
-      plan: L.Routing.plan(
-        [
-          L.latLng(45.8238, 15.9761),
-          L.latLng(45.8238, 15.9421),
-          L.latLng(45.8238, 15.9521),
-        ],
-        {
+
+    var waypoints: L.LatLng[];
+
+    var res;
+
+    console.log("fetching claimed locations");
+    res = await axios.get("/locations/claimed");
+
+    if (res) {
+      if (res.data[0] === "No unclaimed locations found")
+        console.log(res.data[0]);
+      else if (
+        res.data[0] === "No claimed locations found for this cartographer"
+      )
+        console.log(res.data[0]);
+
+      locations = res.data;
+
+      waypoints = locations.map((location) =>
+        L.latLng(location.latitude, location.longitude)
+      );
+
+      var tempRoutingControl = L.Routing.control({
+        plan: L.Routing.plan(waypoints, {
           createMarker: function (i, wp) {
             return L.marker(wp.latLng, {
               draggable: true,
@@ -193,10 +236,27 @@ export default function OnSiteMap() {
               }),
             });
           },
-        }
-      ),
-    }).addTo(myOnSiteMap!);
-  }
+        }),
+      });
+
+      tempRoutingControl.addTo(myOnSiteMap!);
+
+      setRoutingControl(tempRoutingControl);
+      setRouteCreated(true);
+    }
+  };
+
+  const removeRoute = () => {
+    myOnSiteMap = mapContainer;
+
+    if (routingControl != null) {
+      myOnSiteMap!.removeControl(routingControl);
+      routingControl = undefined;
+    }
+
+    setRouteCreated(false);
+  };
+
   return (
     <>
       <Dropdown>
@@ -207,32 +267,41 @@ export default function OnSiteMap() {
         <Dropdown.Menu>
           <Dropdown.Item
             onClick={() => {
-              setDropDownValue("On-site Check");
-              dropvalue = "On-site Check";
+              setDropDownValue("Unclaimed Locations");
+              dropvalue = "Unclaimed Locations";
               updateFilter();
             }}
           >
-            On-site Check
+            Unclaimed Locations
           </Dropdown.Item>
 
           <Dropdown.Item
             onClick={async () => {
-              await setDropDownValue("Claimed Locations");
+              setDropDownValue("Claimed Locations");
               dropvalue = "Claimed Locations";
               updateFilter();
             }}
           >
-            Selected Locations
+            Claimed Locations
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      <h1 style={{ textAlign: "center" }}>
-        Map for viewing Locations that need to be checked on-site and locations
-        you will check
-      </h1>
       <div id="onSiteMapId"></div>
-      <Button variant="text" color="primary" onClick={() => createRoute()}>
+      <Button
+        variant="contained"
+        disabled={dropDownValue !== "Claimed Locations" || routeCreated}
+        color="primary"
+        onClick={() => createRoute()}
+      >
         Create Route
+      </Button>
+      <Button
+        variant="contained"
+        disabled={!routeCreated}
+        color="primary"
+        onClick={() => removeRoute()}
+      >
+        Remove Route
       </Button>
     </>
   );

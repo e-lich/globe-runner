@@ -9,7 +9,7 @@ import {
 import { Box } from "@mui/system";
 import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
-import EditMyProfileDialog from "../EditMyProfileDialog";
+import EditMyProfileDialog from "./EditMyProfileDialog";
 
 // type user = {
 //   userID: string;
@@ -22,9 +22,11 @@ import EditMyProfileDialog from "../EditMyProfileDialog";
 export default function UserProfileCard({
   user,
   numberOfLocations,
+  canEdit,
 }: {
   user: any;
   numberOfLocations: number;
+  canEdit: boolean;
 }) {
   const [open, setOpen] = useState(false);
   return (
@@ -52,9 +54,8 @@ export default function UserProfileCard({
             <Typography gutterBottom variant="h5" component="div">
               {user.username}
             </Typography>
-            {/* TODO - user needs to have a fullName, alongside everything else */}
             <Typography variant="body2" color="text.secondary">
-              {/* {user.fullName} */} Lovro Kovacic
+              {user.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {user.email}
@@ -64,7 +65,7 @@ export default function UserProfileCard({
             </Typography>
           </Box>
         </CardContent>
-        {user.userType.toLowerCase() !== "admin" && (
+        {canEdit && (
           <CardActions sx={{ display: "flex", justifyContent: "end" }}>
             <IconButton onClick={() => setOpen(true)}>
               <EditIcon />

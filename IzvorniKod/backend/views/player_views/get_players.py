@@ -1,6 +1,6 @@
 from backend import app, db
 from flask import request, jsonify, session, redirect
-from backend.database.models import Player
+from backend.database.models import Player, Inventory
 from geopy import distance
 import json
 from sqlalchemy import inspect
@@ -25,6 +25,8 @@ def get_close_by_players():
     closeByPlayers = []
 
     for player in db.session.query(Player).filter(Player.userID!=userID).filter(Player.signedIn==True).all():
+        if player.playerLocation is None:
+            continue
         player_location = json.loads(player.playerLocation)
         player_lat = player_location['latitude']
         player_lng = player_location['longitude']
@@ -37,13 +39,10 @@ def get_close_by_players():
                 'username': player.username,
                 'userId': player.userID,
                 'photo': player.profilePhoto,
-                'challangeable': player.challangeable
+                'challangeable': player.challengeable
             })
 
-    if len(closeByPlayers) == 0:
-        return ["No players found close by"]
-    else:
-        return closeByPlayers
+    return closeByPlayers
 
 def object_as_dict(obj):
     return {c.key: getattr(obj, c.key)
@@ -57,4 +56,8 @@ def post_user_info(userID):
         return ["User not found"]
 
     #vrati statistiku, popis kartica, rang na globalnoj ljestvici // NIJE IMPLEMENTIRANA STATISTIKA
-    return object_as_dict(user)
+    retVal = object_as_dict(user)
+    retVal["numOfCards"] = db.session.query(Inventory).filter_by(userID=userID).count()
+    retVal.pop("password")
+
+    return retVal
