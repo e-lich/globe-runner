@@ -12,6 +12,6 @@ EXPOSE 3000
 
 RUN npm run build
 
-RUN install -g serve
+RUN npm install -g serve
 
 CMD ["serve", "-s", "build"]

@@ -37,7 +37,18 @@ services:
     # depends_on:
     #   - postgres 
     container_name: flask_app
+    command: gunicorn -b 0.0.0.0:5000 backend:app
   
+  nginx:
+    container_name: nginx
+    restart: always
+    build: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - flask_app
+      
   react_app:
     build: ./frontend
     restart: always
@@ -51,3 +62,4 @@ services:
       - /app/node_modules
     stdin_open: true
     tty: true
+
