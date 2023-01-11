@@ -102,8 +102,7 @@ export default function AddLocationMap({
         myAddLocationMap!.addLayer(currentMarker);
       })
       .on("locationerror", function (e) {
-        console.log(e);
-        alert("Location access denied.");
+        window.location.reload();
       });
 
     myAddLocationMap!.on("click", addMarker);
