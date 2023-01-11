@@ -42,7 +42,7 @@ export default function PlayerCard(props: any) {
           >
             {props.closestPlayer.username}
           </Button>
-          {userInfo && (
+          {userInfo && userInfo.challengeable && (
             <ChallengeIcon
               userInfo={userInfo}
               setOpen={() => setOpenWaiting(true)}

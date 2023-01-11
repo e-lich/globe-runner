@@ -17,6 +17,9 @@ export default function ChallengerCard({ challenge, onClose }: any) {
         console.log("Challenge accepted!");
         navigator("/fights");
         // todo redirect to battle
+      } else {
+        console.log("Challenge not accepted!");
+        onClose();
       }
     } catch (error) {
       alert(error);

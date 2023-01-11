@@ -19,8 +19,8 @@ export default function ChallengesDialog({ onClose, open, challenges }: any) {
         <DialogTitle>These people want to challenge you!</DialogTitle>
 
         <DialogContent>
-          {challenges.map((challenge: any) => (
-            <ChallengerCard challenge={challenge} onClose={onClose} />
+          {challenges.map((challenge: any, key: any) => (
+            <ChallengerCard key={key} challenge={challenge} onClose={onClose} />
           ))}
         </DialogContent>
       </Dialog>
