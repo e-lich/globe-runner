@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart, ArcElement, Title, Legend } from "chart.js";
-import { Card, Typography } from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
 import axios from "axios";
 Chart.register(ArcElement);
 Chart.register(Title);
@@ -62,9 +62,22 @@ export default function UserStatsCard() {
         />
       )}
       {numOfFights === 0 && (
-        <Typography variant="h6" sx={{ textAlign: "center" }}>
-          You haven't played any fights yet.
-        </Typography>
+        <Box justifyContent="center" display="flex">
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ width: 0.4, minHeight: "50vh" }}
+          >
+            <Typography
+              variant="h6"
+              sx={{ textAlign: "center", fontWeight: "bold" }}
+            >
+              You haven't played any fights yet.
+            </Typography>
+          </Box>
+        </Box>
       )}
     </Card>
   );
