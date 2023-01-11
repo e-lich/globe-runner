@@ -169,8 +169,7 @@ export default function Navbar() {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  {user!.userType.toLowerCase().includes("player") ||
-                  user!.userType.toLowerCase() === "admin" ? (
+                  {user!.userType.toLowerCase().includes("player") ? (
                     <Dropdown.Item onClick={() => navigate("/userProfile")}>
                       My Profile
                     </Dropdown.Item>
