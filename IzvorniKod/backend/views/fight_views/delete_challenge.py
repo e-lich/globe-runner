@@ -13,7 +13,7 @@ def delete_challenge():
     if user_type != "Player":
         return ["Only players can delete challenges"]
 
-    if request.method == 'POST':
+    if request.method == 'DELETE':
         db.session.query(Challenge).filter_by(challengerUserID=currentUserID).delete()
         db.session.commit()
         return jsonify(success=True)
