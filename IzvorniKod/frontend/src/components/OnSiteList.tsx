@@ -1,6 +1,5 @@
 import { Box, List, Typography } from "@mui/material";
 import ClaimedLocationCard from "./ClaimedLocationCard";
-import PlayerCard from "./PlayerCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
