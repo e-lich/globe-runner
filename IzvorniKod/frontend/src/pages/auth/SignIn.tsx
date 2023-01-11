@@ -1,6 +1,6 @@
 import { Alert, Box, Button, Link, TextField, Typography } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -47,6 +47,13 @@ export default function SignIn() {
     email: Yup.string().required("Required"),
     password: Yup.string().min(8).required("Required"),
   });
+
+  useEffect(() => {
+    if (localStorage.getItem("user") !== null) {
+      navigate("/home");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box justifyContent="center" display="flex">
