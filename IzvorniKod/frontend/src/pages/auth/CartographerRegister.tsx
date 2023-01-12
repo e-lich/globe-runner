@@ -22,8 +22,6 @@ function CartographerRegister() {
 
   const navigate = useNavigate();
 
-  const baseURL = "http://127.0.0.1:5000";
-
   const handleRegister = async (values: any) => {
     let formData = new FormData();
 
@@ -40,7 +38,7 @@ function CartographerRegister() {
     };
 
     axios
-      .post(baseURL + "/register", formData, config)
+      .post("/register", formData, config)
       .then((response) => {
         console.log(response);
         if (response.data.email === undefined) {
