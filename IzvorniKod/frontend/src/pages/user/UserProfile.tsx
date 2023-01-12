@@ -18,6 +18,21 @@ export default function UserProfile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // fetch current user information
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const res = await axios.get("/user/current");
+        setUser(JSON.stringify(res.data));
+      } catch (e) {
+        alert(e);
+      }
+    };
+
+    fetchCurrentUser();
+    // todo add a refresh
+  }, []);
+
   return (
     <>
       <Navbar />

@@ -1,5 +1,4 @@
 import Button from "@mui/material/Button";
-import { Grid } from "@material-ui/core";
 import {
   Box,
   Card,
@@ -12,21 +11,35 @@ import {
 const placeholder = require("../images/card_photo.png");
 
 export default function LocationCard(props: any): JSX.Element {
+  const background = props.chosen ? "green" : "white";
+
   return (
     <>
-      <Box sx={{ justifyContent: "center", display: "flex" }}>
-        <Card sx={{ width: 300, maxHeight: 200, m: 1 }}>
+      <Box
+        sx={{
+          justifyContent: "center",
+          display: "flex",
+        }}
+      >
+        <Card
+          sx={{
+            width: 300,
+            maxHeight: 200,
+            m: 1,
+            backgroundColor: { background },
+          }}
+        >
           <CardActionArea onClick={props.cardOnClick}>
             <CardMedia
               sx={{ display: "flex", objectFit: "cover" }}
               height="100"
               component="img"
               image={
-                props.closestCard.photo === "None"
+                props.closestCard.locationPhoto === "None"
                   ? placeholder
-                  : props.closestCard.photo.startsWith("http")
-                  ? props.closestCard.photo
-                  : `data:image/jpeg;base64,${props.closestCard.photo}`
+                  : props.closestCard.locationPhoto.startsWith("http")
+                  ? props.closestCard.locationPhoto
+                  : `data:image/jpeg;base64,${props.closestCard.locationPhoto}`
               }
               alt="beautiful landscape"
             />
