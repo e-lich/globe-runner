@@ -91,7 +91,7 @@ export default function SignIn() {
                 as={TextField}
                 label="email or username"
                 name="email"
-                placeholder="Enter email"
+                placeholder="Enter email or username"
                 fullWidth
                 required
                 error={props.errors.email && props.touched.email}
