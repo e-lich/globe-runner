@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserCard from "../../components/UserCard";
 import axios from "axios";
+import AdminNavbar from "../../components/navbars/AdminNavbar";
 
 export default function AllUsers() {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ export default function AllUsers() {
 
   return (
     <>
-      <PlayerNavbar />
+      <AdminNavbar />
       <div className="align-items-center Auth-container">
         <form className="Auth-form">
           <div className="closest-players-title">
