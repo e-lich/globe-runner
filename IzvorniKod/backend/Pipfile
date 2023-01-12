@@ -16,6 +16,7 @@ geojson = "*"
 geopy = "*"
 requests = "*"
 flask-session = "*"
+redis = "*"
 
 [dev-packages]
 

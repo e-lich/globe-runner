@@ -19,8 +19,7 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
 
 app.config['SESSION_TYPE'] = 'redis'
-app.config['SESSION_REDIS'] = redis.Redis(host=os.getenv('REDIS_HOST'), port=int(os.getenv('REDIS_PORT')), db=0, password=os.getenv('REDIS_PASSWORD'), username=os.getenv('REDIS_USER'))
-app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_REDIS'] = redis.from_url(os.getenv('REDIS_URL'))
 app.config['SESSION_USE_SIGNER'] = True
 app.config['SESSION_COOKIE_SECURE'] = False
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
