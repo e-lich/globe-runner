@@ -9,12 +9,15 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import EndFightDialog from "../components/EndFightDialog";
 import LocationCard from "../components/LocationCard";
 
 export default function Fights() {
   const [InventoryCards, setInventoryCards] = useState([]);
   const [chosenCards, setChosenCards] = useState<any>([]);
   const [ready, setReady] = useState(false);
+  const [fightResult, setFightResult] = useState<any>(null);
+  const [endFightOpen, setEndFightOpen] = useState(false);
 
   useEffect(() => {
     const getInventoryCards = async () => {
@@ -42,12 +45,49 @@ export default function Fights() {
     }
     return false;
   }
-  function handleFight() {
+  async function handleFight() {
     setReady(true);
+    const response = await axios.post("fights/cards", {
+      cardID1: chosenCards[0].cardID,
+      cardID2: chosenCards[1].cardID,
+      cardID3: chosenCards[2].cardID,
+    });
+    console.log(response);
+  }
+
+  useEffect(() => {
+    let interval: any;
+    if (ready) {
+      interval = setInterval(async () => {
+        console.log("Checking for battles!");
+        await fetchFightResults();
+      }, 5000);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [ready]);
+
+  async function fetchFightResults() {
+    let response = await axios.get("fight/result");
+    if (response.data && response.data.points) {
+      console.log("FIGHT RESPONSE: " + response.data);
+      setReady(false);
+      setFightResult({
+        points1: response.data.points1,
+        points2: response.data.points2,
+        winner: response.data.winner,
+        eloScore: response.data.eloScore,
+        brokenCards: response.data.brokenCards,
+      });
+      setEndFightOpen(true);
+    } else {
+      console.log("Other player not yet ready!!!!");
+    }
   }
 
   return (
-    // make box have column flex display
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Typography variant="h2" sx={{ textAlign: "center", fontWeight: "bold" }}>
         Pick 3 Cards to fight
@@ -105,7 +145,7 @@ export default function Fights() {
         {!ready ? (
           <Button
             disabled={chosenCards.length === 3 ? false : true}
-            sx={{ display: "inline" }}
+            sx={{ display: "inline", mt: 4 }}
             size="large"
             onClick={() => {
               console.log("Fight");
@@ -120,9 +160,13 @@ export default function Fights() {
             </Typography>
           </Button>
         ) : (
-          <CircularProgress />
+          <CircularProgress sx={{ mt: 4 }} />
         )}
       </Box>
+      <EndFightDialog
+        open={endFightOpen}
+        onClose={() => setEndFightOpen(false)}
+      ></EndFightDialog>
     </Box>
   );
 }

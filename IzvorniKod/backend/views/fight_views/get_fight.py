@@ -59,10 +59,10 @@ def get_fight():
         return ["Only players can get fights"]
 
     if request.method == 'GET': 
-        fight = db.session.query(Fight).filter_by(player1ID=currentUserID).filter_by(points1=None).filter_by(points2=None).first()
+        fight = db.session.query(Fight).filter_by(player1UserID=currentUserID).filter_by(points1=None).filter_by(points2=None).first()
         current_player1 = True
         if fight is None:
-            fight = db.session.query(Fight).filter_by(player2ID=currentUserID).filter_by(points1=None).filter_by(points2=None).first()
+            fight = db.session.query(Fight).filter_by(player2UserID=currentUserID).filter_by(points1=None).filter_by(points2=None).first()
             current_player1 = False
             if fight is None:
                 return abort(["No fight found"], 404)
@@ -71,11 +71,11 @@ def get_fight():
             return ["Other player has not chosen cards yet"]
 
         if current_player1:
-            current_player = db.session.query(Player).filter_by(playerID=fight.player1ID).first()
-            other_player = db.session.query(Player).filter_by(playerID=fight.player2ID).first()
+            current_player = db.session.query(Player).filter_by(playerID=fight.player1UserID).first()
+            other_player = db.session.query(Player).filter_by(playerID=fight.player2UserID).first()
         else:
-            current_player = db.session.query(Player).filter_by(playerID=fight.player2ID).first()
-            other_player = db.session.query(Player).filter_by(playerID=fight.player1ID).first()
+            current_player = db.session.query(Player).filter_by(playerID=fight.player2UserID).first()
+            other_player = db.session.query(Player).filter_by(playerID=fight.player1UserID).first()
 
         player1_card1 = db.session.query(Card).filter_by(cardID=fight.cardID11).first()
         player1_card2 = db.session.query(Card).filter_by(cardID=fight.cardID12).first()
