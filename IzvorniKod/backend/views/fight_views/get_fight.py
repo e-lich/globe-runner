@@ -65,7 +65,7 @@ def get_fight():
             fight = db.session.query(Fight).filter_by(player2UserID=currentUserID).filter_by(points1=None).filter_by(points2=None).first()
             current_player1 = False
             if fight is None:
-                return abort("No fight found", 404)
+                return abort(404, "No fight found")
         
         if not fight.player1Ready or not fight.player2Ready:
             return ["Other player has not chosen cards yet"]
