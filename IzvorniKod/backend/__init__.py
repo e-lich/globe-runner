@@ -20,8 +20,9 @@ app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
 
 app.config['SESSION_TYPE'] = 'redis'
 app.config['SESSION_REDIS'] = redis.from_url(os.getenv('REDIS_URL'))
+app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_USE_SIGNER'] = True
-app.config['SESSION_COOKIE_SECURE'] = False
+app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
@@ -36,7 +37,7 @@ app.config['MAIL_DEFAULT_SENDER'] = os.getenv('DEFAULT_FROM_EMAIL')
 
 db = SQLAlchemy(app)
 mail = Mail(app)
-Session(app)
+server_session = Session(app)
 
 CORS(app)
 
