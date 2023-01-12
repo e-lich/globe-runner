@@ -29,10 +29,12 @@ def get_collected_locations_stats():
 
 @app.route('/users/stats', methods=['GET'])
 def get_user_stats():
-    userID = session['userID']
+    
 
-    if userID == None:
+    if 'userID' not in session:
         return ["User not logged in."]
+
+    userID = session['userID']
 
     if session['userType'] != "Player" and session['userType'] != "advancedPlayer":
         return ["Only players can get stats"]
