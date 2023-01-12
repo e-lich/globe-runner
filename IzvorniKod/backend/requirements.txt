@@ -5,4 +5,8 @@ python-dotenv
 flask-cors
 psycopg2
 flask-mail
+flask-session
 debugpy
+geojson
+geopy
+requests
