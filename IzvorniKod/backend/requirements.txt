@@ -10,3 +10,4 @@ debugpy
 geojson
 geopy
 requests
+redis
