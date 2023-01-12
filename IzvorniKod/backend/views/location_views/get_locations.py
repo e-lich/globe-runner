@@ -250,7 +250,7 @@ def get_owned_locations():
             "cardStatus":location.cardStatus,
             "latitude":json.loads(location.cardLocation).get("latitude"),
             "longitude":json.loads(location.cardLocation).get("longitude"),
-            "locationPhoto":location.locationPhoto,
+            "photo":location.locationPhoto,
             "description":location.description,
             "title":location.title
         })

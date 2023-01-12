@@ -1,7 +1,8 @@
-import Navbar from "../../components/Navbar";
+import PlayerNavbar from "../../components/navbars/PlayerNavbar";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CartographerProfileMap from "../../components/CartographerProfileMap";
+import CartographerNavbar from "../../components/navbars/CartographerNavbar";
 
 export default function CartographerMyProfile() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function CartographerMyProfile() {
 
   return (
     <>
-      <Navbar />
+      <CartographerNavbar />
       <CartographerProfileMap />
       <div className="align-items-center Auth-container">
         <form className="Auth-form">

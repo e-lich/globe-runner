@@ -1,3 +1,5 @@
+import { Typography } from "@mui/material";
+import { color } from "@mui/system";
 import axios from "axios";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -199,9 +201,7 @@ export default function CartographerHomeMap() {
 
   return (
     <>
-      <h1 style={{ textAlign: "center" }}>
-        Map for viewing players' suggested locations
-      </h1>
+      <h1 style={{ textAlign: "center", color: "red" }}>Suggested Locations</h1>
       <div id="cartographerHomeMapId"></div>
       <CartographerHomePopup
         open={isPopupOpen}

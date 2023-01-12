@@ -1,4 +1,4 @@
-import Navbar from "../../components/Navbar";
+import PlayerNavbar from "../../components/navbars/PlayerNavbar";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserCard from "../../components/UserCard";
@@ -42,7 +42,7 @@ export default function AllUsers() {
 
   return (
     <>
-      <Navbar />
+      <PlayerNavbar />
       <div className="align-items-center Auth-container">
         <form className="Auth-form">
           <div className="closest-players-title">

@@ -1,4 +1,4 @@
-import Navbar from "../../components/Navbar";
+import PlayerNavbar from "../../components/navbars/PlayerNavbar";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
@@ -34,7 +34,7 @@ export default function CartographerRequests() {
 
   return (
     <>
-      <Navbar />
+      <PlayerNavbar />
       <Box justifyContent="center" display="flex">
         <Box
           display="flex"
