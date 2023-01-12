@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 from backend import db
 import datetime
 import uuid
+import json
 
 
 # User db model
@@ -46,6 +47,12 @@ class Cartographer(User):
         self.banned = False
         self.signedIn = False
 
+    def isPlayer(self):
+        return False
+
+    def isCartographer(self):
+        return True
+
 # Player db model
 class Player(User):
     __tablename__ = "Players"
@@ -70,6 +77,15 @@ class Player(User):
         self.confirmed = confirmed
         self.signedIn = False
         self.challengeable = False
+
+    def isAdvanced(self):
+        return self.advanced
+
+    def isPlayer(self):
+        return True
+
+    def isCartographer(self):
+        return False
 
 # Admin db model
 class Admin(db.Model):
@@ -99,6 +115,24 @@ class Card(db.Model):
     cardStatus = db.Column(db.Enum("submitted", "unclaimed", "claimed", "verified", name="card_status_type"))
     authorUserID = db.Column(db.String(32), db.ForeignKey("Players.userID"))
     cartographerID = db.Column(db.String(32), db.ForeignKey("Cartographers.userID")) 
+
+    def formatted(cls, **filters):
+        queryTmp = query(Card)
+        for key, value in filters.items():
+            queryTmp = queryTmp.filter_by(**{key: value})
+        results = queryTmp.all()
+        locations = []
+        for location in results:
+            locations.append({
+                "cardID":location.cardID,
+                "cardStatus":location.cardStatus,
+                "latitude":json.loads(location.cardLocation).get("latitude"),
+                "longitude":json.loads(location.cardLocation).get("longitude"),
+                "locationPhoto":location.locationPhoto,
+                "description":location.description,
+                "title":location.title
+            })
+        return locations
 
 # Inventory db model
 class Inventory(db.Model):
@@ -163,3 +197,13 @@ class Fight(db.Model):
         self.points1 = 0
         self.points2 = 0
         self.fightTimestamp = datetime.datetime.now()
+
+
+def getUserByID(userType, userID):
+    model = Player
+    if userType == 'Cartographer':
+        model = Cartographer
+    return db.session.query(model).filter_by(userID=userID).first()
+
+def query(model):
+    return db.session.query(model)
