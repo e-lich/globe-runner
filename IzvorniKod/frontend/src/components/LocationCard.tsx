@@ -35,11 +35,11 @@ export default function LocationCard(props: any): JSX.Element {
               height="100"
               component="img"
               image={
-                props.closestCard.locationPhoto === "None"
+                props.closestCard.photo === "None"
                   ? placeholder
-                  : props.closestCard.locationPhoto.startsWith("http")
-                  ? props.closestCard.locationPhoto
-                  : `data:image/jpeg;base64,${props.closestCard.locationPhoto}`
+                  : props.closestCard.photo.startsWith("http")
+                  ? props.closestCard.photo
+                  : `data:image/jpeg;base64,${props.closestCard.photo}`
               }
               alt="beautiful landscape"
             />
