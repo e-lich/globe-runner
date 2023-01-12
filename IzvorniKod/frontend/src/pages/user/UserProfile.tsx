@@ -2,7 +2,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/Navbar";
+import PlayerNavbar from "../../components/navbars/PlayerNavbar";
 import UserInventory from "../../components/UserProfile/UserInventory";
 import UserProfileCard from "../../components/UserProfile/UserProfileCard";
 import UserStatsCard from "../../components/UserProfile/UserStatsCard";
@@ -35,7 +35,7 @@ export default function UserProfile() {
 
   return (
     <>
-      <Navbar />
+      <PlayerNavbar />
       <Grid container spacing={2}>
         <Grid item xs={4.5}>
           <Typography variant="h5" sx={{ m: 2 }}>

@@ -1,10 +1,10 @@
-import Navbar from "../components/Navbar";
+import PlayerNavbar from "../components/navbars/PlayerNavbar";
 import React from "react";
 
 export default function About() {
   return (
     <>
-      <Navbar />
+      <PlayerNavbar />
       <div className="align-items-center Auth-container">
         <form className="Auth-form">
           <div className="Auth-form-content">

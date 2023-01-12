@@ -108,8 +108,8 @@ export default function CartographerProfileMap() {
 
   return (
     <>
-      <h1 style={{ textAlign: "center" }}>
-        Map for viewing the location you accepted
+      <h1 style={{ textAlign: "center", color: "green" }}>
+        Accepted Locations
       </h1>
       <div id="cartographerProfileMapId"></div>
     </>

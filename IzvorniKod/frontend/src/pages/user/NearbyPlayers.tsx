@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import NavbarCustom from "../../components/Navbar";
+import NavbarCustom from "../../components/navbars/PlayerNavbar";
 import PlayerCard from "../../components/PlayerCard";
 import WaitingForVictimDialog from "../../components/fights/WaitingForVictimDialog";
 

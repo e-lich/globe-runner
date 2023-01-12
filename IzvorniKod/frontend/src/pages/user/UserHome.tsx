@@ -4,7 +4,7 @@ import UserHomeMap from "../../components/UserHomeMap";
 import LocationCard from "../../components/LocationCard";
 import { List } from "@mui/material";
 
-import Navbar from "../../components/Navbar";
+import PlayerNavbar from "../../components/navbars/PlayerNavbar";
 import { Grid, Paper } from "@material-ui/core";
 import axios from "axios";
 
@@ -14,14 +14,14 @@ export default function UserHome() {
   var [closestLocations, setClosestLocations] = useState<any>();
 
   useEffect(() => {
-    let userFromLocalStorage = localStorage.getItem("user");
+    var user = JSON.parse(localStorage.getItem("user") || "{}");
 
-    if (userFromLocalStorage === null) navigate("/login");
+    if (user === null) navigate("/login");
 
     if (
-      !JSON.parse(userFromLocalStorage!)
-        .userType.toLowerCase()
-        .includes("player")
+      !user ||
+      !user.userType ||
+      !user.userType.toLowerCase().includes("player")
     )
       navigate("/home");
   });
@@ -37,7 +37,7 @@ export default function UserHome() {
 
   return (
     <>
-      <Navbar />
+      <PlayerNavbar />
       <Grid container>
         <Grid item xs={12} sm={9} style={{ height: "70vh" }}>
           <UserHomeMap refresh={refresh} setRefresh={setRefresh} />
@@ -49,7 +49,8 @@ export default function UserHome() {
           <Paper style={{ maxHeight: "45%", overflow: "auto" }}>
             <List sx={{ textAlign: "center", border: 2 }}>
               {closestLocations &&
-              closestLocations[0] !== "No locations found close by" ? (
+              closestLocations[0] !== "No locations found close by" &&
+              closestLocations[0] !== "User not logged in" ? (
                 closestLocations?.map((closestCard: any, key: number) => (
                   <LocationCard
                     key={key}

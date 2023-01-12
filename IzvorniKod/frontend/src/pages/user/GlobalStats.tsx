@@ -1,4 +1,4 @@
-import Navbar from "../../components/Navbar";
+import PlayerNavbar from "../../components/navbars/PlayerNavbar";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +20,7 @@ export default function GlobalStats() {
 
   return (
     <>
-      <Navbar />
+      <PlayerNavbar />
       <div className="align-items-center Auth-container">
         <form className="Auth-form">
           <div className="Auth-form-content">

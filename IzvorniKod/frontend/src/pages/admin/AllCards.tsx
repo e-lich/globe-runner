@@ -1,7 +1,8 @@
-import Navbar from "../../components/Navbar";
+import PlayerNavbar from "../../components/navbars/PlayerNavbar";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AllCardsMap from "../../components/AllCardsMap";
+import AdminNavbar from "../../components/navbars/AdminNavbar";
 
 export default function AllCards() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function AllCards() {
 
   return (
     <>
-      <Navbar />
+      <AdminNavbar />
       <AllCardsMap />
       <div className="align-items-center Auth-container">
         <form className="Auth-form">

@@ -16,10 +16,18 @@ export default function Home() {
       }
     | undefined = JSON.parse(localStorage.getItem("user")!);
 
-  if (user!.userType.toLowerCase() === "admin") return <AdminHome />;
+  useEffect(() => {
+    if (localStorage.getItem("user") === null) navigate("/login");
+  }, []);
 
-  if (user!.userType.toLowerCase() === "cartographer")
+  if (user && user.userType && user.userType.toLowerCase() === "admin")
+    return <AdminHome />;
+
+  if (user && user.userType && user.userType.toLowerCase() === "cartographer")
     return <CartographerHome />;
 
-  return <UserHome />;
+  if (user && user.userType && user.userType.toLowerCase().includes("player"))
+    return <UserHome />;
+
+  return <></>;
 }

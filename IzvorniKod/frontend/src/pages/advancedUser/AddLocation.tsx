@@ -1,4 +1,4 @@
-import Navbar from "../../components/Navbar";
+import PlayerNavbar from "../../components/navbars/PlayerNavbar";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddLocationMap from "../../components/AddLocationMap";
@@ -29,7 +29,7 @@ export default function AddLocation() {
 
   return (
     <>
-      <Navbar />
+      <PlayerNavbar />
       <Grid container>
         <Grid item xs={12} sm={7} style={{ height: "70vh" }}>
           <AddLocationMap
