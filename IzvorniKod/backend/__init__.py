@@ -18,11 +18,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
 
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_FILE_DIR'] = '/app/session_data'
+# app.config['SESSION_TYPE'] = 'filesystem'
+# app.config['SESSION_FILE_DIR'] = '/app/session_data'
 
-#app.config['SESSION_TYPE'] = 'redis'
-#app.config['SESSION_REDIS'] = redis.from_url('redis://0.0.0.0:6379')
+app.config['SESSION_TYPE'] = 'redis'
+app.config['SESSION_REDIS'] = redis.Redis(host=os.getenv('REDIS_HOST'), port=os.getenv('REDIS_PORT'), db=0, password=os.getenv('REDIS_PASSWORD'), username=os.getenv('REDIS_USER'))
 app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_USE_SIGNER'] = True
 app.config['SESSION_COOKIE_SECURE'] = False
