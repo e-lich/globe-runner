@@ -1,8 +1,9 @@
 from backend import app, db
 from flask import session, redirect
-from backend.database.models import Card, Player, Cartographer, Inventory
+from backend.database.models import Card, Player, Cartographer, Inventory, getUserByID, query
 import json
 from geopy import distance
+from sqlalchemy import MetaData
 
 def formattedReturn(locations):
     locations_arr = []
@@ -28,25 +29,18 @@ def get_submitted_locations():
     userID = session["userID"]
     user_type = session["userType"]
 
-    locations = []
+    user = getUserByID(user_type, userID)
 
-    if user_type == "Player":
-        user = db.session.query(Player).filter_by(userID=userID).first()
+    if user.isPlayer() and not user.isAdvanced():
+        return ["Player is not advanced and cannot submit locations"]
 
-        if user.advanced == False:
-            return ["Player is not advanced and cannot submit locations"]
-
-        locations = db.session.query(Card).filter_by(authorUserID=userID, cardStatus="submitted").all()
-    
-    elif user_type == "Cartographer":
-        user = db.session.query(Cartographer).filter_by(userID=userID).first()
-
-        locations = db.session.query(Card).filter_by(cardStatus="submitted").all()
-    
-    if len(locations) == 0:
-        return ["No submitted locations found"]
+    if user.isPlayer():
+        return Card().formatted(authorUserID=userID, cardStatus="submitted")
+    elif user.isCartographer():
+        return Card().formatted(cartographerID=userID, cardStatus="submitted")
     else:
-        return formattedReturn(locations)
+        return ["This shouldn't happen."]
+    
 
 
 @app.route('/locations/approved', methods=['GET'])
@@ -57,25 +51,17 @@ def get_approved_locations():
     userID = session["userID"]
     user_type = session["userType"]
 
-    locations = []
+    user = getUserByID(user_type, userID)
 
-    if user_type == "Player":
-        user = db.session.query(Player).filter_by(userID=userID).first()
+    if user.isPlayer() and not user.isAdvanced():
+        return ["Player is not advanced and cannot submit locations"]
 
-        if user.advanced == False:
-            return ["Player is not advanced and cannot submit locations"]
-
-        locations = db.session.query(Card).filter_by(authorUserID=userID, cardStatus="verified").all()
-    
-    elif user_type == "Cartographer":
-        user = db.session.query(Cartographer).filter_by(userID=userID).first()
-
-        locations = db.session.query(Card).filter_by(cartographerID=userID, cardStatus="verified").all()
-    
-    if len(locations) == 0:
-        return ["No approved locations found"]
+    if user.isPlayer():
+        return Card().formatted(authorUserID=userID, cardStatus="verified")
+    elif user.isCartographer():
+        return Card().formatted(cartographerID=userID, cardStatus="verified")
     else:
-        return formattedReturn(locations)
+        return ["This shouldn't happen."]
 
 
 @app.route('/locations/unclaimed', methods=['GET'])
@@ -86,12 +72,12 @@ def get_on_site_check_locations():
     if session["userType"] != "Cartographer":
         return ["User is not a cartographer"]
 
-    locations = db.session.query(Card).filter_by(cardStatus="unclaimed").all()
+    locations = Card().formatted(cardStatus="unclaimed")
     
     if len(locations) == 0:
         return ["No unclaimed locations found"]
     else:
-        return formattedReturn(locations)
+        return locations
 
 
 @app.route('/locations/claimed', methods=['GET'])
@@ -104,12 +90,12 @@ def get_on_site_check_claimed_locations():
 
     cartographerID = session["userID"]
 
-    locations = db.session.query(Card).filter_by(cartographerID=cartographerID, cardStatus="claimed").all()
+    locations = Card().formatted(cartographerID=cartographerID, cardStatus="claimed")
 
     if len(locations) == 0:
         return ["No claimed locations found for this cartographer"]
     else:
-        return formattedReturn(locations)
+        return locations
 
 @app.route('/locations/all', methods=['GET'])
 def get_all_locations():
@@ -119,12 +105,12 @@ def get_all_locations():
     if session["userType"] != "Admin":
         return ["User is not an admin"]
 
-    locations = db.session.query(Card).all()
+    locations = Card().formatted()
 
     if len(locations) == 0:
         return ["No locations found"]
     else:
-        return formattedReturn(locations)
+        return locations
 
 
 # vraca sve kartice unutar odredjene udaljenosti od igrača
@@ -132,7 +118,7 @@ def get_all_locations():
 def get_within_distance(player_loc, dist):
     closeByLocations = []
 
-    for card in db.session.query(Card).filter_by(cardStatus="verified").all():
+    for card in query(Card).filter_by(cardStatus="verified").all():
         card_location = json.loads(card.cardLocation)
         card_lat = card_location['latitude']
         card_lng = card_location['longitude']
@@ -164,7 +150,7 @@ def get_close_by_locations():
     if session["userType"] != "Player":
         return ["User is not a player"]
 
-    user = db.session.query(Player).filter_by(userID=userID).first()
+    user = query(Player).filter_by(userID=userID).first()
 
     lat = json.loads(user.playerLocation)['latitude']
     lng = json.loads(user.playerLocation)['longitude']
@@ -215,7 +201,7 @@ def get_collectable_locations():
     if session["userType"] != "Player":
         return ["User is not a player"]
 
-    user = db.session.query(Player).filter_by(userID=userID).first()
+    user = getUserByID("Player", userID)
 
     lat = json.loads(user.playerLocation)['latitude']
     lng = json.loads(user.playerLocation)['longitude']
@@ -240,11 +226,11 @@ def get_owned_locations():
     if session["userType"] != "Player":
         return ["User is not a player"]
 
-    inventory = db.session.query(Inventory).filter_by(userID=userID).all()
+    inventory = query(Inventory).filter_by(userID=userID).all()
 
     owned_cards = []
     for card in inventory:
-        location = db.session.query(Card).filter_by(cardID=card.cardID).first()
+        location = query(Card).filter_by(cardID=card.cardID).first()
         owned_cards.append({
             "cardID":location.cardID,
             "cardStatus":location.cardStatus,
