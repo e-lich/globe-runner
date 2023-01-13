@@ -24,7 +24,8 @@ export default function UserHome() {
       !user.userType.toLowerCase().includes("player")
     )
       navigate("/home");
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     axios.get("/locations/closest").then((response) => {
@@ -49,7 +50,13 @@ export default function UserHome() {
           >
             Closest locations
           </Typography>
-          <Paper style={{ maxHeight: "28.8em", overflow: "auto" }}>
+          <Paper
+            style={{
+              maxHeight: "28.8em",
+              minHeight: "28.8em",
+              overflow: "auto",
+            }}
+          >
             <List sx={{ textAlign: "center" }}>
               {closestLocations &&
               closestLocations[0] !== "No locations found close by" &&

@@ -2,7 +2,6 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { setRef } from "@material-ui/core";
 
 export default function UserHomeMap({
   refresh,

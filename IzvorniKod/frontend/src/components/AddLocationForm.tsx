@@ -7,8 +7,7 @@ import * as Yup from "yup";
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import { useNavigate } from "react-router-dom";
-import { error } from "console";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function AddLocationForm({
   lat,

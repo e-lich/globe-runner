@@ -18,6 +18,7 @@ export default function Home() {
 
   useEffect(() => {
     if (localStorage.getItem("user") === null) navigate("/login");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (user && user.userType && user.userType.toLowerCase() === "admin")

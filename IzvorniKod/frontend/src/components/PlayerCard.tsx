@@ -1,4 +1,4 @@
-import { ListItem, ListItemAvatar, Avatar } from "@mui/material";
+import { ListItem, ListItemAvatar, Avatar, Icon } from "@mui/material";
 import { Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import ChallengeIcon from "./fights/ChallengeIcon";
@@ -10,6 +10,8 @@ export default function PlayerCard(props: any) {
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
   const [openWaiting, setOpenWaiting] = useState<any>(false);
+
+  const graySwords = require("../images/swords-unavailable.png");
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -47,6 +49,30 @@ export default function PlayerCard(props: any) {
               userInfo={userInfo}
               setOpen={() => setOpenWaiting(true)}
             />
+          )}
+          {userInfo && !userInfo.challengeable && (
+            <Button
+              variant="text"
+              color="primary"
+              onClick={() => {
+                alert("Player not challengeable!");
+              }}
+            >
+              <Icon>
+                <div style={{ width: "100%", height: "100%" }}>
+                  <img
+                    src={graySwords}
+                    alt="battle"
+                    style={{
+                      objectFit: "contain",
+                      width: "100%",
+                      height: "100%",
+                      verticalAlign: "top",
+                    }}
+                  />
+                </div>
+              </Icon>
+            </Button>
           )}
         </div>
       </ListItem>

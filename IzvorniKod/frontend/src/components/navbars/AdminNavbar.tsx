@@ -12,6 +12,7 @@ export default function CartographerNavbar() {
     let userFromLocalStorage = localStorage.getItem("user");
 
     if (userFromLocalStorage === null) navigate("/login");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleLogout() {

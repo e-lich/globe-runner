@@ -14,7 +14,8 @@ export default function AllCards() {
 
     if (!(JSON.parse(userFromLocalStorage!).userType.toLowerCase() === "admin"))
       navigate("/home");
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
