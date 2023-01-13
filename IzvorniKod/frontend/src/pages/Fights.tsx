@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import EndFightDialog from "../components/EndFightDialog";
 import LocationCard from "../components/LocationCard";
 
@@ -16,8 +17,16 @@ export default function Fights() {
   const [InventoryCards, setInventoryCards] = useState([]);
   const [chosenCards, setChosenCards] = useState<any>([]);
   const [ready, setReady] = useState(false);
-  const [fightResult, setFightResult] = useState<any>(null);
-  const [endFightOpen, setEndFightOpen] = useState(false);
+  const [fightResult, setFightResult] = useState<any>({
+    points1: 12,
+    points2: 23,
+    winner: true,
+    eloScore: 523,
+    brokenCards: [],
+  });
+
+  const [endFightOpen, setEndFightOpen] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getInventoryCards = async () => {
@@ -74,13 +83,13 @@ export default function Fights() {
     if (response.data && response.data.points) {
       console.log("FIGHT RESPONSE: " + response.data);
       setReady(false);
-      setFightResult({
-        points1: response.data.points1,
-        points2: response.data.points2,
-        winner: response.data.winner,
-        eloScore: response.data.eloScore,
-        brokenCards: response.data.brokenCards,
-      });
+      // setFightResult({
+      //   points1: response.data.points1,
+      //   points2: response.data.points2,
+      //   winner: response.data.winner,
+      //   eloScore: response.data.eloScore,
+      //   brokenCards: response.data.brokenCards,
+      // });
       setEndFightOpen(true);
     } else {
       console.log("Other player not yet ready!!!!");
@@ -165,7 +174,11 @@ export default function Fights() {
       </Box>
       <EndFightDialog
         open={endFightOpen}
-        onClose={() => setEndFightOpen(false)}
+        onClose={() => {
+          setEndFightOpen(false);
+          navigate("/home");
+        }}
+        fightResults={fightResult}
       ></EndFightDialog>
     </Box>
   );

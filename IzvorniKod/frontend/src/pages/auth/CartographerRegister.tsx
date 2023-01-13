@@ -2,6 +2,7 @@ import {
   Alert,
   Box,
   Button,
+  CircularProgress,
   Container,
   CssBaseline,
   Fab,
@@ -19,6 +20,7 @@ import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 
 function CartographerRegister() {
   let [error, setError] = useState<Array<String>>([]);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -33,6 +35,8 @@ function CartographerRegister() {
     formData.append("photo", values.photo);
     formData.append("id", values.idPhoto);
 
+    setLoading(true);
+
     const config = {
       withCredentials: true,
     };
@@ -43,11 +47,14 @@ function CartographerRegister() {
         console.log(response);
         if (response.data.email === undefined) {
           setError(response.data);
+          setLoading(false);
         } else {
+          setLoading(false);
           navigate("/confirm");
         }
       })
       .catch(function (error) {
+        setLoading(false);
         console.log(error);
       });
   };
@@ -273,16 +280,31 @@ function CartographerRegister() {
                 <Grid item xs={12}>
                   <ErrorMessage name="idPhoto" />
                 </Grid>
-                <Button
-                  type="submit"
-                  color="primary"
-                  variant="contained"
-                  disabled={!props.isValid}
-                  sx={{ mt: 3, mb: 2 }}
-                  fullWidth
-                >
-                  Login
-                </Button>
+                {loading && (
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  >
+                    <CircularProgress
+                      sx={{
+                        size: 20,
+                      }}
+                    />
+                  </Grid>
+                )}
+                {!loading && (
+                  <Button
+                    type="submit"
+                    color="primary"
+                    variant="contained"
+                    disabled={!props.isValid}
+                    sx={{ mt: 3, mb: 2 }}
+                    fullWidth
+                  >
+                    Login
+                  </Button>
+                )}
               </Grid>
             </Form>
           )}

@@ -53,7 +53,7 @@ export default function NearbyPlayers() {
                   <PlayerCard key={key} closestPlayer={closestPlayer} />
                 ))}
               {closestPlayers.length === 0 && (
-                <Typography variant="h6" sx={{ m: 2 }}>
+                <Typography variant="h6" sx={{ m: 2, textAlign: "center" }}>
                   No players nearby
                 </Typography>
               )}
