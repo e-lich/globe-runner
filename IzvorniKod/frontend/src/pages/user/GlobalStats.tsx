@@ -36,14 +36,14 @@ export default function GlobalStats() {
   return (
     <>
       <PlayerNavbar />
-      <Box justifyContent="center" display="flex">
+      <Box justifyContent="center" display="flex" style={{ height: "90vh" }}>
         <Box
           display="flex"
           flexDirection="column"
           justifyContent="center"
           alignItems="center"
         >
-          <Typography variant="h5" sx={{ m: 2, fontWeight: "bold" }}>
+          <Typography variant="h3" sx={{ m: 2, fontWeight: "bold" }}>
             Global Stats
           </Typography>
           {globalStats && (
@@ -54,7 +54,10 @@ export default function GlobalStats() {
               <Typography variant="h6">
                 {globalStats.numberOfPlayers} total players
               </Typography>
-              <Typography variant="h5" sx={{ m: 2, fontWeight: "bold" }}>
+              <Typography
+                variant="h4"
+                sx={{ m: 2, fontWeight: "bold", paddingTop: 10 }}
+              >
                 Leaderboard
               </Typography>
               <List

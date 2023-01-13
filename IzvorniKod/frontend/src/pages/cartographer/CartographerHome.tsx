@@ -26,13 +26,6 @@ export default function AddLocation() {
     <>
       <CartographerNavbar />
       <CartographerHomeMap />
-      <div className="align-items-center Auth-container">
-        <form className="Auth-form">
-          <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Cartographer Home</h3>
-          </div>
-        </form>
-      </div>
     </>
   );
 }

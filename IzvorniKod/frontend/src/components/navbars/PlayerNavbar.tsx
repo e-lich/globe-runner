@@ -72,7 +72,11 @@ export default function PlayerNavbar() {
       <>
         <div className="nav">
           <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
+            <Dropdown.Toggle
+              style={{ position: "relative", top: -8 }}
+              variant="success"
+              id="dropdown-basic"
+            >
               Menu
             </Dropdown.Toggle>
 
@@ -96,6 +100,10 @@ export default function PlayerNavbar() {
                   Add Location
                 </Dropdown.Item>
               ) : null}
+
+              <Dropdown.Item onClick={() => navigate("/about")}>
+                About
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
 

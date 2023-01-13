@@ -27,7 +27,12 @@ export default function AllCardsMap() {
       myAllCardsMap.remove(); // should remove the map from UI and clean the inner children of DOM element
     }
 
-    myAllCardsMap = L.map("allCardsMapId");
+    myAllCardsMap = L.map("allCardsMapId", {
+      zoomControl: false,
+    });
+
+    new L.Control.Zoom({ position: "bottomright" }).addTo(myAllCardsMap);
+
     setMapContainer(myAllCardsMap);
 
     var tile_url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
@@ -144,19 +149,16 @@ export default function AllCardsMap() {
   };
 
   return (
-    <>
-      <Typography
-        variant="h5"
-        sx={{ m: 2, fontWeight: "bold", textAlign: "center" }}
-      >
-        All locations
-      </Typography>
-      <div id="allCardsMapId"></div>
+    <div style={{ padding: 20 }}>
+      <div style={{ height: "75vh" }} id="allCardsMapId"></div>
+      <h4 style={{ textAlign: "center", color: "gray", marginTop: 15 }}>
+        This map shows you <u>all locations</u>.
+      </h4>
       <AllCardsPopup
         open={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
         fetchLocations={fetchLocations}
-      />{" "}
-    </>
+      />
+    </div>
   );
 }

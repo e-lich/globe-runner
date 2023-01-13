@@ -37,14 +37,17 @@ export default function CartographerRequests() {
   return (
     <>
       <AdminNavbar />
-      <Box justifyContent="center" display="flex">
+      <Box justifyContent="center" display="flex" style={{ height: "90vh" }}>
         <Box
           display="flex"
           flexDirection="column"
           justifyContent="center"
           alignItems="center"
         >
-          <Typography variant="h5" sx={{ m: 2, fontWeight: "bold" }}>
+          <Typography
+            variant="h3"
+            sx={{ m: 2, fontWeight: "bold", paddingBottom: 5 }}
+          >
             Cartographer requests
           </Typography>
           {unverifiedCartographers.map((cartographer: any, key: any) => (

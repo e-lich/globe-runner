@@ -39,11 +39,11 @@ export default function UserHome() {
   return (
     <>
       <PlayerNavbar />
-      <Grid container>
-        <Grid item xs={12} sm={9} style={{ height: "70vh" }}>
+      <Grid container style={{ height: "90vh", padding: 10 }}>
+        <Grid item xs={12} sm={9} style={{ height: "100%", padding: 10 }}>
           <UserHomeMap refresh={refresh} setRefresh={setRefresh} />
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={3} style={{ height: "100%", padding: 10 }}>
           <Typography
             variant="h5"
             sx={{ m: 2, fontWeight: "bold", textAlign: "center" }}
@@ -52,7 +52,7 @@ export default function UserHome() {
           </Typography>
           <Paper
             style={{
-              maxHeight: "28.8em",
+              maxHeight: "88%",
               minHeight: "28.8em",
               overflow: "auto",
             }}
