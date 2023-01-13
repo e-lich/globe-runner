@@ -11,23 +11,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 import EditMyProfileDialog from "./EditMyProfileDialog";
 
-// type user = {
-//   userID: string;
-//   username: string;
-//   fullName: string;
-//   email: string;
-//   photo: string;
-// };
-
-export default function UserProfileCard({
-  user,
-  numberOfLocations,
-  canEdit,
-}: {
-  user: any;
-  numberOfLocations: number;
-  canEdit: boolean;
-}) {
+export default function UserProfileCard(props: any) {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -40,7 +24,11 @@ export default function UserProfileCard({
           }}
         >
           <Avatar
-            src={`data:image/jpeg;base64,${user.photo}`}
+            src={
+              props.user.profilePhoto
+                ? `data:image/jpeg;base64,${props.user.profilePhoto}`
+                : undefined
+            }
             alt="profile"
             sx={{ width: 150, height: 150 }}
           ></Avatar>
@@ -52,20 +40,20 @@ export default function UserProfileCard({
             }}
           >
             <Typography gutterBottom variant="h5" component="div">
-              {user.username}
+              {props.user.username}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {user.name}
+              {props.user.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {user.email}
+              {props.user.email}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {numberOfLocations} collected cards
+              {props.numberOfLocations} collected cards
             </Typography>
           </Box>
         </CardContent>
-        {canEdit && (
+        {props.canEdit && (
           <CardActions sx={{ display: "flex", justifyContent: "end" }}>
             <IconButton onClick={() => setOpen(true)}>
               <EditIcon />
@@ -75,8 +63,11 @@ export default function UserProfileCard({
       </Card>
       <EditMyProfileDialog
         open={open}
-        onClose={() => setOpen(false)}
-        oldUser={user}
+        onClose={() => {
+          setOpen(false);
+          props.refresh();
+        }}
+        oldUser={props.user}
       />
     </>
   );

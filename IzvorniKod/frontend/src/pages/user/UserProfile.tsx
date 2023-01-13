@@ -10,6 +10,7 @@ import UserStatsCard from "../../components/UserProfile/UserStatsCard";
 export default function UserProfile() {
   const navigate = useNavigate();
   const [user, setUser] = useState(localStorage.getItem("user"));
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
@@ -31,7 +32,7 @@ export default function UserProfile() {
 
     fetchCurrentUser();
     // todo add a refresh
-  }, []);
+  }, [refresh]);
 
   return (
     <>
@@ -45,8 +46,11 @@ export default function UserProfile() {
             <Grid item xs={12}>
               <UserProfileCard
                 user={JSON.parse(user!)}
-                numberOfLocations={12}
                 canEdit={true}
+                numberOfLocations={JSON.parse(user!).numOfCards}
+                refresh={() => {
+                  setRefresh(!refresh);
+                }}
               />
             </Grid>
             <Grid item xs={12}>
