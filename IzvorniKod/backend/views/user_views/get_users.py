@@ -47,6 +47,9 @@ def current_user_info():
 
     userID = session['userID']
 
+    if session['userType'] == 'Admin':
+        return {'userType':'Admin'}
+
     model = Player
     if session['userType'] == 'Cartographer':
         model = Cartographer
