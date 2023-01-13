@@ -31,8 +31,13 @@ export default function AddLocation() {
   return (
     <>
       <PlayerNavbar />
-      <Grid container>
-        <Grid item xs={12} sm={7} style={{ height: "70vh" }}>
+      <Grid container style={{ padding: 10 }}>
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          style={{ height: "82vh", width: "100%", padding: 10 }}
+        >
           <AddLocationMap
             setLat={setLat}
             setLong={setLong}
@@ -42,10 +47,12 @@ export default function AddLocation() {
             setRefresh={setRefresh}
           />
         </Grid>
-        <Grid item xs={12} sm={5}>
+        <Grid item xs={12} sm={4} style={{ padding: 10 }}>
           <div className="align-items-center Auth-container">
-            <div className="Auth-form-content">
-              <h3 className="Auth-form-title">Add Locations</h3>
+            <div style={{ padding: "20px" }}>
+              <h3 className="Auth-form-title" style={{ marginBottom: 0 }}>
+                Add Location
+              </h3>
               <AddLocationForm
                 lat={lat}
                 setLat={setLat}

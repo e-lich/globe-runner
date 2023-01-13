@@ -142,7 +142,7 @@ export default function AddLocationForm({
                   required
                   error={props.errors.title && props.touched.title}
                   helperText={<ErrorMessage name="title" />}
-                  sx={{ m: 1, width: "25ch" }}
+                  sx={{ m: 1, width: "80%", margin: "1px" }}
                 />
                 <Field
                   as={TextField}
@@ -154,7 +154,7 @@ export default function AddLocationForm({
                   required
                   error={props.errors.description && props.touched.description}
                   helperText={<ErrorMessage name="description" />}
-                  sx={{ m: 1, width: "25ch" }}
+                  sx={{ m: 1, width: "80%", margin: "1px" }}
                 />
               </Box>
               <hr />
@@ -178,7 +178,7 @@ export default function AddLocationForm({
                   required
                   error={props.errors.lat && props.touched.lat}
                   helperText={<ErrorMessage name="lat" />}
-                  sx={{ m: 1, width: "25ch" }}
+                  sx={{ m: 1, width: "80%", margin: "1px" }}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">°</InputAdornment>
@@ -198,7 +198,7 @@ export default function AddLocationForm({
                   required
                   error={props.errors.long && props.touched.long}
                   helperText={<ErrorMessage name="long" />}
-                  sx={{ m: 1, width: "25ch" }}
+                  sx={{ m: 1, width: "80%", margin: "1px" }}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">°</InputAdornment>
@@ -253,10 +253,21 @@ export default function AddLocationForm({
                     sx={{ mb: 1 }}
                     variant="body2"
                     color="text.secondary"
+                    textAlign="center"
                   >
                     Location picture
                   </Typography>
-                  <Fab component="span" sx={{ mb: 3 }}>
+                  <Fab
+                    component="span"
+                    sx={{
+                      mb: 3,
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "row",
+                      margin: 0,
+                      marginLeft: "20px",
+                    }}
+                  >
                     <ImageSearchIcon />
                   </Fab>
                 </label>
@@ -267,14 +278,15 @@ export default function AddLocationForm({
                     alt="location pic"
                     src={URL.createObjectURL(props.values.locationPhoto)}
                     sx={{
-                      width: 0.3,
                       border: 3,
                       borderRadius: "2%",
+                      height: "120px",
+                      marginLeft: "20px",
                     }}
                   />
                 )}
               </Box>
-              <hr />
+              <hr style={{ margin: "5px" }} />
               <Box
                 sx={{
                   display: "flex",
