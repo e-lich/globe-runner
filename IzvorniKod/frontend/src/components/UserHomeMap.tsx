@@ -176,6 +176,11 @@ export default function UserHomeMap({
 
     if (closeByLocations[0] !== "No locations found close by")
       closeByLocations.forEach((locationData: any) => {
+        const popupOptions = {
+          maxWidth: 100, // set max-width
+          className: "customPopup", // name custom popup
+        };
+
         var customPopup =
           '<div className="cardpopup">' +
           `   <img className="cardpopup--image" src=${locationData.photo} height="100px" width="100px" alt=""></img>` +
@@ -187,7 +192,7 @@ export default function UserHomeMap({
         L.marker([locationData.latitude, locationData.longitude], {
           icon: locationIcon,
         }) // add the created marker to the desired coordinates
-          .bindPopup(customPopup)
+          .bindPopup(customPopup, popupOptions)
           .addTo(myMap!);
       });
   };
