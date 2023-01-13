@@ -20,7 +20,14 @@ export default function CartographerHomeMap() {
       myCartographerHomeMap.remove(); // should remove the map from UI and clean the inner children of DOM element
     }
 
-    myCartographerHomeMap = L.map("cartographerHomeMapId");
+    myCartographerHomeMap = L.map("cartographerHomeMapId", {
+      zoomControl: false,
+    });
+
+    new L.Control.Zoom({ position: "bottomright" }).addTo(
+      myCartographerHomeMap
+    );
+
     setMapContainer(myCartographerHomeMap);
     var tile_url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     var layer = L.tileLayer(tile_url, {
@@ -200,14 +207,16 @@ export default function CartographerHomeMap() {
   };
 
   return (
-    <>
-      <h1 style={{ textAlign: "center", color: "red" }}>Suggested Locations</h1>
-      <div id="cartographerHomeMapId"></div>
+    <div style={{ padding: 20 }}>
+      <div style={{ height: "75vh" }} id="cartographerHomeMapId"></div>
+      <h4 style={{ textAlign: "center", color: "gray", marginTop: 15 }}>
+        This map shows you <u>suggested locations</u>.
+      </h4>
       <CartographerHomePopup
         open={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
         fetchLocations={fetchLocations}
-      />{" "}
-    </>
+      />
+    </div>
   );
 }

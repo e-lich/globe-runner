@@ -49,10 +49,6 @@ export default function CartographerNavbar() {
             <Dropdown.Item onClick={() => navigate("/onSiteApproval")}>
               On-site Approval
             </Dropdown.Item>
-
-            <Dropdown.Item onClick={() => navigate("/about")}>
-              About
-            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
 

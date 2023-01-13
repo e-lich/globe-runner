@@ -29,7 +29,11 @@ export default function UserHomeMap({
       myMap.remove(); // should remove the map from UI and clean the inner children of DOM element
     }
 
-    myMap = L.map("mapid");
+    myMap = L.map("mapid", {
+      zoomControl: false,
+    });
+    new L.Control.Zoom({ position: "topright" }).addTo(myMap);
+
     setMapContainer(myMap);
     var tile_url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     var layer = L.tileLayer(tile_url, {
