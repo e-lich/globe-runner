@@ -37,7 +37,11 @@ export default function CartographerNavbar() {
     return (
       <div className="nav">
         <Dropdown>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
+          <Dropdown.Toggle
+            style={{ position: "relative", top: -8 }}
+            variant="success"
+            id="dropdown-basic"
+          >
             Menu
           </Dropdown.Toggle>
 
