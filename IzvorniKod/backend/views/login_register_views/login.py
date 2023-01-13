@@ -73,4 +73,3 @@ def login():
             })
     else:
         return ['Invalid request method']
-        # return ['Invalid request method'], {"Access-Control-Allow-Origin": "http://164.92.200.63:3000"}
