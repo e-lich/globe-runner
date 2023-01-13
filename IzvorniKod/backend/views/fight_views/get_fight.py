@@ -59,7 +59,36 @@ def get_fight():
     if user_type != "Player":
         return ["Only players can get fights"]
 
-    if request.method == 'GET': 
+    if request.method == 'GET':
+        fight = db.session.query(Fight).filter_by(player1UserID=currentUserID).filter(Fight.points1>0).filter(Fight.points2>0).first()
+        current_player1 = True
+        if fight is None:
+            fight = db.session.query(Fight).filter_by(player2UserID=currentUserID).filter(Fight.points1>0).filter(Fight.points2>0).first()
+            current_player1 = False
+
+            if fight is not None:
+                winner = None
+
+                if current_player1:
+                    current_player = db.session.query(Player).filter_by(userID=fight.player1UserID).first()
+                    other_player = db.session.query(Player).filter_by(userID=fight.player2UserID).first()
+                else:
+                    current_player = db.session.query(Player).filter_by(userID=fight.player2UserID).first()
+                    other_player = db.session.query(Player).filter_by(userID=fight.player1UserID).first()
+
+                if current_player1:
+                    winner = fight.points1 > fight.points2
+                else:
+                    winner = fight.points2 > fight.points1
+
+                return jsonify({
+                    "points1": fight.points1,
+                    "points2": fight.points2,
+                    "winner": winner,
+                    "brokenCards": [],
+                    "newElo": current_player.eloScore
+                })
+
         fight = db.session.query(Fight).filter_by(player1UserID=currentUserID).filter_by(points1=0).filter_by(points2=0).first()
         current_player1 = True
         if fight is None:
