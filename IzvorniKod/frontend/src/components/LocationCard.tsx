@@ -10,9 +10,11 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import DoneIcon from "@mui/icons-material/Done";
+import CardDialog from "./CardDialog";
 const placeholder = require("../images/placeholder-LocationCard.png");
 
 export default function LocationCard(props: any): JSX.Element {
+  const [openCardDialog, setOpenCardDialog] = useState<any>(false);
   const background = props.chosen ? "green" : "white";
   const objectFitStyle = "contain";
 
@@ -34,7 +36,7 @@ export default function LocationCard(props: any): JSX.Element {
             backgroundColor: { background },
           }}
         >
-          <CardActionArea onClick={props.cardOnClick}>
+          <CardActionArea onClick={() => setOpenCardDialog(true)}>
             <CardMedia
               sx={{ display: "flex", objectFit: objectFitStyle }}
               height="100"
@@ -86,6 +88,13 @@ export default function LocationCard(props: any): JSX.Element {
           )}
         </Card>
       </Box>
+      <CardDialog
+        open={openCardDialog}
+        onClose={() => {
+          setOpenCardDialog(false);
+        }}
+        locationCard={props.closestCard}
+      />
     </>
   );
 }
