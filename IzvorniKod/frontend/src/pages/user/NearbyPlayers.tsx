@@ -37,14 +37,17 @@ export default function NearbyPlayers() {
   return (
     <>
       <NavbarCustom />
-      <Box justifyContent="center" display="flex" style={{ height: "90vh" }}>
+      <Box justifyContent="center" display="flex" style={{ height: "60%" }}>
         <Box
           display="flex"
           flexDirection="column"
           justifyContent="center"
           alignItems="center"
         >
-          <Typography variant="h3" sx={{ m: 2, fontWeight: "bold" }}>
+          <Typography
+            variant="h3"
+            sx={{ m: 2, fontWeight: "bold", paddingBottom: "15px" }}
+          >
             Nearby players
           </Typography>
 

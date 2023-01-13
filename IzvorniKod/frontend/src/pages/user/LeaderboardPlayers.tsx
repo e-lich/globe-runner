@@ -60,7 +60,9 @@ export default function LeaderboardPlayers(props: any) {
               ml: 2,
             }}
           >
-            <Typography variant="h5">{playersInfo.username}</Typography>
+            <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+              <Typography variant="h5">{playersInfo.username}</Typography>
+            </Box>
             <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
               <Typography variant="subtitle1">
                 Elo score : {playersInfo.eloScore}
