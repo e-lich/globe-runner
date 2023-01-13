@@ -2,6 +2,7 @@ import enum
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from backend import db
+from sqlalchemy import or_
 import datetime
 import uuid
 import json
@@ -86,6 +87,12 @@ class Player(User):
 
     def isCartographer(self):
         return False
+
+    def deleteChallenges(self):
+        query(Challenge).filter(or_(Challenge.challengerUserID == self.userID, \
+                                    Challenge.victimUserID == self.userID))\
+                        .delete()
+        db.session.commit()
 
 # Admin db model
 class Admin(db.Model):

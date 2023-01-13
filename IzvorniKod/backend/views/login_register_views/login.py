@@ -60,6 +60,9 @@ def login():
             session['userType'] = user.__class__.__name__
             user_type = session['userType']
 
+            if user_type == 'Player':
+                user.deleteChallenges()
+
             if session['userType'] == 'Player' and user.advanced:
                 user_type = 'advancedPlayer'
 
