@@ -10,9 +10,9 @@ from OpenSSL import SSL
 
 app = Flask(__name__)
 
-context = SSL.Context(SSL.PROTOCOL_TLSv1_2)
-context.use_privatekey_file('server.key')
-context.use_certificate_file('server.crt')   
+context = SSL.Context(SSL.SSLv23_METHOD)
+context.use_privatekey_file('IzvorniKod/backend/server.key')
+context.use_certificate_file('IzvorniKod/backend/server.crt')   
 
 load_dotenv()
 
@@ -27,6 +27,7 @@ app.config['SESSION_TYPE'] = 'redis'
 app.config['SESSION_REDIS'] = redis.from_url(os.getenv('REDIS_URL'))
 app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_USE_SIGNER'] = True
+
 app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 

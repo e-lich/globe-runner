@@ -1,2 +1,2 @@
 FLASK_APP=IzvorniKod/backend
-FLASK_DEBUG=true
+FLASK_DEBUG=false
