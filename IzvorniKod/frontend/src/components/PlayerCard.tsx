@@ -10,8 +10,13 @@ export default function PlayerCard(props: any) {
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
   const [openWaiting, setOpenWaiting] = useState<any>(false);
+  const [user, setUser] = useState<any>(null);
 
   const graySwords = require("../images/swords-unavailable.png");
+
+  async function currentUser() {
+    return JSON.parse(localStorage.getItem("user")!);
+  }
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -21,6 +26,8 @@ export default function PlayerCard(props: any) {
       setUserInfo(response.data);
     };
     getUserInfo();
+
+    setUser(currentUser());
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -44,36 +51,37 @@ export default function PlayerCard(props: any) {
           >
             {props.closestPlayer.username}
           </Button>
-          {userInfo && userInfo.challengeable && (
+          {userInfo && userInfo.challengeable && user && user.challengeable && (
             <ChallengeIcon
               userInfo={userInfo}
               setOpen={() => setOpenWaiting(true)}
             />
           )}
-          {userInfo && !userInfo.challengeable && (
-            <Button
-              variant="text"
-              color="primary"
-              onClick={() => {
-                alert("Player not challengeable!");
-              }}
-            >
-              <Icon>
-                <div style={{ width: "100%", height: "100%" }}>
-                  <img
-                    src={graySwords}
-                    alt="battle"
-                    style={{
-                      objectFit: "contain",
-                      width: "100%",
-                      height: "100%",
-                      verticalAlign: "top",
-                    }}
-                  />
-                </div>
-              </Icon>
-            </Button>
-          )}
+          {(userInfo && !userInfo.challengeable) ||
+            (user && !user.challengeable && (
+              <Button
+                variant="text"
+                color="primary"
+                onClick={() => {
+                  alert("You can't enter this fight!");
+                }}
+              >
+                <Icon>
+                  <div style={{ width: "100%", height: "100%" }}>
+                    <img
+                      src={graySwords}
+                      alt="battle"
+                      style={{
+                        objectFit: "contain",
+                        width: "100%",
+                        height: "100%",
+                        verticalAlign: "top",
+                      }}
+                    />
+                  </div>
+                </Icon>
+              </Button>
+            ))}
         </div>
       </ListItem>
 

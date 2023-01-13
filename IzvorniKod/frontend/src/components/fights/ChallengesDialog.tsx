@@ -7,7 +7,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import ChallengerCard from "./ChallengerCard";
 
-export default function ChallengesDialog({ onClose, open, challenges }: any) {
+export default function ChallengesDialog({
+  onClose,
+  open,
+  challenges,
+  refresh,
+}: any) {
   return (
     <div>
       <Dialog
@@ -20,7 +25,12 @@ export default function ChallengesDialog({ onClose, open, challenges }: any) {
 
         <DialogContent>
           {challenges.map((challenge: any, key: any) => (
-            <ChallengerCard key={key} challenge={challenge} onClose={onClose} />
+            <ChallengerCard
+              key={key}
+              challenge={challenge}
+              onClose={onClose}
+              refresh={refresh}
+            />
           ))}
         </DialogContent>
       </Dialog>

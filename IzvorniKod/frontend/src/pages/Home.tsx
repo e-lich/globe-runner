@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AdminHome from "./admin/AllCards";
 import UserHome from "./user/UserHome";
 import CartographerHome from "./cartographer/CartographerHome";
+import axios from "axios";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -18,6 +19,17 @@ export default function Home() {
 
   useEffect(() => {
     if (localStorage.getItem("user") === null) navigate("/login");
+
+    const fetchCurrentUser = async () => {
+      try {
+        const res = await axios.get("/user/current");
+        localStorage.setItem("user", JSON.stringify(res.data));
+      } catch (e) {
+        alert(e);
+      }
+    };
+
+    fetchCurrentUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

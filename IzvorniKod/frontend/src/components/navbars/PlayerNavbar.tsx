@@ -13,6 +13,7 @@ export default function PlayerNavbar() {
 
   const [challenges, setChallenges] = useState<any>([]);
   const [openChallenges, setOpenChallenges] = useState<any>(false);
+  const [refreshFights, setRefreshFights] = useState<any>(false);
 
   const challengesDummy: Array<{ challengeID: number; challenger: String }> = [
     { challengeID: 1, challenger: "Lovro" },
@@ -35,7 +36,7 @@ export default function PlayerNavbar() {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [refreshFights]);
 
   const fetchFights = async () => {
     try {
@@ -141,6 +142,7 @@ export default function PlayerNavbar() {
           open={openChallenges}
           onClose={() => setOpenChallenges(false)}
           challenges={challenges}
+          referesh={() => setRefreshFights(!refreshFights)}
         />
       </>
     );
