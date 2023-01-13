@@ -1,6 +1,6 @@
 from backend import app, db
 from flask import session, redirect
-from backend.database.models import Card, Player, Cartographer, Inventory, getUserByID, query
+from backend.database.models import Card, Player, Cartographer, Inventory, getUserByID, query, checkPrivilage
 import json
 from geopy import distance
 from sqlalchemy import MetaData
@@ -69,7 +69,7 @@ def get_on_site_check_locations():
     if "userID" not in session:
         return(['User not logged in'])
     
-    if session["userType"] != "Cartographer":
+    if checkPrivilage(session['userType'], ['Admin', 'Cartographer']):
         return ["User is not a cartographer"]
 
     locations = Card().formatted(cardStatus="unclaimed")
@@ -85,7 +85,7 @@ def get_on_site_check_claimed_locations():
     if "userID" not in session:
         return(['User not logged in'])
     
-    if session["userType"] != "Cartographer":
+    if checkPrivilage(session['userType'], ['Admin', 'Cartographer']):
         return ["User is not a cartographer"]
 
     cartographerID = session["userID"]

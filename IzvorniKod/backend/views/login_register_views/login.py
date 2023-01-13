@@ -4,9 +4,6 @@ from backend.database.models import Player, Cartographer, Admin
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if "userID" in session:
-        return ['User already logged in.']
-
     if request.method == 'POST':
         request_data = request.get_json()
 

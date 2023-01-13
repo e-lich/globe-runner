@@ -214,3 +214,8 @@ def getUserByID(userType, userID):
 
 def query(model):
     return db.session.query(model)
+
+def checkPrivilage(userType, privilages):
+    if userType in privilages:
+        return False
+    return True
