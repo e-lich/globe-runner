@@ -42,15 +42,24 @@ export default function UserProfileCard(props: any) {
             <Typography gutterBottom variant="h5" component="div">
               {props.user.username}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {props.user.name}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {props.user.email}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {props.numberOfLocations} collected cards
-            </Typography>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                height: "60%",
+              }}
+            >
+              <Typography variant="body2" color="text.secondary">
+                {props.user.name}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {props.user.email}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {props.numberOfLocations} collected cards
+              </Typography>
+            </div>
           </Box>
         </CardContent>
         {props.canEdit && (

@@ -37,13 +37,20 @@ export default function UserProfile() {
   return (
     <>
       <PlayerNavbar />
-      <Grid container spacing={2}>
-        <Grid item xs={4.5}>
+      <Grid container spacing={2} style={{ height: "90vh", padding: 10 }}>
+        <Grid item xs={12} sm={4}>
           <Typography variant="h5" sx={{ m: 2 }}>
             My profile
           </Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
+          <Grid container spacing={4}>
+            <Grid
+              item
+              xs={12}
+              style={{
+                height: "15em",
+                marginBottom: 32,
+              }}
+            >
               <UserProfileCard
                 user={JSON.parse(user!)}
                 canEdit={true}
@@ -53,12 +60,18 @@ export default function UserProfile() {
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid
+              item
+              xs={12}
+              style={{
+                height: "25em",
+              }}
+            >
               <UserStatsCard />
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={6.5}>
+        <Grid item xs={12} sm={8}>
           <Typography variant="h5" sx={{ m: 2 }}>
             Inventory
           </Typography>

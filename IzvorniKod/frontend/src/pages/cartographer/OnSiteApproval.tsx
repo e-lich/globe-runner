@@ -28,11 +28,11 @@ export default function OnSiteApproval() {
   return (
     <>
       <CartographerNavbar />
-      <Grid container>
-        <Grid item xs={12} sm={9} style={{ height: "70vh" }}>
+      <Grid container style={{ padding: 10, height: "82vh" }}>
+        <Grid item xs={12} sm={9} style={{ height: "80vh", padding: 10 }}>
           <OnSiteMap refresh={refresh} setRefresh={setRefresh} />
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={3} style={{ height: "100%", padding: 10 }}>
           <OnSiteList refresh={refresh} setRefresh={setRefresh} />
         </Grid>
       </Grid>

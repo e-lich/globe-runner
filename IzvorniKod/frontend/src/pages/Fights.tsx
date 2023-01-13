@@ -28,9 +28,6 @@ export default function Fights() {
   const [endFightOpen, setEndFightOpen] = useState(false);
   const navigate = useNavigate();
 
-  // todo handle erros properly
-  const [err, setErr] = useState("");
-
   useEffect(() => {
     const getInventoryCards = async () => {
       const response = await axios.get("locations/owned");
@@ -60,17 +57,16 @@ export default function Fights() {
   async function handleFight() {
     try {
       setReady(true);
-      const response = await axios.post("fight/cards", {
+      await axios.post("fight/cards", {
         cardID1: chosenCards[0].cardID,
         cardID2: chosenCards[1].cardID,
         cardID3: chosenCards[2].cardID,
       });
-      console.log(response);
     } catch (error: any) {
       if (error.response.status === 404) {
-        console.log("No fight found");
+        alert("No fight found");
       } else {
-        console.log("Error: ", error);
+        alert("Something went wrong");
       }
     }
   }
@@ -79,7 +75,6 @@ export default function Fights() {
     let interval: any;
     if (ready) {
       interval = setInterval(async () => {
-        console.log("Checking for battles!");
         await fetchFightResults();
       }, 5000);
     }
@@ -87,6 +82,7 @@ export default function Fights() {
     return () => {
       if (interval) clearInterval(interval);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready]);
 
   async function fetchFightResults() {
@@ -95,13 +91,13 @@ export default function Fights() {
       if (response.data && response.data.points) {
         console.log("FIGHT RESPONSE: " + response.data);
         setReady(false);
-        // setFightResult({
-        //   points1: response.data.points1,
-        //   points2: response.data.points2,
-        //   winner: response.data.winner,
-        //   eloScore: response.data.eloScore,
-        //   brokenCards: response.data.brokenCards,
-        // });
+        setFightResult({
+          points1: response.data.points1,
+          points2: response.data.points2,
+          winner: response.data.winner,
+          eloScore: response.data.eloScore,
+          brokenCards: response.data.brokenCards,
+        });
         setEndFightOpen(true);
       } else {
         console.log(response.data);
