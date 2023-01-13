@@ -7,7 +7,6 @@ import axios from "axios";
 import * as Yup from "yup";
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 
-
 type Props = {
   open: Boolean;
   onClose: any;
@@ -23,10 +22,8 @@ const OVERLAY: CSSProperties = {
   paddingTop: "50px",
   backgroundColor: "rgba(0,0,0,0.7)",
   zIndex: "1000",
-
 };
 //  .../locations/update/submitted/
-
 
 const CartographerHomePopup = ({ open, onClose, fetchLocations }: Props) => {
   let [error, setError] = useState<Array<String>>([]);
@@ -34,7 +31,6 @@ const CartographerHomePopup = ({ open, onClose, fetchLocations }: Props) => {
 
   if (!open) return null;
   var locationData = JSON.parse(localStorage.getItem("locationData")!);
-
 
   const handleSave = async (values: any) => {
     setError([]);
@@ -44,7 +40,6 @@ const CartographerHomePopup = ({ open, onClose, fetchLocations }: Props) => {
     formData.append("title", values.title);
     formData.append("description", values.description);
     formData.append("locationPhoto", values.newLocationPhoto);
-
 
     axios
       .post("/locations/update/submitted/" + locationData.cardID, formData)
@@ -56,7 +51,6 @@ const CartographerHomePopup = ({ open, onClose, fetchLocations }: Props) => {
           fetchLocations().catch(console.error);
           onClose();
           navigate("/home");
-
         }
       })
       .catch((err) => {
@@ -68,22 +62,28 @@ const CartographerHomePopup = ({ open, onClose, fetchLocations }: Props) => {
 
   const initialValues = {
     title: locationData.title,
-    description: locationData.description===null ? "" : locationData.description,
-    locationPhoto: locationData.locationPhoto === undefined ? "" : locationData.locationPhoto,
+    description:
+      locationData.description === null ? "" : locationData.description,
+    locationPhoto:
+      locationData.locationPhoto === undefined
+        ? ""
+        : locationData.locationPhoto,
     newLocationPhoto: undefined,
   };
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("Required"),
     description: Yup.string().min(20).required("Required"),
-    newLocationPhoto: Yup.mixed()
-      .test("photoSize", "Photo too large", photoSizeCheck)
-      .required("Required"),
+    newLocationPhoto: Yup.mixed().test(
+      "photoSize",
+      "Photo too large",
+      photoSizeCheck
+    ),
   });
 
   function photoSizeCheck(locationPhoto?: Blob): boolean {
     if (locationPhoto === undefined) {
-      return false;
+      return true;
     }
     return locationPhoto.size <= 1000000;
   }
@@ -99,21 +99,22 @@ const CartographerHomePopup = ({ open, onClose, fetchLocations }: Props) => {
           justifyContent: "center",
           alignItems: "center",
           width: "75%",
-        }}  
+        }}
       >
         <Typography
           sx={{ textAlign: "center", mb: 2, fontSize: 24, fontWeight: 800 }}
         >
           Editing location <i>{locationData.title}</i>
         </Typography>
-        
-        {error.length > 0 ? 
-          error.map((err, key) => (
-            <Alert key={key} severity="error" sx={{ mb: 1 }}>
-              <strong>Error: </strong> {err}
-            </Alert>
-          )) : ""}
-        
+
+        {error.length > 0
+          ? error.map((err, key) => (
+              <Alert key={key} severity="error" sx={{ mb: 1 }}>
+                <strong>Error: </strong> {err}
+              </Alert>
+            ))
+          : ""}
+
         <Box
           sx={{
             display: "flex",
@@ -138,38 +139,39 @@ const CartographerHomePopup = ({ open, onClose, fetchLocations }: Props) => {
                   }}
                 >
                   <Field
-                      as={TextField}
-                      label="Card title"
-                      name="title"
-                      placeholder="Edit location title"
-                      fullWidth
-                      required
-                      error={props.errors.title && props.touched.title}
-                      helperText={<ErrorMessage name="title" />}
-                      sx={{ m: 1, width: '25ch' }}
-                      />
-                    <Field
-                      as={TextField}
-                      label="Description"
-                      name="description"
-                      placeholder="Edit location description"
-                      fullWidth
-                      multiline
-                      required
-                      error={props.errors.description && props.touched.description}
-                      helperText={<ErrorMessage name="description" />}
-                      sx={{ m: 1, width: '25ch' }}
-
-                    />
+                    as={TextField}
+                    label="Card title"
+                    name="title"
+                    placeholder="Edit location title"
+                    fullWidth
+                    required
+                    error={props.errors.title && props.touched.title}
+                    helperText={<ErrorMessage name="title" />}
+                    sx={{ m: 1, width: "25ch" }}
+                  />
+                  <Field
+                    as={TextField}
+                    label="Description"
+                    name="description"
+                    placeholder="Edit location description"
+                    fullWidth
+                    multiline
+                    required
+                    error={
+                      props.errors.description && props.touched.description
+                    }
+                    helperText={<ErrorMessage name="description" />}
+                    sx={{ m: 1, width: "25ch" }}
+                  />
                 </Box>
                 <hr />
                 <Box
-                sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                 >
                   <input
                     hidden
@@ -181,80 +183,86 @@ const CartographerHomePopup = ({ open, onClose, fetchLocations }: Props) => {
                       props.setFieldValue(
                         "newLocationPhoto",
                         event.currentTarget.files![0]
-                      )
-                      props.setFieldValue(
-                        "locationPhoto",
-                        "")
-                      console.log("added pic  " + props.values.newLocationPhoto);
+                      );
+                      props.setFieldValue("locationPhoto", "");
+                      console.log(
+                        "added pic  " + props.values.newLocationPhoto
+                      );
                     }}
                   />
-                    <label htmlFor="locationPhoto">
-                      <Typography noWrap sx={{ mb: 1 }}>
-                        Location picture
-                      </Typography>
-                      <Fab component="span" sx={{ mb: 3 }}>
-                        <ImageSearchIcon />
-                      </Fab>
-                    </label>
+                  <label htmlFor="locationPhoto">
+                    <Typography noWrap sx={{ mb: 1 }}>
+                      Location picture
+                    </Typography>
+                    <Fab component="span" sx={{ mb: 3 }}>
+                      <ImageSearchIcon />
+                    </Fab>
+                  </label>
 
-                    {props.values.locationPhoto !== "" &&
+                  {props.values.locationPhoto !== "" &&
                     props.values.locationPhoto !== "None" && (
-                        <Box
-                          component="img"
-                          alt="location pic"
-                          src={(props.values.locationPhoto.startsWith("http")) ? props.values.locationPhoto :  `data:image/jpeg;base64,${props.values.locationPhoto}`}
-                          sx={{
-                            width: 0.3,
-                            border: 3,
-                            borderRadius: "2%",
-                          }}
-                        />
-                      )}
+                      <Box
+                        component="img"
+                        alt="location pic"
+                        src={
+                          props.values.locationPhoto.startsWith("http")
+                            ? props.values.locationPhoto
+                            : `data:image/jpeg;base64,${props.values.locationPhoto}`
+                        }
+                        sx={{
+                          width: 0.3,
+                          border: 3,
+                          borderRadius: "2%",
+                        }}
+                      />
+                    )}
 
-                      {props.values.newLocationPhoto !== undefined && 
-                        props.values.newLocationPhoto !== "" &&  (
-                        <Box
-                          component="img"
-                          alt="new location pic"
-                          src={URL.createObjectURL(props.values.newLocationPhoto)}
-                          sx={{
-                            width: 0.3,
-                            border: 3,
-                            borderRadius: "2%",
-                          }}
-                        />
-                      )}
+                  {props.values.newLocationPhoto !== undefined &&
+                    props.values.newLocationPhoto !== "" && (
+                      <Box
+                        component="img"
+                        alt="new location pic"
+                        src={URL.createObjectURL(props.values.newLocationPhoto)}
+                        sx={{
+                          width: 0.3,
+                          border: 3,
+                          borderRadius: "2%",
+                        }}
+                      />
+                    )}
                 </Box>
                 <hr />
                 <Box
-                sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                 >
-                 <Button
+                  <Button
                     type="submit"
                     color="primary"
                     variant="contained"
                     disabled={!props.isValid}
-                    sx={{margin: 1}}
+                    sx={{ margin: 1 }}
                   >
                     Save & Close
                   </Button>
-                  <Button 
+                  <Button
                     onClick={() => {
-                      console.log("Not saving changes")
-                      onClose()}} 
+                      console.log("Not saving changes");
+                      onClose();
+                    }}
                     variant="contained"
                     color="error"
-                    sx={{margin: 1}}
+                    sx={{ margin: 1 }}
                   >
                     Close without saving
                   </Button>
                 </Box>
-              </Form>)}
+              </Form>
+            )}
           </Formik>
         </Box>
       </Box>
