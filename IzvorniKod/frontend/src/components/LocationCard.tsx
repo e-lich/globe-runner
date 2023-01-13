@@ -14,8 +14,7 @@ const placeholder = require("../images/placeholder-LocationCard.png");
 
 export default function LocationCard(props: any): JSX.Element {
   const background = props.chosen ? "green" : "white";
-  const objectFitStyle =
-    props.closestCard.photo === "None" ? "contain" : "cover";
+  const objectFitStyle = "contain";
 
   const [collected, setCollected] = useState<boolean>(false);
 

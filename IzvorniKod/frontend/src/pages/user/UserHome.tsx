@@ -52,8 +52,8 @@ export default function UserHome() {
           </Typography>
           <Paper
             style={{
-              maxHeight: "88%",
-              minHeight: "28.8em",
+              maxHeight: "35.5em",
+              minHeight: "35.5em",
               overflow: "auto",
             }}
           >

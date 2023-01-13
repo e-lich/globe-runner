@@ -36,7 +36,7 @@ export default function GlobalStats() {
   return (
     <>
       <PlayerNavbar />
-      <Box justifyContent="center" display="flex" style={{ height: "90vh" }}>
+      <Box justifyContent="center" display="flex" style={{ height: "60%" }}>
         <Box
           display="flex"
           flexDirection="column"
