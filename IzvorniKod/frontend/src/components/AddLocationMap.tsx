@@ -242,7 +242,11 @@ export default function AddLocationMap({
   return (
     <>
       <Dropdown>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
+        <Dropdown.Toggle
+          variant="success"
+          id="dropdown-basic"
+          style={{ marginLeft: 0 }}
+        >
           {dropDownValue ? dropDownValue : "Select filter"}
         </Dropdown.Toggle>
 
