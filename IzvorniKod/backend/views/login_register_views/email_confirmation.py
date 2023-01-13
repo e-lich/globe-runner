@@ -36,8 +36,39 @@ def confirm_email(token):
     if user is None:
         user = Cartographer.query.filter_by(email=email).first_or_404()
     if user.confirmed:
-        return 'Account already confirmed. Please login.', 'success'
+        return '''<html>
+                        <body>
+                            <center style="display:flex; justifyContent:center; alignItems:center; flex-direction:column">
+                                <div style="padding-top: 250px; display:flex; justifyContent:center; alignItems:center; flex-direction:column">
+                                    <h1 style="color:#ADD8E6; textAlign:center">
+                                     Email Verification
+                                  </h1>
+                                    <h3 style="color:gray; textAlign:center ">
+                                        Your account is already confirmed.
+                                    </h3>
+                                </div>
+                            </center>
+                        </body>
+                    </html>
+                ''', 'success'
     else:
         user.confirmed = True
         db.session.commit()
-        return 'You have confirmed your account. Thanks!', 'success'
+        return '''<html>
+                        <body>
+                            <center style="display:flex; justifyContent:center; alignItems:center; flex-direction:column">
+                                <div style="padding-top: 250px; display:flex; justifyContent:center; alignItems:center; flex-direction:column">
+                                    <h1 style="color:#ADD8E6; textAlign:center">
+                                     Email Verification
+                                  </h1>
+                                    <h3 style="color:gray; textAlign:center ">
+                                         Your email was verified.
+                                    </h3>
+                                    <h3 style="color:gray; textAlign:center ">
+                                          You can continue using the application.
+                                    </h3>
+                                </div>
+                            </center>
+                        </body>
+                    </html>
+                ''', 'success'
