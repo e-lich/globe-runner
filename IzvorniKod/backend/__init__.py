@@ -6,8 +6,13 @@ from flask_session import Session
 from dotenv import load_dotenv
 import os
 import redis
+from OpenSSL import SSL
 
 app = Flask(__name__)
+
+context = SSL.Context(SSL.PROTOCOL_TLSv1_2)
+context.use_privatekey_file('server.key')
+context.use_certificate_file('server.crt')   
 
 load_dotenv()
 
@@ -53,7 +58,7 @@ def creds(response):
     return response
     
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=False, host="0.0.0.0", ssl_context=context)
 
 # import all views (+ db models?)
 import backend.database.models

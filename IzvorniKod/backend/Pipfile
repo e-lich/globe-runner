@@ -17,6 +17,7 @@ geopy = "*"
 requests = "*"
 flask-session = "*"
 redis = "*"
+pyopenssl = "*"
 
 [dev-packages]
 

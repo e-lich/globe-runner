@@ -8,6 +8,10 @@ IzvorniKod/backend/*/__pycache__
 IzvorniKod/.env
 IzvorniKod/backend/Pipfile.lock
 
+# certificates
+IzvorniKod/backend/server.crt
+IzvorniKod/backend/server.key
+
 # flask session
 flask_session
 
