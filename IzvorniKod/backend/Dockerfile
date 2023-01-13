@@ -15,5 +15,3 @@ RUN cd backend
 ENV FLASK_ENV production
 
 EXPOSE 5000
-
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "backend:app"]
