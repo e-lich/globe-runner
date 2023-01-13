@@ -8,12 +8,16 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
+import DoneIcon from "@mui/icons-material/Done";
 const placeholder = require("../images/placeholder-LocationCard.png");
 
 export default function LocationCard(props: any): JSX.Element {
   const background = props.chosen ? "green" : "white";
   const objectFitStyle =
     props.closestCard.photo === "None" ? "contain" : "cover";
+
+  const [collected, setCollected] = useState<boolean>(false);
 
   return (
     <>
@@ -66,10 +70,14 @@ export default function LocationCard(props: any): JSX.Element {
             <CardActions sx={{ justifyContent: "center", p: 1 }}>
               <Button
                 size="medium"
-                color="primary"
+                color="success"
                 variant="contained"
-                sx={{ p: 0.5 }}
-                onClick={props.buttonOnClick}
+                sx={{ pl: 2, pr: 2 }}
+                onClick={() => {
+                  props.buttonOnClick();
+                  setCollected(true);
+                }}
+                startIcon={collected ? <DoneIcon /> : <></>}
               >
                 {props.buttonText}
               </Button>

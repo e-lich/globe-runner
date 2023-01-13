@@ -73,10 +73,14 @@ export default function UserHome() {
                       axios
                         .post("/locations/collect/" + closestCard["cardId"])
                         .then((res) => {
-                          console.log(res);
+                          if (res.status === 200) {
+                            console.log("Collected!");
+                          } else {
+                            alert("Error collecting card!");
+                          }
                         })
                         .catch((err) => {
-                          console.log(err);
+                          alert("Error collecting card!");
                         });
                     }}
                     cardOnClick={() => {
