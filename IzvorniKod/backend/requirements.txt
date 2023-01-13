@@ -11,3 +11,4 @@ geojson
 geopy
 requests
 redis
+pyopenssl
