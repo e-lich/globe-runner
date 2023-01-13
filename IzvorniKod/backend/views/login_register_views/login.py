@@ -4,6 +4,7 @@ from backend.database.models import Player, Cartographer, Admin
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+
     if request.method == 'POST':
         request_data = request.get_json()
 
@@ -34,8 +35,17 @@ def login():
         elif user.password != request_data['password']:
             errors.append("Incorrect password")
             return errors
+        elif type(user) != Admin and user.signedIn:
+            errors.append("User can't be signed in on two locations.")
+            return errors
         elif type(user) != Admin and not user.confirmed:
             errors.append("Email not confirmed")
+            return errors
+        elif type(user) == Cartographer and user.verifiedStatus == "unverified":
+            errors.append("Cartographer not verified yet.")
+            return errors
+        elif type(user) == Cartographer and user.verifiedStatus == "rejected":
+            errors.append("Cartographer has been rejected.")
             return errors
         else:
             if type(user) == Admin:

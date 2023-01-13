@@ -8,6 +8,7 @@ import {
   TextField,
   Typography,
   Fab,
+  CircularProgress,
 } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
@@ -18,6 +19,7 @@ import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 
 function BasicRegister() {
   let [error, setError] = useState<Array<String>>([]);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -33,18 +35,23 @@ function BasicRegister() {
     formData.append("password", values.password);
     formData.append("iban", ""); // TODO - ovo je quick fix, bilo bi ljepse to hendlati na backendu
 
+    setLoading(true);
+
     axios
       .post("/register", formData)
       .then((res) => {
         console.log(res);
         if (res.data.email === undefined) {
+          setLoading(false);
           setError(res.data);
         } else {
+          setLoading(false);
           navigate("/confirm");
         }
       })
       .catch((err) => {
-        console.log(err);
+        setLoading(false);
+        setError(["Something went wrong."]);
       });
 
     return;
@@ -205,18 +212,32 @@ function BasicRegister() {
                 </Grid>
                 {/* ovaj error se pokazuje kada su gore prikazani errori vazani uz backend, znaci kada se klikne submit, a inicijalno sumbit se disable ako ne prode
               vaidadciju, ali ne napise nikakav error msg (al ocito postoji jer inace ne bi disableo submit) */}
-                <Grid item xs={12}>
-                  <ErrorMessage name="photo" />
-                </Grid>
-                <Button
-                  type="submit"
-                  color="primary"
-                  variant="contained"
-                  disabled={!props.isValid}
-                  fullWidth
-                >
-                  Login
-                </Button>
+
+                {loading && (
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  >
+                    <CircularProgress
+                      sx={{
+                        size: 20,
+                      }}
+                    />
+                  </Grid>
+                )}
+
+                {!loading && (
+                  <Button
+                    type="submit"
+                    color="primary"
+                    variant="contained"
+                    disabled={!props.isValid}
+                    fullWidth
+                  >
+                    Register
+                  </Button>
+                )}
               </Grid>
             </Form>
           )}

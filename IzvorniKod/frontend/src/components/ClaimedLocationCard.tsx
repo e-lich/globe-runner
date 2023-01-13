@@ -10,9 +10,12 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-const placeholder = require("../images/card_photo.png");
+const placeholder = require("../images/placeholder-LocationCard.png");
 
 export default function ClaimedLocationCard(props: any): JSX.Element {
+  const objectFitStyle =
+    props.claimedLocation.photo === "None" ? "contain" : "cover";
+
   const handleUnclaim = (cardID: number) => {
     console.log("unclaiming " + cardID);
     props.setRefresh((refresh: any) => !refresh);
@@ -46,7 +49,7 @@ export default function ClaimedLocationCard(props: any): JSX.Element {
         <Card sx={{ width: 300, maxHeight: 200, m: 1 }}>
           <CardActionArea onClick={props.cardOnClick}>
             <CardMedia
-              sx={{ display: "flex", objectFit: "cover" }}
+              sx={{ display: "flex", objectFit: "contain" }}
               height="100"
               component="img"
               image={placeholder}

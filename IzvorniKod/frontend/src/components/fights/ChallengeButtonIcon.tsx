@@ -1,15 +1,17 @@
 import { Icon } from "@mui/material";
+import axios from "axios";
 import { Button } from "react-bootstrap";
 
-export default function ChallengeIcon(props: any) {
-  const swords = require("../images/swords.png");
+export default function ChallengeButtonIcon(props: any) {
+  const swords = require("../../images/swords.png");
+
   return (
     <>
       <Button
         variant="text"
         color="primary"
         onClick={() => {
-          console.log("CHALLENGE THIS USER");
+          props.setOpen();
         }}
       >
         <Icon>

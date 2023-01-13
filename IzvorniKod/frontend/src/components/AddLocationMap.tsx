@@ -102,8 +102,7 @@ export default function AddLocationMap({
         myAddLocationMap!.addLayer(currentMarker);
       })
       .on("locationerror", function (e) {
-        console.log(e);
-        alert("Location access denied.");
+        window.location.reload();
       });
 
     myAddLocationMap!.on("click", addMarker);
@@ -243,7 +242,11 @@ export default function AddLocationMap({
   return (
     <>
       <Dropdown>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
+        <Dropdown.Toggle
+          variant="success"
+          id="dropdown-basic"
+          style={{ marginLeft: 0 }}
+        >
           {dropDownValue ? dropDownValue : "Select filter"}
         </Dropdown.Toggle>
 

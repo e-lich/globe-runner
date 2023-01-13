@@ -1,9 +1,14 @@
-import Navbar from "../../components/Navbar";
-import React, { useEffect } from "react";
+import PlayerNavbar from "../../components/navbars/PlayerNavbar";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Box, List, Typography } from "@mui/material";
+import LeaderboardPlayers from "./LeaderboardPlayers";
 
 export default function GlobalStats() {
   const navigate = useNavigate();
+
+  const [globalStats, setGlobalStats] = useState<any>(null);
 
   useEffect(() => {
     let userFromLocalStorage = localStorage.getItem("user");
@@ -16,25 +21,64 @@ export default function GlobalStats() {
         .includes("player")
     )
       navigate("/home");
-  });
+
+    const fetchGlobalStats = async () => {
+      const response = await axios.get("/stats/leaderboard");
+      setGlobalStats(response.data);
+      console.log(globalStats);
+    };
+
+    fetchGlobalStats();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
-      <Navbar />
-      <div className="align-items-center Auth-container">
-        <form className="Auth-form">
-          <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Stats</h3>
-            <div className="form-group mt-3 align-items-center">
-              <p> This is where your stats are going to show up!</p>
-            </div>
-            <hr></hr>
-            <div className="form-group mt-3 align-items-center">
-              <p> Start playing now :))</p>
-            </div>
-          </div>
-        </form>
-      </div>
+      <PlayerNavbar />
+      <Box justifyContent="center" display="flex" style={{ height: "60%" }}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Typography variant="h3" sx={{ m: 2, fontWeight: "bold" }}>
+            Global Stats
+          </Typography>
+          {globalStats && (
+            <>
+              <Typography variant="h6">
+                {globalStats.numberOfFights} fights played
+              </Typography>
+              <Typography variant="h6">
+                {globalStats.numberOfPlayers} total players
+              </Typography>
+              <Typography
+                variant="h4"
+                sx={{ m: 2, fontWeight: "bold", paddingTop: 10 }}
+              >
+                Leaderboard
+              </Typography>
+              <List
+                sx={{
+                  width: "100%",
+                  maxWidth: 360,
+                  bgcolor: "background.paper",
+                }}
+              >
+                {globalStats.topPlayers.map((topPlayer: any, key: number) => (
+                  <LeaderboardPlayers
+                    key={key}
+                    topPlayer={topPlayer}
+                    counter={key}
+                  />
+                ))}
+              </List>
+            </>
+          )}
+        </Box>
+      </Box>
     </>
   );
 }

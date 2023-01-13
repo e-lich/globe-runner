@@ -15,7 +15,7 @@ def get_unverified_cartographers():
     if user_type != "Admin":
         return ["User is not an admin"]
     
-    cartographers = db.session.query(Cartographer).filter_by(verified=False).all()
+    cartographers = db.session.query(Cartographer).filter_by(verifiedStatus="unverified").all()
 
     cartographers_list = []
 

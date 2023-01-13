@@ -87,10 +87,7 @@ def loadDummyPlayers():
     #db.session.add(player2)
     #db.session.add(player3)
     #db.session.add(player4)
-    db.session.add(basic)
-    db.session.add(advanced)
-    db.session.add(cartographer)
-    db.session.add(admin)
+    db.session.add_all([basic, advanced, cartographer, admin])
     db.session.commit()
 
 # za win: lokacije_json_path = os.path.join(sys.path[0], "backend\\database\\lokacije.geojson")
@@ -103,6 +100,6 @@ with app.app_context():
     db.create_all()
     loadLokacije()
 
-    loadDummyPlayers()
+    # loadDummyPlayers()
 
     # switchLongAndLat()
