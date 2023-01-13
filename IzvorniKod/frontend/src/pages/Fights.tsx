@@ -17,13 +17,7 @@ export default function Fights() {
   const [InventoryCards, setInventoryCards] = useState([]);
   const [chosenCards, setChosenCards] = useState<any>([]);
   const [ready, setReady] = useState(false);
-  const [fightResult, setFightResult] = useState<any>({
-    points1: 12,
-    points2: 23,
-    winner: true,
-    eloScore: 523,
-    brokenCards: [],
-  });
+  const [fightResult, setFightResult] = useState<any>(null);
 
   const [endFightOpen, setEndFightOpen] = useState(false);
   const navigate = useNavigate();
@@ -76,7 +70,7 @@ export default function Fights() {
     if (ready) {
       interval = setInterval(async () => {
         await fetchFightResults();
-      }, 5000);
+      }, 10000);
     }
 
     return () => {
@@ -89,13 +83,12 @@ export default function Fights() {
     try {
       let response = await axios.get("/fight/result");
       if (response.data && response.data.points) {
-        console.log("FIGHT RESPONSE: " + response.data);
         setReady(false);
         setFightResult({
           points1: response.data.points1,
           points2: response.data.points2,
           winner: response.data.winner,
-          eloScore: response.data.eloScore,
+          eloScore: response.data.newElo,
           brokenCards: response.data.brokenCards,
         });
         setEndFightOpen(true);
@@ -103,9 +96,11 @@ export default function Fights() {
         console.log(response.data);
       }
     } catch (error: any) {
-      alert("No fight found");
+      alert("Something went wrong!");
       setReady(false);
-      navigate("/home");
+      if (!fightResult) {
+        navigate("/home");
+      }
     }
   }
 
@@ -136,7 +131,10 @@ export default function Fights() {
                       console.log("");
                     }}
                     cardOnClick={() => {
-                      pickThisCard(InventoryCard);
+                      if (isCardPicked(InventoryCard)) {
+                      } else {
+                        pickThisCard(InventoryCard);
+                      }
                     }}
                   />
                 </Grid>
@@ -185,14 +183,16 @@ export default function Fights() {
           <CircularProgress sx={{ mt: 4 }} />
         )}
       </Box>
-      <EndFightDialog
-        open={endFightOpen}
-        onClose={() => {
-          setEndFightOpen(false);
-          navigate("/home");
-        }}
-        fightResults={fightResult}
-      ></EndFightDialog>
+      {fightResult && (
+        <EndFightDialog
+          open={endFightOpen}
+          onClose={() => {
+            setEndFightOpen(false);
+            navigate("/home");
+          }}
+          fightResults={fightResult}
+        ></EndFightDialog>
+      )}
     </Box>
   );
 }
