@@ -151,7 +151,6 @@ def collect_location(cardID):
             model = Cartographer
         user = db.session.query(model).filter_by(userID=userID).first()
 
-
         ## mozda provjeru blizine dodati ali ne bi se smijelo nikad dogoditi da se pozove ova metoda ako nije dovljno blizu
     
         if request.method == 'POST':
