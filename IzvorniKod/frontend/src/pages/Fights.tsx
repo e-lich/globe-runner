@@ -25,7 +25,7 @@ export default function Fights() {
     brokenCards: [],
   });
 
-  const [endFightOpen, setEndFightOpen] = useState(true);
+  const [endFightOpen, setEndFightOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
