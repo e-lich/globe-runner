@@ -8,10 +8,12 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
-const placeholder = require("../images/card_photo.png");
+const placeholder = require("../images/placeholder-LocationCard.png");
 
 export default function LocationCard(props: any): JSX.Element {
   const background = props.chosen ? "green" : "white";
+  const objectFitStyle =
+    props.closestCard.photo === "None" ? "contain" : "cover";
 
   return (
     <>
@@ -31,7 +33,7 @@ export default function LocationCard(props: any): JSX.Element {
         >
           <CardActionArea onClick={props.cardOnClick}>
             <CardMedia
-              sx={{ display: "flex", objectFit: "cover" }}
+              sx={{ display: "flex", objectFit: objectFitStyle }}
               height="100"
               component="img"
               image={
@@ -41,7 +43,7 @@ export default function LocationCard(props: any): JSX.Element {
                   ? props.closestCard.photo
                   : `data:image/jpeg;base64,${props.closestCard.photo}`
               }
-              alt="beautiful landscape"
+              alt="Location Ping"
             />
             <CardContent sx={{ p: 0.5, justifyContent: "center" }}>
               <Typography
@@ -57,12 +59,11 @@ export default function LocationCard(props: any): JSX.Element {
               >
                 {props.closestCard.title}
               </Typography>
-              <hr></hr>
             </CardContent>
           </CardActionArea>
 
           {props.hasButton ? (
-            <CardActions sx={{ justifyContent: "center", p: 0.5 }}>
+            <CardActions sx={{ justifyContent: "center", p: 1 }}>
               <Button
                 size="medium"
                 color="primary"
