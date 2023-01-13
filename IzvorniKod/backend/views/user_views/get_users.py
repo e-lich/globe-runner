@@ -57,7 +57,12 @@ def current_user_info():
 
     retVal = object_as_dict(user)
     retVal["numOfCards"] = db.session.query(Inventory).filter_by(userID=userID).count()
-    retVal["userType"] = session['userType']
+    
+    userType = session['userType']
+    if userType == 'Player' and user.advanced:
+        userType = "advancedPlayer"
+
+    retVal["userType"] = userType
     retVal.pop("password")
 
     return retVal
