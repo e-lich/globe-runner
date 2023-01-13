@@ -85,7 +85,7 @@ export default function AddLocationForm({
       .post("/locations/add/", formData)
       .then((res) => {
         console.log(res);
-        if (res.data.success != true) {
+        if (res.data.success !== true) {
           setError(res.data);
         } else {
           window.alert("Location added!");

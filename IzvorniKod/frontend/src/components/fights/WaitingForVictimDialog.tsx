@@ -39,7 +39,7 @@ export default function WaitingForVictimDialog({ onClose, open }: any) {
   const fetchChallengeResponse = async () => {
     try {
       const res = await axios.get("/fight/challenges/response");
-      challengeResponse = res.data;
+      challengeResponse = res.data.challengeStatus;
     } catch (e) {
       alert(e);
     }
