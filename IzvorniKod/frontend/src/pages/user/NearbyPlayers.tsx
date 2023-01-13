@@ -1,4 +1,4 @@
-import { List, Typography } from "@mui/material";
+import { Box, Divider, List, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -37,30 +37,35 @@ export default function NearbyPlayers() {
   return (
     <>
       <NavbarCustom />
-      <div className="align-items-center">
-        <div className="closest-player-list">
-          <div className="closest-players-title">
-            <h2>Closest Players:</h2>
-          </div>
-          <hr />
-          <hr />
-          <div className="align-items-center">
-            <List
-              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            >
-              {closestPlayers.lenght !== 0 &&
-                closestPlayers.map((closestPlayer: any, key: any) => (
+      <Box justifyContent="center" display="flex">
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Typography variant="h5" sx={{ m: 2, fontWeight: "bold" }}>
+            Nearby players
+          </Typography>
+
+          <List
+            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+          >
+            {closestPlayers.lenght !== 0 &&
+              closestPlayers.map((closestPlayer: any, key: any) => (
+                <>
                   <PlayerCard key={key} closestPlayer={closestPlayer} />
-                ))}
-              {closestPlayers.length === 0 && (
-                <Typography variant="h6" sx={{ m: 2, textAlign: "center" }}>
-                  No players nearby
-                </Typography>
-              )}
-            </List>
-          </div>
-        </div>
-      </div>
+                  <Divider />
+                </>
+              ))}
+          </List>
+          {closestPlayers.length === 0 && (
+            <Typography variant="body1" sx={{ m: 2 }}>
+              No players nearby
+            </Typography>
+          )}
+        </Box>
+      </Box>
     </>
   );
 }

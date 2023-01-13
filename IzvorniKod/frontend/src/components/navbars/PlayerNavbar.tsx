@@ -12,7 +12,7 @@ export default function PlayerNavbar() {
   var user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const [challenges, setChallenges] = useState<any>([]);
-  const [openChallenges, setOpenChallenges] = useState<any>();
+  const [openChallenges, setOpenChallenges] = useState<any>(false);
 
   const challengesDummy: Array<{ challengeID: number; challenger: String }> = [
     { challengeID: 1, challenger: "Lovro" },

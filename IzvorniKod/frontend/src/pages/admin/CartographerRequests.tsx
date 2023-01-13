@@ -1,7 +1,7 @@
 import PlayerNavbar from "../../components/navbars/PlayerNavbar";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import axios from "axios";
 import CartographerCard from "../../components/verifyCartographers/CartographerCard";
 import AdminNavbar from "../../components/navbars/AdminNavbar";
@@ -31,6 +31,7 @@ export default function CartographerRequests() {
     };
 
     getUnverifiedCartographers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh]);
 
   return (
@@ -43,16 +44,24 @@ export default function CartographerRequests() {
           justifyContent="center"
           alignItems="center"
         >
-          <Typography variant="h5" sx={{ m: 2 }}>
+          <Typography variant="h5" sx={{ m: 2, fontWeight: "bold" }}>
             Cartographer requests
           </Typography>
           {unverifiedCartographers.map((cartographer: any, key: any) => (
-            <CartographerCard
-              cartographer={cartographer}
-              key={key}
-              refresh={() => setRefresh((prev) => !prev)}
-            ></CartographerCard>
+            <>
+              <CartographerCard
+                cartographer={cartographer}
+                key={key}
+                refresh={() => setRefresh((prev) => !prev)}
+              ></CartographerCard>
+              <Divider />
+            </>
           ))}
+          {unverifiedCartographers.length === 0 && (
+            <Typography variant="body1" sx={{ m: 2, textAlign: "center" }}>
+              Good job! There are no more cartographer requests.
+            </Typography>
+          )}
         </Box>
       </Box>
     </>

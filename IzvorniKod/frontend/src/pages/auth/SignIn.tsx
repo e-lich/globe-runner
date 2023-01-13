@@ -23,6 +23,7 @@ export default function SignIn() {
 
   const handleLogin = async (values: any) => {
     setError([]);
+    setLoading(true);
     return new Promise((resolve, reject) => {
       axios
         .post("/login", {
@@ -32,14 +33,17 @@ export default function SignIn() {
         .then((res) => {
           console.log(res);
           if (res.data.email === undefined) {
+            setLoading(false);
             setError(res.data);
           } else {
             setError([]);
             saveUserData(res.data);
+            setLoading(false);
             navigate("/home");
           }
         })
         .catch((err) => {
+          setLoading(false);
           setError(["Something went wrong."]);
         });
     });
@@ -125,7 +129,11 @@ export default function SignIn() {
                   />
                 </Grid>
                 {loading && (
-                  <Grid item xs={12}>
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  >
                     <CircularProgress
                       sx={{
                         size: 20,

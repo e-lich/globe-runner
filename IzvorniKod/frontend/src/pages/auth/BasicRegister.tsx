@@ -51,7 +51,7 @@ function BasicRegister() {
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err);
+        setError(["Something went wrong."]);
       });
 
     return;
@@ -221,9 +221,7 @@ function BasicRegister() {
                   >
                     <CircularProgress
                       sx={{
-                        width: 0.6,
-                        border: 3,
-                        borderRadius: "2%",
+                        size: 20,
                       }}
                     />
                   </Grid>

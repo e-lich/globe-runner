@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import UserCard from "../../components/UserCard";
 import axios from "axios";
 import AdminNavbar from "../../components/navbars/AdminNavbar";
+import { Box, Typography } from "@mui/material";
 
 export default function AllUsers() {
   const navigate = useNavigate();
@@ -44,18 +45,22 @@ export default function AllUsers() {
   return (
     <>
       <AdminNavbar />
-      <div className="align-items-center Auth-container">
-        <form className="Auth-form">
-          <div className="closest-players-title">
-            <h2>All Users:</h2>
-          </div>
-          <div className="closest-players">
-            {allUsers.map((user, key) => (
-              <UserCard key={key} oldUser={user} />
-            ))}
-          </div>
-        </form>
-      </div>
+      <Box justifyContent="center" display="flex">
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Typography variant="h5" sx={{ m: 2, fontWeight: "bold" }}>
+            All users
+          </Typography>
+
+          {allUsers.map((user, key) => (
+            <UserCard key={key} oldUser={user} />
+          ))}
+        </Box>
+      </Box>
     </>
   );
 }

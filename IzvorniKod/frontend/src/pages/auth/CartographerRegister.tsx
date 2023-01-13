@@ -55,7 +55,7 @@ function CartographerRegister() {
       })
       .catch(function (error) {
         setLoading(false);
-        console.log(error);
+        setError(["Something went wrong."]);
       });
   };
 

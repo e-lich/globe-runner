@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserHomeMap from "../../components/UserHomeMap";
 import LocationCard from "../../components/LocationCard";
-import { List } from "@mui/material";
+import { List, Typography } from "@mui/material";
 
 import PlayerNavbar from "../../components/navbars/PlayerNavbar";
 import { Grid, Paper } from "@material-ui/core";
@@ -43,11 +43,14 @@ export default function UserHome() {
           <UserHomeMap refresh={refresh} setRefresh={setRefresh} />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <div className="closest-cards-title">
-            <h2>Closest Cards:</h2>
-          </div>
-          <Paper style={{ maxHeight: "45%", overflow: "auto" }}>
-            <List sx={{ textAlign: "center", border: 2 }}>
+          <Typography
+            variant="h5"
+            sx={{ m: 2, fontWeight: "bold", textAlign: "center" }}
+          >
+            Closest locations
+          </Typography>
+          <Paper style={{ maxHeight: "28.8em", overflow: "auto" }}>
+            <List sx={{ textAlign: "center" }}>
               {closestLocations &&
               closestLocations[0] !== "No locations found close by" &&
               closestLocations[0] !== "User not logged in" ? (

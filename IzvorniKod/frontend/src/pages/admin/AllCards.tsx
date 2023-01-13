@@ -20,13 +20,6 @@ export default function AllCards() {
     <>
       <AdminNavbar />
       <AllCardsMap />
-      <div className="align-items-center Auth-container">
-        <form className="Auth-form">
-          <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Admin Home</h3>
-          </div>
-        </form>
-      </div>
     </>
   );
 }
