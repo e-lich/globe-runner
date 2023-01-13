@@ -152,6 +152,9 @@ def get_close_by_locations():
 
     user = query(Player).filter_by(userID=userID).first()
 
+    if user.playerLocation is None:
+        return ['Location not defined on user.']
+
     lat = json.loads(user.playerLocation)['latitude']
     lng = json.loads(user.playerLocation)['longitude']
 
