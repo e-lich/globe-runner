@@ -2,14 +2,16 @@ import { Link, useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ChallengePopup from "./ChallengePopup";
-import ChallengesDialog from "./ChallengesDialog";
+import ChallengesDialog from "./fights/ChallengesDialog";
+import ChallengeButtonIcon from "./fights/ChallengeButtonIcon";
+import { Icon } from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
 
 export default function Navbar() {
   const navigate = useNavigate();
   var user = JSON.parse(localStorage.getItem("user") || "{}");
 
-  const [challenges, setChallenges] = useState<any>();
+  const [challenges, setChallenges] = useState<any>([]);
   const [openChallenges, setOpenChallenges] = useState<any>();
 
   const challengesDummy: Array<{ challengeID: number; challenger: String }> = [
@@ -27,7 +29,7 @@ export default function Navbar() {
   useEffect(() => {
     let interval = setInterval(async () => {
       console.log("Checking for battles!");
-      await fetchFights;
+      await fetchFights();
     }, 5000);
 
     return () => {
@@ -38,7 +40,6 @@ export default function Navbar() {
   const fetchFights = async () => {
     try {
       const res = await axios.get("/fight/challenges");
-
       setChallenges(res.data);
     } catch (e) {
       alert(e);
@@ -77,13 +78,6 @@ export default function Navbar() {
               {user!.userType.toLowerCase().includes("player") ? (
                 <Dropdown.Item onClick={() => navigate("/home")}>
                   Home
-                </Dropdown.Item>
-              ) : null}
-
-              {user!.userType.toLowerCase().includes("player") ||
-              user!.userType.toLowerCase() === "admin" ? (
-                <Dropdown.Item onClick={() => navigate("/userProfile")}>
-                  My Profile
                 </Dropdown.Item>
               ) : null}
 
@@ -142,8 +136,6 @@ export default function Navbar() {
                   Cartographer Requests
                 </Dropdown.Item>
               ) : null}
-
-              <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
 
@@ -158,22 +150,40 @@ export default function Navbar() {
             </div>
           </Link>
           <ul className="nav--links">
-            <li>
+            <li
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
               {true ? ( // TODO - switch true to challenges, if there are challenges load prompt!
-                <button onClick={() => setOpenChallenges(true)}>
-                  Challenges
-                </button>
+                <ChallengeButtonIcon setOpen={() => setOpenChallenges(true)} />
               ) : null}
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  <PersonIcon />
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  {user!.userType.toLowerCase().includes("player") ? (
+                    <Dropdown.Item onClick={() => navigate("/userProfile")}>
+                      My Profile
+                    </Dropdown.Item>
+                  ) : null}
+                  <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              {/* <Link to="/about">About</Link> */}
             </li>
           </ul>
         </div>
         <ChallengesDialog
           open={openChallenges}
           onClose={() => setOpenChallenges(false)}
-          challenges={challengesDummy} // TODO - SWITCH THIS TO CHALLENGES
+          challenges={challenges} // TODO - SWITCH THIS TO CHALLENGES
         />
       </>
     );

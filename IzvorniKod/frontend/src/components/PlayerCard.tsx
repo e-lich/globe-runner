@@ -1,10 +1,10 @@
 import { ListItem, ListItemAvatar, Avatar } from "@mui/material";
 import { Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import ChallengeIcon from "./ChallengeIcon";
+import ChallengeIcon from "./fights/ChallengeIcon";
 import ViewPlayerProfileDialog from "./ViewPlayerProfileDialog";
 import axios from "axios";
-import WaitingForVictimDialog from "./WaitingForVictimDialog";
+import WaitingForVictimDialog from "./fights/WaitingForVictimDialog";
 
 export default function PlayerCard(props: any) {
   const [isViewOpen, setIsViewOpen] = useState(false);

@@ -4,6 +4,9 @@ from backend.database.models import Player, Cartographer, Admin
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    if "userID" in session:
+        return ['User already logged in.']
+
     if request.method == 'POST':
         request_data = request.get_json()
 
@@ -33,6 +36,9 @@ def login():
             return errors
         elif user.password != request_data['password']:
             errors.append("Incorrect password")
+            return errors
+        elif type(user) != Admin and user.signedIn:
+            errors.append("User can't be signed in on two locations.")
             return errors
         elif type(user) != Admin and not user.confirmed:
             errors.append("Email not confirmed")

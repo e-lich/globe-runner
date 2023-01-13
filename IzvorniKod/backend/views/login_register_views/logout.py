@@ -22,6 +22,7 @@ def logout():
         return ['User not found'] # ovo se nikad ne bi trebalo dogoditi, nadamo se da i nece xD
     
     user.signedIn = False
+    db.session.commit()
     session.pop('userID', None)
     session.pop('userType', None)
     

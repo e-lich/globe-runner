@@ -9,7 +9,7 @@ import {
 import { Box } from "@mui/system";
 import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
-import EditMyProfileDialog from "../EditMyProfileDialog";
+import EditMyProfileDialog from "./EditMyProfileDialog";
 
 // type user = {
 //   userID: string;

@@ -22,7 +22,6 @@ export default function WaitingForVictimDialog({ onClose, open }: any) {
             challengeResponse === "declined"
           ) {
             onClose();
-            axios.delete("/fight/challenges/delete");
             alert(challengeResponse);
           }
 

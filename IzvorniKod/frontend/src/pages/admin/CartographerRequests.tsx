@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import axios from "axios";
-import CartographerCard from "../../components/CartographerCard";
+import CartographerCard from "../../components/verifyCartographers/CartographerCard";
 
 export default function CartographerRequests() {
   const navigate = useNavigate();
