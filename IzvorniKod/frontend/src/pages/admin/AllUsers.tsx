@@ -1,8 +1,10 @@
-import Navbar from "../../components/Navbar";
+import PlayerNavbar from "../../components/navbars/PlayerNavbar";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserCard from "../../components/UserCard";
 import axios from "axios";
+import AdminNavbar from "../../components/navbars/AdminNavbar";
+import { Box, Typography } from "@mui/material";
 
 export default function AllUsers() {
   const navigate = useNavigate();
@@ -42,19 +44,26 @@ export default function AllUsers() {
 
   return (
     <>
-      <Navbar />
-      <div className="align-items-center Auth-container">
-        <form className="Auth-form">
-          <div className="closest-players-title">
-            <h2>All Users:</h2>
-          </div>
-          <div className="closest-players">
-            {allUsers.map((user, key) => (
-              <UserCard key={key} oldUser={user} />
-            ))}
-          </div>
-        </form>
-      </div>
+      <AdminNavbar />
+      <Box justifyContent="center" display="flex" style={{ height: "90vh" }}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Typography
+            variant="h3"
+            sx={{ m: 2, fontWeight: "bold", paddingBottom: 5 }}
+          >
+            All users
+          </Typography>
+
+          {allUsers.map((user, key) => (
+            <UserCard key={key} oldUser={user} />
+          ))}
+        </Box>
+      </Box>
     </>
   );
 }

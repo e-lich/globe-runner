@@ -1,5 +1,4 @@
 import Button from "@mui/material/Button";
-import { Grid } from "@material-ui/core";
 import {
   Box,
   Card,
@@ -9,16 +8,37 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
-const placeholder = require("../images/card_photo.png");
+import { useState } from "react";
+import DoneIcon from "@mui/icons-material/Done";
+import CardDialog from "./CardDialog";
+const placeholder = require("../images/placeholder-LocationCard.png");
 
 export default function LocationCard(props: any): JSX.Element {
+  const [openCardDialog, setOpenCardDialog] = useState<any>(false);
+  const background = props.chosen ? "green" : "white";
+  const objectFitStyle = "contain";
+
+  const [collected, setCollected] = useState<boolean>(false);
+
   return (
     <>
-      <Box sx={{ justifyContent: "center", display: "flex" }}>
-        <Card sx={{ width: 300, maxHeight: 200, m: 1 }}>
-          <CardActionArea onClick={props.cardOnClick}>
+      <Box
+        sx={{
+          justifyContent: "center",
+          display: "flex",
+        }}
+      >
+        <Card
+          sx={{
+            width: 300,
+            maxHeight: 200,
+            m: 1,
+            backgroundColor: { background },
+          }}
+        >
+          <CardActionArea onClick={() => setOpenCardDialog(true)}>
             <CardMedia
-              sx={{ display: "flex", objectFit: "cover" }}
+              sx={{ display: "flex", objectFit: objectFitStyle }}
               height="100"
               component="img"
               image={
@@ -28,7 +48,7 @@ export default function LocationCard(props: any): JSX.Element {
                   ? props.closestCard.photo
                   : `data:image/jpeg;base64,${props.closestCard.photo}`
               }
-              alt="beautiful landscape"
+              alt="Location Ping"
             />
             <CardContent sx={{ p: 0.5, justifyContent: "center" }}>
               <Typography
@@ -44,18 +64,21 @@ export default function LocationCard(props: any): JSX.Element {
               >
                 {props.closestCard.title}
               </Typography>
-              <hr></hr>
             </CardContent>
           </CardActionArea>
 
           {props.hasButton ? (
-            <CardActions sx={{ justifyContent: "center", p: 0.5 }}>
+            <CardActions sx={{ justifyContent: "center", p: 1 }}>
               <Button
                 size="medium"
-                color="primary"
+                color="success"
                 variant="contained"
-                sx={{ p: 0.5 }}
-                onClick={props.buttonOnClick}
+                sx={{ pl: 2, pr: 2 }}
+                onClick={() => {
+                  props.buttonOnClick();
+                  setCollected(true);
+                }}
+                startIcon={collected ? <DoneIcon /> : <></>}
               >
                 {props.buttonText}
               </Button>
@@ -65,6 +88,13 @@ export default function LocationCard(props: any): JSX.Element {
           )}
         </Card>
       </Box>
+      <CardDialog
+        open={openCardDialog}
+        onClose={() => {
+          setOpenCardDialog(false);
+        }}
+        locationCard={props.closestCard}
+      />
     </>
   );
 }

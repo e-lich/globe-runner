@@ -26,7 +26,14 @@ export default function CartographerProfileMap() {
       myCartographerProfileMap.remove(); // should remove the map from UI and clean the inner children of DOM element
     }
 
-    myCartographerProfileMap = L.map("cartographerProfileMapId");
+    myCartographerProfileMap = L.map("cartographerProfileMapId", {
+      zoomControl: false,
+    });
+
+    new L.Control.Zoom({ position: "bottomright" }).addTo(
+      myCartographerProfileMap
+    );
+
     var tile_url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     var layer = L.tileLayer(tile_url, {
       maxZoom: 19,
@@ -107,11 +114,11 @@ export default function CartographerProfileMap() {
   }, [myCartographerProfileMap]);
 
   return (
-    <>
-      <h1 style={{ textAlign: "center" }}>
-        Map for viewing the location you accepted
-      </h1>
-      <div id="cartographerProfileMapId"></div>
-    </>
+    <div style={{ padding: 20 }}>
+      <div style={{ height: "75vh" }} id="cartographerProfileMapId"></div>
+      <h4 style={{ textAlign: "center", color: "gray", marginTop: 15 }}>
+        This map shows you your <u>accepted locations</u>.
+      </h4>
+    </div>
   );
 }

@@ -21,16 +21,22 @@ export default function OnSiteList({
 
   return (
     <>
-      <Typography variant="h4" component="h1">
+      <Typography
+        variant="h4"
+        component="h1"
+        textAlign="center"
+        style={{ padding: 16 }}
+      >
         Claimed locations
       </Typography>
+      <hr></hr>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           width: "100%",
-          height: "600px",
+          height: "90%",
           bgcolor: "background.paper",
           overflow: "auto",
         }}

@@ -1,7 +1,8 @@
-import Navbar from "../../components/Navbar";
+import PlayerNavbar from "../../components/navbars/PlayerNavbar";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CartographerHomeMap from "../../components/CartographerHomeMap";
+import CartographerNavbar from "../../components/navbars/CartographerNavbar";
 
 export default function AddLocation() {
   const navigate = useNavigate();
@@ -18,19 +19,13 @@ export default function AddLocation() {
       )
     )
       navigate("/home");
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
-      <Navbar />
+      <CartographerNavbar />
       <CartographerHomeMap />
-      <div className="align-items-center Auth-container">
-        <form className="Auth-form">
-          <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Cartographer Home</h3>
-          </div>
-        </form>
-      </div>
     </>
   );
 }

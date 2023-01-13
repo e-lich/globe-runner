@@ -2,17 +2,18 @@ import { Link, useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ChallengesDialog from "./fights/ChallengesDialog";
-import ChallengeButtonIcon from "./fights/ChallengeButtonIcon";
-import { Icon } from "@mui/material";
+import ChallengesDialog from "../fights/ChallengesDialog";
+import ChallengeButtonIcon from "../fights/ChallengeButtonIcon";
+
 import PersonIcon from "@mui/icons-material/Person";
 
-export default function Navbar() {
+export default function PlayerNavbar() {
   const navigate = useNavigate();
   var user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const [challenges, setChallenges] = useState<any>([]);
-  const [openChallenges, setOpenChallenges] = useState<any>();
+  const [openChallenges, setOpenChallenges] = useState<any>(false);
+  const [refreshFights, setRefreshFights] = useState<any>(false);
 
   const challengesDummy: Array<{ challengeID: number; challenger: String }> = [
     { challengeID: 1, challenger: "Lovro" },
@@ -35,12 +36,13 @@ export default function Navbar() {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [refreshFights]);
 
   const fetchFights = async () => {
     try {
       const res = await axios.get("/fight/challenges");
       setChallenges(res.data);
+      console.log(res.data);
     } catch (e) {
       alert(e);
     }
@@ -70,72 +72,38 @@ export default function Navbar() {
       <>
         <div className="nav">
           <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
+            <Dropdown.Toggle
+              style={{ position: "relative", top: -8 }}
+              variant="success"
+              id="dropdown-basic"
+            >
               Menu
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              {user!.userType.toLowerCase().includes("player") ? (
-                <Dropdown.Item onClick={() => navigate("/home")}>
-                  Home
-                </Dropdown.Item>
-              ) : null}
+              <Dropdown.Item onClick={() => navigate("/home")}>
+                Home
+              </Dropdown.Item>
 
-              {user!.userType.toLowerCase().includes("player") ? (
-                <Dropdown.Item onClick={() => navigate("/globalStats")}>
-                  Global Stats
-                </Dropdown.Item>
-              ) : null}
+              <Dropdown.Item onClick={() => navigate("/globalStats")}>
+                Global Stats
+              </Dropdown.Item>
 
-              {user!.userType.toLowerCase().includes("player") ? (
-                <Dropdown.Item onClick={() => navigate("/nearbyPlayers")}>
-                  Nearby Players
-                </Dropdown.Item>
-              ) : null}
+              <Dropdown.Item onClick={() => navigate("/nearbyPlayers")}>
+                Nearby Players
+              </Dropdown.Item>
 
-              {user!.userType.toLowerCase() === "advancedplayer" ? (
+              {user &&
+              user.userType &&
+              user!.userType.toLowerCase() === "advancedplayer" ? (
                 <Dropdown.Item onClick={() => navigate("/addLocation")}>
                   Add Location
                 </Dropdown.Item>
               ) : null}
 
-              {user!.userType.toLowerCase() === "cartographer" ? (
-                <Dropdown.Item onClick={() => navigate("/cartographerHome")}>
-                  Home
-                </Dropdown.Item>
-              ) : null}
-
-              {user!.userType.toLowerCase() === "cartographer" ? (
-                <Dropdown.Item onClick={() => navigate("/cartographerProfile")}>
-                  My Profile
-                </Dropdown.Item>
-              ) : null}
-
-              {user!.userType.toLowerCase() === "cartographer" ? (
-                <Dropdown.Item onClick={() => navigate("/onSiteApproval")}>
-                  On-site Approval
-                </Dropdown.Item>
-              ) : null}
-
-              {user!.userType.toLowerCase() === "admin" ? (
-                <Dropdown.Item onClick={() => navigate("/adminHome")}>
-                  Home
-                </Dropdown.Item>
-              ) : null}
-
-              {user!.userType.toLowerCase() === "admin" ? (
-                <Dropdown.Item onClick={() => navigate("/allUsers")}>
-                  All Users
-                </Dropdown.Item>
-              ) : null}
-
-              {user!.userType.toLowerCase() === "admin" ? (
-                <Dropdown.Item
-                  onClick={() => navigate("/cartographerRequests")}
-                >
-                  Cartographer Requests
-                </Dropdown.Item>
-              ) : null}
+              <Dropdown.Item onClick={() => navigate("/about")}>
+                About
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
 
@@ -143,7 +111,7 @@ export default function Navbar() {
             <div className="title">
               <img
                 className="logo"
-                src={require("../images/logo.png")}
+                src={require("../../images/logo.png")}
                 alt="logo"
               />
               <h1 className="globe-runner-title">GlobeRunner</h1>
@@ -157,7 +125,7 @@ export default function Navbar() {
                 alignItems: "center",
               }}
             >
-              {true ? ( // TODO - switch true to challenges, if there are challenges load prompt!
+              {challenges && challenges[0] ? (
                 <ChallengeButtonIcon setOpen={() => setOpenChallenges(true)} />
               ) : null}
             </li>
@@ -168,22 +136,21 @@ export default function Navbar() {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  {user!.userType.toLowerCase().includes("player") ? (
-                    <Dropdown.Item onClick={() => navigate("/userProfile")}>
-                      My Profile
-                    </Dropdown.Item>
-                  ) : null}
+                  <Dropdown.Item onClick={() => navigate("/userProfile")}>
+                    My Profile
+                  </Dropdown.Item>
+
                   <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              {/* <Link to="/about">About</Link> */}
             </li>
           </ul>
         </div>
         <ChallengesDialog
           open={openChallenges}
           onClose={() => setOpenChallenges(false)}
-          challenges={challenges} // TODO - SWITCH THIS TO CHALLENGES
+          challenges={challenges}
+          referesh={() => setRefreshFights(!refreshFights)}
         />
       </>
     );

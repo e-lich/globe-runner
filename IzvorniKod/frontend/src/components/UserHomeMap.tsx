@@ -2,7 +2,6 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { setRef } from "@material-ui/core";
 
 export default function UserHomeMap({
   refresh,
@@ -22,7 +21,7 @@ export default function UserHomeMap({
   var [userLatState, setUserLatState] = useState<number>();
   var [userLngState, setUserLngState] = useState<number>();
 
-  var locations: any;
+  var closeByLocations: any;
 
   // MAP INITIALIZATION
   useEffect(() => {
@@ -30,7 +29,11 @@ export default function UserHomeMap({
       myMap.remove(); // should remove the map from UI and clean the inner children of DOM element
     }
 
-    myMap = L.map("mapid");
+    myMap = L.map("mapid", {
+      zoomControl: false,
+    });
+    new L.Control.Zoom({ position: "topright" }).addTo(myMap);
+
     setMapContainer(myMap);
     var tile_url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     var layer = L.tileLayer(tile_url, {
@@ -86,7 +89,7 @@ export default function UserHomeMap({
       console.log("updating location");
       await axios.post("/users/update-location", userData);
 
-      await fetchLocations();
+      setRefresh((prevRefresh: any) => !prevRefresh);
     }
   }, [myMap]);
 
@@ -104,11 +107,9 @@ export default function UserHomeMap({
     try {
       const res = await axios.get("/locations/close-by");
 
-      locations = res.data;
-      updateMarkers();
+      closeByLocations = res.data;
 
-      if (res.data[0] === "No locations found close by")
-        console.log("There are no nearby locations!");
+      updateMarkers();
     } catch (e) {
       alert(e);
     }
@@ -155,8 +156,8 @@ export default function UserHomeMap({
     myMap!.addLayer(layer);
 
     if (
-      (!userLatNonState && !userLngNonState) ||
-      (!userLatState && !userLngState)
+      (userLatNonState && userLngNonState) ||
+      (userLatState && userLngState)
     ) {
       if (!userLatNonState && !userLngNonState) {
         userLatNonState = userLatState!;
@@ -173,8 +174,13 @@ export default function UserHomeMap({
       myMap!.setView([userLatNonState, userLngNonState], 14.5);
     }
 
-    if (locations[0] !== "No locations found close by")
-      locations.forEach((locationData: any) => {
+    if (closeByLocations[0] !== "No locations found close by")
+      closeByLocations.forEach((locationData: any) => {
+        const popupOptions = {
+          maxWidth: 100, // set max-width
+          className: "customPopup", // name custom popup
+        };
+
         var customPopup =
           '<div className="cardpopup">' +
           `   <img className="cardpopup--image" src=${locationData.photo} height="100px" width="100px" alt=""></img>` +
@@ -186,7 +192,7 @@ export default function UserHomeMap({
         L.marker([locationData.latitude, locationData.longitude], {
           icon: locationIcon,
         }) // add the created marker to the desired coordinates
-          .bindPopup(customPopup)
+          .bindPopup(customPopup, popupOptions)
           .addTo(myMap!);
       });
   };

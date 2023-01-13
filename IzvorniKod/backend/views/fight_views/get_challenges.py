@@ -1,5 +1,5 @@
 from backend import db, app
-from flask import request, jsonify, session
+from flask import request, jsonify, session, abort
 from backend.database.models import Player, Challenge
 from datetime import datetime
 import json
@@ -38,6 +38,10 @@ def get_challenges():
         formatted_challenges = []
 
         for challenge in challenges:
+            if (datetime.now() - challenge.challengeTimestamp).seconds > 120:
+                db.session.delete(challenge)
+                db.session.commit()
+                continue
             challenger = db.session.query(Player).filter_by(userID=challenge.challengerUserID).first()
             formatted_challenges.append({
                 "challengeID": challenge.challengeID,
@@ -66,6 +70,11 @@ def get_challenge_response():
     if request.method == 'GET': 
 
         challenge = db.session.query(Challenge).filter_by(challengerUserID=currentUserID).first()
+
+        if (datetime.now() - challenge.challengeTimestamp).seconds > 120:
+            db.session.delete(challenge)
+            db.session.commit()
+            return abort(["Challenge timed out"], 400)
 
         victim = db.session.query(Player).filter_by(userID=challenge.victimUserID).first()
 

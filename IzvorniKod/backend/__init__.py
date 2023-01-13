@@ -69,3 +69,5 @@ import backend.views.fight_views.get_challenges
 import backend.views.fight_views.get_fight
 import backend.views.fight_views.update_challenge
 import backend.views.fight_views.update_fight
+import backend.views.fight_views.delete_challenge
+import backend.views.fight_views.delete_fight
