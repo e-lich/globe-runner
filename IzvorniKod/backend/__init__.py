@@ -35,6 +35,8 @@ app.config['MAIL_PASSWORD'] = os.getenv('DEFAULT_FROM_EMAIL_PASSWORD')
 
 app.config['MAIL_DEFAULT_SENDER'] = os.getenv('DEFAULT_FROM_EMAIL')
 
+app.config['ALLOWED_HOSTS'] = ['localhost', '164.92.200.63', 'www.globerunner.games', 'globerunner.games']
+
 db = SQLAlchemy(app)
 mail = Mail(app)
 server_session = Session(app)
@@ -44,8 +46,8 @@ CORS(app)
 @app.after_request
 def creds(response):
     response.headers.add('Access-Control-Allow-Credentials', 'true')
-    # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
-    response.headers.add('Access-Control-Allow-Origin', 'http://164.92.200.63:3000')
+    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+    # response.headers.add('Access-Control-Allow-Origin', 'http://164.92.200.63:3000')
     response.headers.add('Access-Control-Allow-Headers', 'content-type')
     response.headers.add('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS, PUT, HEAD')
     return response
