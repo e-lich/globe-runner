@@ -85,7 +85,7 @@ export default function UserHomeMap({
       console.log("updating location");
       await axios.post("/users/update-location", userData);
 
-      await fetchLocations();
+      setRefresh((prevRefresh: any) => !prevRefresh);
     }
   }, [myMap]);
 
@@ -152,8 +152,8 @@ export default function UserHomeMap({
     myMap!.addLayer(layer);
 
     if (
-      (!userLatNonState && !userLngNonState) ||
-      (!userLatState && !userLngState)
+      (userLatNonState && userLngNonState) ||
+      (userLatState && userLngState)
     ) {
       if (!userLatNonState && !userLngNonState) {
         userLatNonState = userLatState!;

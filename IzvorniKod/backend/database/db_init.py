@@ -100,6 +100,6 @@ with app.app_context():
     db.create_all()
     loadLokacije()
 
-    loadDummyPlayers()
+    # loadDummyPlayers()
 
     # switchLongAndLat()

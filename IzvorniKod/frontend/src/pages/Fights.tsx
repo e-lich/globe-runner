@@ -28,6 +28,9 @@ export default function Fights() {
   const [endFightOpen, setEndFightOpen] = useState(false);
   const navigate = useNavigate();
 
+  // todo handle erros properly
+  const [err, setErr] = useState("");
+
   useEffect(() => {
     const getInventoryCards = async () => {
       const response = await axios.get("locations/owned");
@@ -55,13 +58,21 @@ export default function Fights() {
     return false;
   }
   async function handleFight() {
-    setReady(true);
-    const response = await axios.post("fights/cards", {
-      cardID1: chosenCards[0].cardID,
-      cardID2: chosenCards[1].cardID,
-      cardID3: chosenCards[2].cardID,
-    });
-    console.log(response);
+    try {
+      setReady(true);
+      const response = await axios.post("fight/cards", {
+        cardID1: chosenCards[0].cardID,
+        cardID2: chosenCards[1].cardID,
+        cardID3: chosenCards[2].cardID,
+      });
+      console.log(response);
+    } catch (error: any) {
+      if (error.response.status === 404) {
+        console.log("No fight found");
+      } else {
+        console.log("Error: ", error);
+      }
+    }
   }
 
   useEffect(() => {
@@ -79,20 +90,26 @@ export default function Fights() {
   }, [ready]);
 
   async function fetchFightResults() {
-    let response = await axios.get("fight/result");
-    if (response.data && response.data.points) {
-      console.log("FIGHT RESPONSE: " + response.data);
+    try {
+      let response = await axios.get("/fight/result");
+      if (response.data && response.data.points) {
+        console.log("FIGHT RESPONSE: " + response.data);
+        setReady(false);
+        // setFightResult({
+        //   points1: response.data.points1,
+        //   points2: response.data.points2,
+        //   winner: response.data.winner,
+        //   eloScore: response.data.eloScore,
+        //   brokenCards: response.data.brokenCards,
+        // });
+        setEndFightOpen(true);
+      } else {
+        console.log(response.data);
+      }
+    } catch (error: any) {
+      alert("No fight found");
       setReady(false);
-      // setFightResult({
-      //   points1: response.data.points1,
-      //   points2: response.data.points2,
-      //   winner: response.data.winner,
-      //   eloScore: response.data.eloScore,
-      //   brokenCards: response.data.brokenCards,
-      // });
-      setEndFightOpen(true);
-    } else {
-      console.log("Other player not yet ready!!!!");
+      navigate("/home");
     }
   }
 

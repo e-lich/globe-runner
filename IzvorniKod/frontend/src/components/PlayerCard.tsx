@@ -10,13 +10,11 @@ export default function PlayerCard(props: any) {
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [userInfo, setUserInfo] = useState<any>(null);
   const [openWaiting, setOpenWaiting] = useState<any>(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<any>(
+    JSON.parse(localStorage.getItem("user")!)
+  );
 
   const graySwords = require("../images/swords-unavailable.png");
-
-  async function currentUser() {
-    return JSON.parse(localStorage.getItem("user")!);
-  }
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -26,8 +24,6 @@ export default function PlayerCard(props: any) {
       setUserInfo(response.data);
     };
     getUserInfo();
-
-    setUser(currentUser());
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
