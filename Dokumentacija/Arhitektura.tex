@@ -268,9 +268,9 @@
 			\fi %end block com
 			
 			\pagebreak
-			\textbf{\textit{dio 2. revizije}}\\			
+%	\textbf{\textit{dio 2. revizije}}\\			
 			
-			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
+%	\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}\\
 			
 			
 			
@@ -279,10 +279,18 @@
 		\section{Dijagram stanja}
 			
 			
-			\textbf{\textit{dio 2. revizije}}\\
+%	\textbf{\textit{dio 2. revizije}}\\
 			
-			\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
-			
+%	\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }\\
+            
+            Dijagram stanja sa slike \ref{fig:StateMachineDiagram} prikazuje sva moguća stanja u kojima se napredni igrač može zateći zajedno s njihovim prijelazima i akcijama. Poslije prijave, našem korisniku se otvora početna stranica na kojoj može pretraživati kartu i birati kartice. Odabirom slike mačeva u zaglavlju aplikacije dolazi na stranicu s popisom izazova koje može prihvatiti ili odbiti. Također, igrač ima opciju padajućeg izbornika sa sljedećim ponuđenim stanjima: "Osobni podaci", "Top ljestvica", "Aktivni igrači" i "Nova lokacija". Klikom na gumb "My Profile" učita mu se stranica s njegovim osobnim podacima, košarica prikupljenih kartica i statistički graf koji prikazuje odnos pobjeda i poraza u borbama. Svoje osobne podatke igrač može promijeniti ili u stanju uređivanja odabrati opciju brisanja računa. Klikom na gumb "Global Stats" prikazuje se rank naprednog igrača i ljestvica najuspješnijih po bodovima. Zatim, klikom na "Nearby Players" korisnik dobiva popis aktivnih igrača u svojoj blizini kojima može vidjeti profil ili poslati zahtjev za borbu. Samo napredni igrač ima mogućnost predlaganja novih kartica u igri klikom na "Add Location" gdje se ukazuje forma za ispunjavanje i karta.
+            
+			\begin{figure}[H]
+        			\includegraphics[width=\textwidth]{slike/dijagramStanja.png}
+        			\centering
+        			\caption{Dijagram stanja}
+        			\label{fig:StateMachineDiagram}
+        		\end{figure}
 			
 			\eject 
 		
@@ -292,7 +300,7 @@
 			
 %	\textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}\\
 			
-			Slika \ref{fig:ActivityDiagram} prikazuje dijagram aktivnosti koji svojim nizom akcija pobliže objašnjava značajan dio našeg sustava. Glavna akcija u našoj aplikaciji je borba pa smo modelirali sva ponašanja koja vode do kreiranja i odvijanja same borbe. Korisnik se najprije mora prijaviti u sustav te ako su njegovi podaci ispravni, prikaže mu se početna stranica sa mapom i karticama koje može sakupiti. Ako njegovi podaci nisu ispravni, korisnika se preusmjerava nazad na login stranicu. Nakon uspješne prijave, pretpostavimo da je korisnik već sakupio minimalno 3 kartice, on odabire želi li izazvati aktivne igrače u blizini ili prihvatiti izazov od strane drugih igrača, ukoliko oni postoje. Za prvu opciju korisnik bira polje "Nearby players" u padajućem izborniku "Menu" i dobiva popis dostupnih igrača, dok za drugu opciju, odabire ikonu prekriženih mačeva i vidi popis izazova. Da bi korisnik pokrenuo borbu mora ili prihvatiti neki od izazova ili odabrati nekog igrača koji ima uvjete za mogućnost igranja borbe (player mora biti challengable) te pričekati da izazvani igrač prihvati izazov. Kada je postupak borbe pokrenut, igrači biraju kartice s kojima se žele boriti i aplikacija računa iznos njihovih bodova. Na kraju, svi podaci se spremaju u bazu zbog zapisivanja statistike i aplikacija vraća status, odnosno je li korisnik pobijedio ili izgubio u borbi.
+			Slika \ref{fig:ActivityDiagram} prikazuje dijagram aktivnosti koji svojim nizom akcija pobliže objašnjava značajni dio našeg sustava. Glavna akcija u našoj aplikaciji je borba pa smo modelirali sva ponašanja koja vode do kreiranja i odvijanja same borbe. Korisnik se najprije mora prijaviti u sustav te ako su njegovi podaci ispravni, prikaže mu se početna stranica s mapom i karticama koje može sakupiti. Ako njegovi podaci nisu ispravni, korisnika se preusmjerava nazad na login stranicu. Nakon uspješne prijave, pretpostavimo li da je korisnik već sakupio minimalno 3 kartice, on odabire želi li izazvati aktivne igrače u blizini ili prihvatiti izazov drugih igrača, ukoliko oni postoje. Za prvu opciju korisnik bira polje "Nearby players" u padajućem izborniku "Menu" i dobiva popis dostupnih igrača, dok za drugu opciju, odabire ikonu prekriženih mačeva i vidi popis izazova. Da bi korisnik pokrenuo borbu mora ili prihvatiti neki od izazova ili odabrati nekog igrača koji ima uvjete za mogućnost igranja borbe te pričekati da izazvani igrač prihvati izazov. Kada je postupak borbe pokrenut, igrači biraju kartice kojima se žele boriti i aplikacija računa iznos njihovih bodova. Na kraju, svi podaci se spremaju u bazu radi zapisivanja statistike i aplikacija vraća status, odnosno je li korisnik pobijedio ili izgubio u borbi.
 
 			 \begin{figure}[H]
         			\includegraphics[width=\textwidth]{slike/dijagramAktivnosti.png}
