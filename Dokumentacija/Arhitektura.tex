@@ -250,7 +250,7 @@
     			\label{fig:classDiagramDTO}
     		\end{figure}
     		
-    		Dijagram koji prikazuje modele sadrži klase koje preslikavaju stvarne entitete u objektnu paradigmu, a uz to omogućuju i komunikaciju s bazom podataka. Razred \textit{Admin} predstavlja administratora koji ima najveće ovlasti i mogućnosti izmjene podataka. \textit{User} je pak apstraktna klasa koja modelira korisnika nastalog registracijom, konkretno to mogu biti \textit{Cartographer} i \textit{Player}, a oni su klase koje nasljeđuju klasu \textit{User} i pružaju specifične funkcionalnosti i komunikaciju s pripadnim relacijama u bazi podataka. Razred \textit{Card} pruža vezu između pripadne relacije u bazi podataka i objektnog modela, a sadrži podatke bitne za prikaz i smještanje kartice u prostoru. Razred \textit{InventoryEntry} povezuje karticu s igračem dodajući joj pritom snagu koja skalira učinak kartice u borbi. Razredom \textit{Challenge} grupiraju se podatci vezani uz izazov koji je jedan igrač uputio drugom, a koji može rezultirati borbom. Klasa \textit{Fight} predstavlja skup podataka koja je potrebna za razrješenje pobjednika neke borbe.
+    		Dijagram koji prikazuje modele sadrži klase koje preslikavaju stvarne entitete u objektnu paradigmu, a uz to omogućuju i komunikaciju s bazom podataka. Razred \textit{Admin} predstavlja administratora koji ima najveće ovlasti i mogućnosti izmjene podataka. \textit{User} je pak apstraktna klasa koja modelira korisnika nastalog registracijom, konkretno to mogu biti \textit{Cartographer} i \textit{Player}, a oni su klase koje nasljeđuju klasu \textit{User} i pružaju specifične funkcionalnosti i komunikaciju s pripadnim relacijama u bazi podataka. Razred \textit{Card} pruža vezu između pripadne relacije u bazi podataka i objektnog modela, a sadrži podatke bitne za prikaz i smještanje kartice u prostoru. Razred \textit{InventoryEntry} povezuje karticu s igračem dodajući joj pritom snagu koja skalira učinak kartice u borbi. Razredom \textit{Challenge} grupiraju se podatci vezani uz izazov koji je jedan igrač uputio drugom, a koji može rezultirati borbom. Klasa \textit{Fight} predstavlja skup podataka koji je potreban za razrješenje pobjednika neke borbe.
 			
 			\begin{figure}[H]
         			\includegraphics[width=\textwidth]{slike/ClassDiagrams/Models.png}
@@ -312,7 +312,12 @@
 			\eject
 			
 		\section{Dijagram komponenti}
-		
-			\textbf{\textit{dio 2. revizije}}\\
-		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+			 
+			 Dijagram komponenti koji se nalazi na slici \ref{fig:dijagramKomponenti} prikazuje strukturu cijele aplikacije. \textit{Frontend} komponenti pristupa se putem sučelja kojim se dohvaćaju HTML, CSS i JS datoteke koje realiziraju korisničko sučelje za korištenje aplikacijom. To je postignuto nizom TypeScript datoteka koje od kojih svaka čini pojedinu React komponentu koju smo mi realizirali koristeći razne gotove React i Material UI komponente. Prije isporuke aplikacije porisniku, TypeScript programski kod prevodi se u JavaScript kod. Sve TypeScript datoteke ovise o React biblioteci. Kako bi korisniku pružila funkcionalnost, React aplikacija koja je isporučena korisniku koristi sučelje za dohvat JSON podataka kako bi pristupila GlobeRunner aplikaciji koju prema REST načelu realizira Flask razvojno okruženje u korijenskoj ruti flask aplikacije. Od tamo, a na temelju navedenih ruta, preusmjeravaju se zahtjevi koje aplikacija zaprimi kako bi ih obradila konkretna podkomponenta. Flask uz alat SQLAlchemy ostvaruje \textit{Object Relational Mapping} koristeći implementaciju klasa u komponenti Models pomoću kojih su stvorene tablice u bazi podataka. SQLAlchemy ostvaruje komunikaciju s bazom i dohvaća potrebne podatke izvršavanjem SQL upita.
+			 
+			 \begin{figure}[H]
+        			\includegraphics[width=\textwidth]{slike/dijagramKomponenti.png}
+        			\centering
+        			\caption{Dijagram komponenti}
+        			\label{fig:dijagramKomponenti}
+        		\end{figure}
