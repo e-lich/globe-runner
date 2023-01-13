@@ -1,6 +1,6 @@
 from backend import app, db
 from flask import session, jsonify, request
-from backend.database.models import Cartographer, checkPrivilage
+from backend.database.models import Cartographer
 
 @app.route('/cartographers/verify/<userID>', methods=['POST', 'GET'])
 def verify_cartographer(userID):
@@ -10,7 +10,7 @@ def verify_cartographer(userID):
     adminID = session["userID"]
     user_type = session["userType"]
 
-    if checkPrivilage(user_type, ['Admin']):
+    if user_type != "Admin":
         return ["User is not an admin"]
     
     cartographer = db.session.query(Cartographer).filter_by(userID=userID).first()

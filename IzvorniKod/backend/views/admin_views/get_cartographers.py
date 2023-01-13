@@ -1,6 +1,6 @@
 from backend import app, db
 from flask import session, redirect
-from backend.database.models import Card, Player, Cartographer, Inventory, checkPrivilage
+from backend.database.models import Card, Player, Cartographer, Inventory
 import json
 from geopy import distance
 
@@ -12,7 +12,7 @@ def get_unverified_cartographers():
     adminID = session["userID"]
     user_type = session["userType"]
 
-    if checkPrivilage(user_type, ['Admin']):
+    if user_type != "Admin":
         return ["User is not an admin"]
     
     cartographers = db.session.query(Cartographer).filter_by(verifiedStatus="unverified").all()

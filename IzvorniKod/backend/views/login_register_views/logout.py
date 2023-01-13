@@ -13,7 +13,6 @@ def logout():
 
     if user_type == 'Player':
         user = db.session.query(Player).filter_by(userID=userID).first()
-        user.deleteChallenges()
     elif user_type == 'Cartographer':
         user = db.session.query(Cartographer).filter_by(userID=userID).first()
     elif user_type == 'Admin':
