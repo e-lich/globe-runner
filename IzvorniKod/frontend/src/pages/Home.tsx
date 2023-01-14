@@ -23,8 +23,9 @@ export default function Home() {
     const fetchCurrentUser = async () => {
       try {
         const res = await axios.get("/user/current");
-        if (res.data[0] !== "User not logged in")
+        if (res.data[0] !== "User not logged in") {
           localStorage.setItem("user", JSON.stringify(res.data));
+        }
       } catch (e) {
         alert(e);
       }
