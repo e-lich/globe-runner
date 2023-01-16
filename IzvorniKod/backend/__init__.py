@@ -10,10 +10,6 @@ from OpenSSL import SSL
 
 app = Flask(__name__)
 
-context = SSL.Context(SSL.SSLv23_METHOD)
-context.use_privatekey_file('IzvorniKod/backend/server.key')
-context.use_certificate_file('IzvorniKod/backend/server.crt')   
-
 load_dotenv()
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_HOST')}/{os.getenv('POSTGRES_DB')}"
@@ -59,7 +55,7 @@ def creds(response):
     return response
     
 if __name__ == '__main__':
-    app.run(debug=False, host="0.0.0.0", ssl_context=context)
+    app.run(debug=False, host="0.0.0.0")
 
 # import all views (+ db models?)
 import backend.database.models
