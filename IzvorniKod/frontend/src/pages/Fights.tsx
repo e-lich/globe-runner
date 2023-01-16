@@ -82,7 +82,7 @@ export default function Fights() {
   async function fetchFightResults() {
     try {
       let response = await axios.get("/fight/result");
-      if (response.data && response.data.points) {
+      if (response.data && response.data.points1) {
         setReady(false);
         setFightResult({
           points1: response.data.points1,
