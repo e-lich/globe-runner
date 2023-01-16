@@ -48,8 +48,8 @@ CORS(app)
 @app.after_request
 def creds(response):
     response.headers.add('Access-Control-Allow-Credentials', 'true')
-    # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
-    response.headers.add('Access-Control-Allow-Origin', 'globerunner.games, www.globerunner.games')
+    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+    # response.headers.add('Access-Control-Allow-Origin', 'globerunner.games, www.globerunner.games')
     response.headers.add('Access-Control-Allow-Headers', 'content-type')
     response.headers.add('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS, PUT, HEAD')
     return response
