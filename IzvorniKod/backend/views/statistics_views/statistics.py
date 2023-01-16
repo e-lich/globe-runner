@@ -10,7 +10,7 @@ def get_leaderboard_stats():
     num_of_players = db.session.query(Player).count()
     num_of_fights = db.session.query(Fight).count()
 
-    topPlayers = db.session.query(Player).order_by(Player.eloScore.desc()).limit(15)
+    topPlayers = db.session.query(Player).order_by(Player.eloScore.desc()).limit(10)
     topPlayersArray = [{"userID":player.userID, "eloScore":player.eloScore, "username":player.username} for player in topPlayers]    
 
     return jsonify({

@@ -1,8 +1,5 @@
-import { Box, Container, Fab, Grid, Typography } from "@mui/material";
-import { CSSProperties, useEffect, useState } from "react";
-import ImageSearchIcon from "@mui/icons-material/ImageSearch";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Container } from "@mui/material";
+import { CSSProperties, useState } from "react";
 
 type Props = {
   open: Boolean;

@@ -39,9 +39,10 @@ def calculate_surface(card1, card2, card3):
 
 def calculate_strength_factor(card1, card2, card3):
 
-    card1_strength = card1.cardStrength
-    card2_strength = card2.cardStrength
-    card3_strength = card3.cardStrength
+    print(card1)
+    card1_strength = card1.strength
+    card2_strength = card2.strength
+    card3_strength = card3.strength
 
     strength_factor = (card1_strength + card2_strength + card3_strength) / 3
 
@@ -58,24 +59,55 @@ def get_fight():
     if user_type != "Player":
         return ["Only players can get fights"]
 
-    if request.method == 'GET': 
-        fight = db.session.query(Fight).filter_by(player1ID=currentUserID).filter_by(points1=None).filter_by(points2=None).first()
+    if request.method == 'GET':
+        fight = db.session.query(Fight).filter_by(player1UserID=currentUserID).filter(Fight.points1>0).filter(Fight.points2>0).first()
         current_player1 = True
         if fight is None:
-            fight = db.session.query(Fight).filter_by(player2ID=currentUserID).filter_by(points1=None).filter_by(points2=None).first()
+            fight = db.session.query(Fight).filter_by(player2UserID=currentUserID).filter(Fight.points1>0).filter(Fight.points2>0).first()
+            current_player1 = False
+
+            if fight is not None:
+                winner = None
+
+                if current_player1:
+                    current_player = db.session.query(Player).filter_by(userID=fight.player1UserID).first()
+                    other_player = db.session.query(Player).filter_by(userID=fight.player2UserID).first()
+                else:
+                    current_player = db.session.query(Player).filter_by(userID=fight.player2UserID).first()
+                    other_player = db.session.query(Player).filter_by(userID=fight.player1UserID).first()
+
+                if current_player1:
+                    winner = fight.points1 > fight.points2
+                else:
+                    winner = fight.points2 > fight.points1
+
+                return jsonify({
+                    "points1": fight.points1,
+                    "points2": fight.points2,
+                    "winner": winner,
+                    "brokenCards": [],
+                    "newElo": current_player.eloScore
+                })
+
+        fight = db.session.query(Fight).filter_by(player1UserID=currentUserID).filter_by(points1=0).filter_by(points2=0).first()
+        current_player1 = True
+        if fight is None:
+            fight = db.session.query(Fight).filter_by(player2UserID=currentUserID).filter_by(points1=0).filter_by(points2=0).first()
             current_player1 = False
             if fight is None:
-                return abort(["No fight found"], 404)
+                return abort(404, "No fight found")
         
         if not fight.player1Ready or not fight.player2Ready:
             return ["Other player has not chosen cards yet"]
 
         if current_player1:
-            current_player = db.session.query(Player).filter_by(playerID=fight.player1ID).first()
-            other_player = db.session.query(Player).filter_by(playerID=fight.player2ID).first()
+            current_player = db.session.query(Player).filter_by(userID=fight.player1UserID).first()
+            other_player = db.session.query(Player).filter_by(userID=fight.player2UserID).first()
         else:
-            current_player = db.session.query(Player).filter_by(playerID=fight.player2ID).first()
-            other_player = db.session.query(Player).filter_by(playerID=fight.player1ID).first()
+            current_player = db.session.query(Player).filter_by(userID=fight.player2UserID).first()
+            other_player = db.session.query(Player).filter_by(userID=fight.player1UserID).first()
+
+        
 
         player1_card1 = db.session.query(Card).filter_by(cardID=fight.cardID11).first()
         player1_card2 = db.session.query(Card).filter_by(cardID=fight.cardID12).first()
@@ -84,21 +116,30 @@ def get_fight():
         player2_card1 = db.session.query(Card).filter_by(cardID=fight.cardID21).first()
         player2_card2 = db.session.query(Card).filter_by(cardID=fight.cardID22).first()
         player2_card3 = db.session.query(Card).filter_by(cardID=fight.cardID23).first()
+        
+        player1_card1c = db.session.query(Inventory).filter_by(cardID=fight.cardID11).first()
+        player1_card2c = db.session.query(Inventory).filter_by(cardID=fight.cardID12).first()
+        player1_card3c = db.session.query(Inventory).filter_by(cardID=fight.cardID13).first()
 
-        fight.points1 = calculate_surface(player1_card1, player1_card2, player1_card3) * calculate_strength_factor(player1_card1, player1_card2, player1_card3)
-        fight.points2 = calculate_surface(player2_card1, player2_card2, player2_card3) * calculate_strength_factor(player2_card1, player2_card2, player2_card3)
+        player2_card1c = db.session.query(Inventory).filter_by(cardID=fight.cardID21).first()
+        player2_card2c = db.session.query(Inventory).filter_by(cardID=fight.cardID22).first()
+        player2_card3c = db.session.query(Inventory).filter_by(cardID=fight.cardID23).first()
+
+        print(str(player1_card1c) + "HAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        fight.points1 = calculate_surface(player1_card1, player1_card2, player1_card3) * calculate_strength_factor(player1_card1c, player1_card2c, player1_card3c)
+        fight.points2 = calculate_surface(player2_card1, player2_card2, player2_card3) * calculate_strength_factor(player2_card1c, player2_card2c, player2_card3c)
 
         # breaking cards
         if current_player1:
-            cards = [player1_card1, player1_card2, player1_card3]
+            cards = [player1_card1c, player1_card2c, player1_card3c]
         else:
-            cards = [player2_card1, player2_card2, player2_card3]
+            cards = [player2_card1c, player2_card2c, player2_card3c]
 
         broken_cards = []
 
         for card in cards:
-            card.cardStrength -= 1
-            if card.cardStrength == 0:
+            card.strength -= 1
+            if card.strength == 0:
                 inventory = db.session.query(Inventory).filter_by(cardID=card.cardID).filter_by(userID=currentUserID).first()
                 db.session.delete(inventory)
                 broken_cards.append(card.cardID)

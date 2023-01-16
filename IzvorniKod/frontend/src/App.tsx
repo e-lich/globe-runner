@@ -22,6 +22,7 @@ import CartographerMyProfile from "./pages/cartographer/CartographerMyProfile";
 import OnSiteApproval from "./pages/cartographer/OnSiteApproval";
 import AddLocation from "./pages/advancedUser/AddLocation";
 import AllCards from "./pages/admin/AllCards";
+import Fights from "./pages/Fights";
 
 function App() {
   return (
@@ -45,7 +46,7 @@ function App() {
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path="/globalStats" element={<GlobalStats />} />
         <Route path="/nearbyPlayers" element={<NearbyPlayers />} />
-        <Route path="/fights" element={<div>Fights bam </div>} />
+        <Route path="/fights" element={<Fights />} />
 
         {/* advanced user only routes */}
         <Route path="/addLocation" element={<AddLocation />} />

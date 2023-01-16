@@ -5,7 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function ChallengerCard({ challenge, onClose }: any) {
+export default function ChallengerCard({ challenge, onClose, refresh }: any) {
   const navigator = useNavigate();
   async function acceptChallenge(): Promise<void> {
     try {
@@ -18,11 +18,12 @@ export default function ChallengerCard({ challenge, onClose }: any) {
         navigator("/fights");
         // todo redirect to battle
       } else {
-        console.log("Challenge not accepted!");
-        onClose();
+        alert("Something went wrong while accepting the challenge!");
+        refresh();
       }
     } catch (error) {
       alert(error);
+      refresh();
     }
   }
 
@@ -34,10 +35,11 @@ export default function ChallengerCard({ challenge, onClose }: any) {
       );
       if (response.status === 200) {
         console.log("Challenge denied!");
-        onClose();
+        refresh();
       }
     } catch (error) {
       alert(error);
+      refresh();
     }
   }
 
@@ -46,11 +48,11 @@ export default function ChallengerCard({ challenge, onClose }: any) {
       <ListItem alignItems="center" sx={{ justifyContent: "center" }}>
         <Avatar
           alt="profile picture"
-          //   todo fix this
-          // src={`data:image/jpeg;base64,${props.cartographer.photo}`}
+          src={
+            challenge.photo ? `data:image/jpeg;base64,${challenge.photo}` : ""
+          }
         />
         <Button variant="text" color="primary" onClick={() => {}}>
-          {/* todo this argument might be called differently */}
           {challenge.challenger}
         </Button>
         <IconButton onClick={() => acceptChallenge()}>

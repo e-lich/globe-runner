@@ -1,4 +1,13 @@
-import { Alert, Box, Button, Link, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,8 +19,11 @@ export default function SignIn() {
 
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
   const handleLogin = async (values: any) => {
     setError([]);
+    setLoading(true);
     return new Promise((resolve, reject) => {
       axios
         .post("/login", {
@@ -21,14 +33,17 @@ export default function SignIn() {
         .then((res) => {
           console.log(res);
           if (res.data.email === undefined) {
+            setLoading(false);
             setError(res.data);
           } else {
             setError([]);
             saveUserData(res.data);
+            setLoading(false);
             navigate("/home");
           }
         })
         .catch((err) => {
+          setLoading(false);
           setError(["Something went wrong."]);
         });
     });
@@ -87,43 +102,65 @@ export default function SignIn() {
         >
           {(props: any) => (
             <Form>
-              <Field
-                as={TextField}
-                label="email or username"
-                name="email"
-                placeholder="Enter email"
-                fullWidth
-                required
-                error={props.errors.email && props.touched.email}
-                helperText={<ErrorMessage name="email" />}
-              />
-              <Field
-                as={TextField}
-                label="password"
-                sx={{ mt: 1, mb: 2 }}
-                name="password"
-                placeholder="Enter password"
-                type="password"
-                fullWidth
-                required
-                error={props.errors.password && props.touched.password}
-                helperText={<ErrorMessage name="password" />}
-              />
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <Field
+                    as={TextField}
+                    label="email or username"
+                    name="email"
+                    placeholder="Enter email or username"
+                    fullWidth
+                    required
+                    error={props.errors.email && props.touched.email}
+                    helperText={<ErrorMessage name="email" />}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Field
+                    as={TextField}
+                    label="password"
+                    name="password"
+                    placeholder="Enter password"
+                    type="password"
+                    fullWidth
+                    required
+                    error={props.errors.password && props.touched.password}
+                    helperText={<ErrorMessage name="password" />}
+                  />
+                </Grid>
+                {loading && (
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  >
+                    <CircularProgress
+                      sx={{
+                        size: 20,
+                      }}
+                    />
+                  </Grid>
+                )}
 
-              <Button
-                type="submit"
-                color="primary"
-                variant="contained"
-                disabled={
-                  !props.touched.password && !props.touched.email
-                    ? true
-                    : !props.isValid
-                }
-                sx={{ mt: 3, mb: 2 }}
-                fullWidth
-              >
-                Login
-              </Button>
+                {!loading && (
+                  <Grid item xs={12}>
+                    <Button
+                      type="submit"
+                      color="primary"
+                      variant="contained"
+                      disabled={
+                        !props.touched.password && !props.touched.email
+                          ? true
+                          : !props.isValid
+                      }
+                      sx={{ mt: 3, mb: 2 }}
+                      fullWidth
+                    >
+                      Login
+                    </Button>
+                  </Grid>
+                )}
+              </Grid>
             </Form>
           )}
         </Formik>

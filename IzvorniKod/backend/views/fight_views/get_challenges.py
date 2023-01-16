@@ -38,7 +38,7 @@ def get_challenges():
         formatted_challenges = []
 
         for challenge in challenges:
-            if (datetime.now() - challenge.challengeTimestamp) > 120:
+            if (datetime.now() - challenge.challengeTimestamp).seconds > 120:
                 db.session.delete(challenge)
                 db.session.commit()
                 continue
@@ -71,7 +71,7 @@ def get_challenge_response():
 
         challenge = db.session.query(Challenge).filter_by(challengerUserID=currentUserID).first()
 
-        if (datetime.now() - challenge.challengeTimestamp) > 120:
+        if (datetime.now() - challenge.challengeTimestamp).seconds > 120:
             db.session.delete(challenge)
             db.session.commit()
             return abort(["Challenge timed out"], 400)

@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserHomeMap from "../../components/UserHomeMap";
 import LocationCard from "../../components/LocationCard";
-import { List } from "@mui/material";
+import { List, Typography } from "@mui/material";
 
-import Navbar from "../../components/Navbar";
+import PlayerNavbar from "../../components/navbars/PlayerNavbar";
 import { Grid, Paper } from "@material-ui/core";
 import axios from "axios";
 
@@ -14,17 +14,18 @@ export default function UserHome() {
   var [closestLocations, setClosestLocations] = useState<any>();
 
   useEffect(() => {
-    let userFromLocalStorage = localStorage.getItem("user");
+    var user = JSON.parse(localStorage.getItem("user") || "{}");
 
-    if (userFromLocalStorage === null) navigate("/login");
+    if (user === null) navigate("/login");
 
     if (
-      !JSON.parse(userFromLocalStorage!)
-        .userType.toLowerCase()
-        .includes("player")
+      !user ||
+      !user.userType ||
+      !user.userType.toLowerCase().includes("player")
     )
       navigate("/home");
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     axios.get("/locations/closest").then((response) => {
@@ -37,19 +38,29 @@ export default function UserHome() {
 
   return (
     <>
-      <Navbar />
-      <Grid container>
-        <Grid item xs={12} sm={9} style={{ height: "70vh" }}>
+      <PlayerNavbar />
+      <Grid container style={{ height: "90vh", padding: 10 }}>
+        <Grid item xs={12} sm={9} style={{ height: "100%", padding: 10 }}>
           <UserHomeMap refresh={refresh} setRefresh={setRefresh} />
         </Grid>
-        <Grid item xs={12} sm={3}>
-          <div className="closest-cards-title">
-            <h2>Closest Cards:</h2>
-          </div>
-          <Paper style={{ maxHeight: "45%", overflow: "auto" }}>
-            <List sx={{ textAlign: "center", border: 2 }}>
+        <Grid item xs={12} sm={3} style={{ height: "100%", padding: 10 }}>
+          <Typography
+            variant="h5"
+            sx={{ m: 2, fontWeight: "bold", textAlign: "center" }}
+          >
+            Closest locations
+          </Typography>
+          <Paper
+            style={{
+              maxHeight: "35.5em",
+              minHeight: "35.5em",
+              overflow: "auto",
+            }}
+          >
+            <List sx={{ textAlign: "center" }}>
               {closestLocations &&
-              closestLocations[0] !== "No locations found close by" ? (
+              closestLocations[0] !== "No locations found close by" &&
+              closestLocations[0] !== "User not logged in" ? (
                 closestLocations?.map((closestCard: any, key: number) => (
                   <LocationCard
                     key={key}
@@ -62,10 +73,14 @@ export default function UserHome() {
                       axios
                         .post("/locations/collect/" + closestCard["cardId"])
                         .then((res) => {
-                          console.log(res);
+                          if (res.status === 200) {
+                            console.log("Collected!");
+                          } else {
+                            alert("Error collecting card!");
+                          }
                         })
                         .catch((err) => {
-                          console.log(err);
+                          alert("Error collecting card!");
                         });
                     }}
                     cardOnClick={() => {

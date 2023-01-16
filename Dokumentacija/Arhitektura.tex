@@ -13,7 +13,7 @@
 
 	    Korisnik koristi \underline{\textit{web aplikaciju}} za obrađivanje željenih zahtijeva. Web aplikacija obrađuje zahtjev te ovisno o zahtjevu, pristupa bazi podataka nakon čega preko poslužitelja vraća korisniku odgovor u obliku HTML dokumenta vidljivog u web pregledniku.
 		
-		Programski jezik kojeg smo odabrali za izradu naše web aplikacije je Python zajedno s Flask radnim okvirom te programski jezik TypeScript s React radnim okvirom u sklopu kojeg smo koristili CSS radni okvir Bootstrap. Odabrano razvojno okruženje je Microsoft Visual Studio. Arhitektura sustava temeljit će se na MVC (Model-View-Controller) konceptu. MVC koncept podržan je od strane Flask radnog okvira i kao takav ima gotove predloške koji nam olakšavaju razvoj razvoj web aplikacije.
+		Programski jezik kojeg smo odabrali za izradu naše web aplikacije je Python zajedno s Flask radnim okvirom te programski jezik TypeScript s React radnim okvirom u sklopu kojeg smo koristili MUI library. Odabrano razvojno okruženje je Visual Studio Code. Arhitektura sustava temeljit će se na MVC (Model-View-Controller) konceptu. MVC koncept podržan je od strane Flask radnog okvira i kao takav ima gotove predloške koji nam olakšavaju razvoj razvoj web aplikacije.
 		
         Karakteristika MVC koncepta je nezavisan razvoj pojedinih dijelova aplikacije što za posljedicu ima jednostavnije ispitivanje kao i jednostavno razvijanje i dodavanje novih svojstava u sustav.
         MVC koncept sastoji se od:
@@ -43,7 +43,7 @@
 			\subsection{Opis tablica}
 			
 
-				\textbf{User}   Ovaj entitet sadržava sve važne informacije o korisniku aplikacije, ali je apstraktan. Sadrži atribute: userID, username, name, email, profilePhoto, password, confirmed. Ovaj entitet je povezan s entitetima Player i Cartographer koji su specijalizacije entiteta User.
+				\textbf{User}   Ovaj entitet sadržava sve važne informacije o korisniku aplikacije, ali je apstraktan. Sadrži atribute: userID, username, name, email, profilePhoto, password, confirmed, signedIn, banned. Ovaj entitet je povezan s entitetima Player i Cartographer koji su specijalizacije entiteta User.
 				
 				
 				\begin{longtblr}[
@@ -55,17 +55,21 @@
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{User}}	& \textbf{Type} & \textbf{Description}\\ \hline[3pt]
-					\SetCell{LightGreen}userID & INT & jedinstveni identifikator korisnika\\ \hline
+					\SetCell{LightGreen}userID & VARCHAR & jedinstveni identifikator korisnika\\ \hline
 					username & VARCHAR & korisničko ime\\ \hline 
 					name & VARCHAR & ime i prezime korisnika\\ \hline 
 					email & VARCHAR	& email korisnika\\ \hline
 					profilePhoto & VARCHAR & fotografija korisnika\\ \hline
 					password & VARCHAR & lozinka korisnika\\ \hline
-					confirmed & BOOLEAN & je li korisnik potvrđen putem emaila\\ \hline 
+					confirmed & BOOLEAN & je li korisnik potvrđen putem emaila\\ \hline
+                        signedIn & BOOLEAN & je li korisnik
+                    ulogiran\\ \hline
+                        banned & BOOLEAN & je li korisniku zabranjen
+                    pristup\\ \hline    
 				\end{longtblr}
 				
 				
-				\textbf{Cartographer}   Ovaj entitet sadržava sve važne informacije o korisniku aplikacije koji je kartograf. Sadrži atribute: userID, IBAN, document i verified. Ovaj entitet je specijalizacija entiteta User te je u vezi s entitetom Card preko atributa cartographerID.
+				\textbf{Cartographer}   Ovaj entitet sadržava sve važne informacije o korisniku aplikacije koji je kartograf. Sadrži atribute: userID, IBAN, document i verified. Ovaj entitet je specijalizacija entiteta User te je u vezi \textit{One-to-Many} s entitetom Card preko atributa cartographerID.
 				
 				
 				\begin{longtblr}[
@@ -77,14 +81,14 @@
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Cartographer}}	& \textbf{Type} & \textbf{Description}\\ \hline[3pt]
-					\SetCell{LightGreen}userID & INT & \SetCell{LightBlue}jedinstveni identifikator korisnika (user.userID)\\ \hline
+					\SetCell{LightGreen}userID & VARCHAR & \SetCell{LightBlue}jedinstveni identifikator korisnika (user.userID)\\ \hline
 					IBAN & VARCHAR & IBAN kartografa\\ \hline 
 					document & VARCHAR & fotografija osobne iskaznice kartografa\\ \hline 
 					verified & BOOLEAN	& je li administrator odobrio kartografa\\ \hline
 				\end{longtblr}
 				
 			
-			\textbf{Player}   Ovaj entitet sadržava sve važne informacije o korisniku aplikacije koji je igrač. Sadrži atribute: userID,  advanced, eloScore, banned i playerLocation. Ovaj entitet je specijalizacija entiteta User te je u vezi \textit{One-to-Many} s entitetom Inventory preko atributa userID te je u vezi \textit{One-to-Many} s entitetom Card preko atributa authorUserID. Također je u vezi \textit{One-to-Many} s entitetom Challenge preko atributa challengerUserID, tj. victimUserID kao što je i u \textit{One-to-Many} vezi s entiteom Fight preko atributa player1UserID, tj. player2UserID.
+			\textbf{Player}   Ovaj entitet sadržava sve važne informacije o korisniku aplikacije koji je igrač. Sadrži atribute: userID,  advanced, eloScore, playerLocation i challengeable. Ovaj entitet je specijalizacija entiteta User te je u vezi \textit{One-to-Many} s entitetom Inventory preko atributa userID te je u vezi \textit{One-to-Many} s entitetom Card preko atributa authorUserID. Također je u vezi \textit{One-to-Many} s entitetom Challenge preko atributa challengerUserID, tj. victimUserID kao što je i u \textit{One-to-Many} vezi s entiteom Fight preko atributa player1UserID, tj. player2UserID.
 				
 				
 				\begin{longtblr}[
@@ -96,12 +100,11 @@
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Player}}	& \textbf{Type} & \textbf{Description}\\ \hline[3pt]
-					\SetCell{LightGreen}userID & INT & \SetCell{LightBlue}jedinstveni identifikator korisnika (user.userID)\\ \hline
+					\SetCell{LightGreen}userID & VARCHAR & \SetCell{LightBlue}jedinstveni identifikator korisnika (user.userID)\\ \hline
 					advanced	& BOOLEAN & razina ovlasti igrača može biti ordinary ili advanced\\ \hline 
 					eloScore & INT & ELO score igrača\\ \hline 
-					banned & BOOLEAN	& je li igrač isključen iz igre\\ \hline
 					playerLocation & VARCHAR & aktivna lokacija korisnika\\ \hline
-					signedIn & BOOLEAN & je li korisnik prijavljen u sustav\\ \hline
+					challengeable & BOOLEAN & je li korisnika moguće izazvati na borbu\\ \hline
 				\end{longtblr}
 			\pagebreak
 			
@@ -125,7 +128,7 @@
 				\end{longtblr}
 				
 				
-			\textbf{Card}   Ovaj entitet sadržava sve važne informacije o kartici. Sadrži atribute: cardID, cardLocation, locationPhoto, title, description, cardStatus, authorUserID, cartographerID. Ovaj entitet je u vezi \textit{One-to-Many} s entitetom Inventory preko atributa cardID te je u \textit{One-to-Many} vezi s entitetom Fight preko atributa cardIDxy gdje je x element {1, 2} i y je element {1, 2, 3}. Card je također u \textit{One-to-One} vezi s entitetom Player preko atributa authorUserID te je u \textit{One-to-One} vezi s entitetom Cartographer preko atributa authorUserID.
+			\textbf{Card}   Ovaj entitet sadržava sve važne informacije o kartici. Sadrži atribute: cardID, cardLocation, locationPhoto, title, description, cardStatus, authorUserID, cartographerID. Ovaj entitet je u vezi \textit{One-to-Many} s entitetom Inventory preko atributa cardID te je u \textit{One-to-Many} vezi s entitetom Fight preko atributa cardIDxy gdje je x element {1, 2} i y je element {1, 2, 3}. Card je također u \textit{Many-to-One} vezi s entitetom Player preko atributa authorUserID te je u \textit{Many-to-One} vezi s entitetom Cartographer preko atributa cartographerID.
 				
 				
 				\begin{longtblr}[
@@ -143,8 +146,8 @@
 					title & VARCHAR	& naziv kartice\\ \hline
 					description & VARCHAR & opis kartice\\ \hline
 					cardStatus & ENUM & status kartice može biti: submitted, unclaimed, claimed, verified\\ \hline
-					\SetCell{LightBlue}authorUserID & INT & koji igrač je predložio dodavanje nove kartice u igru (user.userID)\\ \hline 
-					\SetCell{LightBlue}cartographerID & INT & koji kartograf je odobrio zahtjev za izradu nove kartice (user.userID)\\ \hline
+					\SetCell{LightBlue}authorUserID & VARCHAR & koji igrač je predložio dodavanje nove kartice u igru (user.userID)\\ \hline 
+					\SetCell{LightBlue}cartographerID & VARCHAR & koji kartograf je odobrio zahtjev za izradu nove kartice (user.userID)\\ \hline
 				\end{longtblr}
 			\pagebreak
 				
@@ -160,13 +163,13 @@
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Inventory}}	& \textbf{Type} & \textbf{Description}\\ \hline[3pt]
-					\SetCell{LightGreen}userID & INT & \SetCell{LightBlue}identifikacijski broj korisnika koji posjeduje karticu (user.userID)\\ \hline
+					\SetCell{LightGreen}userID & VARCHAR & \SetCell{LightBlue}identifikacijski broj korisnika koji posjeduje karticu (user.userID)\\ \hline
 					\SetCell{LightGreen}cardID	& INT & \SetCell{LightBlue}šifra kartice\\ \hline 
 					strength & INT & jačina kartice\\ \hline
 				\end{longtblr}
 				
 				
-			\textbf{Fight}   Ovaj entitet sadržava sve važne informacije o borbi između dva igrača. Sadrži atribute: fightID, player1UserID, player2UserID, cardID11, cardID12, cardID13, cardID21, cardID22, cardID23, points1, points2, fightTimestamp, challengeID. Ovaj entitet je u \textit{One-to-One} vezi s entitetom Challenge preko atributa challengeID. Također je u \textit{Many-to-One} vezi s entitetom Player preko atributa userID te je i u \textit{Many-to-One} vezi s entitetom Card preko atributa cardID.
+			\textbf{Fight}   Ovaj entitet sadržava sve važne informacije o borbi između dva igrača. Sadrži atribute: fightID, player1UserID, player2UserID, player1Ready, player2Ready, cardID11, cardID12, cardID13, cardID21, cardID22, cardID23, points1, points2, fightTimestamp. Ovaj entitet je u \textit{Many-to-One} vezi s entitetom Player preko atributa userID te je i u \textit{Many-to-One} vezi s entitetom Card preko atributa cardID.
 				
 				
 				\begin{longtblr}[
@@ -179,8 +182,12 @@
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Fight}}	& \textbf{Type} & \textbf{Description}\\ \hline[3pt]
 					\SetCell{LightGreen}fightID & INT & šifra borbe\\ \hline
-					\SetCell{LightBlue}player1UserID & INT & pobjednik borbe (user.userID)\\ \hline
-					\SetCell{LightBlue}player2UserID & INT & gubitnik borbe (user.userID)\\ \hline
+					\SetCell{LightBlue}player1UserID & VARCHAR & pobjednik borbe (user.userID)\\ \hline
+					\SetCell{LightBlue}player2UserID & VARCHAR & gubitnik borbe (user.userID)\\ \hline
+                        player1Ready & BOOLEAN &
+                    je li prvi igrač spreman za borbu\\ \hline
+                        player2Ready & BOOLEAN &
+                    je li drugi igrač spreman za borbu\\ \hline
 					\SetCell{LightBlue}cardID11 & INT & prva kartica igrana od strane prvog igrača (card.cardID)\\ \hline
 					\SetCell{LightBlue}cardID12 & INT & druga kartica igrana od strane prvog igrača (card.cardID)\\ \hline 
 					\SetCell{LightBlue}cardID13 & INT & treća kartica igrana od strane prvog igrača (card.cardID)\\ \hline 
@@ -190,11 +197,10 @@
 					points1 & FLOAT	& broj bodova prvog igrača\\ \hline
 					points2 & FLOAT & broj bodova drugog igrača\\ \hline
 					fightTimestamp & TIMESTAMP & trenutak u kojem je provedena borba\\ \hline
-					\SetCell{LightBlue}challengeID & INT & šifra izazova (challenge.challengeID)\\ \hline
 				\end{longtblr}
 				
 				
-			\textbf{Challenge}   Ovaj entitet sadržava sve važne informacije o izazovu između dva igrača. Sadrži atribute: challengeID, challengerUserID, victimUserID, challengeTimestamp, challengeStatus. OVaj entitet je u \textit{One-to-One} vezi s entitetom Fight preko atributa challengeID te je u vezi \textit{Many-to-One} s entitetom Player preko atributa challengerUserID, tj. victimUserID.
+			\textbf{Challenge}   Ovaj entitet sadržava sve važne informacije o izazovu između dva igrača. Sadrži atribute: challengeID, challengerUserID, victimUserID, challengeTimestamp, challengeStatus. Ovaj entitet je u \textit{Many-to-One} s entitetom Player preko atributa challengerUserID, tj. victimUserID.
 				
 				
 				\begin{longtblr}[
@@ -206,17 +212,17 @@
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \multicolumn{3}{|c|}{\textbf{Challenge}}	& \textbf{Type} & \textbf{Description}\\ \hline[3pt]
-					\SetCell{LightGreen}challengeID & INT & šifra izazova\\ \hline
-					\SetCell{LightBlue}challengerUserID & INT & igrač koji šalje zahtjev za borbu (user.userID)\\ \hline 
-					\SetCell{LightBlue}victimUserID & INT & igrač koji je izazvan na borbu (user.userID)\\ \hline
+					\SetCell{LightGreen}challengeID & VARCHAR & šifra izazova\\ \hline
+					\SetCell{LightBlue}challengerUserID & VARCHAR & igrač koji šalje zahtjev za borbu (user.userID)\\ \hline 
+					\SetCell{LightBlue}victimUserID & VARCHAR & igrač koji je izazvan na borbu (user.userID)\\ \hline
 					challengeTimestamp & TIMESTAMP & trenutak u kojem je nastao izazov\\ \hline
-					challengeStatus & ENUM & je li izazov accepted, rejected ili pending\\ \hline
+					challengeStatus & ENUM & izazov može biti: pending, accepted, declined, went too far\\ \hline
 				\end{longtblr}
 			
 			\subsection{Dijagram baze podataka}
 				
 				\begin{figure}[H]
-        			\includegraphics[scale=0.45]{slike/ERdiagram.png}
+        			\includegraphics[scale=0.45]{slike/ERdiagram2.png}
         			\centering
         			\caption{Dijagram baze podataka}
         			\label{fig:DBmodel}
@@ -244,7 +250,7 @@
     			\label{fig:classDiagramDTO}
     		\end{figure}
     		
-    		Dijagram koji prikazuje modele sadrži klase koje preslikavaju stvarne entitete u objektnu paradigmu, a uz to omogućuju i komunikaciju s bazom podataka. Razred \textit{Admin} predstavlja administratora koji ima najveće ovlasti i mogućnosti izmjene podataka. \textit{User} je pak apstraktna klasa koja modelira korisnika nastalog registracijom, konkretno to mogu biti \textit{Cartographer} i \textit{Player}, a oni su klase koje nasljeđuju klasu \textit{User} i pružaju specifične funkcionalnosti i komunikaciju s pripadnim relacijama u bazi podataka. Razred \textit{Card} pruža vezu između pripadne relacije u bazi podataka i objektnog modela, a sadrži podatke bitne za prikaz i smještanje kartice u prostoru. Razred \textit{InventoryEntry} povezuje karticu s igračem dodajući joj pritom snagu koja skalira učinak kartice u borbi. Razredom \textit{Challenge} grupiraju se podatci vezani uz izazov koji je jedan igrač uputio drugom, a koji može rezultirati borbom. Klasa \textit{Fight} predstavlja skup podataka koja je potrebna za razrješenje pobjednika neke borbe.
+    		Dijagram koji prikazuje modele sadrži klase koje preslikavaju stvarne entitete u objektnu paradigmu, a uz to omogućuju i komunikaciju s bazom podataka. Razred \textit{Admin} predstavlja administratora koji ima najveće ovlasti i mogućnosti izmjene podataka. \textit{User} je pak apstraktna klasa koja modelira korisnika nastalog registracijom, konkretno to mogu biti \textit{Cartographer} i \textit{Player}, a oni su klase koje nasljeđuju klasu \textit{User} i pružaju specifične funkcionalnosti i komunikaciju s pripadnim relacijama u bazi podataka. Razred \textit{Card} pruža vezu između pripadne relacije u bazi podataka i objektnog modela, a sadrži podatke bitne za prikaz i smještanje kartice u prostoru. Razred \textit{InventoryEntry} povezuje karticu s igračem dodajući joj pritom snagu koja skalira učinak kartice u borbi. Razredom \textit{Challenge} grupiraju se podatci vezani uz izazov koji je jedan igrač uputio drugom, a koji može rezultirati borbom. Klasa \textit{Fight} predstavlja skup podataka koji je potreban za razrješenje pobjednika neke borbe.
 			
 			\begin{figure}[H]
         			\includegraphics[width=\textwidth]{slike/ClassDiagrams/Models.png}
@@ -262,9 +268,9 @@
 			\fi %end block com
 			
 			\pagebreak
-			\textbf{\textit{dio 2. revizije}}\\			
+%	\textbf{\textit{dio 2. revizije}}\\			
 			
-			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
+%	\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}\\
 			
 			
 			
@@ -273,22 +279,45 @@
 		\section{Dijagram stanja}
 			
 			
-			\textbf{\textit{dio 2. revizije}}\\
+%	\textbf{\textit{dio 2. revizije}}\\
 			
-			\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
-			
+%	\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }\\
+            
+            Dijagram stanja sa slike \ref{fig:StateMachineDiagram} prikazuje sva moguća stanja u kojima se napredni igrač može zateći zajedno s njihovim prijelazima i akcijama. Poslije prijave, našem korisniku se otvora početna stranica na kojoj može pretraživati kartu i birati kartice. Odabirom slike mačeva u zaglavlju aplikacije dolazi na stranicu s popisom izazova koje može prihvatiti ili odbiti. Također, igrač ima opciju padajućeg izbornika sa sljedećim ponuđenim stanjima: "Osobni podaci", "Top ljestvica", "Aktivni igrači" i "Nova lokacija". Klikom na gumb "My Profile" učita mu se stranica s njegovim osobnim podacima, košarica prikupljenih kartica i statistički graf koji prikazuje odnos pobjeda i poraza u borbama. Svoje osobne podatke igrač može promijeniti ili u stanju uređivanja odabrati opciju brisanja računa. Klikom na gumb "Global Stats" prikazuje se rank naprednog igrača i ljestvica najuspješnijih po bodovima. Zatim, klikom na "Nearby Players" korisnik dobiva popis aktivnih igrača u svojoj blizini kojima može vidjeti profil ili poslati zahtjev za borbu. Samo napredni igrač ima mogućnost predlaganja novih kartica u igri klikom na "Add Location" gdje se ukazuje forma za ispunjavanje i karta.
+            
+			\begin{figure}[H]
+        			\includegraphics[width=\textwidth]{slike/dijagramStanja.png}
+        			\centering
+        			\caption{Dijagram stanja}
+        			\label{fig:StateMachineDiagram}
+        		\end{figure}
 			
 			\eject 
 		
 		\section{Dijagram aktivnosti}
 			
-			\textbf{\textit{dio 2. revizije}}\\
+%	\textbf{\textit{dio 2. revizije}}\\
 			
-			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
+%	\textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}\\
+			
+			Slika \ref{fig:ActivityDiagram} prikazuje dijagram aktivnosti koji svojim nizom akcija pobliže objašnjava značajni dio našeg sustava. Glavna akcija u našoj aplikaciji je borba pa smo modelirali sva ponašanja koja vode do kreiranja i odvijanja same borbe. Korisnik se najprije mora prijaviti u sustav te ako su njegovi podaci ispravni, prikaže mu se početna stranica s mapom i karticama koje može sakupiti. Ako njegovi podaci nisu ispravni, korisnika se preusmjerava nazad na login stranicu. Nakon uspješne prijave, pretpostavimo li da je korisnik već sakupio minimalno 3 kartice, on odabire želi li izazvati aktivne igrače u blizini ili prihvatiti izazov drugih igrača, ukoliko oni postoje. Za prvu opciju korisnik bira polje "Nearby players" u padajućem izborniku "Menu" i dobiva popis dostupnih igrača, dok za drugu opciju, odabire ikonu prekriženih mačeva i vidi popis izazova. Da bi korisnik pokrenuo borbu mora ili prihvatiti neki od izazova ili odabrati nekog igrača koji ima uvjete za mogućnost igranja borbe te pričekati da izazvani igrač prihvati izazov. Kada je postupak borbe pokrenut, igrači biraju kartice kojima se žele boriti i aplikacija računa iznos njihovih bodova. Na kraju, svi podaci se spremaju u bazu radi zapisivanja statistike i aplikacija vraća status, odnosno je li korisnik pobijedio ili izgubio u borbi.
+
+			 \begin{figure}[H]
+        			\includegraphics[width=\textwidth]{slike/dijagramAktivnosti.png}
+        			\centering
+        			\caption{Dijagram aktivnosti}
+        			\label{fig:ActivityDiagram}
+        		\end{figure}
 			
 			\eject
+			
 		\section{Dijagram komponenti}
-		
-			\textbf{\textit{dio 2. revizije}}\\
-		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+			 
+			 Dijagram komponenti koji se nalazi na slici \ref{fig:dijagramKomponenti} prikazuje strukturu cijele aplikacije. \textit{Frontend} komponenti pristupa se putem sučelja kojim se dohvaćaju HTML, CSS i JS datoteke koje realiziraju korisničko sučelje za korištenje aplikacijom. To je postignuto nizom TypeScript datoteka koje od kojih svaka čini pojedinu React komponentu koju smo mi realizirali koristeći razne gotove React i Material UI komponente. Prije isporuke aplikacije porisniku, TypeScript programski kod prevodi se u JavaScript kod. Sve TypeScript datoteke ovise o React biblioteci. Kako bi korisniku pružila funkcionalnost, React aplikacija koja je isporučena korisniku koristi sučelje za dohvat JSON podataka kako bi pristupila GlobeRunner aplikaciji koju prema REST načelu realizira Flask razvojno okruženje u korijenskoj ruti flask aplikacije. Od tamo, a na temelju navedenih ruta, preusmjeravaju se zahtjevi koje aplikacija zaprimi kako bi ih obradila konkretna podkomponenta. Flask uz alat SQLAlchemy ostvaruje \textit{Object Relational Mapping} koristeći implementaciju klasa u komponenti Models pomoću kojih su stvorene tablice u bazi podataka. SQLAlchemy ostvaruje komunikaciju s bazom i dohvaća potrebne podatke izvršavanjem SQL upita.
+			 
+			 \begin{figure}[H]
+        			\includegraphics[width=\textwidth]{slike/dijagramKomponenti.png}
+        			\centering
+        			\caption{Dijagram komponenti}
+        			\label{fig:dijagramKomponenti}
+        		\end{figure}

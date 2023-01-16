@@ -1,7 +1,8 @@
-import Navbar from "../../components/Navbar";
+import PlayerNavbar from "../../components/navbars/PlayerNavbar";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AllCardsMap from "../../components/AllCardsMap";
+import AdminNavbar from "../../components/navbars/AdminNavbar";
 
 export default function AllCards() {
   const navigate = useNavigate();
@@ -13,19 +14,13 @@ export default function AllCards() {
 
     if (!(JSON.parse(userFromLocalStorage!).userType.toLowerCase() === "admin"))
       navigate("/home");
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
-      <Navbar />
+      <AdminNavbar />
       <AllCardsMap />
-      <div className="align-items-center Auth-container">
-        <form className="Auth-form">
-          <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Admin Home</h3>
-          </div>
-        </form>
-      </div>
     </>
   );
 }

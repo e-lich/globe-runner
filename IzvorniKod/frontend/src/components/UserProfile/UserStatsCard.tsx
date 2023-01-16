@@ -43,7 +43,7 @@ export default function UserStatsCard() {
   }, []);
 
   return (
-    <Card sx={{ height: "24em" }}>
+    <Card sx={{ height: "100%", display: "flex", justifyContent: "center" }}>
       {chartData && numOfFights > 0 && (
         <Pie
           data={chartData}

@@ -1,6 +1,5 @@
-import { Button, Dialog, Paper } from "@mui/material";
+import { Button } from "@mui/material";
 import axios from "axios";
-import { create } from "domain";
 import * as L from "leaflet";
 import "leaflet-routing-machine";
 import "leaflet/dist/leaflet.css";
@@ -43,7 +42,12 @@ export default function OnSiteMap({
       myOnSiteMap.remove(); // should remove the map from UI and clean the inner children of DOM element
     }
 
-    myOnSiteMap = L.map("onSiteMapId");
+    myOnSiteMap = L.map("onSiteMapId", {
+      zoomControl: false,
+    });
+
+    new L.Control.Zoom({ position: "bottomright" }).addTo(myOnSiteMap);
+
     setMapContainer(myOnSiteMap);
     var tile_url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     var layer = L.tileLayer(tile_url, {
@@ -259,50 +263,65 @@ export default function OnSiteMap({
 
   return (
     <>
-      <Dropdown>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {dropDownValue ? dropDownValue : "Select filter"}
-        </Dropdown.Toggle>
-
-        <Dropdown.Menu>
-          <Dropdown.Item
-            onClick={() => {
-              setDropDownValue("Unclaimed Locations");
-              dropvalue = "Unclaimed Locations";
-              updateFilter();
-            }}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "start",
+          alignItems: "center",
+        }}
+      >
+        <Dropdown>
+          <Dropdown.Toggle
+            style={{ marginLeft: 0 }}
+            variant="success"
+            id="dropdown-basic"
           >
-            Unclaimed Locations
-          </Dropdown.Item>
+            {dropDownValue ? dropDownValue : "Select filter"}
+          </Dropdown.Toggle>
 
-          <Dropdown.Item
-            onClick={async () => {
-              setDropDownValue("Claimed Locations");
-              dropvalue = "Claimed Locations";
-              updateFilter();
-            }}
-          >
-            Claimed Locations
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
+          <Dropdown.Menu>
+            <Dropdown.Item
+              onClick={() => {
+                setDropDownValue("Unclaimed Locations");
+                dropvalue = "Unclaimed Locations";
+                updateFilter();
+              }}
+            >
+              Unclaimed Locations
+            </Dropdown.Item>
+
+            <Dropdown.Item
+              onClick={async () => {
+                setDropDownValue("Claimed Locations");
+                dropvalue = "Claimed Locations";
+                updateFilter();
+              }}
+            >
+              Claimed Locations
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+        <Button
+          variant="contained"
+          disabled={dropDownValue !== "Claimed Locations" || routeCreated}
+          color="primary"
+          style={{ height: "40px", marginRight: "20px" }}
+          onClick={() => createRoute()}
+        >
+          Create Route
+        </Button>
+        <Button
+          variant="contained"
+          disabled={!routeCreated}
+          color="primary"
+          style={{ height: "40px" }}
+          onClick={() => removeRoute()}
+        >
+          Remove Route
+        </Button>
+      </div>
+
       <div id="onSiteMapId"></div>
-      <Button
-        variant="contained"
-        disabled={dropDownValue !== "Claimed Locations" || routeCreated}
-        color="primary"
-        onClick={() => createRoute()}
-      >
-        Create Route
-      </Button>
-      <Button
-        variant="contained"
-        disabled={!routeCreated}
-        color="primary"
-        onClick={() => removeRoute()}
-      >
-        Remove Route
-      </Button>
     </>
   );
 }

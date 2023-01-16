@@ -35,7 +35,7 @@ def login():
         elif user.password != request_data['password']:
             errors.append("Incorrect password")
             return errors
-        elif user.signedIn:
+        elif type(user) != Admin and user.signedIn:
             errors.append("User can't be signed in on two locations.")
             return errors
         elif type(user) != Admin and not user.confirmed:
