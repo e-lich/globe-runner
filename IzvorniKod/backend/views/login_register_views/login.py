@@ -75,4 +75,4 @@ def login():
                 'userType': user_type
             })
     else:
-        return ['Invalid request method'], {"Access-Control-Allow-Origin": "http://localhost:3000"}
+        return ['Invalid request method']

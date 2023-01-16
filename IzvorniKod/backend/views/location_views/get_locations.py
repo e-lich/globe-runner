@@ -37,7 +37,7 @@ def get_submitted_locations():
     if user.isPlayer():
         return Card().formatted(authorUserID=userID, cardStatus="submitted")
     elif user.isCartographer():
-        return Card().formatted(cartographerID=userID, cardStatus="submitted")
+        return Card().formatted(cardStatus="submitted")
     else:
         return ["This shouldn't happen."]
     

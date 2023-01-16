@@ -23,6 +23,7 @@ IzvorniKod/frontend/coverage
 
 # production
 IzvorniKod/frontend/build
+IzvorniKod/nginx/build
 
 # misc
 IzvorniKod/frontend/.DS_Store

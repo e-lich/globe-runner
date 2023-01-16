@@ -1,5 +1,8 @@
 version: "3"
 
+networks:
+  app-network:
+
 services:
   # postgres:
   #   image: postgres:11
@@ -28,38 +31,39 @@ services:
       - .env
     restart: always
     ports:
-      - "8000:8000"
-    # environment:
-    #   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    #   POSTGRES_DB: ${POSTGRES_DB}
+      - 8000:8000
+    expose:
+      - 8000
+    networks:
+      - app-network
     # links:
     #   - postgres
     # depends_on:
     #   - postgres 
     container_name: flask_app
-    command: gunicorn -b 0.0.0.0:5000 backend:app
+    
   
   nginx:
     container_name: nginx
     restart: always
     build: ./nginx
+    networks:
+      - app-network
     ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - flask_app
+      - 80:80
+      - 443:443
       
-  react_app:
-    build: ./frontend
-    restart: always
-    ports:
-      - "3000:3000"
-    links:
-      - flask_app
-    container_name: react_app
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    stdin_open: true
-    tty: true
+  # react_app:
+  #   build: ./frontend
+  #   restart: always
+  #   ports:
+  #     - "3000:3000"
+  #   links:
+  #     - flask_app
+  #   container_name: react_app
+  #   volumes:
+  #     - ./frontend:/app
+  #     - /app/node_modules
+  #   stdin_open: true
+  #   tty: true
 

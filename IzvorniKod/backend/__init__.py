@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify, Response
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_mail import Mail
@@ -18,7 +18,7 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT')
 
 app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_COOKIE_SECURE'] = False
+app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
@@ -35,14 +35,15 @@ db = SQLAlchemy(app)
 mail = Mail(app)
 Session(app)
 
-CORS(app)
+CORS(app, supports_credentials=True)
 
 @app.after_request
 def creds(response):
-    response.headers.add('Access-Control-Allow-Credentials', 'true')
-    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
-    response.headers.add('Access-Control-Allow-Headers', 'content-type')
-    response.headers.add('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS, PUT, HEAD')
+    response.headers.set('Access-Control-Allow-Credentials', 'true')
+    response.headers.set('Access-Control-Allow-Origin', 'https://globerunner.games')
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Origin, X-Requested-With, Accept, Autorization')
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS, PUT, HEAD')
+    
     return response
     
 if __name__ == '__main__':
