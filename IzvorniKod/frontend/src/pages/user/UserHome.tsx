@@ -86,6 +86,7 @@ export default function UserHome() {
                     cardOnClick={() => {
                       console.log("You clicked on the card.");
                     }}
+                    hasPopup={true}
                   />
                 ))
               ) : (

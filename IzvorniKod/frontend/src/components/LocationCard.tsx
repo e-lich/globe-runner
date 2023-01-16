@@ -36,7 +36,11 @@ export default function LocationCard(props: any): JSX.Element {
             backgroundColor: { background },
           }}
         >
-          <CardActionArea onClick={() => setOpenCardDialog(true)}>
+          <CardActionArea
+            onClick={() =>
+              props.hasPopup ? setOpenCardDialog(true) : props.cardOnClick()
+            }
+          >
             <CardMedia
               sx={{ display: "flex", objectFit: objectFitStyle }}
               height="100"

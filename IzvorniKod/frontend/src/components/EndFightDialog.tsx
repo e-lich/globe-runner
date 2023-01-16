@@ -97,7 +97,11 @@ export default function EndFightDialog({ open, onClose, fightResults }: any) {
             Cards broken during battle:
           </Typography>
           {fightResults.brokenCards.map((card: any) => (
-            <LocationCard closestCard={card} hasButton={false} />
+            <LocationCard
+              closestCard={card}
+              hasButton={false}
+              hasPopup={true}
+            />
           ))}
         </Box>
       </DialogContent>
