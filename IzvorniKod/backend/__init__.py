@@ -37,7 +37,7 @@ app.config['MAIL_PASSWORD'] = os.getenv('DEFAULT_FROM_EMAIL_PASSWORD')
 
 app.config['MAIL_DEFAULT_SENDER'] = os.getenv('DEFAULT_FROM_EMAIL')
 
-app.config['ALLOWED_HOSTS'] = ['localhost', '164.92.200.63', 'www.globerunner.games', 'globerunner.games']
+app.config['ALLOWED_HOSTS'] = ['localhost', 'www.globerunner.games', 'globerunner.games']
 
 db = SQLAlchemy(app)
 mail = Mail(app)
