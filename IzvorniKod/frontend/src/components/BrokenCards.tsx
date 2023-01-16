@@ -40,6 +40,7 @@ export default function BrokenCards() {
                     cardOnClick={() => {
                       console.log("Select this card.");
                     }}
+                    hasPopup={true}
                   />
                 </Grid>
               ))}

@@ -136,6 +136,7 @@ export default function Fights() {
                         pickThisCard(InventoryCard);
                       }
                     }}
+                    hasPopup={false}
                   />
                 </Grid>
               ))}
