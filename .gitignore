@@ -24,6 +24,7 @@ IzvorniKod/frontend/coverage
 # production
 IzvorniKod/frontend/build
 IzvorniKod/nginx/build
+IzvorniKod/nginx/certs
 
 # misc
 IzvorniKod/frontend/.DS_Store

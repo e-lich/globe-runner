@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 
-axios.defaults.baseURL = "http://localhost:8000";
+axios.defaults.baseURL = "/api";
 axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(
