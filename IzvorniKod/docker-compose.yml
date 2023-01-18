@@ -16,10 +16,6 @@ services:
     env_file:
       - .env
     restart: always
-    ports:
-      - 8000:8000
-    expose:
-      - 8000
     container_name: backend
 
   nginx:

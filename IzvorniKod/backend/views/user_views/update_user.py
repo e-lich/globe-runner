@@ -21,7 +21,7 @@ def update(userID):
 
     return jsonify(success=True)
 
-@app.route('/users/update/<userID>', methods=['POST', 'GET'])
+@app.route('/api/users/update/<userID>', methods=['POST', 'GET'])
 def update_user(userID):
     if "userID" not in session:
         return abort(403, "User not logged in")
@@ -38,7 +38,7 @@ def update_user(userID):
     else:
         return abort(400, "Invalid request method")
 
-@app.route('/users/update', methods=['POST', 'GET'])
+@app.route('/api/users/update', methods=['POST', 'GET'])
 def update_current_user():
     if "userID" not in session:
         return(['User not logged in'])
@@ -51,7 +51,7 @@ def update_current_user():
     else:
         return ["Invalid request method"]
 
-@app.route('/users/ban/<userID>', methods=['POST', 'GET'])
+@app.route('/api/users/ban/<userID>', methods=['POST', 'GET'])
 def ban_user(userID):
     if "userID" not in session:
         return(['User not logged in'])
@@ -79,7 +79,7 @@ def ban_user(userID):
     else:
         return ["Invalid request method"]
 
-@app.route('/users/update-location', methods=['POST', 'GET'])
+@app.route('/api/users/update-location', methods=['POST', 'GET'])
 def update_user_location():
     if "userID" not in session:
         return ["User not logged in"]

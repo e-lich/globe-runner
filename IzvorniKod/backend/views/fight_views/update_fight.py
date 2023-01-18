@@ -2,7 +2,7 @@ from backend import db, app
 from backend.database.models import Card, Player, Fight
 from flask import request, jsonify, session
 
-@app.route('/fight/cards', methods=['POST', 'GET'])
+@app.route('/api/fight/cards', methods=['POST', 'GET'])
 def choose_cards():
     if "userID" not in session:
         return(['User not logged in'])

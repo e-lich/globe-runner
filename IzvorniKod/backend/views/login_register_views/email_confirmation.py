@@ -22,11 +22,11 @@ def confirm_token(token, expiration=3600):
     return email
 
 # zamjena za home page dok se nemre redirectat na njega 
-@app.route('/')
+@app.route('/api/')
 def home():
     return
 
-@app.route('/confirm/<token>', methods=['GET'])
+@app.route('/api/confirm/<token>', methods=['GET'])
 def confirm_email(token):
     try:
         email = confirm_token(token)

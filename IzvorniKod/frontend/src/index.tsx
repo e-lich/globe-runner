@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 
-axios.defaults.baseURL = "/api";
+axios.defaults.baseURL = "https://globerunner.games/api";
 axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(

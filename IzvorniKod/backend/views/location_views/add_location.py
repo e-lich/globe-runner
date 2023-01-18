@@ -4,7 +4,7 @@ from backend.database.models import Card, Player
 import base64
 import json
 
-@app.route('/locations/add/', methods=['POST', 'GET'])
+@app.route('/api/locations/add/', methods=['POST', 'GET'])
 def add_location():
 
     if "userID" not in session:

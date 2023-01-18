@@ -20,7 +20,7 @@ def update(location):
     return jsonify(success=True)
 
 ## ovo je za admina, moze editat sve
-@app.route('/locations/update/<cardID>', methods=['POST', 'GET'])
+@app.route('/api/locations/update/<cardID>', methods=['POST', 'GET'])
 def update_location(cardID):
 
     if "userID" not in session:
@@ -38,7 +38,7 @@ def update_location(cardID):
         return ["Invalid request method"]
 
 ## ovo je za kartografa, moze editat samo one koje su submitted
-@app.route('/locations/update/submitted/<cardID>', methods=['POST', 'GET'])
+@app.route('/api/locations/update/submitted/<cardID>', methods=['POST', 'GET'])
 def update_submitted_location(cardID):
         if "userID" not in session:
             return(['User not logged in'])
@@ -58,7 +58,7 @@ def update_submitted_location(cardID):
         else:
             return ["Invalid request method"]
 
-@app.route('/locations/verify/<cardID>', methods=['POST', 'GET'])
+@app.route('/api/locations/verify/<cardID>', methods=['POST', 'GET'])
 def approve_location(cardID):
     
         if "userID" not in session:
@@ -83,7 +83,7 @@ def approve_location(cardID):
         else:
             return ["Invalid request method"]
 
-@app.route('/locations/unclaim/<cardID>', methods=['POST', 'GET'])
+@app.route('/api/locations/unclaim/<cardID>', methods=['POST', 'GET'])
 def unclaim_location(cardID):
     
         if "userID" not in session:
@@ -108,7 +108,7 @@ def unclaim_location(cardID):
         else:
             return ["Invalid request method"]
 
-@app.route('/locations/claim/<cardID>', methods=['POST', 'GET'])
+@app.route('/api/locations/claim/<cardID>', methods=['POST', 'GET'])
 def claim_location(cardID):
     
         if "userID" not in session:
@@ -134,7 +134,7 @@ def claim_location(cardID):
         else:
             return ["Invalid request method"]
 
-@app.route('/locations/collect/<cardID>', methods=['POST', 'GET'])
+@app.route('/api/locations/collect/<cardID>', methods=['POST', 'GET'])
 def collect_location(cardID):
         
         if "userID" not in session:

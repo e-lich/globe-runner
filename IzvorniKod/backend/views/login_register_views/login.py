@@ -2,7 +2,7 @@ from backend import app, db
 from flask import request, jsonify, redirect, session
 from backend.database.models import Player, Cartographer, Admin
 
-@app.route('/login', methods=['POST', 'GET'])
+@app.route('/api/login', methods=['POST', 'GET'])
 def login():
 
     if request.method == 'POST':

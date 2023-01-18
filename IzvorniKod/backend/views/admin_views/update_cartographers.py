@@ -2,7 +2,7 @@ from backend import app, db
 from flask import session, jsonify, request
 from backend.database.models import Cartographer
 
-@app.route('/cartographers/verify/<userID>', methods=['POST', 'GET'])
+@app.route('/api/cartographers/verify/<userID>', methods=['POST', 'GET'])
 def verify_cartographer(userID):
     if "userID" not in session:
         return(['Admin not logged in'])
@@ -28,7 +28,7 @@ def verify_cartographer(userID):
     else:
         return ["Invalid request method"]
 
-@app.route('/cartographers/reject/<userID>', methods=['POST', 'GET'])
+@app.route('/api/cartographers/reject/<userID>', methods=['POST', 'GET'])
 def reject_cartographer(userID):
     if "userID" not in session:
         return(['Admin not logged in'])

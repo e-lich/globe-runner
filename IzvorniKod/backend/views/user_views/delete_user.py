@@ -15,7 +15,7 @@ def delete(userID):
     return jsonify(success=True)
 
 ## za admina
-@app.route('/users/delete/<userID>', methods=['DELETE', 'GET'])
+@app.route('/api/users/delete/<userID>', methods=['DELETE', 'GET'])
 def delete_user(userID):
     if "userID" not in session:
         return(['User not logged in'])
@@ -32,7 +32,7 @@ def delete_user(userID):
         return ["Invalid request method"]
 
 ## za korisnika, brisanje vlastitog profila
-@app.route('/users/delete', methods=['DELETE', 'GET'])
+@app.route('/api/users/delete', methods=['DELETE', 'GET'])
 def delete_current_user():
     if "userID" not in session:
         return(['User not logged in'])
