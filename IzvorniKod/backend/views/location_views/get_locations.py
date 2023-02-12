@@ -21,7 +21,7 @@ def formattedReturn(locations):
     return locations_arr
 
 
-@app.route('/api/locations/submitted', methods=['GET'])
+@app.route('/locations/submitted', methods=['GET'])
 def get_submitted_locations():
     if "userID" not in session:
         return(['User not logged in'])
@@ -43,7 +43,7 @@ def get_submitted_locations():
     
 
 
-@app.route('/api/locations/approved', methods=['GET'])
+@app.route('/locations/approved', methods=['GET'])
 def get_approved_locations():
     if "userID" not in session:
         return(['User not logged in'])
@@ -64,7 +64,7 @@ def get_approved_locations():
         return ["This shouldn't happen."]
 
 
-@app.route('/api/locations/unclaimed', methods=['GET'])
+@app.route('/locations/unclaimed', methods=['GET'])
 def get_on_site_check_locations():
     if "userID" not in session:
         return(['User not logged in'])
@@ -80,7 +80,7 @@ def get_on_site_check_locations():
         return locations
 
 
-@app.route('/api/locations/claimed', methods=['GET'])
+@app.route('/locations/claimed', methods=['GET'])
 def get_on_site_check_claimed_locations():
     if "userID" not in session:
         return(['User not logged in'])
@@ -97,7 +97,7 @@ def get_on_site_check_claimed_locations():
     else:
         return locations
 
-@app.route('/api/locations/all', methods=['GET'])
+@app.route('/locations/all', methods=['GET'])
 def get_all_locations():
     if "userID" not in session:
         return(['User not logged in'])
@@ -139,7 +139,7 @@ def get_within_distance(player_loc, dist):
 
 
 # vraca sve kartice u blizini
-@app.route('/api/locations/close-by', methods=['GET'])
+@app.route('/locations/close-by', methods=['GET'])
 def get_close_by_locations():
 
     if "userID" not in session:
@@ -168,7 +168,7 @@ def get_close_by_locations():
         return closeByLocations
 
 # vraca sve kartice u blizini
-@app.route('/api/locations/closest', methods=['GET'])
+@app.route('/locations/closest', methods=['GET'])
 def get_closest_locations():
 
     if "userID" not in session:
@@ -194,7 +194,7 @@ def get_closest_locations():
         return closeByLocations
 
 # vraca sve kartice koje igrac moze sakupiti
-@app.route('/api/locations/collectable', methods=['GET'])
+@app.route('/locations/collectable', methods=['GET'])
 def get_collectable_locations():
     if "userID" not in session:
         return(['User not logged in'])
@@ -219,7 +219,7 @@ def get_collectable_locations():
     else:
         return closeByLocations
 
-@app.route('/api/locations/owned', methods=['GET'])
+@app.route('/locations/owned', methods=['GET'])
 def get_owned_locations():
     if "userID" not in session:
         return(['User not logged in'])

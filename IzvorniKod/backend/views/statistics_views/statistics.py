@@ -5,7 +5,7 @@ from geopy import distance
 import json
 from sqlalchemy import or_, and_
 
-@app.route('/api/stats/leaderboard', methods=['GET'])
+@app.route('/stats/leaderboard', methods=['GET'])
 def get_leaderboard_stats():
     num_of_players = db.session.query(Player).count()
     num_of_fights = db.session.query(Fight).count()
@@ -19,15 +19,15 @@ def get_leaderboard_stats():
         "numberOfFights": num_of_fights
     })
 
-@app.route('/api/stats/global-match', methods=['GET'])
+@app.route('/stats/global-match', methods=['GET'])
 def get_matches_stats():
     return ['Request not implemented']
 
-@app.route('/api/stats/collected-locations', methods=['GET'])
+@app.route('/stats/collected-locations', methods=['GET'])
 def get_collected_locations_stats():
     return ['Request not implemented']
 
-@app.route('/api/users/stats', methods=['GET'])
+@app.route('/users/stats', methods=['GET'])
 def get_user_stats():
     userID = session['userID']
 

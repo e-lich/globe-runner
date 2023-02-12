@@ -3,7 +3,7 @@ from flask import request, jsonify, session, redirect
 from backend.database.models import Player, Challenge, Fight
 
 
-@app.route('/api/fight/challenges/create/<userID>', methods=['POST', 'GET'])
+@app.route('/fight/challenges/create/<userID>', methods=['POST', 'GET'])
 def create_challenge(userID):
     if "userID" not in session:
         return(['User not logged in'])
@@ -26,7 +26,7 @@ def create_challenge(userID):
     else:
         return ["Invalid request method"]
 
-@app.route('/api/fight/challenges/respond/<challengeID>', methods=['POST', 'GET'])
+@app.route('/fight/challenges/respond/<challengeID>', methods=['POST', 'GET'])
 def respond_to_challenge(challengeID):
     if "userID" not in session:
         return(['User not logged in'])

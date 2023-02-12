@@ -7,17 +7,17 @@ from backend.views.login_register_views.email_confirmation import generate_confi
 import base64
 
 # geting rid of 403 error    
-@app.route('/api/register/basic', methods=['GET'])
+@app.route('/register/basic', methods=['GET'])
 def helloRegisterBasic():
     return 
 
 # geting rid of 403 error
-@app.route('/api/register/cartographer', methods=['GET'])
+@app.route('/register/cartographer', methods=['GET'])
 def helloRegisterCartographer():
     return 
 
 # register basic user
-@app.route('/api/register', methods=['POST', 'GET'])
+@app.route('/register', methods=['POST', 'GET'])
 def register_user():
     if request.method == 'POST':
         # input variables validity

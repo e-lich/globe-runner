@@ -4,7 +4,7 @@ from backend.database.models import Card, Player, Cartographer, Inventory
 import json
 from geopy import distance
 
-@app.route('/api/cartographers/unverified', methods=['GET'])
+@app.route('/cartographers/unverified', methods=['GET'])
 def get_unverified_cartographers():
     if "userID" not in session:
         return(['Admin not logged in'])

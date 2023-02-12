@@ -2,7 +2,7 @@ from backend import db, app
 from flask import request, jsonify, session
 from backend.database.models import Challenge
 
-@app.route('/api/fight/challenges/delete', methods=['DELETE', 'GET'])
+@app.route('/fight/challenges/delete', methods=['DELETE', 'GET'])
 def delete_challenge():
     if "userID" not in session:
         return(['User not logged in'])

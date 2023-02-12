@@ -21,7 +21,7 @@ def formattedReturn(users):
     else:
         return users_arr
 
-@app.route('/api/users/all', methods=['GET'])
+@app.route('/users/all', methods=['GET'])
 def get_all_users():
     if "userID" not in session:
         return(['User not logged in'])
@@ -40,7 +40,7 @@ def get_all_users():
     else:
         return formattedReturn(users)
 
-@app.route('/api/user/current', methods=['GET'])
+@app.route('/user/current', methods=['GET'])
 def current_user_info():
     if "userID" not in session:
         return ['User not logged in']

@@ -48,7 +48,7 @@ def calculate_strength_factor(card1, card2, card3):
 
     return strength_factor / 10
 
-@app.route('/api/fight/result', methods=['GET'])
+@app.route('/fight/result', methods=['GET'])
 def get_fight():
     if "userID" not in session:
         return(['User not logged in'])

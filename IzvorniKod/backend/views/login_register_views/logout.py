@@ -2,7 +2,7 @@ from backend import app, db
 from flask import request, jsonify, redirect, session
 from backend.database.models import Player, Cartographer, Admin
 
-@app.route('/api/logout', methods=['POST', 'GET'])
+@app.route('/logout', methods=['POST', 'GET'])
 def logout():
     if "userID" not in session:
         return(['User not logged in'])
