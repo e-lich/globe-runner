@@ -40,7 +40,7 @@ CORS(app, supports_credentials=True)
 @app.after_request
 def creds(response):
     response.headers.set('Access-Control-Allow-Credentials', 'true')
-    response.headers.set('Access-Control-Allow-Origin', 'https://globerunner.games')
+    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000')
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Origin, X-Requested-With, Accept, Autorization')
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS, PUT, HEAD')
     
