@@ -22,7 +22,6 @@ def calculate_new_elo(playerA_elo, playerB_elo, playerA_wins):
 
 
 def calculate_surface(card1, card2, card3):
-
     card1_location = (json.loads(card1.cardLocation)['latitude'], json.loads(card1.cardLocation)['longitude'])
     card2_location = (json.loads(card2.cardLocation)['latitude'], json.loads(card2.cardLocation)['longitude'])
     card3_location = (json.loads(card3.cardLocation)['latitude'], json.loads(card3.cardLocation)['longitude'])
@@ -66,28 +65,6 @@ def get_fight():
             fight = db.session.query(Fight).filter_by(player2UserID=currentUserID).filter(Fight.points1>0).filter(Fight.points2>0).first()
             current_player1 = False
 
-            if fight is not None:
-                winner = None
-
-                if current_player1:
-                    current_player = db.session.query(Player).filter_by(userID=fight.player1UserID).first()
-                    other_player = db.session.query(Player).filter_by(userID=fight.player2UserID).first()
-                else:
-                    current_player = db.session.query(Player).filter_by(userID=fight.player2UserID).first()
-                    other_player = db.session.query(Player).filter_by(userID=fight.player1UserID).first()
-
-                if current_player1:
-                    winner = fight.points1 > fight.points2
-                else:
-                    winner = fight.points2 > fight.points1
-
-                return jsonify({
-                    "points1": fight.points1,
-                    "points2": fight.points2,
-                    "winner": winner,
-                    "brokenCards": [],
-                    "newElo": current_player.eloScore
-                })
 
         fight = db.session.query(Fight).filter_by(player1UserID=currentUserID).filter_by(points1=0).filter_by(points2=0).first()
         current_player1 = True
@@ -125,7 +102,6 @@ def get_fight():
         player2_card2c = db.session.query(Inventory).filter_by(cardID=fight.cardID22).first()
         player2_card3c = db.session.query(Inventory).filter_by(cardID=fight.cardID23).first()
 
-        print(str(player1_card1c) + "HAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         fight.points1 = calculate_surface(player1_card1, player1_card2, player1_card3) * calculate_strength_factor(player1_card1c, player1_card2c, player1_card3c)
         fight.points2 = calculate_surface(player2_card1, player2_card2, player2_card3) * calculate_strength_factor(player2_card1c, player2_card2c, player2_card3c)
 
@@ -149,7 +125,6 @@ def get_fight():
         if number_of_owned_cards < 3:
             current_player.challengeable = False
 
-        db.session.commit()
 
         winner = None
 
@@ -158,12 +133,35 @@ def get_fight():
         else:
             winner = fight.points2 > fight.points1
 
+        if fight.fightStatus == "done":
+            return jsonify(success=True)
+
+        current_player.eloScore = calculate_new_elo(current_player.eloScore, other_player.eloScore, winner)
+        db.session.commit()
+
+        if fight.fightStatus == "finished":
+            fight.fightStatus = "done"
+            db.session.commit()
+            
+            return jsonify({
+                    "points1": fight.points1,
+                    "points2": fight.points2,
+                    "winner": winner,
+                    "brokenCards": [],
+                    "newElo": current_player.eloScore
+                })
+
+        
+
+        fight.fightStatus = "finished"
+
+        db.session.commit()
         return jsonify({
             "points1": fight.points1,
             "points2": fight.points2,
             "winner": winner,
             "brokenCards": broken_cards,
-            "newElo": calculate_new_elo(current_player.eloScore, other_player.eloScore, winner)
+            "newElo": current_player.eloScore
             })
 
     else:
