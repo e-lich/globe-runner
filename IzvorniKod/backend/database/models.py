@@ -190,7 +190,6 @@ class Fight(db.Model):
     points2 = db.Column(db.Float)
     fightTimestamp = db.Column(db.DateTime)
     fightStatus = db.Column(db.Enum("pending", "finished", name="fight_status_type"))
-    playerFinished = db.Column(db.Integer) # 1 or 2
 
     def __init__(self, player1UserID, player2UserID):
         self.player1UserID = player1UserID

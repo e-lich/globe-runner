@@ -59,20 +59,24 @@ def get_fight():
         return ["Only players can get fights"]
 
     if request.method == 'GET':
-        fight = db.session.query(Fight).filter_by(player1UserID=currentUserID).filter(Fight.points1>0).filter(Fight.points2>0).first()
-        current_player1 = True
-        if fight is None:
-            fight = db.session.query(Fight).filter_by(player2UserID=currentUserID).filter(Fight.points1>0).filter(Fight.points2>0).first()
-            current_player1 = False
+        # fight = db.session.query(Fight).filter_by(player1UserID=currentUserID).filter(Fight.points1>0).filter(Fight.points2>0).first()
+        # current_player1 = True
+        # if fight is None:
+        #     fight = db.session.query(Fight).filter_by(player2UserID=currentUserID).filter(Fight.points1>0).filter(Fight.points2>0).first()
+        #     current_player1 = False
 
 
-        fight = db.session.query(Fight).filter_by(player1UserID=currentUserID).filter_by(points1=0).filter_by(points2=0).first()
+        # fight = db.session.query(Fight).filter_by(player1UserID=currentUserID).filter_by(points1=0).filter_by(points2=0).first()
+        fight = db.session.query(Fight).filter_by(player1UserID=currentUserID).first()
         current_player1 = True
         if fight is None:
-            fight = db.session.query(Fight).filter_by(player2UserID=currentUserID).filter_by(points1=0).filter_by(points2=0).first()
+            # fight = db.session.query(Fight).filter_by(player2UserID=currentUserID).filter_by(points1=0).filter_by(points2=0).first()
+            fight = db.session.query(Fight).filter_by(player2UserID=currentUserID).first()
             current_player1 = False
             if fight is None:
                 return abort(404, "No fight found")
+
+        
         
         if not fight.player1Ready or not fight.player2Ready:
             return ["Other player has not chosen cards yet"]
@@ -84,6 +88,20 @@ def get_fight():
             current_player = db.session.query(Player).filter_by(userID=fight.player2UserID).first()
             other_player = db.session.query(Player).filter_by(userID=fight.player1UserID).first()
 
+        if fight.fightStatus == "finished":
+            winner = True
+            if current_player1:
+                winner = fight.points1 > fight.points2
+            else:
+                winner = fight.points2 > fight.points1
+
+            return jsonify({
+                    "points1": fight.points1,
+                    "points2": fight.points2,
+                    "winner": winner,
+                    "brokenCards": [],
+                    "newElo": current_player.eloScore
+                })
         
 
         player1_card1 = db.session.query(Card).filter_by(cardID=fight.cardID11).first()
@@ -133,29 +151,12 @@ def get_fight():
         else:
             winner = fight.points2 > fight.points1
 
-        if fight.fightStatus == "done":
-            return jsonify(success=True)
-
+        current_player_old_elo = current_player.eloScore
         current_player.eloScore = calculate_new_elo(current_player.eloScore, other_player.eloScore, winner)
-        db.session.commit()
-
-        if fight.fightStatus == "finished":
-            fight.fightStatus = "done"
-            db.session.commit()
-            
-            return jsonify({
-                    "points1": fight.points1,
-                    "points2": fight.points2,
-                    "winner": winner,
-                    "brokenCards": [],
-                    "newElo": current_player.eloScore
-                })
-
-        
-
+        other_player.eloScore = calculate_new_elo(other_player.eloScore, current_player_old_elo, not winner)
         fight.fightStatus = "finished"
-
         db.session.commit()
+        
         return jsonify({
             "points1": fight.points1,
             "points2": fight.points2,
